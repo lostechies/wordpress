@@ -1,0 +1,4 @@
+permalinkmap.csv
+*.swp
+wp-config.php
+wp-content/cache/

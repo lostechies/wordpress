@@ -1,0 +1,28 @@
+[fixed] Open automatically comment form when there are no comments.
+[fixed] Better comments title bar
+[fixed] Expand comments vertically
+[fixed] Unify back and normal buttons.
+[fixed] Add a Cancel or Close btn to comment modal
+
+[new] Lick-worthy textures
+[new | RFC] Special Magazine-FX form otherwise dull blavatars.
+[fixed] Landscape mode ONLY- bottom px cutoff still exists. Now grey.
+[fixed] Landscape mode, articles not centered
+[fixed] Text is hard to read when leaving comment [fixed with new modal interface]
+[fixed] If I write a comment that’s long enough to fill up the entire height of the textarea, it doesn’t allow me to scroll in the textarea to view it all. Bigger textfield by default + scrolling? 
+
+[new] FONT PREVIEW (Arial rounded is sweet)
+[fixed] Bottom of content has a static set of pixels ie- very bottom of the page always stays beige.
+[fixed] Orange and green text.
+[fixed] Other misc annoyances, going towards an unified button style.
+
+[Fixed] admin bar gap when user is not logged in
+[Fixed] Back Button prettier
+
+[fixed] Move from PadPressed menu to apperance submenu
+[fixed] Margins for individual article to be even
+[fixed] Gravatar not displaying with comments
+[fixed] If I write a comment with multiple lines it doesn’t seem to save the line breaks and just jumbles the comment up together
+[fixed] Admin Bar 28px
+[fixed] blavatar logo on the categories/3x3 grid is just bad looking. look at padpresseddemo.wordpress.com
+[fixed] Comment button has jagged pixels
