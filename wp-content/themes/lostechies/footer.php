@@ -14,19 +14,13 @@
 					
 					<h3>Friends of Pablo</h3>
 <ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
 <li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
 <li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
-<li><a href="http://agilezen.com/" target="_blank">AgileZen</a></li>
-<li><a href="http://virtualaltnet.com/" target="_blank">Virtual Alt.NET</a></li>
-<li><a href="http://europevan.blogspot.com/" target="_blank">European Virtual Alt.NET</a></li>
 <li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
 <li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
-<li><a href="http://www.visualsvn.com/" target="_blank">VisualSVN</a></li>
 <li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
-<li><a href="http://www.ncover.com/" target="_blank">NCover</a></li>
-<li><a href="http://castingcode.tv/" target="_blank">CastingCode.tv</a></li>
-<li><a href="http://codertalkshow.com/" target="_blank">Coder Talk</a></li>
-<li><a href="http://vimconf.org/" target="_blank">VimConf</a></li>
+
 </ul>				
 				</div><!-- #third .widget-area -->
 				<div class="grid_4">
