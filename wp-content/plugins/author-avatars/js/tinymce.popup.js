@@ -63,21 +63,21 @@ function insertAuthorAvatarsCode() {
 	if (type == 'authoravatars') {
 
 		// blogs
-		var blogs = jQuery("#blogs").val() || [];
+		var blogs = jQuery(".fields_type_authoravatars #blogs").val() || [];
 	    if (blogs.length > 0) {
 	        tagtext += " blogs=" + blogs.join(',');
 	    }
-
+ 
 		// group_by
 		var group_by = new Array();
-		jQuery("#group_by :checked").each(function(i, el) { group_by.push(jQuery(el).val()); });
+		jQuery(".fields_type_authoravatars #group_by :checked").each(function(i, el) { group_by.push(jQuery(el).val()); });
 	    if (group_by.length > 0) {
 	        tagtext += " group_by=" + group_by.join(',');
 	    }
 
 		// roles
 		var roles = new Array();
-		jQuery("#roles :checked").each(function(i, el) { roles.push(jQuery(el).val()); });
+		jQuery(".fields_type_authoravatars #roles :checked").each(function(i, el) { roles.push(jQuery(el).val()); });
 	    if (roles.length > 0) {
 	        tagtext += " roles=" + roles.join(',');
 	    }
@@ -89,26 +89,27 @@ function insertAuthorAvatarsCode() {
 		}
 
 		// user_link
-		var user_link = jQuery("#user_link").val() || "";
+		var user_link = jQuery(".fields_type_authoravatars #user_link").val() || "";
 		if (user_link.length > 0) {
 			tagtext += " user_link=" + user_link;
 		}
 
 		// show_name
-		var show_name = jQuery("#display input[value=show_name]").attr("checked");
-		if (show_name == true) {
+
+		var show_name = jQuery('.fields_type_authoravatars #display input[value="show_name"]').attr("checked");
+		if (show_name == true || 'checked' == show_name) {
 			tagtext += " show_name=true";
 		}
 
 		// show_postcount
-		var show_postcount = jQuery("#display input[value=show_postcount]").attr("checked");
-		if (show_postcount == true) {
+		var show_postcount = jQuery('.fields_type_authoravatars #display input[value="show_postcount"]').attr("checked");
+		if (show_postcount == true || 'checked' == show_postcount) {
 			tagtext += " show_postcount=true";
 		}
 
 		// show_biography
-		var show_biography = jQuery("#display input[value=show_biography]").attr("checked");
-		if (show_biography == true) {
+		var show_biography = jQuery('.fields_type_authoravatars #display input[value="show_biography"]').attr("checked");
+		if (show_biography == true || 'checked' == show_biography) {
 			tagtext += " show_biography=true";
 		}
 
@@ -117,7 +118,11 @@ function insertAuthorAvatarsCode() {
 		if (limit.length > 0) {
 			tagtext += " limit=" + limit;
 		}
-
+		// Page size
+	var page_size = jQuery("#page_size").val() || "";
+	if (page_size.length > 0) {
+		tagtext += " page_size=" + page_size;
+	}
 		// min post count
 		var min_post_count = jQuery("#min_post_count").val() || "";
 		if (min_post_count.length > 0) {
@@ -143,9 +148,9 @@ function insertAuthorAvatarsCode() {
 	if (type == 'show_avatar') {
 
 		// email or id
-		var email = jQuery('#email').val() || '';
+		var email = jQuery('.fields_type_show_avatar #email').val() || '';
 		if (email.length > 0) {
-			jQuery('#email').parent().parent().removeClass('aa-form-error');
+			jQuery('.fields_type_show_avatar #email').parent().parent().removeClass('aa-form-error');
 			tagtext += " email=" + email;
 		}
 		else {
@@ -154,9 +159,33 @@ function insertAuthorAvatarsCode() {
 		}
 
 		// alignment
-		var align = jQuery('#alignment :checked').val() || '';
+		var align = jQuery('.fields_type_show_avatar #alignment :checked').val() || '';
 		if (align.length > 0) {
 			tagtext += " align=" + align;
+		}
+		
+		// user_link
+		var user_link = jQuery(".fields_type_show_avatar #user_link").val() || "";
+		if (user_link.length > 0) {
+			tagtext += " user_link=" + user_link;
+		}
+
+		// show_name
+
+		var show_name = jQuery('.fields_type_show_avatar #display input[value="show_name"]').attr("checked");
+		if (show_name == true || 'checked' == show_name) {
+			tagtext += " show_name=true";
+		}
+				// show_postcount
+		var show_postcount = jQuery('.fields_type_show_avatar #display input[value="show_postcount"]').attr("checked");
+		if (show_postcount == true || 'checked' == show_postcount) {
+			tagtext += " show_postcount=true";
+		}
+
+		// show_biography
+		var show_biography = jQuery('.fields_type_show_avatar #display input[value="show_biography"]').attr("checked");
+		if (show_biography == true || 'checked' == show_biography) {
+			tagtext += " show_biography=true";
 		}
 
 	}

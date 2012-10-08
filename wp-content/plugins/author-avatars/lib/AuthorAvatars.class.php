@@ -20,7 +20,8 @@ class AuthorAvatars {
 		}
 		else {
 			$this->init_settings();
-			$this->register_resources();
+			add_action( 'init', array( $this, 'register_resources' ));
+		//	$this->register_resources();
 			$this->init_widgets();
 			$this->init_shortcodes();
 			$this->init_controlpanels();
@@ -42,10 +43,8 @@ class AuthorAvatars {
 	function init_settings() {
 		// include global helper functions file.
 		require_once('helper.functions.php');
-
 		// include settings file
 		require_once('AuthorAvatarsSettings.class.php');
-
 		// load translation domain on init action
 		add_action('init', array($this, 'load_translation_domain'));
 	}
@@ -66,18 +65,16 @@ class AuthorAvatars {
 	 */
 	function register_resources() {
 		$aa_ver = AUTHOR_AVATARS_VERSION;
-
 		// make sure styles are written on wp_head action
 		add_action('wp_head', 'wp_print_styles');
-
-		// styles
+		// styles 
+		wp_register_style('MCE_BoxStyles', get_stylesheet_directory_uri().'/editorstyle.css');
 		wp_register_style('author-avatars-widget', WP_PLUGIN_URL . '/author-avatars/css/widget.css', array(), $aa_ver);
 		wp_register_style('author-avatars-shortcode', WP_PLUGIN_URL . '/author-avatars/css/shortcode.css', array(), $aa_ver);
 		wp_register_style('admin-form', WP_PLUGIN_URL . '/author-avatars/css/admin-form.css', array(), $aa_ver);
-
+/**/	
 		// scripts
 		wp_register_script('jquery-ui-resizable', WP_PLUGIN_URL . '/author-avatars/js/jquery-ui.resizable.js', array('jquery-ui-core'), '1.5.3');
-
 		wp_register_script('author-avatars-form', WP_PLUGIN_URL . '/author-avatars/js/form.js', array('jquery-ui-resizable'), $aa_ver);
 		wp_register_script('author-avatars-widget-admin', WP_PLUGIN_URL . '/author-avatars/js/widget.admin.js', array('author-avatars-form'), $aa_ver);
 		wp_register_script('tinymce-popup', '/wp-includes/js/tinymce/tiny_mce_popup.js', array(), function_exists('mce_version') ? mce_version() : false);
@@ -90,9 +87,8 @@ class AuthorAvatars {
 	function init_widgets() {
 		// include necessary file(s).
 		require_once('AuthorAvatarsWidget.class.php');
-
 		// Create an object for the widget. Registering is done in the object's constructor
-		$author_avatars_multiwidget = new AuthorAvatarsWidget();
+		$this->author_avatars_multiwidget = new AuthorAvatarsWidget();
 	}
 
 	/**
@@ -103,12 +99,10 @@ class AuthorAvatars {
 		require_once('AuthorAvatarsShortcode.class.php');
 		require_once('ShowAvatarShortcode.class.php');
         require_once('AuthorAvatarsEditorButton.class.php');
-
 		// Create objects of the shortcode classes. Registering is done in the objects' constructors
-		$author_avatars = new AuthorAvatarsShortcode();
-		$show_avatar = new ShowAvatarShortcode();
-
-        $editor_button = new AuthorAvatarsEditorButton();
+		$this->author_avatars_shortcode = new AuthorAvatarsShortcode();
+		$this->show_avatar = new ShowAvatarShortcode();
+        $this->editor_button = new AuthorAvatarsEditorButton();
 	}
 
 	/**
@@ -117,14 +111,14 @@ class AuthorAvatars {
 	function init_controlpanels() {
 		// include necessary file(s).
 		require_once('AuthorAvatarsSitewideAdminPanel.class.php');
-
-		$wpmu_settings = new AuthorAvatarsSitewideAdminPanel();
+		$this->wpmu_settings = new AuthorAvatarsSitewideAdminPanel();
 	}
 
 	/**
 	 * Number of the currently installed version of the plugin.
 	 * @access private
 	 */
+
 	var $__version_installed = null;
 
 	/**
@@ -157,10 +151,8 @@ class AuthorAvatars {
 	 */
 	function install_check() {
 		$version = $this->get_installed_version(true);
-
 		// Version not empty -> plugin already installed
 		if (!empty($version)) return true;
-
 		// Version empty: this means we are either on version 0.1 (which didn't have this option) or on a fresh install.
 		else {
 			// check if the 0.1 version is installed

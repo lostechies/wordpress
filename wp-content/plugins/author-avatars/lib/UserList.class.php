@@ -65,6 +65,16 @@ class UserList {
 	 * Minimum number of posts which a user needs to have in order to be shown in the listing
 	 */
 	var $min_post_count = 0;
+
+	/**
+	 * Minimum number of posts which a user needs to have in order to be shown in the listing
+	 */
+	var $page_size = 0;	
+	var $aa_page = 0;
+	/**
+	 * The page number hrml
+	 */
+	var $pagingHTML = '';		
 	
 	/**
 	 * The order which the users are shown in.
@@ -127,6 +137,16 @@ class UserList {
 	function output() {
 		echo $this->get_output();
 	}
+
+	/**
+	 * Echos the list of users.
+	 *
+	 * @return void
+	 */
+	public function ajax_output() {
+		// pass all the value into class
+		echo $this->get_output();
+	}
 	
 	/**
 	 * Returns the list of users.
@@ -137,17 +157,22 @@ class UserList {
 	function get_output() {
 		// get users
 		$users = $this->get_users();
-		
+	
 		if (empty($users)) {
 			return apply_filters('aa_userlist_empty', '<p class="no_users">'. __('No users found.', 'author-avatars'). '</p>');
 		}
 		elseif (!empty($this->group_by)) {
-			return $this->format_groups($users);
+			return $this->format_groups($this->page_users($users));
 		}
 		else {
-			return $this->format_users($users);
+			return $this->format_users($this->page_users($users));		
 		}
+	
+
 	}
+	
+	
+	
 	
 	/**
 	 * Formats a grouped list of users
@@ -184,6 +209,81 @@ class UserList {
 		}
 		return str_replace('{users}', $html, apply_filters('aa_userlist_template', $this->userlist_template));
 	}
+	/**
+	 * pages the list of users
+	 *
+	 * @param Array $groups An array of users.
+	 * @return Array list of users
+	 */
+	function page_users($users) {
+		if (empty($this->page_size)) {
+			return $users;
+		}
+		$this->setup_page_users_ajax();
+		$page_size = $this->page_size;
+
+		if ($this->aa_page > 0){
+			$offset = $this->aa_page * $page_size;
+			// so we can't try to slice more than the array test offset is not more than array length
+			// and is show the last page posiable
+			if ( $offset >= count($users) ){
+				$offset = count($users) - $page_size;
+			}
+		}else{
+			$offset = 0;
+		}
+		
+		$this->pagingHTML = '<div class="aa_pageList"><div><a href="?aa_page=0" id="0">'. __('<<', 'author-avatars').'</a>';
+		for ($i = 0; $i <= count($users)/$page_size; $i++) {
+			$this->pagingHTML .= '<a href="?aa_page='.$i.'" id="'. ($i) .'"';
+			if ($i == $this->aa_page){
+				$this->pagingHTML .= 'class="current"';	
+			}
+			$this->pagingHTML .= '>'.$i.'</a>';	
+		}
+		$this->pagingHTML .= '<a href="?aa_page='. ($i - 1) .'" id="'. ($i - 1) .'">'. __('>>', 'author-avatars').'</a></div></div>';
+		
+
+		return array_slice($users,$offset , $page_size);
+	}	
+	
+	/**
+	 * Ajax to update pages the list of users
+	 *
+	 * 
+	 * @return void
+	 */
+	function setup_page_users_ajax() {	
+	
+	// create axjax calls
+	wp_register_script('author-avatars-shortcode-paging', WP_PLUGIN_URL . '/author-avatars/js/AuthorAvatarsShortcode.paging.ajax.js', array('jquery-ui-core'), '', true);
+	// pass values to JS
+	$params = array(
+	
+		'hiddenusers' => $this->hiddenusers,
+		'blogs' => $this->blogs,
+		'roles' => $this->roles,
+		'group_by' => $this->group_by,
+		'user_link' => $this->user_link,
+		'show_name' => $this->show_name,
+		'show_postcount' => $this->show_postcount,
+		'show_biography' => $this->show_biography,
+		'avatar_size' => $this->avatar_size,
+		'limit' => $this->limit,
+		'min_post_count' => $this->min_post_count,
+		'page_size' => $this->page_size,
+		'order' => $this->order,
+		'sort_direction' => $this->sort_direction,
+		'postCommentNonce' => wp_create_nonce( 'author-avatars-shortcode-paging-nonce') , 
+		'action' => 'AA_shortcode_paging',
+		'aa_page' => 0,   
+	);
+
+	wp_enqueue_script('author-avatars-shortcode-paging');
+	wp_localize_script('author-avatars-shortcode-paging', 'shortCodeValues', $params);	
+
+	}
+
 	
 	
 	/**
@@ -213,29 +313,35 @@ class UserList {
 			$link_type = 'website';
 		}
 
-		switch ($link_type) {
+	switch ($link_type) {
 			case 'authorpage':
 				$link = get_author_posts_url($user->user_id);
 				break;
 			case 'website':
 				$link = $user->user_url;
-				if (empty($link) || $link == 'http://') $link = false;
-				break;
+			if (empty($link) || $link == 'http://') $link = false;
+			break;
 			case 'blog':
 				if (AA_is_wpmu()) {
-					$blog = get_active_blog_for_user($user->user_id);
-					if (!empty($blog->siteurl)) $link = $blog->siteurl;
-				}
+				$blog = get_active_blog_for_user($user->user_id);
+				if (!empty($blog->siteurl)) $link = $blog->siteurl;
+			}
 				break;
 			case 'bp_memberpage':
-				if (function_exists('bp_core_get_user_domain')) {
-					$link = bp_core_get_user_domain($user->user_id);
-				}
-				elseif (function_exists('bp_core_get_userurl')) { // BP versions < 1.1
-					$link = bp_core_get_userurl($user->user_id);
-				}
-				break;
-		}
+			if (function_exists('bp_core_get_user_domain')) {
+				$link = bp_core_get_user_domain($user->user_id);
+			}
+			elseif (function_exists('bp_core_get_userurl')) { // BP versions < 1.1
+				$link = bp_core_get_userurl($user->user_id);
+			}
+			break;
+		case 'bbpress_memberpage':
+			if (function_exists('bbp_get_user_profile_url')) {
+				$link = bbp_get_user_profile_url( $user->user_id );
+			}
+				if (empty($link) || $link == 'http://') $link = false;
+			break;
+	}
 
 		if ($this->show_postcount) {
 			$postcount = 0;

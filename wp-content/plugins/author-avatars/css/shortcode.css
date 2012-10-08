@@ -26,5 +26,32 @@
 	clear: left;
 	margin-right: .25em;
 }
+.shortcode-author-avatars div.aa_pageList{
+	width:100%;
+	clear: left;
+	text-align:center;
+}
+.shortcode-author-avatars div.aa_pageList div {
+	width:auto;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+}
 
+.shortcode-author-avatars div.aa_pageList  a{
+padding: 2px 4px;
+border:1px #BFBFBF solid;
+margin:0 2px;
+}
 
+.shortcode-author-avatars div.aa_pageList a.current, .shortcode-author-avatars div.aa_pageList  a:hover{
+border-color: black;	
+}
+.shortcode-author-avatars div.aa_pageList a.current{
+	font-weight: bold;
+}
+.shortcode-show-avatar{
+	display: block;
+
+}
+	
