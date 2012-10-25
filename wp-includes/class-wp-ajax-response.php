@@ -16,7 +16,7 @@ class WP_Ajax_Response {
 	var $responses = array();
 
 	/**
-	 * PHP4 Constructor - Passes args to {@link WP_Ajax_Response::add()}.
+	 * Constructor - Passes args to {@link WP_Ajax_Response::add()}.
 	 *
 	 * @since 2.1.0
 	 * @see WP_Ajax_Response::add()
@@ -24,7 +24,7 @@ class WP_Ajax_Response {
 	 * @param string|array $args Optional. Will be passed to add() method.
 	 * @return WP_Ajax_Response
 	 */
-	function WP_Ajax_Response( $args = '' ) {
+	function __construct( $args = '' ) {
 		if ( !empty($args) )
 			$this->add($args);
 	}
@@ -131,8 +131,9 @@ class WP_Ajax_Response {
 		foreach ( (array) $this->responses as $response )
 			echo $response;
 		echo '</wp_ajax>';
-		die();
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+			wp_die();
+		else
+			die();
 	}
 }
-
-?>

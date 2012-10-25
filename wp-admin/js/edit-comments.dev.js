@@ -1,44 +1,47 @@
 var theList, theExtraList, toggleWithKeyboard = false;
+
 (function($) {
+var getCount, updateCount, updatePending, dashboardTotals;
 
 setCommentsList = function() {
-	var totalInput, perPageInput, pageInput, lastConfidentTime = 0, dimAfter, delBefore, updateTotalCount, delAfter;
+	var totalInput, perPageInput, pageInput, lastConfidentTime = 0, dimAfter, delBefore, updateTotalCount, delAfter, refillTheExtraList;
 
 	totalInput = $('input[name="_total"]', '#comments-form');
 	perPageInput = $('input[name="_per_page"]', '#comments-form');
 	pageInput = $('input[name="_page"]', '#comments-form');
 
 	dimAfter = function( r, settings ) {
-		var c = $('#' + settings.element);
+		var c = $('#' + settings.element), editRow, replyID, replyButton;
 
-		if ( c.is('.unapproved') )
-			c.find('div.comment_status').html('0')
-		else
-			c.find('div.comment_status').html('1')
+		editRow = $('#replyrow');
+		replyID = $('#comment_ID', editRow).val();
+		replyButton = $('#replybtn', editRow);
 
-		$('span.pending-count').each( function() {
-			var a = $(this), n, dif;
-			n = a.html().replace(/[^0-9]+/g, '');
-			n = parseInt(n,10);
-			if ( isNaN(n) ) return;
-			dif = $('#' + settings.element).is('.' + settings.dimClass) ? 1 : -1;
-			n = n + dif;
-			if ( n < 0 ) { n = 0; }
-			a.closest('#awaiting-mod')[ 0 == n ? 'addClass' : 'removeClass' ]('count-0');
-			updateCount(a, n);
-			dashboardTotals();
-		});
+		if ( c.is('.unapproved') ) {
+			if ( settings.data.id == replyID )
+				replyButton.text(adminCommentsL10n.replyApprove);
+
+			c.find('div.comment_status').html('0');
+		} else {
+			if ( settings.data.id == replyID )
+				replyButton.text(adminCommentsL10n.reply);
+
+			c.find('div.comment_status').html('1');
+		}
+
+		var diff = $('#' + settings.element).is('.' + settings.dimClass) ? 1 : -1;
+		updatePending( diff );
 	};
 
 	// Send current total, page, per_page and url
 	delBefore = function( settings, list ) {
-		var cl = $(settings.target).attr('className'), id, el, n, h, a, author, action = false;
+		var cl = $(settings.target).attr('class'), id, el, n, h, a, author, action = false;
 
 		settings.data._total = totalInput.val() || 0;
 		settings.data._per_page = perPageInput.val() || 0;
 		settings.data._page = pageInput.val() || 0;
 		settings.data._url = document.location.href;
-		settings.data.comment_status = $('input[name=comment_status]', '#comments-form').val();
+		settings.data.comment_status = $('input[name="comment_status"]', '#comments-form').val();
 
 		if ( cl.indexOf(':trash=1') != -1 )
 			action = 'trash';
@@ -50,7 +53,7 @@ setCommentsList = function() {
 			el = $('#comment-' + id);
 			note = $('#' + action + '-undo-holder').html();
 
-			el.find('.check-column :checkbox').attr('checked', ''); // Uncheck the row so as not to be affected by Bulk Edits.
+			el.find('.check-column :checkbox').prop('checked', false); // Uncheck the row so as not to be affected by Bulk Edits.
 
 			if ( el.siblings('#replyrow').length && commentReply.cid == id )
 				commentReply.close();
@@ -66,10 +69,10 @@ setCommentsList = function() {
 
 			el.before(h);
 
-			$('strong', '#undo-' + id).text(author + ' ');
+			$('strong', '#undo-' + id).text(author);
 			a = $('.undo a', '#undo-' + id);
 			a.attr('href', 'comment.php?action=un' + action + 'comment&c=' + id + '&_wpnonce=' + settings.data._ajax_nonce);
-			a.attr('className', 'delete:the-comment-list:comment-' + id + '::un' + action + '=1 vim-z vim-destructive');
+			a.attr('class', 'delete:the-comment-list:comment-' + id + '::un' + action + '=1 vim-z vim-destructive');
 			$('.avatar', el).clone().prependTo('#undo-' + id + ' .' + action + '-undo-inside');
 
 			a.click(function(){
@@ -85,7 +88,7 @@ setCommentsList = function() {
 		return settings;
 	};
 
-	// Updates the current total (as displayed visibly)
+	// Updates the current total (stored in the _total input)
 	updateTotalCount = function( total, time, setConfidentTime ) {
 		if ( time < lastConfidentTime )
 			return;
@@ -94,12 +97,9 @@ setCommentsList = function() {
 			lastConfidentTime = time;
 
 		totalInput.val( total.toString() );
-		$('span.total-type-count').each( function() {
-			updateCount( $(this), total );
-		});
 	};
 
-	function dashboardTotals(n) {
+	dashboardTotals = function(n) {
 		var dash = $('#dashboard_right_now'), total, appr, totalN, apprN;
 
 		n = n || 0;
@@ -114,17 +114,16 @@ setCommentsList = function() {
 		apprN = totalN - getCount( $('span.pending-count', dash) ) - getCount( $('span.spam-count', dash) );
 		updateCount(total, totalN);
 		updateCount(appr, apprN);
+	};
 
-	}
-
-	function getCount(el) {
+	getCount = function(el) {
 		var n = parseInt( el.html().replace(/[^0-9]+/g, ''), 10 );
 		if ( isNaN(n) )
 			return 0;
 		return n;
-	}
+	};
 
-	function updateCount(el, n) {
+	updateCount = function(el, n) {
 		var n1 = '';
 		if ( isNaN(n) )
 			return;
@@ -137,11 +136,26 @@ setCommentsList = function() {
 			n = n + n1;
 		}
 		el.html(n);
-	}
+	};
+
+	updatePending = function( diff ) {
+		$('span.pending-count').each(function() {
+			var a = $(this), n = getCount(a) + diff;
+			if ( n < 1 )
+				n = 0;
+			a.closest('.awaiting-mod')[ 0 == n ? 'addClass' : 'removeClass' ]('count-0');
+			updateCount( a, n );
+		});
+
+		dashboardTotals();
+	};
 
 	// In admin-ajax.php, we send back the unix time stamp instead of 1 on success
 	delAfter = function( r, settings ) {
-		var total, pageLinks, N, untrash = $(settings.target).parent().is('span.untrash'), unspam = $(settings.target).parent().is('span.unspam'), spam, trash;
+		var total, N, spam, trash, pending,
+			untrash = $(settings.target).parent().is('span.untrash'),
+			unspam = $(settings.target).parent().is('span.unspam'),
+			unapproved = $('#' + settings.element).is('.unapproved');
 
 		function getUpdate(s) {
 			if ( $(settings.target).parent().is('span.' + s) )
@@ -151,27 +165,28 @@ setCommentsList = function() {
 
 			return 0;
 		}
-		spam = getUpdate('spam');
-		trash = getUpdate('trash');
 
 		if ( untrash )
 			trash = -1;
+		else
+			trash = getUpdate('trash');
+
 		if ( unspam )
 			spam = -1;
+		else
+			spam = getUpdate('spam');
 
-		$('span.pending-count').each( function() {
-			var a = $(this), n = getCount(a), unapproved = $('#' + settings.element).is('.unapproved');
+		if ( $(settings.target).parent().is('span.unapprove') || ( ( untrash || unspam ) && unapproved ) ) {
+			// a comment was 'deleted' from another list (e.g. approved, spam, trash) and moved to pending,
+			// or a trash/spam of a pending comment was undone
+			pending = 1;
+		} else if ( unapproved ) {
+			// a pending comment was trashed/spammed/approved
+			pending = -1;
+		}
 
-			if ( $(settings.target).parent().is('span.unapprove') || ( ( untrash || unspam ) && unapproved ) ) { // we "deleted" an approved comment from the approved list by clicking "Unapprove"
-				n = n + 1;
-			} else if ( unapproved ) { // we deleted a formerly unapproved comment
-				n = n - 1;
-			}
-			if ( n < 0 ) { n = 0; }
-			a.closest('#awaiting-mod')[ 0 == n ? 'addClass' : 'removeClass' ]('count-0');
-			updateCount(a, n);
-			dashboardTotals();
-		});
+		if ( pending )
+			updatePending(pending);
 
 		$('span.spam-count').each( function() {
 			var a = $(this), n = getCount(a) + spam;
@@ -188,7 +203,11 @@ setCommentsList = function() {
 			dashboardTotals(N);
 		} else {
 			total = totalInput.val() ? parseInt( totalInput.val(), 10 ) : 0;
-			total = total - spam - trash;
+			if ( $(settings.target).parent().is('span.undo') )
+				total++;
+			else
+				total--;
+
 			if ( total < 0 )
 				total = 0;
 
@@ -205,7 +224,6 @@ setCommentsList = function() {
 			}
 		}
 
-
 		if ( ! theExtraList || theExtraList.size() == 0 || theExtraList.children().size() == 0 || untrash || unspam ) {
 			return;
 		}
@@ -215,9 +233,8 @@ setCommentsList = function() {
 		refillTheExtraList();
 	};
 
-	var refillTheExtraList = function(ev) {
-		// var args = $.query.get(), total_pages = listTable.get_total_pages(), per_page = $('input[name=_per_page]', '#comments-form').val(), r;
-		var args = $.query.get(), total_pages = $('.total-pages').text(), per_page = $('input[name=_per_page]', '#comments-form').val(), r;
+	refillTheExtraList = function(ev) {
+		var args = $.query.get(), total_pages = $('.total-pages').text(), per_page = $('input[name="_per_page"]', '#comments-form').val();
 
 		if (! args.paged)
 			args.paged = 1;
@@ -267,7 +284,6 @@ setCommentsList = function() {
 			if ( s.target.className.indexOf(':trash=1') != -1 || s.target.className.indexOf(':spam=1') != -1 )
 				$('#undo-' + id).fadeIn(300, function(){ $(this).show() });
 		});
-	// $(listTable).bind('changePage', refillTheExtraList);
 };
 
 commentReply = {
@@ -330,78 +346,83 @@ commentReply = {
 	},
 
 	close : function() {
-		var c;
+		var c, replyrow = $('#replyrow');
 
-		if ( this.cid ) {
+		// replyrow is not showing?
+		if ( replyrow.parent().is('#com-reply') )
+			return;
+
+		if ( this.cid && this.act == 'edit-comment' ) {
 			c = $('#comment-' + this.cid);
-
-			if ( this.act == 'edit-comment' )
-				c.fadeIn(300, function(){ c.show() }).css('backgroundColor', '');
-
-			$('#replyrow').hide();
-			$('#com-reply').append( $('#replyrow') );
-			$('#replycontent').val('');
-			$('input', '#edithead').val('');
-			$('.error', '#replysubmit').html('').hide();
-			$('.waiting', '#replysubmit').hide();
-
-			if ( $.browser.msie )
-				$('#replycontainer, #replycontent').css('height', '120px');
-			else
-				$('#replycontainer').resizable('destroy').css('height', '120px');
-
-			this.cid = '';
+			c.fadeIn(300, function(){ c.show() }).css('backgroundColor', '');
 		}
+
+		// reset the Quicktags buttons
+		if ( typeof QTags != 'undefined' )
+			QTags.closeAllTags('replycontent');
+
+		$('#add-new-comment').css('display', '');
+
+		replyrow.hide();
+		$('#com-reply').append( replyrow );
+		$('#replycontent').css('height', '').val('');
+		$('#edithead input').val('');
+		$('.error', replyrow).html('').hide();
+		$('.waiting', replyrow).hide();
+
+		this.cid = '';
 	},
 
-	open : function(id, p, a) {
-		var t = this, editRow, rowData, act, h, c = $('#comment-' + id);
+	open : function(comment_id, post_id, action) {
+		var t = this, editRow, rowData, act, c = $('#comment-' + comment_id), h = c.height(), replyButton;
+
 		t.close();
-		t.cid = id;
+		t.cid = comment_id;
 
 		editRow = $('#replyrow');
-		rowData = $('#inline-'+id);
-		act = t.act = (a == 'edit') ? 'edit-comment' : 'replyto-comment';
+		rowData = $('#inline-'+comment_id);
+		action = action || 'replyto';
+		act = 'edit' == action ? 'edit' : 'replyto';
+		act = t.act = act + '-comment';
 
 		$('#action', editRow).val(act);
-		$('#comment_post_ID', editRow).val(p);
-		$('#comment_ID', editRow).val(id);
+		$('#comment_post_ID', editRow).val(post_id);
+		$('#comment_ID', editRow).val(comment_id);
 
-		if ( a == 'edit' ) {
+		if ( h > 120 )
+			$('#replycontent', editRow).css('height', (35+h) + 'px');
+
+		if ( action == 'edit' ) {
 			$('#author', editRow).val( $('div.author', rowData).text() );
 			$('#author-email', editRow).val( $('div.author-email', rowData).text() );
 			$('#author-url', editRow).val( $('div.author-url', rowData).text() );
 			$('#status', editRow).val( $('div.comment_status', rowData).text() );
 			$('#replycontent', editRow).val( $('textarea.comment', rowData).val() );
 			$('#edithead, #savebtn', editRow).show();
-			$('#replyhead, #replybtn', editRow).hide();
-
-			h = c.height();
-			if ( h > 220 )
-				if ( $.browser.msie )
-					$('#replycontainer, #replycontent', editRow).height(h-105);
-				else
-					$('#replycontainer', editRow).height(h-105);
+			$('#replyhead, #replybtn, #addhead, #addbtn', editRow).hide();
 
 			c.after( editRow ).fadeOut('fast', function(){
 				$('#replyrow').fadeIn(300, function(){ $(this).show() });
 			});
-		} else {
-			$('#edithead, #savebtn', editRow).hide();
+		} else if ( action == 'add' ) {
+			$('#addhead, #addbtn', editRow).show();
+			$('#replyhead, #replybtn, #edithead, #editbtn', editRow).hide();
+			$('#the-comment-list').prepend(editRow);
+			$('#replyrow').fadeIn(300);
+ 		} else {
+ 			replyButton = $('#replybtn', editRow);
+			$('#edithead, #savebtn, #addhead, #addbtn', editRow).hide();
 			$('#replyhead, #replybtn', editRow).show();
 			c.after(editRow);
+
+			if ( c.hasClass('unapproved') ) {
+				replyButton.text(adminCommentsL10n.replyApprove);
+			} else {
+				replyButton.text(adminCommentsL10n.reply);
+			}
+
 			$('#replyrow').fadeIn(300, function(){ $(this).show() });
 		}
-
-		if ( ! $.browser.msie )
-			$('#replycontainer').resizable({
-				handles : 's',
-				axis : 'y',
-				minHeight : 80,
-				stop : function() {
-					$('#replycontainer').width('auto');
-				}
-			});
 
 		setTimeout(function() {
 			var rtop, rbottom, scrollTop, vp, scrollBottom;
@@ -432,14 +453,18 @@ commentReply = {
 		$('#replysubmit .error').hide();
 		$('#replysubmit .waiting').show();
 
-		$('#replyrow input').each(function() {
-			post[ $(this).attr('name') ] = $(this).val();
+		$('#replyrow input').not(':button').each(function() {
+			var t = $(this);
+			post[ t.attr('name') ] = t.val();
 		});
 
 		post.content = $('#replycontent').val();
 		post.id = post.comment_post_ID;
 		post.comments_listing = this.comments_listing;
-		post.p = $('[name=p]').val();
+		post.p = $('[name="p"]').val();
+
+		if ( $('#comment-' + $('#comment_ID').val()).hasClass('unapproved') )
+			post.approve_parent = 1;
 
 		$.ajax({
 			type : 'POST',
@@ -453,37 +478,56 @@ commentReply = {
 	},
 
 	show : function(xml) {
-		var r, c, id, bg;
+		var t = this, r, c, id, bg, pid;
 
 		if ( typeof(xml) == 'string' ) {
-			this.error({'responseText': xml});
+			t.error({'responseText': xml});
 			return false;
 		}
 
 		r = wpAjax.parseAjaxResponse(xml);
 		if ( r.errors ) {
-			this.error({'responseText': wpAjax.broken});
+			t.error({'responseText': wpAjax.broken});
 			return false;
 		}
+
+		t.revert();
 
 		r = r.responses[0];
 		c = r.data;
 		id = '#comment-' + r.id;
-		if ( 'edit-comment' == this.act )
+
+		if ( 'edit-comment' == t.act )
 			$(id).remove();
+
+		if ( r.supplemental.parent_approved ) {
+			pid = $('#comment-' + r.supplemental.parent_approved);
+			updatePending( -1 );
+
+			if ( this.comments_listing == 'moderated' ) {
+				pid.animate( { 'backgroundColor':'#CCEEBB' }, 400, function(){
+					pid.fadeOut();
+				});
+				return;
+			}
+		}
 
 		$(c).hide()
 		$('#replyrow').after(c);
+		id = $(id);
+		t.addEvents(id);
+		bg = id.hasClass('unapproved') ? '#FFFFE0' : id.closest('.widefat, .postbox').css('backgroundColor');
 
-		this.revert();
-		this.addEvents($(id));
-		bg = $(id).hasClass('unapproved') ? '#ffffe0' : '#fff';
+		id.animate( { 'backgroundColor':'#CCEEBB' }, 300 )
+			.animate( { 'backgroundColor': bg }, 300, function() {
+				if ( pid && pid.length ) {
+					pid.animate( { 'backgroundColor':'#CCEEBB' }, 300 )
+						.animate( { 'backgroundColor': bg }, 300 )
+						.removeClass('unapproved').addClass('approved')
+						.find('div.comment_status').html('1');
+				}
+			});
 
-		$(id)
-			.animate( { 'backgroundColor':'#CCEEBB' }, 600 )
-			.animate( { 'backgroundColor': bg }, 600 );
-
-		// $.fn.wpList.process($(id));
 	},
 
 	error : function(r) {
@@ -497,6 +541,16 @@ commentReply = {
 		if ( er )
 			$('#replysubmit .error').html(er).show();
 
+	},
+
+	addcomment: function(post_id) {
+		var t = this;
+
+		$('#add-new-comment').fadeOut(200, function(){
+			t.open(0, post_id, 'add');
+			$('table.comments-box').css('display', '');
+			$('#no-comments').remove();
+		});
 	}
 };
 
@@ -506,9 +560,6 @@ $(document).ready(function(){
 	setCommentsList();
 	commentReply.init();
 	$(document).delegate('span.delete a.delete', 'click', function(){return false;});
-
-	if ( typeof QTags != 'undefined' )
-		ed_reply = new QTags('ed_reply', 'replycontent', 'replycontainer', 'more');
 
 	if ( typeof $.table_hotkeys != 'undefined' ) {
 		make_hotkeys_redirect = function(which) {
@@ -528,14 +579,14 @@ $(document).ready(function(){
 
 		toggle_all = function() {
 			toggleWithKeyboard = true;
-			$('input:checkbox', '#cb').click().attr('checked', '');
+			$('input:checkbox', '#cb').click().prop('checked', false);
 			toggleWithKeyboard = false;
 		};
 
 		make_bulk = function(value) {
 			return function() {
 				var scope = $('select[name="action"]');
-				$('option[value='+value+']', scope).attr('selected', 'selected');
+				$('option[value="' + value + '"]', scope).prop('selected', true);
 				$('#doaction').click();
 			}
 		};

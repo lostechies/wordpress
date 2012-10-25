@@ -80,7 +80,7 @@ function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1) 
  * @global array $wp_filter Stores all of the filters
  *
  * @param string $tag The name of the filter hook.
- * @param callback $function_to_check optional.  If specified, return the priority of that function on this hook or false if not attached.
+ * @param callback $function_to_check optional. If specified, return the priority of that function on this hook or false if not attached.
  * @return int|boolean Optionally returns the priority on that hook for the specified function.
  */
 function has_filter($tag, $function_to_check = false) {
@@ -135,18 +135,22 @@ function apply_filters($tag, $value) {
 	global $wp_filter, $merged_filters, $wp_current_filter;
 
 	$args = array();
-	$wp_current_filter[] = $tag;
 
 	// Do 'all' actions first
 	if ( isset($wp_filter['all']) ) {
+		$wp_current_filter[] = $tag;
 		$args = func_get_args();
 		_wp_call_all_hook($args);
 	}
 
 	if ( !isset($wp_filter[$tag]) ) {
-		array_pop($wp_current_filter);
+		if ( isset($wp_filter['all']) )
+			array_pop($wp_current_filter);
 		return $value;
 	}
+
+	if ( !isset($wp_filter['all']) )
+		$wp_current_filter[] = $tag;
 
 	// Sort
 	if ( !isset( $merged_filters[ $tag ] ) ) {
@@ -193,18 +197,21 @@ function apply_filters($tag, $value) {
 function apply_filters_ref_array($tag, $args) {
 	global $wp_filter, $merged_filters, $wp_current_filter;
 
-	$wp_current_filter[] = $tag;
-
 	// Do 'all' actions first
 	if ( isset($wp_filter['all']) ) {
+		$wp_current_filter[] = $tag;
 		$all_args = func_get_args();
 		_wp_call_all_hook($all_args);
 	}
 
 	if ( !isset($wp_filter[$tag]) ) {
-		array_pop($wp_current_filter);
+		if ( isset($wp_filter['all']) )
+			array_pop($wp_current_filter);
 		return $args[0];
 	}
+
+	if ( !isset($wp_filter['all']) )
+		$wp_current_filter[] = $tag;
 
 	// Sort
 	if ( !isset( $merged_filters[ $tag ] ) ) {
@@ -244,7 +251,7 @@ function apply_filters_ref_array($tag, $args) {
  * @param string $tag The filter hook to which the function to be removed is hooked.
  * @param callback $function_to_remove The name of the function which should be removed.
  * @param int $priority optional. The priority of the function (default: 10).
- * @param int $accepted_args optional. The number of arguments the function accpets (default: 1).
+ * @param int $accepted_args optional. The number of arguments the function accepts (default: 1).
  * @return boolean Whether the function existed before it was removed.
  */
 function remove_filter($tag, $function_to_remove, $priority = 10, $accepted_args = 1) {
@@ -301,7 +308,6 @@ function current_filter() {
 	return end( $wp_current_filter );
 }
 
-
 /**
  * Hooks a function on to a specific action.
  *
@@ -324,7 +330,6 @@ function current_filter() {
 function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) {
 	return add_filter($tag, $function_to_add, $priority, $accepted_args);
 }
-
 
 /**
  * Execute functions hooked on a specific action hook.
@@ -360,18 +365,21 @@ function do_action($tag, $arg = '') {
 	else
 		++$wp_actions[$tag];
 
-	$wp_current_filter[] = $tag;
-
 	// Do 'all' actions first
 	if ( isset($wp_filter['all']) ) {
+		$wp_current_filter[] = $tag;
 		$all_args = func_get_args();
 		_wp_call_all_hook($all_args);
 	}
 
 	if ( !isset($wp_filter[$tag]) ) {
-		array_pop($wp_current_filter);
+		if ( isset($wp_filter['all']) )
+			array_pop($wp_current_filter);
 		return;
 	}
+
+	if ( !isset($wp_filter['all']) )
+		$wp_current_filter[] = $tag;
 
 	$args = array();
 	if ( is_array($arg) && 1 == count($arg) && isset($arg[0]) && is_object($arg[0]) ) // array(&$this)
@@ -400,7 +408,7 @@ function do_action($tag, $arg = '') {
 }
 
 /**
- * Retrieve the number times an action is fired.
+ * Retrieve the number of times an action is fired.
  *
  * @package WordPress
  * @subpackage Plugin
@@ -446,18 +454,21 @@ function do_action_ref_array($tag, $args) {
 	else
 		++$wp_actions[$tag];
 
-	$wp_current_filter[] = $tag;
-
 	// Do 'all' actions first
 	if ( isset($wp_filter['all']) ) {
+		$wp_current_filter[] = $tag;
 		$all_args = func_get_args();
 		_wp_call_all_hook($all_args);
 	}
 
 	if ( !isset($wp_filter[$tag]) ) {
-		array_pop($wp_current_filter);
+		if ( isset($wp_filter['all']) )
+			array_pop($wp_current_filter);
 		return;
 	}
+
+	if ( !isset($wp_filter['all']) )
+		$wp_current_filter[] = $tag;
 
 	// Sort
 	if ( !isset( $merged_filters[ $tag ] ) ) {
@@ -486,7 +497,7 @@ function do_action_ref_array($tag, $args) {
  * @see has_filter() has_action() is an alias of has_filter().
  *
  * @param string $tag The name of the action hook.
- * @param callback $function_to_check optional.  If specified, return the priority of that function on this hook or false if not attached.
+ * @param callback $function_to_check optional. If specified, return the priority of that function on this hook or false if not attached.
  * @return int|boolean Optionally returns the priority on that hook for the specified function.
  */
 function has_action($tag, $function_to_check = false) {
@@ -507,7 +518,7 @@ function has_action($tag, $function_to_check = false) {
  * @param string $tag The action hook to which the function to be removed is hooked.
  * @param callback $function_to_remove The name of the function which should be removed.
  * @param int $priority optional The priority of the function (default: 10).
- * @param int $accepted_args optional. The number of arguments the function accpets (default: 1).
+ * @param int $accepted_args optional. The number of arguments the function accepts (default: 1).
  * @return boolean Whether the function is removed.
  */
 function remove_action($tag, $function_to_remove, $priority = 10, $accepted_args = 1) {
@@ -731,8 +742,8 @@ function _wp_call_all_hook($args) {
  * @global array $wp_filter Storage for all of the filters and actions
  * @param string $tag Used in counting how many hooks were applied
  * @param callback $function Used for creating unique id
- * @param int|bool $priority Used in counting how many hooks were applied.  If === false and $function is an object reference, we return the unique id only if it already has one, false otherwise.
- * @return string|bool Unique ID for usage as array key or false if $priority === false and $function is an object reference, and it does not already have a uniqe id.
+ * @param int|bool $priority Used in counting how many hooks were applied. If === false and $function is an object reference, we return the unique id only if it already has one, false otherwise.
+ * @return string|bool Unique ID for usage as array key or false if $priority === false and $function is an object reference, and it does not already have a unique id.
  */
 function _wp_filter_build_unique_id($tag, $function, $priority) {
 	global $wp_filter;
@@ -771,5 +782,3 @@ function _wp_filter_build_unique_id($tag, $function, $priority) {
 		return $function[0].$function[1];
 	}
 }
-
-?>

@@ -33,7 +33,6 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 		$tabs['featured'] = _x( 'Featured','Plugin Installer' );
 		$tabs['popular']  = _x( 'Popular','Plugin Installer' );
 		$tabs['new']      = _x( 'Newest','Plugin Installer' );
-		$tabs['updated']  = _x( 'Recently Updated','Plugin Installer' );
 
 		$nonmenu_tabs = array( 'plugin-information' ); //Valid actions to perform which do not have a Menu item.
 
@@ -48,7 +47,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 
 		switch ( $tab ) {
 			case 'search':
-				$type = isset( $_REQUEST['type'] ) ? stripslashes( $_REQUEST['type'] ) : '';
+				$type = isset( $_REQUEST['type'] ) ? stripslashes( $_REQUEST['type'] ) : 'term';
 				$term = isset( $_REQUEST['s'] ) ? stripslashes( $_REQUEST['s'] ) : '';
 
 				switch ( $type ) {
@@ -63,13 +62,12 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 						break;
 				}
 
-				add_action( 'install_plugins_table_header', 'install_search_form' );
+				add_action( 'install_plugins_table_header', 'install_search_form', 10, 0 );
 				break;
 
 			case 'featured':
 			case 'popular':
 			case 'new':
-			case 'updated':
 				$args['browse'] = $tab;
 				break;
 
@@ -138,7 +136,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 
 	function get_columns() {
 		return array(
-			'name'        => __( 'Name' ),
+			'name'        => _x( 'Name', 'plugin name' ),
 			'version'     => __( 'Version' ),
 			'rating'      => __( 'Rating' ),
 			'description' => __( 'Description' ),
@@ -205,7 +203,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 						break;
 					case 'latest_installed':
 					case 'newer_installed':
-						$action_links[] = '<span title="' . esc_attr__( 'This plugin is already installed and is up to date' ) . ' ">' . __( 'Installed' ) . '</span>';
+						$action_links[] = '<span title="' . esc_attr__( 'This plugin is already installed and is up to date' ) . ' ">' . _x( 'Installed', 'plugin' ) . '</span>';
 						break;
 				}
 			}
@@ -219,12 +217,7 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 			<td class="vers column-version"<?php echo $style['version']; ?>><?php echo $version; ?></td>
 			<td class="vers column-rating"<?php echo $style['rating']; ?>>
 				<div class="star-holder" title="<?php printf( _n( '(based on %s rating)', '(based on %s ratings)', $plugin['num_ratings'] ), number_format_i18n( $plugin['num_ratings'] ) ) ?>">
-					<div class="star star-rating" style="width: <?php echo esc_attr( $plugin['rating'] ) ?>px"></div>
-					<div class="star star5"><img src="<?php echo admin_url( 'images/star.gif' ); ?>" alt="<?php _e( '5 stars' ) ?>" /></div>
-					<div class="star star4"><img src="<?php echo admin_url( 'images/star.gif' ); ?>" alt="<?php _e( '4 stars' ) ?>" /></div>
-					<div class="star star3"><img src="<?php echo admin_url( 'images/star.gif' ); ?>" alt="<?php _e( '3 stars' ) ?>" /></div>
-					<div class="star star2"><img src="<?php echo admin_url( 'images/star.gif' ); ?>" alt="<?php _e( '2 stars' ) ?>" /></div>
-					<div class="star star1"><img src="<?php echo admin_url( 'images/star.gif' ); ?>" alt="<?php _e( '1 star' ) ?>" /></div>
+					<div class="star star-rating" style="width: <?php echo esc_attr( str_replace( ',', '.', $plugin['rating'] ) ); ?>px"></div>
 				</div>
 			</td>
 			<td class="desc column-description"<?php echo $style['description']; ?>><?php echo $description, $author; ?></td>
@@ -233,5 +226,3 @@ class WP_Plugin_Install_List_Table extends WP_List_Table {
 		}
 	}
 }
-
-?>

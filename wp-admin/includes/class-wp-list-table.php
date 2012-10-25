@@ -77,7 +77,7 @@ class WP_List_Table {
 	 * @param array $args An associative array with information about the current table
 	 * @access protected
 	 */
-	function WP_List_Table( $args = array() ) {
+	function __construct( $args = array() ) {
 		$args = wp_parse_args( $args, array(
 			'plural' => '',
 			'singular' => '',
@@ -90,6 +90,9 @@ class WP_List_Table {
 
 		if ( !$args['plural'] )
 			$args['plural'] = $screen->base;
+
+		$args['plural'] = sanitize_key( $args['plural'] );
+		$args['singular'] = sanitize_key( $args['singular'] );
 
 		$this->_args = $args;
 
@@ -138,6 +141,12 @@ class WP_List_Table {
 
 		if ( !$args['total_pages'] && $args['per_page'] > 0 )
 			$args['total_pages'] = ceil( $args['total_items'] / $args['per_page'] );
+
+		// redirect if page number is invalid and headers are not already sent
+		if ( ! headers_sent() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) && $args['total_pages'] > 0 && $this->get_pagenum() > $args['total_pages'] ) {
+			wp_redirect( add_query_arg( 'paged', $args['total_pages'] ) );
+			exit;
+		}
 
 		$this->_pagination_args = $args;
 	}
@@ -203,7 +212,7 @@ class WP_List_Table {
 ?>
 <p class="search-box">
 	<label class="screen-reader-text" for="<?php echo $input_id ?>"><?php echo $text; ?>:</label>
-	<input type="text" id="<?php echo $input_id ?>" name="s" value="<?php _admin_search_query(); ?>" />
+	<input type="search" id="<?php echo $input_id ?>" name="s" value="<?php _admin_search_query(); ?>" />
 	<?php submit_button( $text, 'button', false, false, array('id' => 'search-submit') ); ?>
 </p>
 <?php
@@ -223,7 +232,7 @@ class WP_List_Table {
 	}
 
 	/**
-	 * Display the bulk actions dropdown.
+	 * Display the list of views available on this table.
 	 *
 	 * @since 3.1.0
 	 * @access public
@@ -282,8 +291,13 @@ class WP_List_Table {
 
 		echo "<select name='action$two'>\n";
 		echo "<option value='-1' selected='selected'>" . __( 'Bulk Actions' ) . "</option>\n";
-		foreach ( $this->_actions as $name => $title )
-			echo "\t<option value='$name'>$title</option>\n";
+
+		foreach ( $this->_actions as $name => $title ) {
+			$class = 'edit' == $name ? ' class="hide-if-no-js"' : '';
+
+			echo "\t<option value='$name'$class>$title</option>\n";
+		}
+
 		echo "</select>\n";
 
 		submit_button( __( 'Apply' ), 'button-secondary action', false, false, array( 'id' => "doaction$two" ) );
@@ -315,7 +329,7 @@ class WP_List_Table {
 	 * @access protected
 	 *
 	 * @param array $actions The list of actions
-	 * @param bool $always_visible Wether the actions should be always visible
+	 * @param bool $always_visible Whether the actions should be always visible
 	 * @return string
 	 */
 	function row_actions( $actions, $always_visible = false ) {
@@ -372,7 +386,8 @@ class WP_List_Table {
 			printf( "<option %s value='%s'>%s</option>\n",
 				selected( $m, $year . $month, false ),
 				esc_attr( $arc_row->year . $month ),
-				$wp_locale->get_month( $month ) . " $year"
+				/* translators: 1: month name, 2: 4-digit year */
+				sprintf( __( '%1$s %2$d' ), $wp_locale->get_month( $month ), $year )
 			);
 		}
 ?>
@@ -469,7 +484,7 @@ class WP_List_Table {
 		if ( empty( $this->_pagination_args ) )
 			return;
 
-		extract( $this->_pagination_args );
+		extract( $this->_pagination_args, EXTR_SKIP );
 
 		$output = '<span class="displaying-num">' . sprintf( _n( '1 item', '%s items', $total_items ), number_format_i18n( $total_items ) ) . '</span>';
 
@@ -504,9 +519,8 @@ class WP_List_Table {
 		if ( 'bottom' == $which )
 			$html_current_page = $current;
 		else
-			$html_current_page = sprintf( "<input class='current-page' title='%s' type='text' name='%s' value='%s' size='%d' />",
+			$html_current_page = sprintf( "<input class='current-page' title='%s' type='text' name='paged' value='%s' size='%d' />",
 				esc_attr__( 'Current page' ),
-				esc_attr( 'paged' ),
 				$current,
 				strlen( $total_pages )
 			);
@@ -528,9 +542,15 @@ class WP_List_Table {
 			'&raquo;'
 		);
 
-		$output .= "\n" . join( "\n", $page_links );
+		$pagination_links_class = 'pagination-links';
+		if ( ! empty( $infinite_scroll ) )
+			$pagination_links_class = ' hide-if-js';
+		$output .= "\n<span class='$pagination_links_class'>" . join( "\n", $page_links ) . '</span>';
 
-		$page_class = $total_pages < 2 ? ' one-page' : '';
+		if ( $total_pages )
+			$page_class = $total_pages < 2 ? ' one-page' : '';
+		else
+			$page_class = ' no-pages';
 
 		$this->_pagination = "<div class='tablenav-pages{$page_class}'>$output</div>";
 
@@ -854,7 +874,7 @@ class WP_List_Table {
 		$this->prepare_items();
 
 		extract( $this->_args );
-		extract( $this->_pagination_args );
+		extract( $this->_pagination_args, EXTR_SKIP );
 
 		ob_start();
 		if ( ! empty( $_REQUEST['no_placeholder'] ) )
@@ -883,12 +903,16 @@ class WP_List_Table {
 	 * @access private
 	 */
 	function _js_vars() {
+		$current_screen = get_current_screen();
+
 		$args = array(
-			'class' => get_class( $this ),
-			'screen' => get_current_screen()
+			'class'  => get_class( $this ),
+			'screen' => array(
+				'id'   => $current_screen->id,
+				'base' => $current_screen->base,
+			)
 		);
 
 		printf( "<script type='text/javascript'>list_args = %s;</script>\n", json_encode( $args ) );
 	}
 }
-?>

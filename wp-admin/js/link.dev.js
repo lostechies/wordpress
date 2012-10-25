@@ -23,13 +23,13 @@ jQuery(document).ready( function($) {
 
 	// Ajax Cat
 	newCat = $('#newcat').one( 'focus', function() { $(this).val( '' ).removeClass( 'form-input-tip' ) } );
-	$('#category-add-submit').click( function() { newCat.focus(); } );
+	$('#link-category-add-submit').click( function() { newCat.focus(); } );
 	syncChecks = function() {
 		if ( noSyncChecks )
 			return;
 		noSyncChecks = true;
 		var th = $(this), c = th.is(':checked'), id = th.val().toString();
-		$('#in-link-category-' + id + ', #in-popular-category-' + id).attr( 'checked', c );
+		$('#in-link-category-' + id + ', #in-popular-category-' + id).prop( 'checked', c );
 		noSyncChecks = false;
 	};
 

@@ -101,9 +101,9 @@ function get_bookmark_field( $field, $bookmark, $context = 'display' ) {
  *		links marked as 'invisible'.
  * 'show_updated' - Default is 0 (integer). Will show the time of when the
  *		bookmark was last updated.
- * 'include' - Default is empty string (string). Include other categories
+ * 'include' - Default is empty string (string). Include bookmark ID(s)
  *		separated by commas.
- * 'exclude' - Default is empty string (string). Exclude other categories
+ * 'exclude' - Default is empty string (string). Exclude bookmark ID(s)
  *		separated by commas.
  *
  * @since 2.1.0
@@ -213,22 +213,35 @@ function get_bookmarks($args = '') {
 
 	$orderby = strtolower($orderby);
 	$length = '';
-	switch ($orderby) {
+	switch ( $orderby ) {
 		case 'length':
 			$length = ", CHAR_LENGTH(link_name) AS length";
 			break;
 		case 'rand':
 			$orderby = 'rand()';
 			break;
+		case 'link_id':
+			$orderby = "$wpdb->links.link_id";
+			break;
 		default:
 			$orderparams = array();
-			foreach ( explode(',', $orderby) as $ordparam )
-				$orderparams[] = 'link_' . trim($ordparam);
+			foreach ( explode(',', $orderby) as $ordparam ) {
+				$ordparam = trim($ordparam);
+				$keys = array( 'link_id', 'link_name', 'link_url', 'link_visible', 'link_rating', 'link_owner', 'link_updated', 'link_notes' );
+				if ( in_array( 'link_' . $ordparam, $keys ) )
+					$orderparams[] = 'link_' . $ordparam;
+				elseif ( in_array( $ordparam, $keys ) )
+					$orderparams[] = $ordparam;
+			}
 			$orderby = implode(',', $orderparams);
 	}
 
-	if ( 'link_id' == $orderby )
-		$orderby = "$wpdb->links.link_id";
+	if ( empty( $orderby ) )
+		$orderby = 'link_name';
+
+	$order = strtoupper( $order );
+	if ( '' !== $order && !in_array( $order, array( 'ASC', 'DESC' ) ) )
+		$order = 'ASC';
 
 	$visible = '';
 	if ( $hide_invisible )
@@ -362,9 +375,8 @@ function sanitize_bookmark_field($field, $value, $bookmark_id, $context) {
  * @since 2.7.0
  * @uses wp_cache_delete() Deletes the contents of 'get_bookmarks'
  */
-function clean_bookmark_cache($bookmark_id) {
+function clean_bookmark_cache( $bookmark_id ) {
 	wp_cache_delete( $bookmark_id, 'bookmark' );
 	wp_cache_delete( 'get_bookmarks', 'bookmark' );
+	clean_object_term_cache( $bookmark_id, 'link');
 }
-
-?>
