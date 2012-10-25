@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/embed-github-gist/
 Description: Embed GitHub Gists
 Author: Dragonfly Development
 Author URI: http://dflydev.com/
-Version: 0.8
+Version: 0.10
 License: New BSD License - http://www.opensource.org/licenses/bsd-license.php
 */
 
@@ -88,7 +88,7 @@ function embed_github_gist($id, $ttl = null, $bump = null, $file = null) {
         } else {
             if ( ! $file ) $file = 'file';
             $result = $http->request('https://gist.github.com/raw/' . $id . '/' . $file);
-            $gist = '<script src="https://gist.github.com/' . $id . '.js?file=' . $file . '%5B345%5D" type="text/javascript"></script>';
+            $gist = '<script src="https://gist.github.com/' . $id . '.js?file=' . $file . '" type="text/javascript"></script>';
             $gist .= '<noscript><div class="embed-github-gist-source"><code><pre>';
             $gist .= htmlentities($result['body']);
             $gist .= '</pre></code></div></noscript>';

@@ -83,12 +83,12 @@ jQuery(document).ready(function($){
     printf('
       <h2>%s</h2>
       <p><label>%s &nbsp; <input name="wpm_options_update[show_link]" value="on" type="radio" '.checked(true, $wpm_options['show_link'], false).'/></label></p>
-      <p><label>%s <a href="http://omninoggin.com/donate">%s</a> &nbsp; <input name="wpm_options_update[show_link]" value="off" type="radio" '.checked(false, $wpm_options['show_link'], false).'/></label></p>
+      <p><label>%s (<a href="http://omninoggin.com/donate">%s</a>) &nbsp; <input name="wpm_options_update[show_link]" value="off" type="radio" '.checked(false, $wpm_options['show_link'], false).'/></label></p>
       ',
       __('Support this plugin!', $this->name),
       __('Display "Page optimized by WP Minify" link in the footer', $this->name),
       __('Do not display "Page optimized by WP Minify" link.', $this->name),
-      __('I will donate and/or write about this plugin', $this->name)
+      __('Donations are appreciated!', $this->name)
     );
 
     printf('

@@ -3,8 +3,8 @@ Tags: minify, js, css, html, javascript, cascading style sheets, optimize, perfo
 Contributors: madeinthayaland
 Donate link: http://omninoggin.com/donate/
 Requires at least: 2.7
-Tested up to: 3.2.1
-Stable Tag: 1.1.8
+Tested up to: 3.3.2
+Stable Tag: 1.2.0
 
 This plugin uses the Minify engine to combine and compress JS and CSS files
 to improve page load time.
@@ -36,6 +36,11 @@ WordPress header.
 * Plugin hooks!
 
 == Changelog ==
+
+= 1.2.0 =
+* Tested with 3.3.2
+* No longer showing attribution link by default.
+* Changed donation phrasing.
 
 = 1.1.8 =
 * Removed unnecessary error_log line.

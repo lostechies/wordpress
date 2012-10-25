@@ -3,7 +3,7 @@
 Plugin Name: WP Minify
 Plugin URI: http://omninoggin.com/wordpress-plugins/wp-minify-wordpress-plugin/
 Description: This plugin uses the Minify engine to combine and compress JS and CSS files to improve page load time.
-Version: 1.1.8
+Version: 1.2.0
 Author: Thaya Kareeson
 Author URI: http://omninoggin.com
 */
@@ -33,7 +33,7 @@ class WPMinify {
   var $name_dashed = 'wp-minify'; 
   var $name_proper = 'WP Minify'; 
   var $required_wp_version = '2.7';
-  var $version = '1.1.8';
+  var $version = '1.2.0';
 
   var $c = null;
   var $debug = false;
@@ -95,7 +95,7 @@ class WPMinify {
       'js_in_footer' => false,
       'force_https' => false,
       'pretty_url' => false,
-      'show_link' => true,
+      'show_link' => false,
       'show_advanced' => false,
       'uri_exclude' => array(),
       'version' => $this->version,

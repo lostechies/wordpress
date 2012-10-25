@@ -3,7 +3,7 @@
 Plugin Name: WordPress MU Sitewide Tags Pages
 Plugin URI: http://ocaoimh.ie/wordpress-mu-sitewide-tags/
 Description: Creates a blog where all the most recent posts on a WordPress network may be found.
-Version: 0.4.1.1
+Version: 0.4.2
 Author: Donncha O Caoimh
 Author URI: http://ocaoimh.ie/
 */
@@ -374,8 +374,10 @@ function sitewide_tags_post( $post_id, $post ) {
 	}
 	unset( $meta_keys );
 
-	if( get_sitewide_tags_option( 'tags_blog_thumbs' ) && ( $thumb_id = get_post_meta( $post->ID, '_thumbnail_id', true ) ) )
-		$global_meta['thumbnail_html'] = wp_get_attachment_image( $thumb_id );
+	if( get_sitewide_tags_option( 'tags_blog_thumbs' ) && ( $thumb_id = get_post_meta( $post->ID, '_thumbnail_id', true ) ) ) {
+		$thumb_size = apply_filters( 'sitewide_tags_thumb_size', 'thumbnail' );
+		$global_meta['thumbnail_html'] = wp_get_attachment_image( $thumb_id, $thumb_size );
+	}
 
 	// custom taxonomies 
 	$taxonomies = apply_filters( 'sitewide_tags_custom_taxonomies', array() );
@@ -399,7 +401,12 @@ function sitewide_tags_post( $post_id, $post ) {
 	switch_to_blog( $tags_blog_id );
 	if( is_array( $cats ) && !empty( $cats ) && $post->post_status == 'publish' ) {
 		foreach( $cats as $t => $d ) {
-			/* Here is where we insert the category */
+			$term = get_term_by( 'slug', $d['slug'], 'category' );
+			if( $term && $term->parent == 0 ) {
+				$category_id[] = $term->term_id;
+				continue;
+			}
+			/* Here is where we insert the category if necessary */
 			wp_insert_category( array('cat_name' => $d['name'], 'category_description' => $d['name'], 'category_nicename' => $d['slug'], 'category_parent' => '') );
 
 			/* Now get the category ID to be used for the post */
@@ -569,13 +576,19 @@ function sitewide_tags_post_link( $link, $post ) {
 		return $link;
 
 	if( $wpdb->blogid == $tags_blog_id ) {
-		$url = get_post_meta( $post->ID, "permalink", true );
+		if( is_numeric( $post ) )
+			$url = get_post_meta( $post, 'permalink', true );
+		else
+			$url = get_post_meta( $post->ID, "permalink", true );
+
 		if( $url )
 			return $url;
 	}
+
 	return $link;
 }
-add_filter('post_link', 'sitewide_tags_post_link', 10, 2);
+add_filter( 'post_link', 'sitewide_tags_post_link', 10, 2 );
+add_filter( 'page_link', 'sitewide_tags_post_link', 10, 2 );
 
 function sitewide_tags_pages_filter( $post_types ) {
 	if( get_sitewide_tags_option( 'tags_blog_pages' ) )

@@ -1,8 +1,8 @@
 === WordPress MU Sitewide Tags Pages ===
 Contributors: donncha, imwebgefunden, wpmuguru
 Tags: wordpressmu
-Tested up to: 3.1.3
-Stable tag: 0.4.1.1
+Tested up to: 3.3
+Stable tag: 0.4.2
 Requires at least: 3.0
 
 A central area where all the posts on a WordPress MU or WordPress MS site can be collected.
@@ -25,6 +25,11 @@ For performance reasons the number of posts is limited to a user configurable am
 	8. "Populate Posts" allows you to fill in posts from an existing blog.
 
 == Changelog ==
+
+= 0.4.2 =
+* duplicate category fix
+* page permalink fix
+* thumbnail size filter
 
 = 0.4.1.1 =
 * Run populate feature in source blog context.
