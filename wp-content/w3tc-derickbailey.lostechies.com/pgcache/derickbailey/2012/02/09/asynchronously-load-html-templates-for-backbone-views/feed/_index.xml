@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Asynchronously Load HTML Templates For Backbone Views</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Mon, 05 Nov 2012 04:46:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Pascal Altena</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2604</link>
+		<dc:creator>Pascal Altena</dc:creator>
+		<pubDate>Tue, 10 Jul 2012 16:33:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2604</guid>
+		<description>There&#039;s still a typo, in 2.js
+
+
+$.get(&quot;/templates/&quot; + id + &quot;.html&quot;, function(template))
+
+That last ) shouldn&#039;t be there, it should be moved to the end of the $.get block.</description>
+		<content:encoded><![CDATA[<p>There&#8217;s still a typo, in 2.js</p>
+<p>$.get(&#8220;/templates/&#8221; + id + &#8220;.html&#8221;, function(template))</p>
+<p>That last ) shouldn&#8217;t be there, it should be moved to the end of the $.get block.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Stanković Vlada</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2592</link>
+		<dc:creator>Stanković Vlada</dc:creator>
+		<pubDate>Wed, 04 Jul 2012 08:43:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2592</guid>
+		<description>You are calling TemplateManager within View code. Do you use one TemplateManager instance per View? If not, it looks tedious to pass around TemplateManager reference all the time. Should we get our templates outside of View code.
+
+Your blog posts are really inspiring. Thank you on your efforts.</description>
+		<content:encoded><![CDATA[<p>You are calling TemplateManager within View code. Do you use one TemplateManager instance per View? If not, it looks tedious to pass around TemplateManager reference all the time. Should we get our templates outside of View code.</p>
+<p>Your blog posts are really inspiring. Thank you on your efforts.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Bill</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2534</link>
+		<dc:creator>Bill</dc:creator>
+		<pubDate>Wed, 06 Jun 2012 20:55:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2534</guid>
+		<description>I think the below syntax is a little more succinct. But, requirejs is a pain in the butt for most applications, because of the extra deployment step of optimizing :) I haven&#039;t seen any major benefits in using it unless your app is HUGE....require([ &quot;text!some/module.html&quot;],
+    function(templateHtml) {
+       
+ return Backbone.View.extend({        render: function () {            that.$el.html(templateHtml);            return this;        }    });
+
+    }
+);</description>
+		<content:encoded><![CDATA[<p>I think the below syntax is a little more succinct. But, requirejs is a pain in the butt for most applications, because of the extra deployment step of optimizing :) I haven&#8217;t seen any major benefits in using it unless your app is HUGE&#8230;.require([ "text!some/module.html"],<br />
+    function(templateHtml) {</p>
+<p> return Backbone.View.extend({        render: function () {            that.$el.html(templateHtml);            return this;        }    });</p>
+<p>    }<br />
+);</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Michael Martin</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2480</link>
+		<dc:creator>Michael Martin</dc:creator>
+		<pubDate>Fri, 25 May 2012 00:42:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2480</guid>
+		<description>Done and done, thanks!</description>
+		<content:encoded><![CDATA[<p>Done and done, thanks!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2479</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Thu, 24 May 2012 23:53:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2479</guid>
+		<description>Hey Michael,
+
+Can I get you to post that code in to an issue on the Marionette project issue list: https://github.com/derickbailey/backbone.marionette/issues
+
+A lot of people are having that problem these days, and getting that info out to everyone while I&#039;m trying to find time to dig in and fix this, would be awesome :)</description>
+		<content:encoded><![CDATA[<p>Hey Michael,</p>
+<p>Can I get you to post that code in to an issue on the Marionette project issue list: https://github.com/derickbailey/backbone.marionette/issues</p>
+<p>A lot of people are having that problem these days, and getting that info out to everyone while I&#8217;m trying to find time to dig in and fix this, would be awesome :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Michael Martin</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2478</link>
+		<dc:creator>Michael Martin</dc:creator>
+		<pubDate>Thu, 24 May 2012 23:48:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2478</guid>
+		<description>Derick,
+Backbone.Marionette is really, really cool. I ran into an issue while loading nested views using this async method, in which the parent view would render too quickly, ie. before the template was actually loaded into Backbone.Marionette.TemplateCache.templates
+and I just wanted to share my solution here as well as elicit feedback.
+
+Here is the meat and potatoes:
+
+Backbone.Marionette.TemplateCache.loadTemplate = function (templateId, callback) {
+            var that = this;
+ 
+            if (templateId &amp;&amp; templateId.length) {
+ 
+                var tmpId = templateId.replace(&quot;#&quot;, &quot;&quot;);
+                var url = &quot;/templates/&quot; + tmpId + &quot;.htm&quot;;
+                var promise = $.trafficCop(url);
+                promise.done(function (templateHtml) {
+                    var $template = $(templateHtml);
+                    var template = that.compileTemplate($template.html());
+                    callback(template);
+                    App.vent.trigger(templateId + &quot;:loaded&quot;); // necessary to load sub views in conjunction with &#039;NestedViewsApp.loadSubView&#039; method.
+                });
+            }
+        }
+ 
+        App.loadSubView = function (parentView, childView) {
+ 
+            if (Backbone.Marionette.TemplateCache.templates[parentView.template]) {
+ 
+                var $viewContainer = parentView.$el.find(parentView.subViewContainer);
+ 
+                $viewContainer.html(childView.el);
+            }
+            else {
+                NestedViewsApp.vent.bind(parentView.template + &quot;:loaded&quot;, function () {
+ 
+                    var $viewContainer = parentView.$el.find(parentView.subViewContainer);
+ 
+                    $viewContainer.html(childView.el);
+                });
+            }
+        }
+
+And the call to loadSubView is within the parentView.render method as follows:
+
+Parent.ParentView = Marionette.ItemView.extend({
+ 
+                tagName: &quot;div&quot;,
+                className: &quot;parent-view&quot;,
+                template: &quot;#parent-view-template&quot;,
+ 
+                render: function () {
+ 
+                    Marionette.ItemView.prototype.render.apply(this, arguments);
+ 
+                    var childView = App.Children.getChildView();
+ 
+                    App.loadSubView(this, childView);
+                }
+            });
+
+BTW, this works well with Marionette.CompositeView as the childView, which rocks. If anyone can think of a more elegant way to handle this or provide any feedback, sharing is always appreciated.
+
+Have a great Memorial Day weekend!</description>
+		<content:encoded><![CDATA[<p>Derick,<br />
+Backbone.Marionette is really, really cool. I ran into an issue while loading nested views using this async method, in which the parent view would render too quickly, ie. before the template was actually loaded into Backbone.Marionette.TemplateCache.templates<br />
+and I just wanted to share my solution here as well as elicit feedback.</p>
+<p>Here is the meat and potatoes:</p>
+<p>Backbone.Marionette.TemplateCache.loadTemplate = function (templateId, callback) {<br />
+            var that = this;</p>
+<p>            if (templateId &amp;&amp; templateId.length) {</p>
+<p>                var tmpId = templateId.replace(&#8220;#&#8221;, &#8221;");<br />
+                var url = &#8221;/templates/&#8221; + tmpId + &#8221;.htm&#8221;;<br />
+                var promise = $.trafficCop(url);<br />
+                promise.done(function (templateHtml) {<br />
+                    var $template = $(templateHtml);<br />
+                    var template = that.compileTemplate($template.html());<br />
+                    callback(template);<br />
+                    App.vent.trigger(templateId + &#8221;:loaded&#8221;); // necessary to load sub views in conjunction with &#8217;NestedViewsApp.loadSubView&#8217; method.<br />
+                });<br />
+            }<br />
+        }</p>
+<p>        App.loadSubView = function (parentView, childView) {</p>
+<p>            if (Backbone.Marionette.TemplateCache.templates[parentView.template]) {</p>
+<p>                var $viewContainer = parentView.$el.find(parentView.subViewContainer);</p>
+<p>                $viewContainer.html(childView.el);<br />
+            }<br />
+            else {<br />
+                NestedViewsApp.vent.bind(parentView.template + &#8221;:loaded&#8221;, function () {</p>
+<p>                    var $viewContainer = parentView.$el.find(parentView.subViewContainer);</p>
+<p>                    $viewContainer.html(childView.el);<br />
+                });<br />
+            }<br />
+        }</p>
+<p>And the call to loadSubView is within the parentView.render method as follows:</p>
+<p>Parent.ParentView = Marionette.ItemView.extend({</p>
+<p>                tagName: &#8221;div&#8221;,<br />
+                className: &#8221;parent-view&#8221;,<br />
+                template: &#8221;#parent-view-template&#8221;,</p>
+<p>                render: function () {</p>
+<p>                    Marionette.ItemView.prototype.render.apply(this, arguments);</p>
+<p>                    var childView = App.Children.getChildView();</p>
+<p>                    App.loadSubView(this, childView);<br />
+                }<br />
+            });</p>
+<p>BTW, this works well with Marionette.CompositeView as the childView, which rocks. If anyone can think of a more elegant way to handle this or provide any feedback, sharing is always appreciated.</p>
+<p>Have a great Memorial Day weekend!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Cocovan</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2368</link>
+		<dc:creator>Cocovan</dc:creator>
+		<pubDate>Thu, 19 Apr 2012 12:44:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2368</guid>
+		<description>Hi Derick,
+
+I&#039;m implementing exactly that at the moment (backbone complete n00b) and wanted my templates in a separate file).
+
+Pulled them in via a $.get() and prepended them to the body so they were before the load of the views. However, the views can&#039;t seem to find them and the app fails.
+
+Did you have success with that approach?</description>
+		<content:encoded><![CDATA[<p>Hi Derick,</p>
+<p>I&#8217;m implementing exactly that at the moment (backbone complete n00b) and wanted my templates in a separate file).</p>
+<p>Pulled them in via a $.get() and prepended them to the body so they were before the load of the views. However, the views can&#8217;t seem to find them and the app fails.</p>
+<p>Did you have success with that approach?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2286</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Sun, 11 Mar 2012 13:33:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2286</guid>
+		<description>i ran into a situation where i needed something like this, last week. i haven&#039;t implemented anything yet, but I don&#039;t think it would be very difficult. 
+
+1) $.get all-templates.html
+2) jquery select all  elements with type=&quot;text/template&quot;
+3) stuff all the selected templates in to the template cache
+
+or alternate:
+
+1) $.get all-templates.html
+2) stuff the results in to a hidden div or in to the head of the page</description>
+		<content:encoded><![CDATA[<p>i ran into a situation where i needed something like this, last week. i haven&#8217;t implemented anything yet, but I don&#8217;t think it would be very difficult. </p>
+<p>1) $.get all-templates.html<br />
+2) jquery select all  elements with type=&#8221;text/template&#8221;<br />
+3) stuff all the selected templates in to the template cache</p>
+<p>or alternate:</p>
+<p>1) $.get all-templates.html<br />
+2) stuff the results in to a hidden div or in to the head of the page</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: life like weeds</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2281</link>
+		<dc:creator>life like weeds</dc:creator>
+		<pubDate>Sat, 10 Mar 2012 05:38:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2281</guid>
+		<description>What are your thoughts on using a technique for a larger scale app which could have a dozen or more templates on a given view? Surely a production-mode type mechanism that flattens all related templates into one file, then that view could just fetch them with a single async request, but still make them accessible via a technique like you&#039;ve posted here.
+
+I don&#039;t know, too esoteric? Seems common for full-fledged apps.</description>
+		<content:encoded><![CDATA[<p>What are your thoughts on using a technique for a larger scale app which could have a dozen or more templates on a given view? Surely a production-mode type mechanism that flattens all related templates into one file, then that view could just fetch them with a single async request, but still make them accessible via a technique like you&#8217;ve posted here.</p>
+<p>I don&#8217;t know, too esoteric? Seems common for full-fledged apps.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/02/09/asynchronously-load-html-templates-for-backbone-views/#comment-2256</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Sun, 26 Feb 2012 19:12:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=805#comment-2256</guid>
+		<description>Yeah - my BBCloneMail sample app does this with the mail in box. http://bbclonemail.heroku.com and http://github.com/derickbailey/bbclonemail</description>
+		<content:encoded><![CDATA[<p>Yeah &#8211; my BBCloneMail sample app does this with the mail in box. <a href="http://bbclonemail.heroku.com" rel="nofollow">http://bbclonemail.heroku.com</a> and <a href="http://github.com/derickbailey/bbclonemail" rel="nofollow">http://github.com/derickbailey/bbclonemail</a></p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:10:16 -->

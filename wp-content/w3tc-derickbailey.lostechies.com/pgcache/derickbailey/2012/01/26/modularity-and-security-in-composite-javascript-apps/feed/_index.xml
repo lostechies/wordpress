@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Modularity And Security In Composite JavaScript Apps</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Fri, 05 Oct 2012 08:53:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Yusuf Motara</title>
+		<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/#comment-2161</link>
+		<dc:creator>Yusuf Motara</dc:creator>
+		<pubDate>Fri, 27 Jan 2012 16:53:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=782#comment-2161</guid>
+		<description>Absolutely. You might be interested in this excellent write-up about JS by Matasano: 
+http://www.matasano.com/articles/javascript-cryptography/
+
+It&#039;s written in the context of cryptography, but the conclusions are valid for any sort of JavaScript security checks.</description>
+		<content:encoded><![CDATA[<p>Absolutely. You might be interested in this excellent write-up about JS by Matasano: <br />
+<a href="http://www.matasano.com/articles/javascript-cryptography/" rel="nofollow">http://www.matasano.com/articles/javascript-cryptography/</a></p>
+<p>It&#8217;s written in the context of cryptography, but the conclusions are valid for any sort of JavaScript security checks.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/#comment-2160</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Fri, 27 Jan 2012 16:36:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=782#comment-2160</guid>
+		<description>thinking about this a bit more... i think i can see your point about this being obscurity. but i would say checking permissions on the client side is also just a form of obscurity.
+
+in my version of this, i&#039;m not sending the javascript down to the browser, so there&#039;s no way the user can even see it. i&#039;ve obscured the functionality from their sight. 
+
+if we did client side checking of the permissions, the user would still have the functionality downloaded to their browser. the checks would prevent it from being displayed, though. again, obscuring it from their sight.
+
+i don&#039;t think obscurity in this case is bad. but it&#039;s not &quot;complete&quot;, either. it&#039;s only a part of the over all security of a web app. we have to do the authorization checks on the back-end, still, because javascript running in the browser is inherently less secure than the code running on the server.</description>
+		<content:encoded><![CDATA[<p>thinking about this a bit more&#8230; i think i can see your point about this being obscurity. but i would say checking permissions on the client side is also just a form of obscurity.</p>
+<p>in my version of this, i&#8217;m not sending the javascript down to the browser, so there&#8217;s no way the user can even see it. i&#8217;ve obscured the functionality from their sight. </p>
+<p>if we did client side checking of the permissions, the user would still have the functionality downloaded to their browser. the checks would prevent it from being displayed, though. again, obscuring it from their sight.</p>
+<p>i don&#8217;t think obscurity in this case is bad. but it&#8217;s not &#8220;complete&#8221;, either. it&#8217;s only a part of the over all security of a web app. we have to do the authorization checks on the back-end, still, because javascript running in the browser is inherently less secure than the code running on the server.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/#comment-2159</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Fri, 27 Jan 2012 16:25:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=782#comment-2159</guid>
+		<description>right - so, we have the same goals, then, we just have 2 slightly different ways of getting there :)
+
+i like that quote/variation. simple is definitely more difficult.</description>
+		<content:encoded><![CDATA[<p>right &#8211; so, we have the same goals, then, we just have 2 slightly different ways of getting there :)</p>
+<p>i like that quote/variation. simple is definitely more difficult.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Yusuf Motara</title>
+		<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/#comment-2158</link>
+		<dc:creator>Yusuf Motara</dc:creator>
+		<pubDate>Fri, 27 Jan 2012 16:23:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=782#comment-2158</guid>
+		<description>Then the primary benefit is reduced user confusion?  I absolutely agree with you about the importance of that (&quot;check on the clientside what you should display and only display that&quot;).
+
+Speaking as a pentester (in a past life) and current security researcher, &quot;multi-part&quot; security systems are a treat to explore.  A variation of Hoare&#039;s maxim comes to mind: &quot;There are two ways of developing secure systems: One way is to make it so simple that there are obviously no holes, and the other way is to make it so complicated that there are no obvious holes. The first method is far more difficult.&quot; :).</description>
+		<content:encoded><![CDATA[<p>Then the primary benefit is reduced user confusion?  I absolutely agree with you about the importance of that (&#8220;check on the clientside what you should display and only display that&#8221;).</p>
+<p>Speaking as a pentester (in a past life) and current security researcher, &#8220;multi-part&#8221; security systems are a treat to explore.  A variation of Hoare&#8217;s maxim comes to mind: &#8220;There are two ways of developing secure systems: One way is to make it so simple that there are obviously no holes, and the other way is to make it so complicated that there are no obvious holes. The first method is far more difficult.&#8221; :).</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/#comment-2157</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Fri, 27 Jan 2012 16:01:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=782#comment-2157</guid>
+		<description>
+You&#039;re right about the obscurity bit. This isn&#039;t obscurity, though. I&#039;m not hiding something in the hope they won&#039;t find it. I&#039;m using actual authorization checks to determine what they can and cannot do. It&#039;s a multi-part security system, where I don&#039;t give them the option to even try something they can&#039;t do, and I also check everything they do against what they can do, to make sure it&#039;s all valid. It&#039;s not obscurity. It&#039;s security.
+
+&quot;If you make actual authorization calls on the back-end, when why not send the JS across?  It doesn&#039;t reduce security at all, though it might reduce efficiency (more stuff being transferred &amp; parsed).&quot;
+
+It reduces the user experience by causing confusion and the perception of errors. 
+
+Why should a user be able to see a bunch of stuff on the screen if they aren&#039;t allowed to use it? If I allow my users to see the search features, select the options that they want, and then they get an error message saying that they can&#039;t use this feature, the user will likely perceive this as a problem with the system. I&#039;ve run into this before. I&#039;m not postulating or assuming, here, but basing this on actual experience. I&#039;ve had users tell me &quot;if I&#039;m not allowed to do X, then why is X on my screen?&quot;</description>
+		<content:encoded><![CDATA[<p>You&#8217;re right about the obscurity bit. This isn&#8217;t obscurity, though. I&#8217;m not hiding something in the hope they won&#8217;t find it. I&#8217;m using actual authorization checks to determine what they can and cannot do. It&#8217;s a multi-part security system, where I don&#8217;t give them the option to even try something they can&#8217;t do, and I also check everything they do against what they can do, to make sure it&#8217;s all valid. It&#8217;s not obscurity. It&#8217;s security.</p>
+<p>&#8220;If you make actual authorization calls on the back-end, when why not send the JS across?  It doesn&#8217;t reduce security at all, though it might reduce efficiency (more stuff being transferred &amp; parsed).&#8221;</p>
+<p>It reduces the user experience by causing confusion and the perception of errors. </p>
+<p>Why should a user be able to see a bunch of stuff on the screen if they aren&#8217;t allowed to use it? If I allow my users to see the search features, select the options that they want, and then they get an error message saying that they can&#8217;t use this feature, the user will likely perceive this as a problem with the system. I&#8217;ve run into this before. I&#8217;m not postulating or assuming, here, but basing this on actual experience. I&#8217;ve had users tell me &#8220;if I&#8217;m not allowed to do X, then why is X on my screen?&#8221;</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Yusuf Motara</title>
+		<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/#comment-2156</link>
+		<dc:creator>Yusuf Motara</dc:creator>
+		<pubDate>Fri, 27 Jan 2012 15:47:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=782#comment-2156</guid>
+		<description>If you trust Joe to not look at Tim&#039;s stuff, then why not simply trust him to click on only his stuff?  Or, more simply, send him all of the JS, but check on the clientside what you should display and only display that.  Sure, you&#039;re trusting him to NOT do the view-source ... but then again, you trust him, right?
+
+Security that only works in the presence of a trusted consumer isn&#039;t security.  Security needs to work against the most determined attacker, who is malicious.  The term &quot;security through obscurity&quot; refers to NOT revealing security controls, in the hope that an attacker won&#039;t guess what they are; it doesn&#039;t usually refer to obscuring code.
+
+If you make actual authorization calls on the back-end, when why not send the JS across?  It doesn&#039;t reduce security at all, though it might reduce efficiency (more stuff being transferred &amp; parsed).</description>
+		<content:encoded><![CDATA[<p>If you trust Joe to not look at Tim&#8217;s stuff, then why not simply trust him to click on only his stuff?  Or, more simply, send him all of the JS, but check on the clientside what you should display and only display that.  Sure, you&#8217;re trusting him to NOT do the view-source &#8230; but then again, you trust him, right?</p>
+<p>Security that only works in the presence of a trusted consumer isn&#8217;t security.  Security needs to work against the most determined attacker, who is malicious.  The term &#8220;security through obscurity&#8221; refers to NOT revealing security controls, in the hope that an attacker won&#8217;t guess what they are; it doesn&#8217;t usually refer to obscuring code.</p>
+<p>If you make actual authorization calls on the back-end, when why not send the JS across?  It doesn&#8217;t reduce security at all, though it might reduce efficiency (more stuff being transferred &amp; parsed).</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/#comment-2152</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Fri, 27 Jan 2012 14:59:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=782#comment-2152</guid>
+		<description>if a user with lower privileges is viewing the source from a user with higher privileges, you&#039;re not going to be able to do anything. that would basically mean, &quot;Joe&quot; - an order entry person walked over to the computer of &quot;Tim&quot; - an administrator, and started using Tim&#039;s computer. You&#039;ve got bigger problems to solve, related to the people that you hire.
+
+This is not security through obscurity. I&#039;m not obscuring anything. Security through obscurity means that the code is sitting right there in front of the person, but it&#039;s so obscure that they can&#039;t figure out how to get around it.
+
+This is one level of security by not giving the user the option to even try to do something they can&#039;t do. As I said in my post, I make actual authorization calls on the back-end of my system, to ensure nothing gets through that shouldn&#039;t.</description>
+		<content:encoded><![CDATA[<p>if a user with lower privileges is viewing the source from a user with higher privileges, you&#8217;re not going to be able to do anything. that would basically mean, &#8220;Joe&#8221; &#8211; an order entry person walked over to the computer of &#8220;Tim&#8221; &#8211; an administrator, and started using Tim&#8217;s computer. You&#8217;ve got bigger problems to solve, related to the people that you hire.</p>
+<p>This is not security through obscurity. I&#8217;m not obscuring anything. Security through obscurity means that the code is sitting right there in front of the person, but it&#8217;s so obscure that they can&#8217;t figure out how to get around it.</p>
+<p>This is one level of security by not giving the user the option to even try to do something they can&#8217;t do. As I said in my post, I make actual authorization calls on the back-end of my system, to ensure nothing gets through that shouldn&#8217;t.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Yusuf Motara</title>
+		<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/#comment-2151</link>
+		<dc:creator>Yusuf Motara</dc:creator>
+		<pubDate>Fri, 27 Jan 2012 14:56:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=782#comment-2151</guid>
+		<description>What if a user with lower privileges gets to view-source (and save-source) on a session belonging to a user with higher privileges?  All the &quot;security benefit&quot; (and I don&#039;t think there is much; this is basically security through obscurity) is removed.</description>
+		<content:encoded><![CDATA[<p>What if a user with lower privileges gets to view-source (and save-source) on a session belonging to a user with higher privileges?  All the &#8220;security benefit&#8221; (and I don&#8217;t think there is much; this is basically security through obscurity) is removed.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2012/01/26/modularity-and-security-in-composite-javascript-apps/#comment-2150</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Fri, 27 Jan 2012 14:51:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=782#comment-2150</guid>
+		<description>_test</description>
+		<content:encoded><![CDATA[<p>_test</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 08:51:32 -->

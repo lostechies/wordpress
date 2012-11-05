@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>Adding Request / Reply To The Application Controller | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Help! I’m Terrible At Migrating/Restructuring Code In A Test-First Manner' href='http://lostechies.com/derickbailey/2010/04/14/help-i-m-terrible-at-migrating-restructuring-code-in-a-test-first-manner/' />
+<link rel='next' title='All Solved Problems Are Easy' href='http://lostechies.com/derickbailey/2010/04/16/all-solved-problems-are-easy/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2010/04/15/adding-request-reply-to-the-application-controller/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=140' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-140" class="post-140 post type-post status-publish format-standard hentry category-net category-analysis-and-design category-appcontroller category-c category-compact-framework category-cqrs category-design-patterns category-messaging category-pragmatism category-principles-and-patterns">
+					<h1 class="entry-title">Adding Request / Reply To The Application Controller</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2010/04/15/adding-request-reply-to-the-application-controller/" title="12:00 pm" rel="bookmark"><span class="entry-date">April 15, 2010</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>Back in December of 2009 I had a post on using various <a href="http://www.lostechies.com/blogs/derickbailey/archive/2009/12/22/understanding-the-application-controller-through-object-messaging-patterns.aspx">messaging patterns within an application controller</a> as part of an application’s architecture. One of the patterns that I distinctly left out was request/reply. At the time I had not yet implemented a good solution for it. Since then I’ve tried several variations of implementations but had not found anything that I liked for various reasons. However, during a conversation with a coworker today that touched on many different subjects the concept of request/reply came up again. He came up with a quick hack that would allow him to get it done with the existing app controller’s .Execute() method and his idea sparked another idea for a full fledged request/reply implementation. This time, I liked the results that I came up with and I added it to our application controller.</p>
+<p>&#160;</p>
+<h3>The <a href="http://www.enterpriseintegrationpatterns.com/RequestReply.html">Request / Reply</a> Pattern</h3>
+<p><a href="http://www.enterpriseintegrationpatterns.com/RequestReply.html"><img style="border-bottom: 0px;border-left: 0px;margin: 0px 10px 0px 0px;border-top: 0px;border-right: 0px" border="0" alt="image" align="left" src="http://lostechies.com/derickbailey/files/2011/03/image_451AE86F.png" width="81" height="49" /></a> When two applications communicate via <a href="http://www.enterpriseintegrationpatterns.com/Messaging.html"><i>Messaging</i></a>, the communication is one-way. The applications may want a two-way conversation.</p>
+<p><b>When an application sends a message, how can it get a response from the receiver? <b>Send a pair of <i>Request-Reply</i> messages, each on its own channel.</b></b></p>
+<p>The request / reply pattern has a use case that is very similar to a command pattern. It is used for decoupling a part of a process and calling out to an external part of your system or another system altogether. There are a few distinct differences between a command and a request/reply, though. Namely, those differences are:</p>
+<ul>
+<li>A command is a one way fire and forget and does not need to execute on the same thread, while a request / reply is assumed to block the calling thread while waiting for a reply</li>
+<li>A command has no direct response, while a request has a response</li>
+</ul>
+<p>A command should be able to run asynchronously – imagine if your boss had to wait for you to finish the software before they could do anything else. Nothing would ever get done. A request / reply on the other hand, may block the requesting object while it waits for a reply. This is akin to your boss asking you to print out a report so they can take it to a management meeting. They need to wait for you to return with the report before the continue on into the meeting. It is also possible for a request / reply to run asynchronously and for a command to run synchronously of course. How your system implements these two patterns is a matter of the needs of the system in question.</p>
+<p>There are likely other differences to consider and there may be scenarios where these differences don’t hold true, but this is generally a good way to distinguish between a command and a request/reply.</p>
+<p>&#160;</p>
+<h3>When To Use It</h3>
+<p>The request / reply pattern is used when you need to have a conversation with another part of a system, or a completely different system, and you do not want to couple the two systems together. In the context of an application controller and object messaging patterns, there are times when all we want to do is make a call from one object to another and get a response that we can use. One example of this is having a confirmation dialog for deleting an item. We need to be able to pop up a confirmation message to the user and have the user’s response determine what the system does next. However, we may not want to couple the object that needs the information to the object that can provide the information. In such a case, it would be awkward to have our object call out to Application.Execute to show the dialog and then have the dialog call Application.Raise with an event that the first object listens to. From a technical standpoint this works perfectly fine, but from an understandability and correct use of patterns standpoint, it is very awkward. After all, why should a developer be forced to make two application controller calls and handle an application event when all they want to do is call a method on an object and get a return value?</p>
+<p>To solve this problem and decouple the object from the dialog while still providing a simple, the request/reply pattern can be used:</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> SomeResponseData response = appController.RequestReply&lt;SomeRequestData, SomeResponseData&gt;(<span style="color: #0000ff">new</span> SomeRequestData());</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span> DoSomethingWithTheResponse(response);</pre>
+<p><!--CRLF--></div>
+</div>
+<p>&#160;</p>
+<h3>When Not To Use It</h3>
+<p>There are still going to be occasions where it is better to have two objects coupled to each other through a more direct form of abstraction, such as a role-specific interface. A good example of this is the <a href="http://www.lostechies.com/blogs/derickbailey/archive/2010/03/15/semantic-code-migrating-from-a-chatty-interface-to-a-simple-one-with-a-data-transfer-object.aspx">virtual keyboard that I previously talked about</a>. In that scenario, the form that was needing input from the virtual keyboard was better off making the call directly to the role specific interface, IVirtualKeyboard. Technically speaking it would have worked for the form to call out to a request / reply implementation. The issue in this case was the cost / benefit of the additional layers of indirection and abstraction vs. the need to just call a method and get a response. </p>
+<p>The cost / benefit of abstraction and indirection is an important part of deciding when to use request / reply within a system. There is no clear-cut rule of when it is absolutely wrong to use request / reply in this case, like there is when communicating with external systems. It takes judgment calls by the team that is using the patterns and the team should try to set standards on when and where request / reply is used within the context of the system they are building.</p>
+<p>&#160;</p>
+<h3>Request/Reply vs. Command+Event</h3>
+<p>There are times when the right thing to do is a command + an event, rather than a request/reply. A good scenario for this is an asynchronous process. While it is certainly possible from a technical standpoint and may be appropriate in some circumstances, doing a request / reply asynchronously generally goes against the norms of this pattern. Instead, an asynchronous command can be executed and allowed to run on it’s own. Then, when that command has completed it may raise an event that the original caller subscribes to. </p>
+<p>In this scenario it is important to understand that the command being executed may not be the object that raises the event. By having an event handler in an object, the object is stating that it does not necessarily care where the event data comes from – only that it expects to receive that event data at some point in time. With that in mind, calling out to a command still does not have the implication of returning data. Only the expectation of receiving the event data, as evidenced by the presence of the event handler, implies the need for data to be sent to the object.</p>
+<p>&#160;</p>
+</p>
+<h3>Additional Benefits</h3>
+<p>There is an added benefit to using this pattern, related to the use of IoC containers. Part of the conversation that lead to this solution was the need to reduce resource usage in the compact framework application that my team is currently building. </p>
+<p>In a system that makes heavy use of an IoC container for automatic dependency injection, it is very easy for resource usage to get out of hand. For example, if an IoC container is used to instantiate a form and its presenter, and that presenter relies on 3 different interfaces that are implemented by other presenters with each of those presenters relying on an interface that is implemented by another form as well as other interfaces that are implemented by yet more presenters with views… the resource utilization of a system such as this quickly gets out of hand. In this example, there are a minimum of 4 forms that are instantiated and injected into presenters – and that only accounts for the second level of forms in the system. As the system becomes larger and the number of forms and other resource intensive objects being instantiated on start up can quickly get out of hand. This is especially dangerous in a limited resource platform, such as the Compact Framework for Windows Mobile devices – which is the context in which my team is currently using the application controller and these patterns.</p>
+<p>A good command and request / reply implementation can help solve this problem and also provide additional use cases for these patterns. If the application controller’s .Execute and .RequestReply methods use an IoC container in their implementation to instantiate the objects that handle the processing, then we can avoid the unnecessary instantiation of objects. When a call to an interface occurs directly, it is assumed that the interface has an implementation (even if it’s a proxy implementation). When a call to the application controller’s .Execute or .RequestReply methods are made, though, the only object that has an implementation at the time of the call is the application controller and its direct dependencies. When the application controller receives the calls, it uses the IoC container to instantiate the objects that need to be run… essentially lazy loading the required resources.</p>
+<p>A solution such as this will not only cut down on initial resource utilization, but will also help to create a system that appears to be more responsive to the user. Rather than taking 10 to 20 seconds to load all resources and consuming those resources at the beginning of an application’s life, an implementation like this can distribute that time into smaller chunks across the functionality that is called, when that functionality is needed. For example, if the system in question has 10 different buttons and each button uses a command or request / reply, then the 10 to 20 seconds of resource loading will be cut into 1 to 2 seconds of resource load when at the time that the user clicks a button. This gives the user a sense of the application being more responsive because the application starts up faster and only takes a small hit on each button press.</p>
+<p>&#160;</p>
+<h3>The Implementation</h3>
+<p>The implementation for this functionality is fairly simple. We need a few new interfaces and a new method on the application controller. Then the objects that want to provide the request/reply functionality will need to take advantage of those interfaces.</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span> IRequestData&lt;TResponse&gt; { }</pre>
+<p><!--CRLF--></div>
+</div>
+<p>This first interface is nothing more than a marker interface for the request data objects. The reason for this interface’s existence is to provide type safety during the calls to the application controller’s .RequestReply method. Without this interface defined as such, the .RequestReply method call would not be able to provide the needed information on the type of the return value. This would cause a semantic coupling in the calls to the method because the developer would have to know what the response type is supposed to be. By requiring this interface for the request objects, though, the C# compiler will tell the developer if they are looking for the correct response data type.</p>
+<p>The response objects, on the other hand, have no marker interface. They can be anything from a string, int or other primitive types, to full fledged classes and interfaces, etc.</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span> IRequestHandler&lt;TRequest, TResponse&gt;</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span>   <span style="color: #0000ff">where</span> TRequest : IRequestData&lt;TResponse&gt;</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span>     TResponse ProcessRequest(TRequest request);</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span> }</pre>
+<p><!--CRLF--></div>
+</div>
+<p>The IRequestHandler interface is used to process the request object and return the response value. Note that the TRequest generics type uses a clause to specify that it must be an IRequestData&lt;TResponse&gt;. This is how the compiler knows to check the type of the return data when making the call to the .RequestReply method on the application controller.</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span> IApplicationController</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span>     <span style="color: #008000">//existing method definitions go here</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span>     TResponse RequestReply&lt;TRequest, TResponse&gt;(TRequest request) <span style="color: #0000ff">where</span> TRequest : IRequestData&lt;TResponse&gt;</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   6:</span> }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   7:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   8:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> ApplicationController: IApplicationController</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   9:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  10:</span>     <span style="color: #008000">//existing implementation goes here</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  11:</span>     </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  12:</span>     <span style="color: #0000ff">public</span> TResponse RequestReply&lt;TRequest, TResponse&gt;(TRequest request)</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  13:</span>         <span style="color: #0000ff">where</span> TRequest : IRequestData&lt;TResponse&gt;</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  14:</span>     {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  15:</span>         var handler = Container.TryGetInstance&lt;IRequestHandler&lt;TRequest, TResponse&gt;&gt;();</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  16:</span>         <span style="color: #0000ff">return</span> handler.ProcessRequest(request);</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  17:</span>     }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  18:</span> }</pre>
+<p><!--CRLF--></div>
+</div>
+<p>These are the changes to the IApplicationController and ApplicationController interface, assuming the use of StructureMap as the IoC container. There is nothing terribly special here, other than the interface method that is defined needs to have the same clause on the TRequest generics type.</p>
+<p>&#160;</p>
+<h3>A Simple Example Of Use</h3>
+<p>This code may not actually do anything, but it does show the use of the functionality.</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeRequestData : IRequestData&lt;SomeResponseData&gt;</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span>     <span style="color: #008000">//some relevant properties and method for the request data, goes here</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span> }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   6:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeResponseData</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   7:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   8:</span>     <span style="color: #008000">//some relevant properties and methods for the response data, goes here</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   9:</span> }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  10:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  11:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> SomeRequestHandler : IRequestHandler&lt;SomeRequestData, SomeResponseData&gt;</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  12:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  13:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  14:</span>     <span style="color: #0000ff">public</span> SomeResponseData ProcessRequest(SomeRequestData request)</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  15:</span>     {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  16:</span>         <span style="color: #008000">//handle the request here and process it, producing a response</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  17:</span>         <span style="color: #0000ff">return</span> <span style="color: #0000ff">new</span> SomeResponseData();</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  18:</span>     }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  19:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  20:</span> }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  21:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  22:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  23:</span> <span style="color: #008000">//this class makes use of the request/reply functionality</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  24:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> DoStuff</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  25:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  26:</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Foo()</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  27:</span>     {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  28:</span>         IApplicationController appController = <span style="color: #0000ff">null</span>; <span style="color: #008000">// = get my AppController however i want</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  29:</span>         <span style="color: #008000">//make the request/reply call and get the response</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  30:</span>         SomeResponseData response = appController.RequestResponse&lt;SomeRequestData, SomeResponseData&gt;(<span style="color: #0000ff">new</span> SomeRequestData());</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  31:</span>         DoSomethingWithTheResponse(response);</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  32:</span>     }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  33:</span> }</pre>
+<p><!--CRLF--></div>
+</div>
+<p>Note that this code explicitly supplies the type of the TRequest and TResponse data. Without providing these the C# compiler won’t be able to determine what types to use. However, providing the wrong return type for the request will also produce a compiler error thanks to the generics clauses that we added to the IRequestData&lt;T&gt; interface.</p>
+<p>&#160;</p>
+<h3>Download The Reference Implementations</h3>
+<p>The <a href="http://github.com/derickbailey/appcontroller">appcontroller</a> and <a href="http://github.com/derickbailey/appcontroller.cf">appcontroller.cf</a> implementations over at github will be updated with this functionality, shortly. Feel free to take the source code directly from this blog post or grab it from there.</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/net/" title="View all posts in .NET" rel="category tag">.NET</a>, <a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts in Analysis and Design" rel="category tag">Analysis and Design</a>, <a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts in AppController" rel="category tag">AppController</a>, <a href="http://lostechies.com/derickbailey/category/c/" title="View all posts in C#" rel="category tag">C#</a>, <a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts in Compact Framework" rel="category tag">Compact Framework</a>, <a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts in CQRS" rel="category tag">CQRS</a>, <a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts in Design Patterns" rel="category tag">Design Patterns</a>, <a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts in Messaging" rel="category tag">Messaging</a>, <a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts in Pragmatism" rel="category tag">Pragmatism</a>, <a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts in Principles and Patterns" rel="category tag">Principles and Patterns</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2010/04/15/adding-request-reply-to-the-application-controller/" title="Permalink to Adding Request / Reply To The Application Controller" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2010/04/15/adding-request-reply-to-the-application-controller/feed/" title="Comments RSS to Adding Request / Reply To The Application Controller" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-140 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2010/04/14/help-i-m-terrible-at-migrating-restructuring-code-in-a-test-first-manner/" rel="prev"><span class="meta-nav">&larr;</span> Help! I’m Terrible At Migrating/Restructuring Code In A Test-First Manner</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2010/04/16/all-solved-problems-are-easy/" rel="next">All Solved Problems Are Easy <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-821">
+        <div id="dsq-comment-header-821" class="dsq-comment-header">
+            <cite id="dsq-cite-821">
+                <span id="dsq-author-user-821">WillSmith</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-821" class="dsq-comment-body">
+            <div id="dsq-comment-message-821" class="dsq-comment-message"><p>Did you see this project?</p>
+<p><a href="http://code.google.com/p/agatha-rrsl/" rel="nofollow">http://code.google.com/p/agatha-rrsl/</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-822">
+        <div id="dsq-comment-header-822" class="dsq-comment-header">
+            <cite id="dsq-cite-822">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-822">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-822" class="dsq-comment-body">
+            <div id="dsq-comment-message-822" class="dsq-comment-message"><p>@WillSMith &#8211; interesting&#8230; but that looks like a full EAI messaging model for request/reply. </p>
+<p>my code is specifically not going down that path &#8211; only trying to work within the confines of a single application, to decouple the various parts of the application.  </p>
+<p>i&#8217;ve done quite a bit of work with service bus systems (wrote my own, currently using MassTransit, have played with NServicebus) and am borrowing the ideas i&#8217;ve taken from EAI and service busses to create better in-process application architectures.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-823">
+        <div id="dsq-comment-header-823" class="dsq-comment-header">
+            <cite id="dsq-cite-823">
+                <span id="dsq-author-user-823">Joshka</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-823" class="dsq-comment-body">
+            <div id="dsq-comment-message-823" class="dsq-comment-message"><p>The additional benefits section seems like a bit of a red herring. If your presenter class doesn&#8217;t need a dependency (say ISubPresenter) for its entire lifetime, then a dependency on Func<isubpresenter> or ISubPresenterProvider makes more sense. I don&#8217;t know about structure map, but AutoFac can auto generate Func<t> dependencies given a registration of T.</t></isubpresenter></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-824">
+        <div id="dsq-comment-header-824" class="dsq-comment-header">
+            <cite id="dsq-cite-824">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-824">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-824" class="dsq-comment-body">
+            <div id="dsq-comment-message-824" class="dsq-comment-message"><p>@Joshka &#8211; actually not sure about structuremap supporting that, but i&#8217;m pretty sure Ninject does. i&#8217;ve got another blog post in the works (should be posted next week some time) discussing this and one or two other options. i wouldn&#8217;t call it a red herring, but you&#8217;re right in that this isn&#8217;t the only option to solve that problem. </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2010/04/15/adding-request-reply-to-the-application-controller/';
+    var disqus_identifier = '140 /blogs/derickbailey/archive/2010/04/15/adding-request-reply-to-the-application-controller.aspx';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "Adding Request \/ Reply To The Application Controller";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=140';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2010\/04\/15\/adding-request-reply-to-the-application-controller\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">TechNet on <a href="http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-2769">Resources For, And How I Learned Backbone.js</a></li><li class="recentcomments">AK on <a href="http://lostechies.com/derickbailey/2010/05/11/vim-grep-find-all-occurrences-of-text-in-your-project/#comment-2768">Vim+Grep: Find All Occurrences Of Text In Your Project</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2010/05/11/vim-grep-find-all-occurrences-of-text-in-your-project/#comment-2767">Vim+Grep: Find All Occurrences Of Text In Your Project</a></li><li class="recentcomments">AK on <a href="http://lostechies.com/derickbailey/2010/05/11/vim-grep-find-all-occurrences-of-text-in-your-project/#comment-2766">Vim+Grep: Find All Occurrences Of Text In Your Project</a></li><li class="recentcomments">Guy on <a href="http://lostechies.com/derickbailey/2012/04/17/managing-a-modal-dialog-with-backbone-and-marionette/#comment-2765">Managing A Modal Dialog With Backbone And Marionette</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
+Make your Backbone applications dance with a composite application architecture!
+
+
+The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2012<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 08:21:39 -->

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Backbone.js And JavaScript Garbage Collection</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Mon, 05 Nov 2012 04:46:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Jason</title>
+		<link>http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/#comment-2430</link>
+		<dc:creator>Jason</dc:creator>
+		<pubDate>Tue, 08 May 2012 21:33:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=853#comment-2430</guid>
+		<description>If this were expanded, do you think it could be of use?
+https://github.com/jstrimpel/emem </description>
+		<content:encoded><![CDATA[<p>If this were expanded, do you think it could be of use?<br />
+<a href="https://github.com/jstrimpel/emem " rel="nofollow">https://github.com/jstrimpel/emem </a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: rob8YC</title>
+		<link>http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/#comment-2379</link>
+		<dc:creator>rob8YC</dc:creator>
+		<pubDate>Sat, 21 Apr 2012 18:43:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=853#comment-2379</guid>
+		<description>I&#039;ve seen that delete mistake a couple of places recently... here&#039;s a very thorough article that also explains why the firebug console has a misleading quirk on the issue.
+http://perfectionkills.com/understanding-delete/ </description>
+		<content:encoded><![CDATA[<p>I&#8217;ve seen that delete mistake a couple of places recently&#8230; here&#8217;s a very thorough article that also explains why the firebug console has a misleading quirk on the issue.<br />
+<a href="http://perfectionkills.com/understanding-delete/" rel="nofollow">http://perfectionkills.com/understanding-delete/</a> </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/#comment-2316</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Tue, 27 Mar 2012 01:14:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=853#comment-2316</guid>
+		<description> Oh my, this is exactly what I wanted and never knew existed.</description>
+		<content:encoded><![CDATA[<p> Oh my, this is exactly what I wanted and never knew existed.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/#comment-2306</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Thu, 22 Mar 2012 14:54:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=853#comment-2306</guid>
+		<description>I&#039;m not sure I can directly answer your question, but I ran across this article today and though it might be useful: http://gent.ilcore.com/2011/08/finding-memory-leaks.html</description>
+		<content:encoded><![CDATA[<p>I&#8217;m not sure I can directly answer your question, but I ran across this article today and though it might be useful: http://gent.ilcore.com/2011/08/finding-memory-leaks.html</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/#comment-2303</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Wed, 21 Mar 2012 14:44:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=853#comment-2303</guid>
+		<description>right - i always forget about that, for some reason. a &quot;var&quot; will fall out of scope, though, and be cleaned up, when the function exits (assuming no closures on the var). 
+
+there was an article I read a while back that talked about &quot;delete&quot; great detail, but i can&#039;t seem to find it anymore.</description>
+		<content:encoded><![CDATA[<p>right &#8211; i always forget about that, for some reason. a &#8220;var&#8221; will fall out of scope, though, and be cleaned up, when the function exits (assuming no closures on the var). </p>
+<p>there was an article I read a while back that talked about &#8220;delete&#8221; great detail, but i can&#8217;t seem to find it anymore.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Misha Reyzlin</title>
+		<link>http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/#comment-2302</link>
+		<dc:creator>Misha Reyzlin</dc:creator>
+		<pubDate>Wed, 21 Mar 2012 14:40:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=853#comment-2302</guid>
+		<description>I think it is worth mentioning that “you can force a variable to be de-referenced and allow the thing it points to be cleaned up by using the delete keyword in JavaScript: `delete myVar`” will not work with variables declared with `var`. As `delete` works with properties of objects (and in case of non `var` declaration the declared variable is actually a part of global object [`window` in browsers]). </description>
+		<content:encoded><![CDATA[<p>I think it is worth mentioning that “you can force a variable to be de-referenced and allow the thing it points to be cleaned up by using the delete keyword in JavaScript: `delete myVar`” will not work with variables declared with `var`. As `delete` works with properties of objects (and in case of non `var` declaration the declared variable is actually a part of global object [`window` in browsers]). </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/#comment-2297</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Mon, 19 Mar 2012 14:13:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=853#comment-2297</guid>
+		<description>Is there an easy way in something like Chrome&#039;s web inspector to check if a particular object has been properly cleaned up? I&#039;m thinking something like:
+
+- navigate to a view plus model in my backbone app
+- open the web inspector and look at the view and model somewhere
+- navigate to a different view
+- use the web inspector to check the old view and model have been GC&#039;d
+
+Being able to do that would really help me understand/play with GC to get my head around it better.</description>
+		<content:encoded><![CDATA[<p>Is there an easy way in something like Chrome&#8217;s web inspector to check if a particular object has been properly cleaned up? I&#8217;m thinking something like:</p>
+<p>- navigate to a view plus model in my backbone app<br />
+- open the web inspector and look at the view and model somewhere<br />
+- navigate to a different view<br />
+- use the web inspector to check the old view and model have been GC&#8217;d</p>
+<p>Being able to do that would really help me understand/play with GC to get my head around it better.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Dom Barker</title>
+		<link>http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/#comment-2296</link>
+		<dc:creator>Dom Barker</dc:creator>
+		<pubDate>Mon, 19 Mar 2012 13:41:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=853#comment-2296</guid>
+		<description>JMVC does some really neat things for handling memory leaks</description>
+		<content:encoded><![CDATA[<p>JMVC does some really neat things for handling memory leaks</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:33:41 -->

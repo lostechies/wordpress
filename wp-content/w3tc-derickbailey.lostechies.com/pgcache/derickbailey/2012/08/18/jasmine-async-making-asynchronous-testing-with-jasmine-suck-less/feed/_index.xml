@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Jasmine.Async: Making Asynchronous Testing With Jasmine Suck Less</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Mon, 05 Nov 2012 04:46:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2741</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Thu, 06 Sep 2012 21:14:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2741</guid>
+		<description>the it statement doesn&#039;t need to be async in this case, though the plugin does support it.</description>
+		<content:encoded><![CDATA[<p>the it statement doesn&#8217;t need to be async in this case, though the plugin does support it.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2742</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Thu, 06 Sep 2012 21:14:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2742</guid>
+		<description>the it statement doesn&#039;t need to be async in this case, though the plugin does support it.</description>
+		<content:encoded><![CDATA[<p>the it statement doesn&#8217;t need to be async in this case, though the plugin does support it.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Dan Hollenbeck</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2739</link>
+		<dc:creator>Dan Hollenbeck</dc:creator>
+		<pubDate>Thu, 06 Sep 2012 20:56:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2739</guid>
+		<description>Typo in your gist? 
+
+  async.it(&quot;did stuff&quot;, function(){
+ instead of
+
+  it(&quot;did stuff&quot;, function(){ 
+</description>
+		<content:encoded><![CDATA[<p>Typo in your gist? </p>
+<p>  async.it(&#8220;did stuff&#8221;, function(){<br />
+ instead of</p>
+<p>  it(&#8220;did stuff&#8221;, function(){ </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Dan Hollenbeck</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2740</link>
+		<dc:creator>Dan Hollenbeck</dc:creator>
+		<pubDate>Thu, 06 Sep 2012 20:56:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2740</guid>
+		<description>Typo in your gist? 
+
+  async.it(&quot;did stuff&quot;, function(){
+ instead of
+
+  it(&quot;did stuff&quot;, function(){ 
+</description>
+		<content:encoded><![CDATA[<p>Typo in your gist? </p>
+<p>  async.it(&#8220;did stuff&#8221;, function(){<br />
+ instead of</p>
+<p>  it(&#8220;did stuff&#8221;, function(){ </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Rodrigo Rosenfeld Rosas</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2725</link>
+		<dc:creator>Rodrigo Rosenfeld Rosas</dc:creator>
+		<pubDate>Fri, 24 Aug 2012 20:53:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2725</guid>
+		<description>I won&#039;t repeat myself on this issue once more. Please see my opinions here:
+
+
+https://github.com/busterjs/buster/issues/193</description>
+		<content:encoded><![CDATA[<p>I won&#8217;t repeat myself on this issue once more. Please see my opinions here:</p>
+<p><a href="https://github.com/busterjs/buster/issues/193" rel="nofollow">https://github.com/busterjs/buster/issues/193</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2724</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Fri, 24 Aug 2012 17:49:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2724</guid>
+		<description>if you can, do that. it&#039;s not always possible, though. There are times when it&#039;s far more difficult or creates too much of a brittle test, to spy/mock/stub the internal working of an object. in those cases, async tests are important. the prime example for me, right now, is WinJS/Promises. but also in API design for my Backbone applications, I often want to ensure my promises are working correctly for loading data through an API in my app instead of directly through a model or collection.</description>
+		<content:encoded><![CDATA[<p>if you can, do that. it&#8217;s not always possible, though. There are times when it&#8217;s far more difficult or creates too much of a brittle test, to spy/mock/stub the internal working of an object. in those cases, async tests are important. the prime example for me, right now, is WinJS/Promises. but also in API design for my Backbone applications, I often want to ensure my promises are working correctly for loading data through an API in my app instead of directly through a model or collection.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2723</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Fri, 24 Aug 2012 17:47:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2723</guid>
+		<description>in what way is this limiting? there&#039;s nothing you can do with runs/waitsFor that can&#039;t be done with a simple &quot;done()&quot; call.</description>
+		<content:encoded><![CDATA[<p>in what way is this limiting? there&#8217;s nothing you can do with runs/waitsFor that can&#8217;t be done with a simple &#8220;done()&#8221; call.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Rodrigo Rosenfeld Rosas</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2722</link>
+		<dc:creator>Rodrigo Rosenfeld Rosas</dc:creator>
+		<pubDate>Fri, 24 Aug 2012 13:37:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2722</guid>
+		<description>I&#039;d like to hear your opinions on my own spec runner: oojspec
+
+
+https://github.com/rosenfeld/oojspec
+
+
+
+Since it supports beforeAll and afterAll and since all examples are run in a specific order and since the &quot;runs&quot; block is guaranteed to be run in any before blocks before the examples start, I don&#039;t think the waitsFor/runs suck. Quite the opposite, I find the option you provide very limiting when you&#039;re writing integration specs specially. This is a limiting factor in Buster.js for example in my opinion, which implements the approach you suggested...</description>
+		<content:encoded><![CDATA[<p>I&#8217;d like to hear your opinions on my own spec runner: oojspec</p>
+<p><a href="https://github.com/rosenfeld/oojspec" rel="nofollow">https://github.com/rosenfeld/oojspec</a></p>
+<p>Since it supports beforeAll and afterAll and since all examples are run in a specific order and since the &#8220;runs&#8221; block is guaranteed to be run in any before blocks before the examples start, I don&#8217;t think the waitsFor/runs suck. Quite the opposite, I find the option you provide very limiting when you&#8217;re writing integration specs specially. This is a limiting factor in Buster.js for example in my opinion, which implements the approach you suggested&#8230;</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Joseph chapman</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2721</link>
+		<dc:creator>Joseph chapman</dc:creator>
+		<pubDate>Fri, 24 Aug 2012 13:08:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2721</guid>
+		<description>Can you not just mock asynchronous calls with andCallFake to return done </description>
+		<content:encoded><![CDATA[<p>Can you not just mock asynchronous calls with andCallFake to return done </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Kevin Dente</title>
+		<link>http://lostechies.com/derickbailey/2012/08/18/jasmine-async-making-asynchronous-testing-with-jasmine-suck-less/#comment-2712</link>
+		<dc:creator>Kevin Dente</dc:creator>
+		<pubDate>Mon, 20 Aug 2012 15:55:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=982#comment-2712</guid>
+		<description>If you didn&#039;t see them, there were a couple of new test runners released recently that give you similar capabilities as the Ruby gem (and more, especially multibrowser testing - cool stuff) 
+Testem - https://github.com/airportyh/testem
+Testacular - http://vojtajina.github.com/testacular/</description>
+		<content:encoded><![CDATA[<p>If you didn&#8217;t see them, there were a couple of new test runners released recently that give you similar capabilities as the Ruby gem (and more, especially multibrowser testing &#8211; cool stuff)<br />
+Testem &#8211; <a href="https://github.com/airportyh/testem" rel="nofollow">https://github.com/airportyh/testem</a><br />
+Testacular &#8211; <a href="http://vojtajina.github.com/testacular/" rel="nofollow">http://vojtajina.github.com/testacular/</a></p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:45:10 -->

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: View Helpers For Underscore Templates</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Mon, 05 Nov 2012 04:46:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Ruben Vreeken</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2644</link>
+		<dc:creator>Ruben Vreeken</dc:creator>
+		<pubDate>Thu, 26 Jul 2012 10:43:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2644</guid>
+		<description>Nevermind, I fixed it.</description>
+		<content:encoded><![CDATA[<p>Nevermind, I fixed it.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Ruben Vreeken</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2640</link>
+		<dc:creator>Ruben Vreeken</dc:creator>
+		<pubDate>Tue, 24 Jul 2012 20:24:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2640</guid>
+		<description>Hello Derrick,
+
+First of all, great work on Backbone.Marrionette plugin! It absolutely rocks and it&#039;s been very interesting watching it develop over the past months (I&#039;ve been following your progress since ~v0.4)
+
+
+These template helpers seem to be very handy, but i&#039;m having a little trouble with them in my latest project.
+
+
+Basically, I&#039;m trying to inject a few error messages into the template alongside the serialized model. The errors are currently stored in a property of the view object, because adding them to the model seems messy to me. 
+So I&#039;ve implemented a templateHelpers method, which is supposed to make them accessible inside the template, but so far I&#039;m just getting errors.
+
+If you would be so kind to take a look at it, you can find my question on stackoverflow:
+http://stackoverflow.com/questions/11638613/backbone-marionette-templatehelpers-access-data-stored-outside-the-model
+</description>
+		<content:encoded><![CDATA[<p>Hello Derrick,</p>
+<p>First of all, great work on Backbone.Marrionette plugin! It absolutely rocks and it&#8217;s been very interesting watching it develop over the past months (I&#8217;ve been following your progress since ~v0.4)</p>
+<p>These template helpers seem to be very handy, but i&#8217;m having a little trouble with them in my latest project.</p>
+<p>Basically, I&#8217;m trying to inject a few error messages into the template alongside the serialized model. The errors are currently stored in a property of the view object, because adding them to the model seems messy to me.<br />
+So I&#8217;ve implemented a templateHelpers method, which is supposed to make them accessible inside the template, but so far I&#8217;m just getting errors.</p>
+<p>If you would be so kind to take a look at it, you can find my question on stackoverflow:<br />
+<a href="http://stackoverflow.com/questions/11638613/backbone-marionette-templatehelpers-access-data-stored-outside-the-model" rel="nofollow">http://stackoverflow.com/questions/11638613/backbone-marionette-templatehelpers-access-data-stored-outside-the-model</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2566</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Tue, 19 Jun 2012 22:51:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2566</guid>
+		<description>Haha -- should have realized the implementation was simply based on the id attribute. Didn&#039;t look because I assumed there was some other piece of internal state. Thanks!</description>
+		<content:encoded><![CDATA[<p>Haha &#8212; should have realized the implementation was simply based on the id attribute. Didn&#8217;t look because I assumed there was some other piece of internal state. Thanks!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2565</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Tue, 19 Jun 2012 22:32:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2565</guid>
+		<description>the isNew() function does exactly this: 
+
+
+ isNew: function() {
+      return this.id == null;
+    },
+
+
+http://backbonejs.org/docs/backbone.html#section-63
+
+
+
+you could easily add that to your helper methods</description>
+		<content:encoded><![CDATA[<p>the isNew() function does exactly this: </p>
+<p> isNew: function() {<br />
+      return this.id == null;<br />
+    },</p>
+<p><a href="http://backbonejs.org/docs/backbone.html#section-63" rel="nofollow">http://backbonejs.org/docs/backbone.html#section-63</a></p>
+<p>you could easily add that to your helper methods</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2564</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Tue, 19 Jun 2012 21:24:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2564</guid>
+		<description>Spoke too soon. I&#039;m looking to expose access to the isNew() method on the underlying model. Is there a way to do this? TemplateHelpers don&#039;t work, because they only have access to the JSON attributes, not methods. 
+
+Or is there a better way to approach templates which need to render new, unsaved objects differently? I realize getTemplate() could be used to render an entirely different template, but that would result in duplication since the majority of the template is common.</description>
+		<content:encoded><![CDATA[<p>Spoke too soon. I&#8217;m looking to expose access to the isNew() method on the underlying model. Is there a way to do this? TemplateHelpers don&#8217;t work, because they only have access to the JSON attributes, not methods. </p>
+<p>Or is there a better way to approach templates which need to render new, unsaved objects differently? I realize getTemplate() could be used to render an entirely different template, but that would result in duplication since the majority of the template is common.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2563</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Tue, 19 Jun 2012 21:06:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2563</guid>
+		<description>Arrived here after tracing through the marionette source to handle exactly this case. Always great to see it already there.</description>
+		<content:encoded><![CDATA[<p>Arrived here after tracing through the marionette source to handle exactly this case. Always great to see it already there.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: S Satya Suman</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2411</link>
+		<dc:creator>S Satya Suman</dc:creator>
+		<pubDate>Tue, 01 May 2012 17:53:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2411</guid>
+		<description>Hi Derick, please follow the link 
+http://stackoverflow.com/questions/10401837/using-functions-in-a-underscore-template</description>
+		<content:encoded><![CDATA[<p>Hi Derick, please follow the link <br />
+<a href="http://stackoverflow.com/questions/10401837/using-functions-in-a-underscore-template" rel="nofollow">http://stackoverflow.com/questions/10401837/using-functions-in-a-underscore-template</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2410</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Tue, 01 May 2012 17:06:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2410</guid>
+		<description>the code is nearly impossible to read in this comment setup. can you post the question on http://stackoverflow.com and reply to this comment with a link to the question?</description>
+		<content:encoded><![CDATA[<p>the code is nearly impossible to read in this comment setup. can you post the question on <a href="http://stackoverflow.com" rel="nofollow">http://stackoverflow.com</a> and reply to this comment with a link to the question?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: S Satya Suman</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2409</link>
+		<dc:creator>S Satya Suman</dc:creator>
+		<pubDate>Tue, 01 May 2012 16:21:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2409</guid>
+		<description>Hi i am extending the view handler exactly the same shown here but i get  
+Uncaught ReferenceError: getProperty is not defined 
+error. I checked the object in the console but the getProperty is defined as a function. I know i am asking a forum question here but had no other choice, pardon my ignorance...
+
+var viewHelper = {    getProperty:function(propertyName, object) {        if(typeof(object) === &quot;undefined&quot;){            object = this[&quot;attributes&quot;];        }        for (i in object) {            if (_.isObject(object[i])) {                var currentObj = object[i];                if(_.has(currentObj, propertyName)){                    return currentObj[propertyName];                }                this.getProperty(propertyName, currentObj);            }        }    }}var CustomerDetailView = Backbone.View.extend({    tagName : &quot;div&quot;,    template: &quot;#customer-detail-view-template&quot;,    initialize: function() {        _.bindAll(this, &#039;render&#039;);        this.model.bind(&#039;change&#039;, this.render);        this.initializeTemplate();    },    initializeTemplate: function() {        this.template = _.template($(this.template).html());    },    render: function() {        var data = this.model.toJSON();        _.extend(data, viewHelper);        console.log(data);        var html = _.template($(this.template), data);        $(this.el).html(html);        return this;    }})
+
+                                     Full Name :                  Country Code :                 street :                 maiden_name :                                         marital_status_code :                 tax_id_number :                 primary_phone :                 customer_number :                         </description>
+		<content:encoded><![CDATA[<p>Hi i am extending the view handler exactly the same shown here but i get  <br />
+Uncaught ReferenceError: getProperty is not defined<br />
+error. I checked the object in the console but the getProperty is defined as a function. I know i am asking a forum question here but had no other choice, pardon my ignorance&#8230;</p>
+<p>var viewHelper = {    getProperty:function(propertyName, object) {        if(typeof(object) === &#8220;undefined&#8221;){            object = this["attributes"];        }        for (i in object) {            if (_.isObject(object[i])) {                var currentObj = object[i];                if(_.has(currentObj, propertyName)){                    return currentObj[propertyName];                }                this.getProperty(propertyName, currentObj);            }        }    }}var CustomerDetailView = Backbone.View.extend({    tagName : &#8220;div&#8221;,    template: &#8220;#customer-detail-view-template&#8221;,    initialize: function() {        _.bindAll(this, &#8216;render&#8217;);        this.model.bind(&#8216;change&#8217;, this.render);        this.initializeTemplate();    },    initializeTemplate: function() {        this.template = _.template($(this.template).html());    },    render: function() {        var data = this.model.toJSON();        _.extend(data, viewHelper);        console.log(data);        var html = _.template($(this.template), data);        $(this.el).html(html);        return this;    }})</p>
+<p>                                     Full Name :                  Country Code :                 street :                 maiden_name :                                         marital_status_code :                 tax_id_number :                 primary_phone :                 customer_number :                         </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: S Satya Suman</title>
+		<link>http://lostechies.com/derickbailey/2012/04/26/view-helpers-for-underscore-templates/#comment-2402</link>
+		<dc:creator>S Satya Suman</dc:creator>
+		<pubDate>Sun, 29 Apr 2012 04:46:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=912#comment-2402</guid>
+		<description>Awesome!!!!! is all i can say</description>
+		<content:encoded><![CDATA[<p>Awesome!!!!! is all i can say</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:23:52 -->

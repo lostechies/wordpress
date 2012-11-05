@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: JavaScript Performance: Pre-Compiling And Caching HTML Templates</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Mon, 05 Nov 2012 04:46:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2422</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Thu, 03 May 2012 03:08:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=872#comment-2422</guid>
+		<description>very nice! :)</description>
+		<content:encoded><![CDATA[<p>very nice! :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2420</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Wed, 02 May 2012 13:38:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=872#comment-2420</guid>
+		<description>Yesterday I updated my code from 0.6.1 to 0.7.4 with the intent to merge in the changes I made to support pre-compiled templates, and then create that pull request. 
+
+What I had done (bit of a hack) was to set a templateFn attribute on my ItemViews and then override ItemView.prototype.render to check for that attribute and if found, bypass the normal template loading/compiling. The trouble with creating a general solution was that you already allow the template attribute to be either a jQuery selector string, or a function that returns a selector string, so I couldn&#039;t just set the actual template there.
+
+Anyway, after looking in more detail at 0.7.4 and thinking through several alternatives for how to cleanly support this, it dawned on me. The signature of ItemView.renderHtml is the same as a compiled underscore template. So, in my AMD modules where I define my views, I can just override renderHtml with my pre-compiled template function.
+
+This lets me cleanly bypass your templateSelector/Renderer/TemplateCache without clobbering it, so if I have some views which I want to load lazily, I still can.
+
+Pretty sweet!
+
+Here&#039;s a gist 
+
+https://gist.github.com/2576421
+
+that shows you what I&#039;m doing. I&#039;m using require.js and the tpl plugin. The tpl plugin extends the text plugin by returning you the compiled template function instead of just the text string. At developlement time it loads the template asynchronously, but with the require.js build optimizer, it minifies and inlines the template functions in your main application js, which I prefer over lazy loading, particularly for the mobile web where the number of requests matter, and I can use the html5 app cache to store everything. Makes for a very responsive app!</description>
+		<content:encoded><![CDATA[<p>Yesterday I updated my code from 0.6.1 to 0.7.4 with the intent to merge in the changes I made to support pre-compiled templates, and then create that pull request. </p>
+<p>What I had done (bit of a hack) was to set a templateFn attribute on my ItemViews and then override ItemView.prototype.render to check for that attribute and if found, bypass the normal template loading/compiling. The trouble with creating a general solution was that you already allow the template attribute to be either a jQuery selector string, or a function that returns a selector string, so I couldn&#8217;t just set the actual template there.</p>
+<p>Anyway, after looking in more detail at 0.7.4 and thinking through several alternatives for how to cleanly support this, it dawned on me. The signature of ItemView.renderHtml is the same as a compiled underscore template. So, in my AMD modules where I define my views, I can just override renderHtml with my pre-compiled template function.</p>
+<p>This lets me cleanly bypass your templateSelector/Renderer/TemplateCache without clobbering it, so if I have some views which I want to load lazily, I still can.</p>
+<p>Pretty sweet!</p>
+<p>Here&#8217;s a gist </p>
+<p><a href="https://gist.github.com/2576421" rel="nofollow">https://gist.github.com/2576421</a></p>
+<p>that shows you what I&#8217;m doing. I&#8217;m using require.js and the tpl plugin. The tpl plugin extends the text plugin by returning you the compiled template function instead of just the text string. At developlement time it loads the template asynchronously, but with the require.js build optimizer, it minifies and inlines the template functions in your main application js, which I prefer over lazy loading, particularly for the mobile web where the number of requests matter, and I can use the html5 app cache to store everything. Makes for a very responsive app!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2400</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Sun, 29 Apr 2012 04:04:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=872#comment-2400</guid>
+		<description>i&#039;d love to see that pull request! i know it could be done a lot better, but i haven&#039;t seen a pull request to do it yet :)</description>
+		<content:encoded><![CDATA[<p>i&#8217;d love to see that pull request! i know it could be done a lot better, but i haven&#8217;t seen a pull request to do it yet :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Ryan Smith</title>
+		<link>http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2398</link>
+		<dc:creator>Ryan Smith</dc:creator>
+		<pubDate>Sat, 28 Apr 2012 22:53:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=872#comment-2398</guid>
+		<description>Even better would be using the r.js optimizer from require.js and the tpl plugin to pre-compile and concatenate and minify them at build time.
+
+I can see some benefit of lazy-loading templates to speed initial page load, but you could also build several template bundles for different parts of the application.
+
+I&#039;ve been using Marionette the last month or so, and extended the template support to handle r.js optimized templates even before you added the enhancements to your TemplateCache. Your enhancements are closer, but still not quite the optimal solution I&#039;d like. I&#039;ll submit a pull request soon to see what you think.</description>
+		<content:encoded><![CDATA[<p>Even better would be using the r.js optimizer from require.js and the tpl plugin to pre-compile and concatenate and minify them at build time.</p>
+<p>I can see some benefit of lazy-loading templates to speed initial page load, but you could also build several template bundles for different parts of the application.</p>
+<p>I&#8217;ve been using Marionette the last month or so, and extended the template support to handle r.js optimized templates even before you added the enhancements to your TemplateCache. Your enhancements are closer, but still not quite the optimal solution I&#8217;d like. I&#8217;ll submit a pull request soon to see what you think.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2340</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Tue, 10 Apr 2012 17:28:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=872#comment-2340</guid>
+		<description>I am using Cassette and Knockout on the client. Cassette uses KO 1.6, not 2.0+. I&#039;ve been trying to figure out if I can update it because if I can, that would be awesome. I&#039;ve opened an issue on it. 
+https://github.com/andrewdavey/cassette/issues/219
+
+If someone better at figuring this out would like to help... that&#039;d be great.</description>
+		<content:encoded><![CDATA[<p>I am using Cassette and Knockout on the client. Cassette uses KO 1.6, not 2.0+. I&#8217;ve been trying to figure out if I can update it because if I can, that would be awesome. I&#8217;ve opened an issue on it. <br />
+<a href="https://github.com/andrewdavey/cassette/issues/219" rel="nofollow">https://github.com/andrewdavey/cassette/issues/219</a></p>
+<p>If someone better at figuring this out would like to help&#8230; that&#8217;d be great.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Prabir</title>
+		<link>http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2339</link>
+		<dc:creator>Prabir</dc:creator>
+		<pubDate>Tue, 10 Apr 2012 13:47:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=872#comment-2339</guid>
+		<description>Another alternative solution would be to precompile templates in server side.
+Using Cassette in asp.net and hogan.js you can precompile the mustache templates. http://getcassette.net/documentation/html-templates/mustache-hoganjs
+http://twitter.github.com/hogan.js/</description>
+		<content:encoded><![CDATA[<p>Another alternative solution would be to precompile templates in server side.<br />
+Using Cassette in asp.net and hogan.js you can precompile the mustache templates. http://getcassette.net/documentation/html-templates/mustache-hoganjs<br />
+<a href="http://twitter.github.com/hogan.js/" rel="nofollow">http://twitter.github.com/hogan.js/</a></p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:52:25 -->

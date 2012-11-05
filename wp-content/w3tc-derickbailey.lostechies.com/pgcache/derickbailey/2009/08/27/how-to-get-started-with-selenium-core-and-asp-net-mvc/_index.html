@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>How To Get Started With Selenium Core And ASP.NET MVC | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='A Conversation On Adopting Kanban' href='http://lostechies.com/derickbailey/2009/08/20/a-conversation-on-adopting-kanban/' />
+<link rel='next' title='WIP Queues: Done vs Ready' href='http://lostechies.com/derickbailey/2009/09/01/wip-queues-done-vs-ready/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2009/08/27/how-to-get-started-with-selenium-core-and-asp-net-mvc/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=77' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-77" class="post-77 post type-post status-publish format-standard hentry category-net category-model-view-controller category-productivity category-quality category-selenium category-test-automation">
+					<h1 class="entry-title">How To Get Started With Selenium Core And ASP.NET MVC</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2009/08/27/how-to-get-started-with-selenium-core-and-asp-net-mvc/" title="7:02 pm" rel="bookmark"><span class="entry-date">August 27, 2009</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>About a year and a half ago, my team and I tried to get some WaitiN UI tests up and running. We got some basic tests working on our local machines after a while, but we were never able to get them to run correctly in our CruiseControl.NET CI server. We spent near 2 months trying to get it to work with nothing but pain and heartache. Eventually we gave up on WatiN and left UI test automation out of our process. </p>
+<p>Recently, my interested in UI test automation has resurfaced. I wanted to find an easier way to get up and running, though, and see if anyone else out in the world had some suggestions on what to use and why. The twitter-verse was kind enough to offer more opinions than available frameworks, as I expected. In the end, some opinions of Selenium combined with previous demo I had seen and some discussion with Scott Bellware helped convinced me to give Selenium a shot. After 30 minutes of Googling for “how to get started with selenium” and finding nothing useful, I pulled up their built in test suite and just started hacking away at it. It only took about 10 minutes to get my first test up and running, from there. </p>
+<p>At this point, I’m still a complete n00b in terms of UI test automation with Selenium, but I at least understand how to get a test suite setup and running. With that in mind, I wanted to share my own quick-start tutorial to try and help others get up and running with Selenium Core as quickly as possible.</p>
+<p>&#160;</p>
+<h3>Step 1: Download Selenium Core</h3>
+<p>Ok, that’s probably a Step 0… but I’ll go head and include it anyways. Head on over to <a href="http://seleniumhq.org/">SeleniumHQ</a> and download the latest Selenium Core. At this time, I’m using v1.0.1. Once you have that package downloaded, you can unzip the contents into a folder that is accessible to your web server. You’ll end up with a folder structure that contains everything you need to get started, and have all of the built in selenium tests available for you to run. </p>
+<p><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_1F6CB2E8.png" width="592" height="318" /> </p>
+<p>You can open the index.html file in a browser and see all of the tests run. This isn’t terribly interesting to me, though, since it only shows the tests running and not how to work with them or write them.</p>
+<p>&#160;</p>
+<h3>Step 2: Setup an ASP.NET MVC Application</h3>
+<p>For this example, we are just using the default project structure for a sample ASP.NET MVC web application. I called my project “MyFirstMVCSeleniumTest”. </p>
+<p>I’m not going to touch any of the forms and database related stuff, though, so you don’t need to worry about putting an actual database behind the site, if you don’t want to. I’m also not going to both with a unit test suite at this point. After all, this is not a production-ready example test. I’m only intending this as a very quick “how to get started with selenium” tutorial. </p>
+<p>Once you’ve got the MVC project setup, you should be able to hit the home page of the app and see this:</p>
+<p><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_7EE57335.png" width="730" height="275" /> </p>
+<p>&#160;</p>
+</p>
+<h3>Step 3: Setup A Test Suite Web Application</h3>
+<p>For this step, we’re going to add another Web Application to our solution in Visual Studio. My test suite was called “MyFirstMVCSeleniumTest.UITestSuite”. </p>
+<p>I like to set up a separate project so that I don’t have to ship my UI test suite with the application if I don’t want to. It also helps me to easily see where my test suite is vs. the actual application. It really doesn’t matter if you add an MVC or WebForms web app for this step – we’re not going to use either of those UI technologies. In fact, once you have the web application for your test suite created, you can delete all of the default files and folders that were created – we don’t need them.</p>
+<p>The end result of having both projects in your visual studio solution should look something like this:</p>
+<p>&#160;<img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_508BED88.png" width="283" height="331" /> </p>
+<p>Notice that the UITestSuite project is empty – no App_Data, no web.config, no nothing… we don’t need any of that because we’re dealing with plain HTML files, not an ASP.NET codebase. The reason I used an ASP.NET application here, was to make management of the files easier in Visual Studio.</p>
+<p>&#160;</p>
+<h3>Step 4: Add Selenium To Your UI Test Suite Project</h3>
+<p>Remember those 7 folders and 6 files that you unpacked at the root level of the selenium distribution, as shown above? The good news is you don’t need most of that. All you need for this basic test suite is the “core” folder. Copy the “core” folder from the location that you unzipped it, into your UITestSuite. For clarity on what this folder actually is, I renamed it to “Selenium”. </p>
+<p>The result looks like this:</p>
+<p><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_7E0D0D4B.png" width="285" height="350" /> </p>
+<p>&#160;</p>
+<h3>Step 5: Setup A Test Suite</h3>
+<p>This was probably the most difficult part of figuring out how to use selenium, for me. I think it took all of 5 minutes to realize that I need to have a “test suite” and a “test” as separate HTML files, so that selenium knows what to run.</p>
+<p>To start with, create a plain old HTML file called “TestSuite.html” in the root of your UITestSuite project. This will contain the location of the actual tests, so that selenium knows what tests to run. The contents of this file are about as simple as you can get: an html table with a link to a test file.</p>
+<p>Here’s the screenshot of the project:</p>
+<p>&#160;<img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_169CAA9C.png" width="285" height="369" /> </p>
+<p>and here’s the contents of the TestSuite html file:</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span>     <span style="color: #0000ff">&lt;</span><span style="color: #800000">title</span><span style="color: #0000ff">&gt;</span>Test Suite<span style="color: #0000ff">&lt;/</span><span style="color: #800000">title</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   6:</span>     <span style="color: #0000ff">&lt;</span><span style="color: #800000">table</span> <span style="color: #ff0000">id</span><span style="color: #0000ff">=&quot;suiteTable&quot;</span> <span style="color: #ff0000">cellpadding</span><span style="color: #0000ff">=&quot;1&quot;</span> <span style="color: #ff0000">cellspacing</span><span style="color: #0000ff">=&quot;1&quot;</span> <span style="color: #ff0000">border</span><span style="color: #0000ff">=&quot;1&quot;</span> <span style="color: #ff0000">class</span><span style="color: #0000ff">=&quot;selenium&quot;</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   7:</span>         <span style="color: #0000ff">&lt;</span><span style="color: #800000">tbody</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   8:</span>             <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   9:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;&lt;</span><span style="color: #800000">b</span><span style="color: #0000ff">&gt;</span>Test Suite<span style="color: #0000ff">&lt;/</span><span style="color: #800000">b</span><span style="color: #0000ff">&gt;&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  10:</span>             <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  11:</span>             <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  12:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;&lt;</span><span style="color: #800000">a</span> <span style="color: #ff0000">href</span><span style="color: #0000ff">=&quot;./SomeTest.html&quot;</span><span style="color: #0000ff">&gt;</span>My First MVC/Selenium Example Test!<span style="color: #0000ff">&lt;/</span><span style="color: #800000">a</span><span style="color: #0000ff">&gt;&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  13:</span>             <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  14:</span>         <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tbody</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  15:</span>     <span style="color: #0000ff">&lt;/</span><span style="color: #800000">table</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  16:</span> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  17:</span> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></div>
+</div>
+<p>&#160;</p>
+<h3>Step 6: Add A Test </h3>
+<p>You can see in the html from the test suite that I have included a file called “SomeTest.html”. This is a test that selenium will execute for us. We can include multiple tests in a test suite – we just need to add new table rows pointing to the other test files. For now, though, let’s just start with the one test. </p>
+<p><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_5D199AA4.png" width="257" height="108" /> </p>
+<p>A test in selenium is not a simple, single command. Rather, it is a series of simple commands that are formatted in three columns of a table. These columns contain the commands and up to two optional parameters. You can read all about the ‘seleniumese’ over at the <a href="http://seleniumhq.org/docs/index.html">documentation</a> site.</p>
+<p>To start with, we’ll create a simple test that does a few things with our ASP.NET MVC website:</p>
+<ol>
+<li>Open the website </li>
+<li>verify that we’re on the ASP.NET MVC site by looking for the “Welcome to ASP.NET MVC!” text </li>
+<li>verify that we have an “About” link </li>
+<li>click on the “About” link and wait for the about page to load </li>
+<li>Verify that we are on the About page by looking for the “About” text </li>
+<li>Verify that we are on the About page by looking for the “About Us” title in the browser window </li>
+</ol>
+<p>The HTML that we need to put into our SomeTest file, is this:</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span>     <span style="color: #0000ff">&lt;</span><span style="color: #800000">title</span><span style="color: #0000ff">&gt;</span>My First MVC/Selenium Example Test!<span style="color: #0000ff">&lt;/</span><span style="color: #800000">title</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">head</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span> <span style="color: #0000ff">&lt;</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   6:</span>     <span style="color: #0000ff">&lt;</span><span style="color: #800000">table</span> <span style="color: #ff0000">cellpadding</span><span style="color: #0000ff">=&quot;1&quot;</span> <span style="color: #ff0000">cellspacing</span><span style="color: #0000ff">=&quot;1&quot;</span> <span style="color: #ff0000">border</span><span style="color: #0000ff">=&quot;1&quot;</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   7:</span>         <span style="color: #0000ff">&lt;</span><span style="color: #800000">tbody</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   8:</span>             <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   9:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span> <span style="color: #ff0000">rowspan</span><span style="color: #0000ff">=&quot;1&quot;</span> <span style="color: #ff0000">colspan</span><span style="color: #0000ff">=&quot;3&quot;</span><span style="color: #0000ff">&gt;</span>This Is My First MVC/Selenium Example Test!<span style="color: #0000ff">&lt;</span><span style="color: #800000">br</span><span style="color: #0000ff">&gt;&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  10:</span>             <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  11:</span>             <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  12:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>open<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  13:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>http://localhost/MyFirstMVCSeleniumTest<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  14:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  15:</span>             <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  16:</span>             <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  17:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>verifyTextPresent<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  18:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>Welcome to ASP.NET MVC!<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  19:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  20:</span>             <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  21:</span>             <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  22:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>verifyElementPresent<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  23:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>link=About<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  24:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  25:</span>             <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  26:</span>             <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  27:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>clickAndWait<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  28:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>link=About<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  29:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  30:</span>             <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  31:</span>             <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  32:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>verifyTextPresent<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  33:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>About<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  34:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  35:</span>             <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  36:</span>             <span style="color: #0000ff">&lt;</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  37:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>assertTitle<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  38:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span>About Us<span style="color: #0000ff">&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  39:</span>                 <span style="color: #0000ff">&lt;</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;&lt;/</span><span style="color: #800000">td</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  40:</span>             <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tr</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  41:</span>         <span style="color: #0000ff">&lt;/</span><span style="color: #800000">tbody</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  42:</span>     <span style="color: #0000ff">&lt;/</span><span style="color: #800000">table</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  43:</span> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">body</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  44:</span> <span style="color: #0000ff">&lt;/</span><span style="color: #800000">html</span><span style="color: #0000ff">&gt;</span></pre>
+<p><!--CRLF--></div>
+</div>
+<p>You should be able to correlate the commands and parameters from this file – represented as table rows and columsn – to the list of steps that I outlined above.</p>
+<p>Now I know that this isn’t the most exciting test in the world. I wasn’t going for exciting. In fact, I wasn’t even going for ‘valuable’ in this test. I only wanted to show how simple it is to get a test like this up and running. </p>
+<p>&#160;</p>
+<h3>Step 7: Run The Test</h3>
+</p>
+</p>
+</p>
+<p>Running a selenium test suite is as easy as hitting a web page.</p>
+<p>First, Make sure you have built the ASP.NET MVC app and that you can open it in your browser. Then we’ll point your browser to the location of the test suite. To tell selenium to run, we want to hit the “Selenium/TestRunner.html” file that is included in the “core” folder that we renamed to “Selenium”. The TestRunner file expects to find a “test” parameter attatched to the end of it, to tell it what test suite to run (if you don’t provide this, it will default to something like Test.html). </p>
+<p>Assuming that we are using localhost IIS for our test suite, the URL would look like this:</p>
+<p><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_67D6F1F9.png" width="664" height="32" /> </p>
+<p>Notice the “../” in the test parameter – this is because the “TestSuite.html” file lives one folder above the TestRunner.html file.</p>
+<p>By pulling up this URL, you should see the following screen:</p>
+<p><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_35731E7A.png" width="811" height="726" /> </p>
+</p>
+<p>To run the test, click the “Play all” ( <img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_26C87295.png" width="24" height="13" /> )button in the Selenium TestRunner section of the windows. You’ll see the bottom half of this page switch over to your MVC app, the page will change from the home page to the About us page, and the tests in the middle top of the screen should all turn green!</p>
+<p><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_4D9688D5.png" width="813" height="729" /> </p>
+<p>If you would like to “see” all of this happen, you can move the slider in the Selenium TestRunner from Fast over to Slow. You can also check the “Highlight elements” box, which will turn the element yellow when it is being worked on. This will let you see what’s really going on, in much more detail.</p>
+<p>&#160;</p>
+<h3>Step 8: Verify The Results</h3>
+</p>
+<p>After running the test suite, we can see some results and metrics shown in the Selenium TestRunner section of the screen. </p>
+<p><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_3AE18F1E.png" width="282" height="231" /> </p>
+<p>It took a total of 5 seconds to run this test suite, i had 1 test run and there were 4 commands that executed and passed.</p>
+<p>Did you notice that the number of “commands” is not the same as the number of steps in our test? This is because some of the steps in the test are actions that do things, not commands that check for things. In our list of 6 steps, step #1 and #4 are actions – open the website, click the about link – and the other 4 steps are the commands that assert or verify state. You can see this distinction in the center column of the test suite, as light green items for the actions and green items for the commands:</p>
+<p><img style="border-right-width: 0px;border-top-width: 0px;border-bottom-width: 0px;border-left-width: 0px" border="0" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_015E7F27.png" width="336" height="160" /> </p>
+</p>
+<h3>Download The Sample Code</h3>
+<p>If you’re interested in downloading the complete solution that I created, here, you can grab it from my GitHub account:</p>
+<blockquote>
+<p><strong>Download </strong><a href="http://github.com/derickbailey/MyFirstMVCSeleniumTest/tree/master"><strong>My First MVC Selenium Test</strong></a></p>
+</blockquote>
+<p>I did this in Visual Studio 2008 with Service Pack 1 and the <a href="http://www.asp.net/mvc/">ASP.NET MVC Framework v1.0</a>.</p>
+<h3>Conclusion</h3>
+<p>Congratulations, you now have a working Selenium Core test suite for your ASP.NET MVC application! There are lot of lessons to learn beyond just these basics, though. We have to consider filling out forms, submitting them, working with ajax callbacks, integrating the test suite into a continuous integration server, and many many other aspects of our testing strategy. </p>
+<p>As a final note &#8211; I have no misunderstandings about the limitations of HTML based testing, like this. The more we tie ourselves to the specific HTML of a page, the more brittle our tests become. I don’t want anyone to think that the examples I have shown here are in any way production-ready. This was only a “get started fast” tutorial, created by a guy who is just now learning how to use Selenium. Please remember that good tests take a lot of effort to plan and maintain over time. There is no shortcut for the planning and maintenance of the tests. It seems, though, that selenium is a great way to simplify the writing of the tests. </p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/net/" title="View all posts in .NET" rel="category tag">.NET</a>, <a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts in Model-View-Controller" rel="category tag">Model-View-Controller</a>, <a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts in Productivity" rel="category tag">Productivity</a>, <a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts in Quality" rel="category tag">Quality</a>, <a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts in Selenium" rel="category tag">Selenium</a>, <a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts in Test Automation" rel="category tag">Test Automation</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2009/08/27/how-to-get-started-with-selenium-core-and-asp-net-mvc/" title="Permalink to How To Get Started With Selenium Core And ASP.NET MVC" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2009/08/27/how-to-get-started-with-selenium-core-and-asp-net-mvc/feed/" title="Comments RSS to How To Get Started With Selenium Core And ASP.NET MVC" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-77 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2009/08/20/a-conversation-on-adopting-kanban/" rel="prev"><span class="meta-nav">&larr;</span> A Conversation On Adopting Kanban</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2009/09/01/wip-queues-done-vs-ready/" rel="next">WIP Queues: Done vs Ready <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-427">
+        <div id="dsq-comment-header-427" class="dsq-comment-header">
+            <cite id="dsq-cite-427">
+                <span id="dsq-author-user-427">Allen P</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-427" class="dsq-comment-body">
+            <div id="dsq-comment-message-427" class="dsq-comment-message"><p>I&#8217;ve been using Selenium for a while, and really like testing UI with it.<br />
+One feature I wanted to point out, is the capability to write the tests in c#.  I&#8217;ve found this a lot easier than writing the tests I html format, and it allows you to more easily test intricate details.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-428">
+        <div id="dsq-comment-header-428" class="dsq-comment-header">
+            <cite id="dsq-cite-428">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-428">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-428" class="dsq-comment-body">
+            <div id="dsq-comment-message-428" class="dsq-comment-message"><p>@Allen P,</p>
+<p>Yeah, I saw the Selenium IDE stuff but haven&#8217;t taken the time to play with it, yet. </p>
+<p>Are you integrating the IDE version with a CI server to do automated test execution? I&#8217;d love to see some info on that.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-429">
+        <div id="dsq-comment-header-429" class="dsq-comment-header">
+            <cite id="dsq-cite-429">
+http://blog.dynamicprogrammer.com                <span id="dsq-author-user-429">Hernan Garcia</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-429" class="dsq-comment-body">
+            <div id="dsq-comment-message-429" class="dsq-comment-message"><p>To integrate selenium with your CI process (or at least run it via CI server) we write our test in c# (using nunit). Some info here:<br />
+<a href="http://seleniumhq.org/docs/appendix_installing_dotnet_driver_client.html" rel="nofollow">http://seleniumhq.org/docs/appendix_installing_dotnet_driver_client.html</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-430">
+        <div id="dsq-comment-header-430" class="dsq-comment-header">
+            <cite id="dsq-cite-430">
+                <span id="dsq-author-user-430">Allen P</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-430" class="dsq-comment-body">
+            <div id="dsq-comment-message-430" class="dsq-comment-message"><p>Derek,</p>
+<p>I have some Java tests (jUnit) using Selenium RC that is being run on the Hudson Continious Integration tool.  I haven&#8217;t tried it with .NET technology, but imagine that you could get it set up on Cruise Control.Net.  </p>
+<p>Here is a brief snippet using c#, <a href="http://seleniumhq.org/docs/05_selenium_rc.html#c" rel="nofollow">http://seleniumhq.org/docs/05_selenium_rc.html#c</a>.  You&#8217;ll want to organize these tests carefully, as it is unlikely that you would want them to run with all of your other unit tests.</p>
+<p>I&#8217;ve also used Selenium as a way of scripting repetitive clicking tasks, but that&#8217;s really not it&#8217;s intended use.</p>
+<p>Thanks for your article, it was a great read.  Hope this helps.</p>
+<p>Allen</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-431">
+        <div id="dsq-comment-header-431" class="dsq-comment-header">
+            <cite id="dsq-cite-431">
+http://www.davetheninja.net                <span id="dsq-author-user-431">Dave the Ninja</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-431" class="dsq-comment-body">
+            <div id="dsq-comment-message-431" class="dsq-comment-message"><p>I had started working on a library for integrating selenium remote and FluentHTML (MvcContrib) for the use of fluent coded selenium tests for my applications.</p>
+<p>I have just moved to Hong Kong and am awaiting my dev boxes arrival so I look to get cracking on the library again.</p>
+<p>Have a look here to see what I have done so far (filed under FluentSelenium)</p>
+<p><a href="http://code.google.com/p/davetheninja/source/browse/#svn" rel="nofollow">http://code.google.com/p/davetheninja/source/browse/#svn</a></p>
+<p>As I said its still in its basic state, but I believe it will save me a lot of time in the future + its type safe and refactorable.</p>
+<p>Let me know what you think</p>
+<p>david at davetheninja dot net</p>
+<p>Dave the Ninja</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-432">
+        <div id="dsq-comment-header-432" class="dsq-comment-header">
+            <cite id="dsq-cite-432">
+http://blog.troytuttle.com                <span id="dsq-author-user-432">Troy Tuttle</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-432" class="dsq-comment-body">
+            <div id="dsq-comment-message-432" class="dsq-comment-message"><p>Very nice.  Thanks for the kick start on UI testing.  </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-433">
+        <div id="dsq-comment-header-433" class="dsq-comment-header">
+            <cite id="dsq-cite-433">
+http://dgoyani.blogspot.com/                <span id="dsq-author-user-433">Dhananjay Goyani</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-433" class="dsq-comment-body">
+            <div id="dsq-comment-message-433" class="dsq-comment-message"><p>Well, I never used the way you mentioned &#8211; writing test actions in HTML file. </p>
+<p>Rather I tie Selenium as a library in nUnit test suite. As a developer it is lot more easier to describe tests in C# than managing the HTML file. The great advantage of creating scripts in C# is that you can leverage all your BL and DL while assertion. It&#8217;s really fun.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-434">
+        <div id="dsq-comment-header-434" class="dsq-comment-header">
+            <cite id="dsq-cite-434">
+http://igorbrejc.net                <span id="dsq-author-user-434">Igor Brejc</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-434" class="dsq-comment-body">
+            <div id="dsq-comment-message-434" class="dsq-comment-message"><p>I agree with Dhananjay, I think very soon you will find that the HTML test code approach is very problematic &#8211; the tests are fragile and difficult to maintain.</p>
+<p>I strongly recommend looking at the Google&#8217;s PageObject pattern: <a href="http://code.google.com/p/webdriver/wiki/PageObjects" rel="nofollow">http://code.google.com/p/webdriver/wiki/PageObjects</a> </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-435">
+        <div id="dsq-comment-header-435" class="dsq-comment-header">
+            <cite id="dsq-cite-435">
+                <span id="dsq-author-user-435">jspringer</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-435" class="dsq-comment-body">
+            <div id="dsq-comment-message-435" class="dsq-comment-message"><p>Awesome example&#8230;great idea for using ASP.NET website as well&#8230;I took a few minutes to create a repeater and a code behind on a page to see if ASPX pages would work, and of course they do, so you could create some reusability snippets&#8230;</p>
+<p>Markup..<br />
+< %@ Page Language="C#" AutoEventWireup="true" CodeBehind="ASPXTest.aspx.cs" Inherits="Rock.Ihr.BusinessSolutions.Crib.UI.Web.Mvc.Tests.ASPXTest" %></p>
+<p><html><br />
+<body></p>
+<table cellpadding="1" cellspacing="1" border="1">
+<tbody>
+<tr>
+<td rowspan="1" colspan="3">This Is My First MVC/Selenium Example Test!</td>
+</tr>
+<p>    <asp:repeater runat="server" ID="rptInstructions"><br />
+        <itemtemplate></p>
+<tr>
+<td>< %#Eval("Action") %></td>
+<td>< %#Eval("WhatToDo") %></td>
+<td>< %#Eval("ThirdColumn") %></td>
+</tr>
+<p>        </itemtemplate><br />
+    </asp:repeater><br />
+        </tbody>
+</table>
+<p></body><br />
+</html></p>
+<p>CodeBehind for ASPX page&#8230;<br />
+    public partial class ASPXTest : System.Web.UI.Page<br />
+    {<br />
+        protected void Page_Load(object sender, EventArgs e)<br />
+        {<br />
+            SetupRepeater();<br />
+        }<br />
+        public class DummyClass { public string Action { get; set; } public string WhatToDo { get; set; } public string ThirdColumn { get; set; } }<br />
+        private void SetupRepeater()<br />
+        {<br />
+            var listOfObjects = new DummyClass[] {<br />
+                new DummyClass {<br />
+                    Action = &#8220;open&#8221;,<br />
+                    WhatToDo = &#8220;http://localhost:55244/crib/admin/&#8221;,<br />
+                    ThirdColumn = &#8220;&#8221;<br />
+                },<br />
+                new DummyClass {<br />
+                    Action = &#8220;verifyTextPresent&#8221;,<br />
+                    WhatToDo = &#8220;You are logged into Crib as an Administrator. The \&#8221;Admin Only Tools\&#8221; in the NavBar are available to you.&#8221;,<br />
+                    ThirdColumn = &#8220;&#8221;<br />
+                },<br />
+                new DummyClass {<br />
+                    Action = &#8220;verifyElementPresent&#8221;,<br />
+                    WhatToDo = &#8220;link=Impersonations&#8221;,<br />
+                    ThirdColumn = &#8220;&#8221;<br />
+                },<br />
+                new DummyClass {<br />
+                    Action = &#8220;clickAndWait&#8221;,<br />
+                    WhatToDo = &#8220;link=Impersonations&#8221;,<br />
+                    ThirdColumn = &#8220;&#8221;<br />
+                },<br />
+                new DummyClass {<br />
+                    Action = &#8220;verifyTextPresent&#8221;,<br />
+                    WhatToDo = &#8220;Change Impersonation&#8221;,<br />
+                    ThirdColumn = &#8220;&#8221;<br />
+                }<br />
+            };</p>
+<p>            rptInstructions.DataSource = listOfObjects;<br />
+            rptInstructions.DataBind();<br />
+        }<br />
+    }</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2009/08/27/how-to-get-started-with-selenium-core-and-asp-net-mvc/';
+    var disqus_identifier = '77 /blogs/derickbailey/archive/2009/08/27/how-to-get-started-with-selenium-core-and-asp-net-mvc.aspx';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "How To Get Started With Selenium Core And ASP.NET MVC";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=77';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2009\/08\/27\/how-to-get-started-with-selenium-core-and-asp-net-mvc\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
+Make your Backbone applications dance with a composite application architecture!
+
+
+The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2012<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:56:32 -->

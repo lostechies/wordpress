@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>Composition Of Responsibility vs Interface Implementation | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Reducing Backbone Routers To Nothing More Than Configuration' href='http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/' />
+<link rel='next' title='HTML5 And Internet Explorer: Modernizr To The Rescue!' href='http://lostechies.com/derickbailey/2012/01/23/html5-and-internet-explorer-modernizr-to-the-rescue/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2012/01/03/composition-of-responsibility-vs-interface-implementation/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=749' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-749" class="post-749 post type-post status-publish format-standard hentry category-net category-c category-mongoid category-philosophy-of-software category-principles-and-patterns category-rails category-ruby">
+					<h1 class="entry-title">Composition Of Responsibility vs Interface Implementation</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2012/01/03/composition-of-responsibility-vs-interface-implementation/" title="9:23 am" rel="bookmark"><span class="entry-date">January 3, 2012</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>This started out a comment in a Google+ stream, which is in response to the brujahahahahalols that have been going around concerning <a href="http://blog.steveklabnik.com/posts/2011-12-30-active-record-considered-harmful">ActiveRecord</a>, <a href="http://lostechies.com/chadmyers/2011/12/30/sweet-sweet-vindication/">FubuMVC</a> and <a href="http://wekeroad.com/2012/01/03/rails-has-turned-me-into-a-cannibalizing-idiot/">Rails</a>. I&#8217;m not defending any of these posts or perspectives. I have my own opinions on the problems and benefits of the various things mentioned… but I wanted to specifically talk about something that Chad mentions: bloated object interfaces, or too many methods on an object.</p>
+<p>It seems to me that claims of object bloat and Separation of Concerns (SoC) / Single Responsibility Principle (SRP) violations for languages like Ruby are often based on the idea of interface-based method dispatch&#8230; the idea that an object must implement an interface in order to have the method available. Now I&#8217;m not saying that all claims of these violations are from this perspective, by any means. I don&#8217;t know if this was Chad&#8217;s perspective or not. I can only assume based on how he worded things. And obviously there are some horrible chunks of code out there, in any language, with any type system or method dispatch system, that really do violate these principles.</p>
+<p>Still… I wonder how much of the bloat or perception of bloat is based on the wrong perspective&#8230;</p>
+<h2>SoC/SRP: 354 Methods On An Object!</h2>
+<p>ActiveRecord might truly be a horrible beast with far too many concerns in one given place. I haven&#8217;t dug into that source code very much. From what I remember of it, it&#8217;s huge and difficult for me to understand (but then, it does a metric-ton-squared of meta-programming, so I guess I&#8217;m not surprised that it&#8217;s hard for me to understand).</p>
+<p>I have dug deep in to Mongoid, though (a MongoDB ODM for ruby), which sits on top of various pieces of ActiveRecord. I&#8217;ve submitted a handful of patches for Mongoid and have spent a fair amount of time studying it to learn how it works. On the surface, it also looks like a ton of bloat and SoC/SRP violations. Run &#8220;puts my_model.methods.sort&#8221;, and you&#8217;ll see 354 methods&#8230; it makes you wonder&#8230;</p>
+<div id="gist-1555221" class="gist">
+    
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'>1.9.2p290 :001 &gt; require <span class="s1">&#39;rubygems&#39;</span></div><div class='line' id='LC2'>1.9.2p290 :002 &gt; require <span class="s1">&#39;mongoid&#39;</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>1.9.2p290 :003 &gt; class Foo</div><div class='line' id='LC5'>1.9.2p290 :004?&gt;   include Mongoid::Document</div><div class='line' id='LC6'>1.9.2p290 :005?&gt; end</div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>1.9.2p290 :006 &gt; <span class="nv">f</span> <span class="o">=</span> Foo.new</div><div class='line' id='LC9'>1.9.2p290 :007 &gt; f.methods.count</div><div class='line' id='LC10'>&nbsp;<span class="o">=</span>&gt; 354 </div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>1.9.2p290 :008 &gt; f.methods.sort</div><div class='line' id='LC13'>&nbsp;<span class="o">=</span>&gt; <span class="o">[</span>:!, :!<span class="o">=</span>, :!~, :&lt;<span class="o">=</span>&gt;, :<span class="o">==</span>, :<span class="o">===</span>, :<span class="o">=</span>~, :<span class="o">[]</span>, :<span class="o">[]=</span>, :__id__, :__send__, :_accessible_attributes, :_accessible_attributes<span class="o">=</span>, :_accessible_attributes?, :_active_authorizer, :_active_authorizer<span class="o">=</span>, :_active_authorizer?, :_children, :_collection, :_collection<span class="o">=</span>, :_create_callbacks, :_create_callbacks<span class="o">=</span>, :_create_callbacks?, :_destroy_callbacks, :_destroy_callbacks<span class="o">=</span>, :_destroy_callbacks?, :_id, :_id<span class="o">=</span>, :_id?, :_id_change, :_id_changed?, :_id_was, :_id_will_change!, :_index, :_index<span class="o">=</span>, :_initialize_callbacks, :_initialize_callbacks<span class="o">=</span>, :_initialize_callbacks?, :_parent, :_parent<span class="o">=</span>, :_protected_attributes, :_protected_attributes<span class="o">=</span>, :_protected_attributes?, :_root, :_save_callbacks, :_save_callbacks<span class="o">=</span>, :_save_callbacks?, :_type, :_type<span class="o">=</span>, :_type?, :_type_change, :_type_changed?, :_type_was, :_type_will_change!, :_update_callbacks, :_update_callbacks<span class="o">=</span>, :_update_callbacks?, :_updates, :_vacant?, :_validate_callbacks, :_validate_callbacks<span class="o">=</span>, :_validate_callbacks?, :_validation_callbacks, :_validation_callbacks<span class="o">=</span>, :_validation_callbacks?, :_validators, :_validators<span class="o">=</span>, :_validators?, :<span class="sb">`</span>, :acts_like?, :add_atomic_pull, :add_to_set, :apply_defaults, :as_document, :as_json, :assign_attributes, :associations, :atomic_delete_modifier, :atomic_insert_modifier, :atomic_path, :atomic_position, :atomic_pulls, :atomic_pushes, :atomic_selector, :atomic_sets, :atomic_unsets, :atomic_updates, :attribute_method?, :attribute_method_matchers, :attribute_method_matchers?, :attribute_present?, :attributes, :attributes<span class="o">=</span>, :becomes, :begin_validate, :bit, :blank?, :breakpoint, :build, :cached, :cached<span class="o">=</span>, :cached?, :capture, :cascade!, :cascades, :cascades<span class="o">=</span>, :cascades?, :changed, :changed?, :changed_attributes, :changes, :class, :class_eval, :clone, :collection, :collection_name, :collection_name<span class="o">=</span>, :create_relation, :cyclic, :cyclic<span class="o">=</span>, :cyclic?, :db, :debugger, :default_scoping, :default_scoping<span class="o">=</span>, :default_scoping?, :defaults, :define_singleton_method, :delayed_atomic_pulls, :delayed_atomic_sets, :delete, :deleted?, :destroy, :destroyed<span class="o">=</span>, :destroyed?, :display, :do_or_do_not, :dup, :duplicable?, :embedded<span class="o">=</span>, :embedded?, :embedded_many?, :embedded_one?, :enable_warnings, :enum_for, :eql?, :equal?, :errors, :exit_validate, :extend, :fields, :flagged_for_destroy<span class="o">=</span>, :flagged_for_destroy?, :freeze, :from_json, :from_xml, :frozen?, :has_attribute?, :hash, :hereditary?, :html_safe?, :id, :id<span class="o">=</span>, :identifier, :identify, :in?, :inc, :include_root_in_json, :include_root_in_json<span class="o">=</span>, :include_root_in_json?, :index_options, :index_options<span class="o">=</span>, :initialize_clone, :initialize_copy, :initialize_dup, :insert, :inspect, :instance_eval, :instance_exec, :instance_of?, :instance_values, :instance_variable_defined?, :instance_variable_get, :instance_variable_names, :instance_variable_set, :instance_variables, :invalid?, :is_a?, :ivar, :key_formatter, :key_formatter<span class="o">=</span>, :kind_of?, :mass_assignment_authorizer, :matches?, :metadata, :metadata<span class="o">=</span>, :method, :method_missing, :methods, :model_name, :move_changes, :nested_attributes, :nested_attributes<span class="o">=</span>, :nested_attributes?, :new?, :new_record, :new_record<span class="o">=</span>, :new_record?, :nil?, :object_id, :parentize, :pending_attribute?, :pending_nested, :pending_relations, :persisted?, :polymorphic, :polymorphic<span class="o">=</span>, :polymorphic?, :pop, :presence, :present?, :previous_changes, :primary_key, :primary_key<span class="o">=</span>, :private_methods, :process, :process_attribute, :process_nested, :process_pending, :process_relations, :protected_methods, :psych_to_yaml, :psych_y, :public_method, :public_methods, :public_send, :pull, :pull_all, :push, :push_all, :pushable?, :quietly, :raw_attributes, :read_attribute, :read_attribute_for_validation, :referenced_many?, :referenced_one?, :reflect_on_all_associations, :reflect_on_association, :relation_exists?, :relations, :relations<span class="o">=</span>, :relations?, :reload, :reload_relations, :remove, :remove_attribute, :remove_change, :remove_child, :remove_inverse_keys, :remove_ivar, :rename, :require_library_or_gem, :require_library_or_gem_with_deprecation, :require_library_or_gem_without_deprecation, :reset__id!, :reset__type!, :reset_persisted_children, :respond_to?, :respond_to_missing?, :respond_to_without_attributes?, :run_callbacks, :run_validations!, :safely, :sanitize_for_mass_assignment, :save, :save!, :scopes, :scopes<span class="o">=</span>, :scopes?, :send, :serializable_hash, :set, :set_relation, :settable?, :setters, :shard_key_fields, :shard_key_fields<span class="o">=</span>, :shard_key_selector, :silence, :silence_stderr, :silence_stream, :silence_warnings, :singleton_class, :singleton_methods, :substitutable, :suppress, :syncable?, :synced, :synced?, :taint, :tainted?, :tap, :timeless, :timestamping?, :to_a, :to_enum, :to_json, :to_key, :to_model, :to_param, :to_query, :to_s, :to_xml, :to_yaml, :to_yaml_properties, :trust, :try, :typed_value_for, :unsafely, :unset, :untaint, :untrust, :untrusted?, :update, :update_attribute, :update_attributes, :update_attributes!, :update_inverse_keys, :updateable?, :upsert, :using_object_ids, :using_object_ids<span class="o">=</span>, :using_object_ids?, :valid?, :validated?, :validates_acceptance_of, :validates_confirmation_of, :validates_exclusion_of, :validates_format_of, :validates_inclusion_of, :validates_length_of, :validates_numericality_of, :validates_presence_of, :validates_size_of, :validates_with, :validation_context, :validation_context<span class="o">=</span>, :with_options, :with_warnings, :write_attribute, :write_attributes, :y, :you_must<span class="o">]</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/1555221/b35ed66d5e423a67ef54f429973f9c7a5ad9683a/mongoid.sh" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/1555221#file_mongoid.sh" style="float:right;margin-right:10px;color:#666">mongoid.sh</a>
+            <a href="https://gist.github.com/1555221">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>But when I look at the source for Mongoid, it&#8217;s one of the most beautiful sets of code that i&#8217;ve seen in Ruby. From my perspective, it has a very clean separation of concerns and follows many other good OO principles to the core (at least until it has to interact w/ activerecord).</p>
+<p>The interface bloat that we see on an object like the one above comes as a result of a few different things: Ruby base objects, and applying the many different Mongoid mixins to a Ruby model, via `include Mongoid::Document`.</p>
+<h2>Perspective: Interface-based vs Message-based</h2>
+<p>The problem might not be ActiveRecord, or Mongoid, or any other &#8220;bloated framework that violates …&#8221; and how the objects that use these frameworks look when we list the interface of a model. The problem might really be that we are listing the interface to the model as if it were the truth of this object&#8217;s implementation. The problem might just be our perspective.</p>
+<p>Does the object above really implement all of these methods? Or has it been composed from many different mixins, with many different hats to wear in different scenarios (Udi Dahan&#8217;s &#8220;role specific interfaces&#8221;, or dependency inversion in general)?</p>
+<h2>Watch Where You&#8217;re Pointing That Perspective!</h2>
+<p>If we look at a message-based method dispatch in the same light and perspective as we do a interface-based dispatch, things look bad. If we look at the message-based, first-class-mixin system as a series of responsibilities, though, with each responsibility having it&#8217;s own protocol definition and each responsibility and protocol captured into an object that can be composed into a larger piece (again, mixins), things look much better.</p>
+<p>Yes, my &#8220;Foo&#8221; object in the above example still has 354 methods on it. But how many of these do you really care about for a given scenario? What role do you expect this object to play, when? Ruby, Rails, ActiveRecord, Mongoid… Python, JavaScript, and the rest of the dynamic ecosystem give us a lot of power and flexbility. (Insert abused &#8220;Uncle Ben&#8221; quote from Spiderman… with great power come blah blah blah blah&#8230;)</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/net/" title="View all posts in .NET" rel="category tag">.NET</a>, <a href="http://lostechies.com/derickbailey/category/c/" title="View all posts in C#" rel="category tag">C#</a>, <a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts in Mongoid" rel="category tag">Mongoid</a>, <a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts in Philosophy of Software" rel="category tag">Philosophy of Software</a>, <a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts in Principles and Patterns" rel="category tag">Principles and Patterns</a>, <a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts in Rails" rel="category tag">Rails</a>, <a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts in Ruby" rel="category tag">Ruby</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2012/01/03/composition-of-responsibility-vs-interface-implementation/" title="Permalink to Composition Of Responsibility vs Interface Implementation" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2012/01/03/composition-of-responsibility-vs-interface-implementation/feed/" title="Comments RSS to Composition Of Responsibility vs Interface Implementation" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-749 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/" rel="prev"><span class="meta-nav">&larr;</span> Reducing Backbone Routers To Nothing More Than Configuration</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2012/01/23/html5-and-internet-explorer-modernizr-to-the-rescue/" rel="next">HTML5 And Internet Explorer: Modernizr To The Rescue! <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-2081">
+        <div id="dsq-comment-header-2081" class="dsq-comment-header">
+            <cite id="dsq-cite-2081">
+http://twitter.com/colin_jack                <span id="dsq-author-user-2081">Colin Jack</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2081" class="dsq-comment-body">
+            <div id="dsq-comment-message-2081" class="dsq-comment-message"><p>&#8220;Yes, my “Foo” object in the above example still has 354 methods on it.<br />
+But how many of these do you really care about for a given scenario?&#8221;</p>
+<p>I get what your saying but when faced with an object with 354 methods don&#8217;t you end up being a bit lost?</p>
+<p>To me thats where the interface segregation principle has value, it makes it much easier (as a developer) to reason about a particular object. Mixins help with that to some extent, its not like you look at your type and see 354 methods, but the roles you mention are pretty implicit when your looking at a particular object (or argument). </p>
+<p>I am looking forward to giving Dart a proper run for its money because to me its optional typing could have real possibilities, for example in the case of your Foo maybe carving off some of that behavior into an interface so that when viewing the code one of the responsibilities is made more concrete.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2082">
+        <div id="dsq-comment-header-2082" class="dsq-comment-header">
+            <cite id="dsq-cite-2082">
+http://mutedsolutions.com                <span id="dsq-author-user-2082">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2082" class="dsq-comment-body">
+            <div id="dsq-comment-message-2082" class="dsq-comment-message"><p>354 methods would be horrible to sift through if i ever looked at that list with intellisense or via command line as shown above. i very rarely do this, though. i use vim and i never use the auto-complete (intellisense-like) feature. </p>
+<p>the only time i ever list the methods on an object are when i think there should be a method with a specific name&#8230; then i&#8217;ll `.methods.grep(/name/)` to find it. other than that, i read documentation for each of the separate responsibilities, and I look at the code to find the responsibilities and the protocols (API) that they implement.</p>
+<p>as for ISP&#8230; i&#8217;m not sure ISP as it was originally defined applies to ruby very well. Jim Weirich discussed SOLID ruby back in 2009: http://confreaks.net/videos/185-rubyconf2009-solid-ruby note in the ISP section (at 40:10), he all but says that ISP doesn&#8217;t apply because a language like ruby requires a far deeper implementation of DIP &#8211; dependency inversion &#8211; via responsibilities and protocols (APIs). he specifically says &#8220;depend upon narrow protocols&#8221;, but in his description of that he talks about dependency inversion. </p>
+<p>with such a deep need for dependency inversion, the ability to easy mix a dependency&#8217;s protocol into an object, and the nature of ruby being message-based dispatch instead of interface-based, I have a hard time seeing classic ISP techniques as a concern. ISP itself still applies&#8230; but i don&#8217;t think it&#8217;s a first-class concern in Ruby. i think it&#8217;s a side effect of other principles, like DIP, SRP, etc. </p>
+<p>when looking at the code and documentation for my Foo object, I should see the API that directly relates to Foo and it should be simple and ISP conforming. When I list the methods for a Foo instance at runtime, though, that&#8217;s a different story. the ability to compose objects at run time means we can&#8217;t assume the same perspective on what these principles look like at runtime.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2083">
+        <div id="dsq-comment-header-2083" class="dsq-comment-header">
+            <cite id="dsq-cite-2083">
+http://twitter.com/colin_jack                <span id="dsq-author-user-2083">Colin Jack</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2083" class="dsq-comment-body">
+            <div id="dsq-comment-message-2083" class="dsq-comment-message"><p>&#8220;When I list the methods for a Foo instance at runtime, though, that&#8217;s a<br />
+different story. the ability to compose objects at run time means we<br />
+can&#8217;t assume the same perspective on what these principles look like at<br />
+runtime.&#8221;</p>
+<p>Definitely, I maybe wasn&#8217;t clear. Lets say I&#8217;m coming to a new method and its taking in an argument. I just want a quick summary of what I can do with that argument. You&#8217;ve answered how to work it out, and I do the same, look at code or documentation (or tests). </p>
+<p>But just compare static to dynamic here. Static if I&#8217;ve used ISP I know exactly what I can do with the argument, the protocol is explicit. Dynamic I obviously can&#8217;t be 100% sure (metaprogramming) but even ignoring that its a bit more implicit. Thats good if I get to a type somehow (say Foo) but less good if Foo has lots of mixins, suddenly I have a lot of choices (lots of responsibilities in one place). I&#8217;ve got a bit of work to find out which of them applies in this context.</p>
+<p>This is not an argument against dynamic languages at all, but I do worry that if you have such a wide interface combined with a dynamic language then you could be making it hard for the maintainers of your code.</p>
+<p>Caveat is this hasn&#8217;t been a big problem for me, but then I haven&#8217;t actually worked on large Ruby codebases and I have found it to be a little bit of an issue when working with some open source Ruby code.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2084">
+        <div id="dsq-comment-header-2084" class="dsq-comment-header">
+            <cite id="dsq-cite-2084">
+                <span id="dsq-author-user-2084">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2084" class="dsq-comment-body">
+            <div id="dsq-comment-message-2084" class="dsq-comment-message"><p>I would personally like to hear more about:</p>
+<p> &#8221;If we look at a message-based method dispatch in the same light and perspective as we do a interface-based dispatch, things look bad. If we look at the message-based, first-class-mixin system as a series of responsibilities, though, with each responsibility having it’s own protocol definition and each responsibility and protocol captured into an object that can be composed into a larger piece (again, mixins), things look much better.&#8221;</p>
+<p>How do you look at and understand highly mixed code, protocol definition at the ruby method / message level &#8211; etc.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-2" id="dsq-comment-2086">
+        <div id="dsq-comment-header-2086" class="dsq-comment-header">
+            <cite id="dsq-cite-2086">
+http://mutedsolutions.com                <span id="dsq-author-user-2086">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2086" class="dsq-comment-body">
+            <div id="dsq-comment-message-2086" class="dsq-comment-message"><p>In general: I read the code and the documentation for the code. </p>
+<p>The problem with heavy use of mixins, from the perspective of what functions are for what responsibility, is generally at runtime. doing a list of methods like i did is a runtime call, for example. but the actual code for Mongoid, and the documentation for it, are not a giant blob like that. </p>
+<p>If you look at Ruby&#8217;s Array class documentation (which is admittedly a poor example because of the number of methods on it) you can see that it includes the Enumerable module. </p>
+<p><a href="http://ruby-doc.org/core-1.9.3/Array.html" rel="nofollow">http://ruby-doc.org/core-1.9.3/Array.html</a></p>
+<p>Assuming I know what an Enumerable is, in Ruby, and have a fair idea of what responsibilities that module encompasses, I now know one of the responsibilities that is mixed in to an Array. </p>
+<p>Knowing that an Enumerable exists allows me to write code to that API/Protocol/whatever you want to call it. When I&#8217;m writing my own code or reading documentation for other people&#8217;s code and I see someone say that a parameter should be an Enumerable, I have knowledge of what that is because the documentation has lead me to it.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2085">
+        <div id="dsq-comment-header-2085" class="dsq-comment-header">
+            <cite id="dsq-cite-2085">
+                <span id="dsq-author-user-2085">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2085" class="dsq-comment-body">
+            <div id="dsq-comment-message-2085" class="dsq-comment-message"><p>links would work too. :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2088">
+        <div id="dsq-comment-header-2088" class="dsq-comment-header">
+            <cite id="dsq-cite-2088">
+http://murrayon.net/                <span id="dsq-author-user-2088">Mike Murray</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2088" class="dsq-comment-body">
+            <div id="dsq-comment-message-2088" class="dsq-comment-message"><p>So I can understand the argument to focus on roles/responsibilities instead of 1-to-1 interfaces. But at what point are you not following SRP by having your objects take on too many roles?</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2089">
+        <div id="dsq-comment-header-2089" class="dsq-comment-header">
+            <cite id="dsq-cite-2089">
+http://mutedsolutions.com                <span id="dsq-author-user-2089">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2089" class="dsq-comment-body">
+            <div id="dsq-comment-message-2089" class="dsq-comment-message"><p>Having an object take on multiple roles is not an SRP violation in itself. It&#8217;s the single Responsibility principles, not single Role principle.</p>
+<p>SRP says a class (or object in non-classy languages) should have one reason to change. We change a class/object by changing it&#8217;s code. If I define 5 or 10 fields for my Foo class in the above example, and use it in a simple forms over data app, there&#8217;s likely no violation of SRP happening because the responsibility of the class is moving data between the form/user input and the database.</p>
+<p>That doesn&#8217;t mean it&#8217;s never an SRP violation, though. SRP is very contextually sensitive. An SRP violation in one code base may be a perfectly fine chunk of code with no SRP violation in another context.</p>
+<p>If I&#8217;m building a highly complex business application with tendencies toward domain modeling and other domain-driven-design concepts, then including Mongoid::Document in a domain model is likely an SRP violation&#8230; not because there are too many methods on the runtime object, though. But because I have chosen to mix the responsibility of data persistence with the responsibility of the domain model.</p>
+<p>For more of my opinion on SRP, see my SOLID article here: http://www.code-magazine.com/article.aspx?quickid=1001061&amp;page=4</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2090">
+        <div id="dsq-comment-header-2090" class="dsq-comment-header">
+            <cite id="dsq-cite-2090">
+http://murrayon.net/                <span id="dsq-author-user-2090">Mike Murray</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2090" class="dsq-comment-body">
+            <div id="dsq-comment-message-2090" class="dsq-comment-message"><p>Yeah, ok&#8230;not much I disagree with there&#8230;</p>
+<p>I guess I still don&#8217;t see the distinction between roles and responsibilities as you are seeing it. Can you elaborate on situations where an object would keep to a single responsibility but take on multiple roles?</p>
+<p>I&#8217;m also sensing you making a separation between the name of the principle and its definition? Are you saying that taking the name of the principle (&#8220;single responsibility&#8221;) too literally is an unnecessary restriction, and that following the definition of the principle (&#8220;one reason to change&#8221;) is sufficient? Isn&#8217;t having more than one role having more than one reason to change?</p>
+<p>Interested to hear your thoughts. Thanks!</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-4" id="dsq-comment-2092">
+        <div id="dsq-comment-header-2092" class="dsq-comment-header">
+            <cite id="dsq-cite-2092">
+http://mutedsolutions.com                <span id="dsq-author-user-2092">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2092" class="dsq-comment-body">
+            <div id="dsq-comment-message-2092" class="dsq-comment-message"><p>names are good because they give us shared meaning. but it&#8217;s the meaning, and subtleties of the meaning that are really important.</p>
+<p>&#8220;responsibility&#8221; is very subjective and too open to the overly analytical left-brain developers that want to over-engineer everything. &#8220;I&#8217;m building a car? Ok, it needs an engine. So I need pistons, crank shaft, oil pan / pump, spark plugs, block, &#8230;.&#8221; vs &#8220;I&#8217;m building a car that accelerates and breaks? Ok. Here&#8217;s the car w/ an accelerate method, and a break method.&#8221;</p>
+<p>&#8220;one reason to change&#8221; forces us to ask questions about the reasons for change&#8230; what are the valid reasons in this case. what are the possible vectors of change that we know of in this application? Am I building a vehicle repair system that needs to track every single part? Or am I building a child&#8217;s entry-level video game with two buttons: accelerate and break?</p>
+<p>&#8230; fwiw: i keep waiting for someone to come along and show me where my opinions and ideas have gone off the deep end. these are my opinions and ideas after having dealt with this stuff for a bunch of years&#8230; but i still don&#8217;t think i&#8217;m an &#8220;expert&#8221; with this stuff by any means. i keep going back to the examples used in the &#8220;Agile principles, patterns and practices&#8221; book, and scratching my head at how they came up with some of those examples and great solutions. :P</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2012/01/03/composition-of-responsibility-vs-interface-implementation/';
+    var disqus_identifier = '749 http://lostechies.com/derickbailey/?p=749';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "Composition Of Responsibility vs Interface Implementation";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=749';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2012\/01\/03\/composition-of-responsibility-vs-interface-implementation\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">TechNet on <a href="http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-2769">Resources For, And How I Learned Backbone.js</a></li><li class="recentcomments">AK on <a href="http://lostechies.com/derickbailey/2010/05/11/vim-grep-find-all-occurrences-of-text-in-your-project/#comment-2768">Vim+Grep: Find All Occurrences Of Text In Your Project</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2010/05/11/vim-grep-find-all-occurrences-of-text-in-your-project/#comment-2767">Vim+Grep: Find All Occurrences Of Text In Your Project</a></li><li class="recentcomments">AK on <a href="http://lostechies.com/derickbailey/2010/05/11/vim-grep-find-all-occurrences-of-text-in-your-project/#comment-2766">Vim+Grep: Find All Occurrences Of Text In Your Project</a></li><li class="recentcomments">Guy on <a href="http://lostechies.com/derickbailey/2012/04/17/managing-a-modal-dialog-with-backbone-and-marionette/#comment-2765">Managing A Modal Dialog With Backbone And Marionette</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
+Make your Backbone applications dance with a composite application architecture!
+
+
+The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2012<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 08:41:13 -->

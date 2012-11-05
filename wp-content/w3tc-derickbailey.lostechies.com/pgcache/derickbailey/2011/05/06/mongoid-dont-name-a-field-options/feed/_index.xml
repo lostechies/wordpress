@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Mongoid: Don&#8217;t Name A Field :options</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/05/06/mongoid-dont-name-a-field-options/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/05/06/mongoid-dont-name-a-field-options/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Fri, 05 Oct 2012 08:53:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Aluminium Kozijnen</title>
+		<link>http://lostechies.com/derickbailey/2011/05/06/mongoid-dont-name-a-field-options/#comment-1510</link>
+		<dc:creator>Aluminium Kozijnen</dc:creator>
+		<pubDate>Mon, 09 May 2011 13:04:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=296#comment-1510</guid>
+		<description>What is that mongoid.. Can anyone suggest me about it.. </description>
+		<content:encoded><![CDATA[<p>What is that mongoid.. Can anyone suggest me about it.. </p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 08:42:38 -->

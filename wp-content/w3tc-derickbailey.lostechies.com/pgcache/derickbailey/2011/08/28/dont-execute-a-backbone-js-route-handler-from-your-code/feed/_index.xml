@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Don&#8217;t Execute A Backbone.js Route Handler From Your Code</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Fri, 05 Oct 2012 08:53:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2496</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Wed, 30 May 2012 21:07:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2496</guid>
+		<description>I think we&#039;re both heading in the same direction and the implementation here is pretty lousy for all the reasons you pointed out. the premise of not using a router to navigate and not using a router as a controller still stand firm, but the implementation and example code in this post is outdated for sure.
+
+I&#039;ve moved well beyond this example code and am doing much more controller-like implementations now, starting with http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/
+
+but I&#039;ve also moved further along with the implementation of modules that i&#039;m using, and having a module-controller per module, which handles all the work flow within a module. i havent&#039; blogged about this yet, but it&#039;s something i&#039;ve been doing in recent apps and i really like the way it works.</description>
+		<content:encoded><![CDATA[<p>I think we&#8217;re both heading in the same direction and the implementation here is pretty lousy for all the reasons you pointed out. the premise of not using a router to navigate and not using a router as a controller still stand firm, but the implementation and example code in this post is outdated for sure.</p>
+<p>I&#8217;ve moved well beyond this example code and am doing much more controller-like implementations now, starting with http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/</p>
+<p>but I&#8217;ve also moved further along with the implementation of modules that i&#8217;m using, and having a module-controller per module, which handles all the work flow within a module. i havent&#8217; blogged about this yet, but it&#8217;s something i&#8217;ve been doing in recent apps and i really like the way it works.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Brendan Delumpa</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2495</link>
+		<dc:creator>Brendan Delumpa</dc:creator>
+		<pubDate>Wed, 30 May 2012 20:58:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2495</guid>
+		<description>Derek, I read this article with great interest several months ago. I agree with your overall approach in your final solution, but disagree with using the router as a secondary controller. I know you&#039;ve cut out a lot of code for brevity, but the way you&#039;ve coupled the model with the router is a bit disconcerting to me. 
+
+In lieu of that, an approach I&#039;ve taken to ensure that I have everything decoupled is to simply have the router trigger an event to which the application controller will respond and update the model(s) which in turn will update the view state. Conversely, a user clicking on a link, does nothing more than either updating its model, or triggering an event that the controller listens to, and it in turn instructs the router to update the URL. In either case, it boils down to a single point of control. 
+
+So at least from my perspective, the router is simply a composite component with its own MVC within the context of an application controller. Its model being the browser history stack, the controller being the public API of the router, and the view being the URL. 
+
+That&#039;s not to say you can&#039;t put all the controller functionality within the router - I&#039;ve seen that done as well, though not very cleanly - but my personal preference would be to relegate controller function to a custom controller object. 
+
+In any case, don&#039;t know if any of this makes sense, but I&#039;ve used this pattern with great success.</description>
+		<content:encoded><![CDATA[<p>Derek, I read this article with great interest several months ago. I agree with your overall approach in your final solution, but disagree with using the router as a secondary controller. I know you&#8217;ve cut out a lot of code for brevity, but the way you&#8217;ve coupled the model with the router is a bit disconcerting to me. </p>
+<p>In lieu of that, an approach I&#8217;ve taken to ensure that I have everything decoupled is to simply have the router trigger an event to which the application controller will respond and update the model(s) which in turn will update the view state. Conversely, a user clicking on a link, does nothing more than either updating its model, or triggering an event that the controller listens to, and it in turn instructs the router to update the URL. In either case, it boils down to a single point of control. </p>
+<p>So at least from my perspective, the router is simply a composite component with its own MVC within the context of an application controller. Its model being the browser history stack, the controller being the public API of the router, and the view being the URL. </p>
+<p>That&#8217;s not to say you can&#8217;t put all the controller functionality within the router &#8211; I&#8217;ve seen that done as well, though not very cleanly &#8211; but my personal preference would be to relegate controller function to a custom controller object. </p>
+<p>In any case, don&#8217;t know if any of this makes sense, but I&#8217;ve used this pattern with great success.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: chandra</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2443</link>
+		<dc:creator>chandra</dc:creator>
+		<pubDate>Fri, 11 May 2012 09:59:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2443</guid>
+		<description>This is good, but what about when you have to wait for an asynchronous response when the user submits a form to change view, the router needs to wait for the async success callback to fire before routing to the new view. I read your articles, and I see they are very helpful. Thanks!</description>
+		<content:encoded><![CDATA[<p>This is good, but what about when you have to wait for an asynchronous response when the user submits a form to change view, the router needs to wait for the async success callback to fire before routing to the new view. I read your articles, and I see they are very helpful. Thanks!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2285</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Sun, 11 Mar 2012 13:30:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2285</guid>
+		<description>although i haven&#039;t tried this, i&#039;m pretty sure you can have in page named a # tags and also use routers. for the in-page tags, you wouldn&#039;t specify a route that matches. if there is no route that matches, the router will ignore it and this should let the browser scroll down to that part of the page</description>
+		<content:encoded><![CDATA[<p>although i haven&#8217;t tried this, i&#8217;m pretty sure you can have in page named a # tags and also use routers. for the in-page tags, you wouldn&#8217;t specify a route that matches. if there is no route that matches, the router will ignore it and this should let the browser scroll down to that part of the page</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2284</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Sun, 11 Mar 2012 13:27:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2284</guid>
+		<description>:P i think Disqus lets you edit comments if you register an account with them.</description>
+		<content:encoded><![CDATA[<p>:P i think Disqus lets you edit comments if you register an account with them.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: DynamicDan</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2283</link>
+		<dc:creator>DynamicDan</dc:creator>
+		<pubDate>Sun, 11 Mar 2012 13:18:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2283</guid>
+		<description>*do = did, Once = One, it&#039;s = its, links = link .... where&#039;s the undo/edit btn (within 2 mins)?</description>
+		<content:encoded><![CDATA[<p>*do = did, Once = One, it&#8217;s = its, links = link &#8230;. where&#8217;s the undo/edit btn (within 2 mins)?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: DynamicDan</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2282</link>
+		<dc:creator>DynamicDan</dc:creator>
+		<pubDate>Sun, 11 Mar 2012 13:15:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2282</guid>
+		<description>Thanks, I do some reading and playing with the app.
+
+Once thing that is still not clear is what happens with the traditional use of &#039;#/in-page-anchor&#039;. We can&#039;t let the browser scroll down the page and update it&#039;s URL on it&#039;s own anymore right? We have to override all links events, pass them to a router, work some magic (eg, JS scroll down the page) and then update the URL.
+
+True?</description>
+		<content:encoded><![CDATA[<p>Thanks, I do some reading and playing with the app.</p>
+<p>Once thing that is still not clear is what happens with the traditional use of &#8216;#/in-page-anchor&#8217;. We can&#8217;t let the browser scroll down the page and update it&#8217;s URL on it&#8217;s own anymore right? We have to override all links events, pass them to a router, work some magic (eg, JS scroll down the page) and then update the URL.</p>
+<p>True?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2280</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Thu, 08 Mar 2012 12:47:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2280</guid>
+		<description>Hi Dan,
+
+I&#039;ve written some additional articles that take this idea and put it in to more practical terms w/ code :) you might them useful:
+
+http://lostechies.com/derickbailey/2012/02/06/3-stages-of-a-backbone-applications-startup/
+
+and
+
+http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/
+
+also check out my BBCloneMail sample app, which is an implementation of all my latest ideas. It might help you see how I&#039;m solving this now:
+
+https://github.com/derickbailey/bbclonemail
+</description>
+		<content:encoded><![CDATA[<p>Hi Dan,</p>
+<p>I&#8217;ve written some additional articles that take this idea and put it in to more practical terms w/ code :) you might them useful:</p>
+<p><a href="http://lostechies.com/derickbailey/2012/02/06/3-stages-of-a-backbone-applications-startup/" rel="nofollow">http://lostechies.com/derickbailey/2012/02/06/3-stages-of-a-backbone-applications-startup/</a></p>
+<p>and</p>
+<p><a href="http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/" rel="nofollow">http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/</a></p>
+<p>also check out my BBCloneMail sample app, which is an implementation of all my latest ideas. It might help you see how I&#8217;m solving this now:</p>
+<p><a href="https://github.com/derickbailey/bbclonemail" rel="nofollow">https://github.com/derickbailey/bbclonemail</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: DynamicDan</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2279</link>
+		<dc:creator>DynamicDan</dc:creator>
+		<pubDate>Thu, 08 Mar 2012 11:06:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2279</guid>
+		<description>I am working on upgrading a flash site using hash URLs to an HTML site using hash URLs and it is turning out to be complicated for similar reasons as documented in this post.
+
+I need to ensure the following scenarios are possible
+- links to pages load the page via AJAX
+- links to in-page named anchors move the user to that anchor while also updating the URL
+- typed in URLs (for pages or in-page anchors) work always (or at least for the first page load)
+
+I have come to the conclusion that the controller needs to handle all URL display and logic routing of any link click event. Here are the JS steps that should be made:
+
+1 - upgrade links to required format (eg, #/stockists/victoria changes to #/stockists/internal/victoria)
+2 - all link clicks are captured for processing (no direct URL manipulation from links)
+3 - URL &#039;view&#039; is updated using .navigate(url, {trigger: false});
+4 - when a user interacts with the address bar (usually a first time load) the event should be acted apon as if a link was clicked (true?)
+
+Point 4 is a little tricky.
+
+Thoughts?
+
+</description>
+		<content:encoded><![CDATA[<p>I am working on upgrading a flash site using hash URLs to an HTML site using hash URLs and it is turning out to be complicated for similar reasons as documented in this post.</p>
+<p>I need to ensure the following scenarios are possible<br />
+- links to pages load the page via AJAX<br />
+- links to in-page named anchors move the user to that anchor while also updating the URL<br />
+- typed in URLs (for pages or in-page anchors) work always (or at least for the first page load)</p>
+<p>I have come to the conclusion that the controller needs to handle all URL display and logic routing of any link click event. Here are the JS steps that should be made:</p>
+<p>1 &#8211; upgrade links to required format (eg, #/stockists/victoria changes to #/stockists/internal/victoria)<br />
+2 &#8211; all link clicks are captured for processing (no direct URL manipulation from links)<br />
+3 &#8211; URL &#8216;view&#8217; is updated using .navigate(url, {trigger: false});<br />
+4 &#8211; when a user interacts with the address bar (usually a first time load) the event should be acted apon as if a link was clicked (true?)</p>
+<p>Point 4 is a little tricky.</p>
+<p>Thoughts?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Kevin Warner</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2067</link>
+		<dc:creator>Kevin Warner</dc:creator>
+		<pubDate>Tue, 27 Dec 2011 17:03:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2067</guid>
+		<description>I actually think a combination of these approaches is a good one. Like you said earlier, there is no perfect approach to solving these challenges. One problem with my approach, as I am finding out, is that it my views that listen to changes to state re-render their entire view. This is not a huge deal, but if the views are complex, it could be more work than is necessary. With the event model, you might run into this as well, but you might be able to have finer control over what happens in your views. Thanks again for the great posts!</description>
+		<content:encoded><![CDATA[<p>I actually think a combination of these approaches is a good one. Like you said earlier, there is no perfect approach to solving these challenges. One problem with my approach, as I am finding out, is that it my views that listen to changes to state re-render their entire view. This is not a huge deal, but if the views are complex, it could be more work than is necessary. With the event model, you might run into this as well, but you might be able to have finer control over what happens in your views. Thanks again for the great posts!</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 08:51:18 -->

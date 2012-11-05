@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Rewriting My &#8216;Guaranteed Callbacks&#8217; Code With jQuery Deferred</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/02/07/rewriting-my-guaranteed-callbacks-code-with-jquery-deferred/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/02/07/rewriting-my-guaranteed-callbacks-code-with-jquery-deferred/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Mon, 05 Nov 2012 04:46:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Andrew McCloud</title>
+		<link>http://lostechies.com/derickbailey/2012/02/07/rewriting-my-guaranteed-callbacks-code-with-jquery-deferred/#comment-2718</link>
+		<dc:creator>Andrew McCloud</dc:creator>
+		<pubDate>Wed, 22 Aug 2012 22:59:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=809#comment-2718</guid>
+		<description>Awesome! Could you share an example using Marionette.Callbacks vs your Collection.onReset? Would you still need to override Collection.fetch to resolve the callback?</description>
+		<content:encoded><![CDATA[<p>Awesome! Could you share an example using Marionette.Callbacks vs your Collection.onReset? Would you still need to override Collection.fetch to resolve the callback?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: j@ubourg</title>
+		<link>http://lostechies.com/derickbailey/2012/02/07/rewriting-my-guaranteed-callbacks-code-with-jquery-deferred/#comment-2202</link>
+		<dc:creator>j@ubourg</dc:creator>
+		<pubDate>Wed, 08 Feb 2012 04:34:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=809#comment-2202</guid>
+		<description>Not at all! Keep creating domain-centric objects with clear, semantic, method names: that way, application code is readable and explicit.
+
+The whole idea behind $.Deferred and $.Callbacks methods being lexically bound is to push people into creating their own utility classes. Just like Addy Osmani demonstrates in his Demistifying $.Callbacks article by creating a pub/sub object ( http://addyosmani.com/blog/jquery-1-7s-callbacks-feature-demystified/ ).</description>
+		<content:encoded><![CDATA[<p>Not at all! Keep creating domain-centric objects with clear, semantic, method names: that way, application code is readable and explicit.</p>
+<p>The whole idea behind $.Deferred and $.Callbacks methods being lexically bound is to push people into creating their own utility classes. Just like Addy Osmani demonstrates in his Demistifying $.Callbacks article by creating a pub/sub object ( <a href="http://addyosmani.com/blog/jquery-1-7s-callbacks-feature-demystified/" rel="nofollow">http://addyosmani.com/blog/jquery-1-7s-callbacks-feature-demystified/</a> ).</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/02/07/rewriting-my-guaranteed-callbacks-code-with-jquery-deferred/#comment-2201</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Wed, 08 Feb 2012 04:02:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=809#comment-2201</guid>
+		<description>nice! ... kind of make the whole point of my object go away, too. i think i like that :)</description>
+		<content:encoded><![CDATA[<p>nice! &#8230; kind of make the whole point of my object go away, too. i think i like that :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: j@ubourg</title>
+		<link>http://lostechies.com/derickbailey/2012/02/07/rewriting-my-guaranteed-callbacks-code-with-jquery-deferred/#comment-2200</link>
+		<dc:creator>j@ubourg</dc:creator>
+		<pubDate>Wed, 08 Feb 2012 03:28:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=809#comment-2200</guid>
+		<description>You can make your Callbacks definition even shorter, knowing that Deferred methods are detachable:
+
+Marionette.Callbacks = function() {    var defer = $.Deferred();    return {        add: defer.done,        run: defer.resolveWith    };};</description>
+		<content:encoded><![CDATA[<p>You can make your Callbacks definition even shorter, knowing that Deferred methods are detachable:</p>
+<p>Marionette.Callbacks = function() {    var defer = $.Deferred();    return {        add: defer.done,        run: defer.resolveWith    };};</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:05:35 -->

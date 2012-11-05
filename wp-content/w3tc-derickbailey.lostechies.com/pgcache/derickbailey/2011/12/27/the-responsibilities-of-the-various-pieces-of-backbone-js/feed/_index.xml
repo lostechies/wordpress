@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: The Responsibilities Of The Various Pieces Of Backbone.js</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Fri, 05 Oct 2012 08:53:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Craig Everett Jones</title>
+		<link>http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/#comment-2685</link>
+		<dc:creator>Craig Everett Jones</dc:creator>
+		<pubDate>Wed, 15 Aug 2012 02:41:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=743#comment-2685</guid>
+		<description>Hey Derick, just wanted to say thanks for your invaluable contributions on the web.  Although your entry is over 9 months old as of this comment, it&#039;s still the most helpful and relevant discussion of backbone I&#039;ve been able to find (as are several of your other entries).  FYI I&#039;m coming from a C# and Java background moving into HTML5+Phonegap for mobile+desktop; played with ember.js, angular.js etc. and decided I had to go back to basics and just build what I need on top of backbone.js.  Thanks for being awesome.</description>
+		<content:encoded><![CDATA[<p>Hey Derick, just wanted to say thanks for your invaluable contributions on the web.  Although your entry is over 9 months old as of this comment, it&#8217;s still the most helpful and relevant discussion of backbone I&#8217;ve been able to find (as are several of your other entries).  FYI I&#8217;m coming from a C# and Java background moving into HTML5+Phonegap for mobile+desktop; played with ember.js, angular.js etc. and decided I had to go back to basics and just build what I need on top of backbone.js.  Thanks for being awesome.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Rick</title>
+		<link>http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/#comment-2227</link>
+		<dc:creator>Rick</dc:creator>
+		<pubDate>Thu, 16 Feb 2012 22:29:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=743#comment-2227</guid>
+		<description>Here&#039;s the key quote from the post: &quot;... a route callback is only one possible entry point into the application’s state.&quot;
+
+For an application only driven by user events and url history it&#039;s fine for the router to be the controller. But when other events may drive the app - say, events pushed from other clients, or a presentation or workflow replayed - separate controllers are essential.</description>
+		<content:encoded><![CDATA[<p>Here&#8217;s the key quote from the post: &#8220;&#8230; a route callback is only one possible entry point into the application’s state.&#8221;</p>
+<p>For an application only driven by user events and url history it&#8217;s fine for the router to be the controller. But when other events may drive the app &#8211; say, events pushed from other clients, or a presentation or workflow replayed &#8211; separate controllers are essential.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Ran Davidovitz</title>
+		<link>http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/#comment-2076</link>
+		<dc:creator>Ran Davidovitz</dc:creator>
+		<pubDate>Fri, 30 Dec 2011 00:12:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=743#comment-2076</guid>
+		<description>Have you had a chance to look at BackBone, i started using it and i was impressed from the reduce of code i had shown
+it was a bit weird, i felt like i am asking my self all the time if i am writing too little code
+
+The main challenge when moving to BackBone is to to make sure you still write some small pieces of code that will orchestrate your views (Although they will mainly be templates)</description>
+		<content:encoded><![CDATA[<p>Have you had a chance to look at BackBone, i started using it and i was impressed from the reduce of code i had shown<br />
+it was a bit weird, i felt like i am asking my self all the time if i am writing too little code</p>
+<p>The main challenge when moving to BackBone is to to make sure you still write some small pieces of code that will orchestrate your views (Although they will mainly be templates)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/#comment-2065</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Tue, 27 Dec 2011 15:43:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=743#comment-2065</guid>
+		<description>It&#039;s an approach that serves me well and helps me keep my code clean and organized. 
+
+It doesn&#039;t always look like this, though. There are times when I&#039;ll have a router callback look up an item in a collection and pass that item somewhere to be used, or do some other small thing like that. 
+
+I&#039;m not sure I can say much else in a stream of comments... maybe another blog post... if you&#039;re ever down in the Austin, TX area, a few beers would be better. :)</description>
+		<content:encoded><![CDATA[<p>It&#8217;s an approach that serves me well and helps me keep my code clean and organized. </p>
+<p>It doesn&#8217;t always look like this, though. There are times when I&#8217;ll have a router callback look up an item in a collection and pass that item somewhere to be used, or do some other small thing like that. </p>
+<p>I&#8217;m not sure I can say much else in a stream of comments&#8230; maybe another blog post&#8230; if you&#8217;re ever down in the Austin, TX area, a few beers would be better. :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Tim Branyen</title>
+		<link>http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/#comment-2064</link>
+		<dc:creator>Tim Branyen</dc:creator>
+		<pubDate>Tue, 27 Dec 2011 15:16:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=743#comment-2064</guid>
+		<description>What you&#039;re saying is spot-on, but I feel your approach is flawed.  Anything you assemble inside a route callback is accessible just like your FooApp.show.  Instead it would be router.show.  It seems you&#039;re introducing new structure when Backbone already provides it.
+
+
+I fail to see how having a larger app would make this any more complicated to deal with.  Since it boils down to functions, and the route callback already is one.</description>
+		<content:encoded><![CDATA[<p>What you&#8217;re saying is spot-on, but I feel your approach is flawed.  Anything you assemble inside a route callback is accessible just like your FooApp.show.  Instead it would be router.show.  It seems you&#8217;re introducing new structure when Backbone already provides it.</p>
+<p>I fail to see how having a larger app would make this any more complicated to deal with.  Since it boils down to functions, and the route callback already is one.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/#comment-2063</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Tue, 27 Dec 2011 15:12:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=743#comment-2063</guid>
+		<description>The fragment is not the actual application state. It&#039;s a representation of the application state. That means we need code that can translate / deserialize / rehydrate from the representation in to the actual state. The process of rehydrating the state from a token is something that should be well encapsulated.
+
+These two examples are functionally the same:
+
+example 1)
+
+Backbone.Router.extend({
+  routes: {
+    &quot;foo&quot;: &quot;showFoo&quot;
+  },
+
+  showFoo: function(){
+    var fooView = new FooView();
+    fooView.render();
+    $(&quot;#someEl&quot;).html(fooView.el);
+  }
+});
+
+example 2)
+
+Backbone.Router.extend({
+  routes: {
+    &quot;foo&quot;: &quot;showFoo&quot;
+  },
+
+  showFoo: function(){
+    FooApp.show();
+  }
+});
+
+FooApp = {
+  show: function(){
+    var fooView = new FooView();
+    fooView.render();
+    $(&quot;#someEl&quot;).html(fooView.el);
+  }
+}
+
+The difference between the two is coupling, cohesion, encapsulation, separation of concerns and the single responsibility principle. If I want to change how the FooApp shows the application&#039;s views and make things work, I shouldn&#039;t have to change the Router. These two concerns should be separated. I should have &quot;one reason to change&quot; for the router and for the FooApp (high level application object). 
+
+For a small demo app, #1 is ok. Anything more than 1 or 2 views, though, and the code becomes unmaintainable quickly. Having to sift through all of the cruft of doing the actual display so that you can see what the router is doing as a whole is a really bad idea in my experience. 
+
+For a larger example of this at play, check out my BBCloneMail sample project: http://github.com/derickbailey/bbclonemail - look at the BBCloneMail.Router.js file.</description>
+		<content:encoded><![CDATA[<p>The fragment is not the actual application state. It&#8217;s a representation of the application state. That means we need code that can translate / deserialize / rehydrate from the representation in to the actual state. The process of rehydrating the state from a token is something that should be well encapsulated.</p>
+<p>These two examples are functionally the same:</p>
+<p>example 1)</p>
+<p>Backbone.Router.extend({<br />
+  routes: {<br />
+    &#8220;foo&#8221;: &#8220;showFoo&#8221;<br />
+  },</p>
+<p>  showFoo: function(){<br />
+    var fooView = new FooView();<br />
+    fooView.render();<br />
+    $(&#8220;#someEl&#8221;).html(fooView.el);<br />
+  }<br />
+});</p>
+<p>example 2)</p>
+<p>Backbone.Router.extend({<br />
+  routes: {<br />
+    &#8220;foo&#8221;: &#8220;showFoo&#8221;<br />
+  },</p>
+<p>  showFoo: function(){<br />
+    FooApp.show();<br />
+  }<br />
+});</p>
+<p>FooApp = {<br />
+  show: function(){<br />
+    var fooView = new FooView();<br />
+    fooView.render();<br />
+    $(&#8220;#someEl&#8221;).html(fooView.el);<br />
+  }<br />
+}</p>
+<p>The difference between the two is coupling, cohesion, encapsulation, separation of concerns and the single responsibility principle. If I want to change how the FooApp shows the application&#8217;s views and make things work, I shouldn&#8217;t have to change the Router. These two concerns should be separated. I should have &#8220;one reason to change&#8221; for the router and for the FooApp (high level application object). </p>
+<p>For a small demo app, #1 is ok. Anything more than 1 or 2 views, though, and the code becomes unmaintainable quickly. Having to sift through all of the cruft of doing the actual display so that you can see what the router is doing as a whole is a really bad idea in my experience. </p>
+<p>For a larger example of this at play, check out my BBCloneMail sample project: <a href="http://github.com/derickbailey/bbclonemail" rel="nofollow">http://github.com/derickbailey/bbclonemail</a> &#8211; look at the BBCloneMail.Router.js file.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Tim Branyen</title>
+		<link>http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/#comment-2062</link>
+		<dc:creator>Tim Branyen</dc:creator>
+		<pubDate>Tue, 27 Dec 2011 14:57:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=743#comment-2062</guid>
+		<description>&quot;But a router should never instantiate a view and manipulate the DOM directly with jQuery or placing the view in to the DOM.&quot;
+Do you mind justifying this? This seems incredibly prescriptive and goes against the ideals of having the fragment serve as application state.</description>
+		<content:encoded><![CDATA[<p>&#8220;But a router should never instantiate a view and manipulate the DOM directly with jQuery or placing the view in to the DOM.&#8221;<br />
+Do you mind justifying this? This seems incredibly prescriptive and goes against the ideals of having the fragment serve as application state.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 08:28:07 -->

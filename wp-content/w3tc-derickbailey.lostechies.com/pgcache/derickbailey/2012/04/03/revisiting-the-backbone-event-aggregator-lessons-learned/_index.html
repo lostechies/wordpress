@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>Revisiting The Backbone Event Aggregator: Lessons Learned | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Proxies And Decorators In JavaScript' href='http://lostechies.com/derickbailey/2012/03/29/proxies-and-decorators-in-javascript/' />
+<link rel='next' title='Composite Views: Tree Structures, Tables, And More' href='http://lostechies.com/derickbailey/2012/04/05/composite-views-tree-structures-tables-and-more/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=863' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-863" class="post-863 post type-post status-publish format-standard hentry category-backbone category-composite-apps category-javascript category-marionette category-messaging">
+					<h1 class="entry-title">Revisiting The Backbone Event Aggregator: Lessons Learned</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/" title="7:14 am" rel="bookmark"><span class="entry-date">April 3, 2012</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>It&#8217;s been a while since I originally talked about using an event aggregator in my Backbone applications. Since then, I&#8217;ve encapsulated the &#8220;vent&#8221; object in my Backbone.Marionette application and I&#8217;ve also realized that a lot of what I wrote originally is steeped in C# thinking. Specifically, the way I&#8217;m passing the vent object in as a dependency everywhere, gets really old and frustrating really fast. I&#8217;ve also read some interesting blog posts in recent months that take the basic idea of what I wrote and run in some interesting directions.</p>
+<h2>Dependency Injection: Bad Idea</h2>
+<p>This is the first of the obvious mistakes that I made my original blog post and implementation. Passing around an event aggregator as a dependency for various objects is just plain painful in JavaScript. There&#8217;s no real value in doing this, either. The few benefits that it may provide are greatly outweighed by the flexibility inherent in JavaScript and our ability to work around the problem that dependency injection solves.</p>
+<p>You can see the obvious problems in the original code, pretty easily:</p>
+<div id="gist-1092444" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">AddEditView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;editMedication&quot;</span><span class="p">);</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">options</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;editMedication&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">editMedication</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">medication</span><span class="p">){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="nx">medication</span><span class="p">;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC11'><span class="p">});</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="nx">MedicationView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click #edit&quot;</span><span class="o">:</span> <span class="s2">&quot;editMedication&quot;</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC17'><br/></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">vent</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">vent</span><span class="p">;</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC21'><br/></div><div class='line' id='LC22'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;editMedication&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">);</span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC25'><span class="p">});</span></div><div class='line' id='LC26'><br/></div><div class='line' id='LC27'><span class="c1">// initialize everything, and tie it all together</span></div><div class='line' id='LC28'><span class="c1">// with the event aggregator object: vent</span></div><div class='line' id='LC29'><br/></div><div class='line' id='LC30'><span class="kd">var</span> <span class="nx">vent</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC31'><br/></div><div class='line' id='LC32'><span class="kd">var</span> <span class="nx">addEditView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AddEditView</span><span class="p">({</span><span class="nx">vent</span><span class="o">:</span> <span class="nx">vent</span><span class="p">});</span></div><div class='line' id='LC33'><br/></div><div class='line' id='LC34'><span class="nx">medicationList</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">med</span><span class="p">){</span></div><div class='line' id='LC35'>&nbsp;&nbsp;<span class="k">new</span> <span class="nx">MedicationView</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="nx">med</span><span class="p">,</span> <span class="nx">vent</span><span class="o">:</span> <span class="nx">vent</span><span class="p">});</span></div><div class='line' id='LC36'><span class="p">});</span></div><div class='line' id='LC37'><br/></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/1092444/c2cf72b0c68768c636af9ffef6693a81493d63db/5-event-aggregation.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/1092444#file_5_event_aggregation.js" style="float:right;margin-right:10px;color:#666">5-event-aggregation.js</a>
+            <a href="https://gist.github.com/1092444">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>Having to pass the `vent` object to every single constructor gets frustrating, fast. It turns in to a real nightmare, though, when you want to trigger an event from an object that is 5 or 6 levels deep in an object graph. If this is the only place that needs to trigger an event, you still have to pass the aggregator around to all of the objects in the graph.</p>
+<h3>Solution: Application Level Aggregator</h3>
+<p>One of the solutions, and the easiest way to start using an event aggregator, is to attach the aggregator to your application&#8217;s namespace object. This becomes the application level event aggregator that any code in your application can attach to and trigger events from.</p>
+<div id="gist-2146930" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span> <span class="o">=</span> <span class="p">{};</span></div><div class='line' id='LC2'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;some:event&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;some event was fired!&quot;</span><span class="p">);</span></div><div class='line' id='LC6'><span class="p">});</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;some:event&quot;</span><span class="p">);</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/2146930/36eaa491aae029e1deae839a6585ac1a8adaed14/1.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/2146930#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
+            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>I&#8217;ve baked this idea directly in to my Marionette.Application object. When you instantiate a Marionette.Application, you get the `vent` attribute with it.</p>
+<div id="gist-2146930" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;some:event&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;some event was fired!&quot;</span><span class="p">);</span></div><div class='line' id='LC5'><span class="p">});</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;some:event&quot;</span><span class="p">);</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/2146930/6797a4a6c49af01c2db9e32702665081c4460fd4/2.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/2146930#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
+            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p><span style="font-size: 14px; font-weight: bold;">Solution: Sub-Module Aggregators</span></p>
+<p>Along with the application level event aggregator, there are times when you&#8217;ll want to have some events tossed around within an application sub-module. When I run in to this need, I don&#8217;t rely on the application&#8217;s `vent`, instead I&#8217;ll build one specific to the module.</p>
+<p>For example, if I were building an application module to manage users and I needed to run some events in between various parts of the user management screens, I might do it like this:</p>
+<div id="gist-2146930" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">UserManagement</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">mgmt</span> <span class="o">=</span> <span class="p">{};</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">mgmtEvents</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">EventAggregator</span><span class="p">();</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">mgmt</span><span class="p">.</span><span class="nx">UserListView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click .user&quot;</span><span class="o">:</span> <span class="s2">&quot;userClicked&quot;</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">userClicked</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="c1">// get the user that was clicked</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">mgmtEvents</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;user:selected&quot;</span><span class="p">,</span> <span class="nx">user</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="nx">mgmt</span><span class="p">.</span><span class="nx">UserDetailView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC22'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC23'><br/></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="nx">mgmtEvents</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;user:selected&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">user</span><span class="p">){</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mgmt</span><span class="p">.</span><span class="nx">UserDetailView</span><span class="p">({</span></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">user</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#detail&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC30'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC31'><br/></div><div class='line' id='LC32'>&nbsp;&nbsp;<span class="k">return</span> <span class="nx">mgmt</span><span class="p">;</span></div><div class='line' id='LC33'><span class="p">})(</span><span class="nx">Backbone</span><span class="p">);</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/2146930/d7ff0b5df8c0463756173fbf948de68d714c9414/3.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/2146930#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
+            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>Note that I&#8217;m also showing the Marionette.EventAggregator object in this example. This object is a tiny bit more than the standard `_.extend({}, Backbone.Events);` that I typically use, but not by much.</p>
+<p>I still have access to the application&#8217;s event aggregator, but now I also have access to an aggregator that is specific to the module. This lets me publish and subscribe to events that are local to the module. Other modules in the application are not able to see this aggregator, so they are not able to publish / subscribe with it. If I need this module to talk to other modules, then, I use the application&#8217;s aggregator.</p>
+<p> </p>
+<h2>Multiple Channels For Events</h2>
+<p>This idea comes from <a href="http://www.michikono.com/2012/01/11/adding-a-centralized-event-dispatcher-on-backbone-js/">a blog post I read a while back</a> that posits the idea of having multiple channels for events. Thinking back to my full-scale enterprise-service-bus development days, I can see the value in this. It allows you to have different subscribers on different channels, letting each of those channels act independently. But there&#8217;s a few problems with this in JavaScript that are solved in much more simple manners.</p>
+<h3>The Idea</h3>
+<p>The basic idea behind &#8220;channels&#8221; is that you can have a single event aggregator or message bus that allows publishers and subscribers to communicate with each other in a segmented manner.</p>
+<p>Think about a CB-radio for a moment. You can turn the CB to various channels. When you talk through your CB on a given channel, other people that are listening to that channel will hear you. If you are listening to a specific channel, you will hear other people that are talking on that channel. If you are talking on Channel 1, though, and someone else is listening on Channel 2, they will not hear you.</p>
+<h3>The Problems</h3>
+<p>The same principle is often applied in service-bus architectures, where standing up multiple services buses for communication is expensive. But this doesn&#8217;t translate too well in to JavaScript &#8211; at least not with simple event aggregators like I&#8217;m using.</p>
+<p>A simple use of an event aggregator that supports channels might look something like this:</p>
+<div id="gist-2146930" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;myChannel&quot;</span><span class="p">,</span> <span class="s2">&quot;myEvent&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="c1">// do stuff here</span></div><div class='line' id='LC3'><span class="p">});</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;myChannel&quot;</span><span class="p">,</span> <span class="s2">&quot;myEvent&quot;</span><span class="p">);</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/2146930/0d34059a77ed93ae3b5d408211648afebc3557a3/4.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/2146930#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
+            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>In this example, we&#8217;re standing up an aggregator and then subscribing to an even on a channel. We then trigger the event on that channel, and our handler is called. This seems easy enough and it shouldn&#8217;t take that much work to implement channels.</p>
+<p>The real problem, though, is that the number of publishers and subscribers using this one event aggregator can quickly get out of hand. Every time we trigger an event through a channel, we have to filter the list of subscribers so that we only publish the event to those listening on the correct channel. This filtering is going to take time. If we have a large number of subscribers in our aggregator, and we only need to send the event to one of them, why should we have to sift through the rest of them?</p>
+<p>There are some optimizations that we can put in place, of course. We could set up the &#8220;on&#8221; method so that when you specify what channel to listen on, it stores your handler in a collection of listeners specifically for that channel. Then when you trigger an event, the channel can be matched to the collection of subscribers more quickly.</p>
+<p>The odd part about this, though, is that we&#8217;re adding a lot of infrastructure and code to support what amounts to multiple event aggregators. We&#8217;re aggregating the aggregators and then using code to split apart the aggregate when we need to publish and subscribe.</p>
+<p>Again, I understand why this seems like a good idea. When you&#8217;re dealing with actual network communications and distributed systems where a service bus is an expensive thing to stand up, you&#8217;ll want to make this kind of optimization. But when you&#8217;re dealing with an in-memory application and event aggregator, you&#8217;re adding overhead that is not needed. The easier option, instead, is to use multiple event aggregators: one per &#8220;channel&#8221;.</p>
+<h3>A Simple Solution: Many Event Aggregators</h3>
+<p>By setting up multiple event aggregators, we can more effectively optimize the memory and performance of our application.</p>
+<div id="gist-2146930" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">myChannel</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC2'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">anotherChannel</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">myChannel</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;someEvent&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC6'><span class="p">});</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">myChannel</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;anotherEvent&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC10'><span class="p">});</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/2146930/f436796eed5572446c5ee909adcc660df0a2cb4c/5.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/2146930#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
+            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>Now when we have many overall subscribers to many event aggregators, publishing to a single event aggregator doesn&#8217;t have to think about which subscribers should and should not be checked, based on channels. When you publish to a specific event aggregator, it checks all of the subscribers that it has registered, and that&#8217;s it.</p>
+<h3>A Built In Solution: Event Namspacing</h3>
+<p>The other option that we see in Backbone events is the use of namespaced events. For example, when you set some data on a Backbone model, you get multiple events:</p>
+<div id="gist-2146930" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;some:namespaced:event&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC3'><span class="p">});</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;some:namespaced:event&quot;</span><span class="p">);</span></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/2146930/c309097dd7e553a9df33860b23188310ed9af846/6.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/2146930#file_6.js" style="float:right;margin-right:10px;color:#666">6.js</a>
+            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>Now this isn&#8217;t truly a namespace in the event handler. There is no parsing of the event name to try and figure out where the : is in the event name, to filter out which subscribers should be receiving the event. This is only a convention that helps us, as developers, see which events belong together.</p>
+<h3>But Events Will Be Filtered Anyways</h3>
+<p>In the end, the event aggregator object does have to filter out the subscribers that don&#8217;t care about the event being triggered. There&#8217;s simply no way around this. When you have an event subscriber, you tell it what specific event to listen to. If a different event is triggered, that subscriber doesn&#8217;t get called. This is filtering by it&#8217;s nature and we can&#8217;t reasonably get away from that. My argument, though, is that we should limit the filtering as much as possible because it&#8217;s more expensive to filter a larger list than it is to split the list out in to multiple, separate objects.</p>
+<p> </p>
+<h2>Semantics: Separating Command Messages From Event Messages</h2>
+<p>This is a topic that <a href="http://lostechies.com/derickbailey/2011/11/18/is-there-an-idiomatic-command-pattern-implementation-for-javascript/">I tried to explore already</a>, but I never found a good answer. I&#8217;m still looking for a good way to separate the idea of a command system from an event system in JavaScript. Both of these are message-based patterns, but I think the semantics of the message types is very important. I don&#8217;t want to see my command messages being passed around with the &#8220;on&#8221; / &#8220;off&#8221; / &#8220;trigger&#8221; method semantics. It doesn&#8217;t fit and it can get confusing which will lead to bugs in a system.</p>
+<h2>Client-Side Messaging Anti-Patterns</h2>
+<p><a href="https://twitter.com/#!/ifandelse">Jim Cowart</a> has <a href="http://freshbrewedcode.com/jimcowart/2012/03/19/client-side-messaging-in-javascript-part-3-anti-patterns/">a great article on client side messaging anti-patterns</a>. I&#8217;m not going to try and re-visit any more items in his list, as this post is getting long enough already. Instead, I would highly recommend reading his post. I&#8217;m not sure I 100% agree with every last detail, but I think this largely comes down to opinions and not real technical merit. I&#8217;m probably close to 99.9% agreement, though.</p>
+<h2>A Better Way Forward</h2>
+<p>Hopefully this post will help clear up some of the confusion and problems that I caused in my original post, while also presenting some ideas that can help you build a better organization around your event aggregator usage. I&#8217;m sure this won&#8217;t be the last set of lessons I learn or opinions I form on the subject, though. As always, I reserve the right to realize the mistakes I&#8217;ve made and change my opinion, without warning.</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts in Backbone" rel="category tag">Backbone</a>, <a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts in Composite Apps" rel="category tag">Composite Apps</a>, <a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts in Javascript" rel="category tag">Javascript</a>, <a href="http://lostechies.com/derickbailey/category/marionette/" title="View all posts in Marionette" rel="category tag">Marionette</a>, <a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts in Messaging" rel="category tag">Messaging</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/" title="Permalink to Revisiting The Backbone Event Aggregator: Lessons Learned" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/feed/" title="Comments RSS to Revisiting The Backbone Event Aggregator: Lessons Learned" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-863 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2012/03/29/proxies-and-decorators-in-javascript/" rel="prev"><span class="meta-nav">&larr;</span> Proxies And Decorators In JavaScript</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2012/04/05/composite-views-tree-structures-tables-and-more/" rel="next">Composite Views: Tree Structures, Tables, And More <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-2330">
+        <div id="dsq-comment-header-2330" class="dsq-comment-header">
+            <cite id="dsq-cite-2330">
+http://www.cornerstonenw.com/                <span id="dsq-author-user-2330">Peter Rust</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2330" class="dsq-comment-body">
+            <div id="dsq-comment-message-2330" class="dsq-comment-message"><p>Thank you Derick &#8212; good post, as always.</p>
+<p>I wholeheartedly agree about multiple event aggregators vs. channels. I&#8217;m not convinced that the memory/performance differences are significant, but the most important thing to me is that it is more explicit. With just a single global event aggregator, any component can publish or subscribe to any channel. With separate aggregators, the dev is forced to pass in the relevant one(s) and consider whether the component *should* have a dependency on the aggregator(s) in question.</p>
+<p>It&#8217;s similar to having every component readily available as a global&#8230; it can be too easy to do things wrong. But if you have to pass in which aggregators a component should have access to, it forces you to think twice &#8212; it&#8217;s becomes less work to do things right (locally, within the component) and more work to do things wrong (break encap, publishing/subscribing to channels it shouldn&#8217;t pub/sub to).</p>
+<p>Regarding command messages, I much prefer to just use method calls wherever possible. Of course there are situations where they are necessary (chain of responsibility pattern, command pattern, etc) &#8212; but so far the only time I&#8217;ve used them was to provide the foundation for undo/redo functionality, which I never got around to implementing.</p>
+<p>Event messages are a good way to decouple components that aren&#8217;t genuinely dependent on each-other, but in the case of commands&#8230; my first inclination is that a command betrays a genuine dependency and that the dependent component should be passed in as such.</p>
+<p>Regarding the annoyance of passing in a dependency everywhere, check out Where Have All The New Operators Gone (<a href="http://misko.hevery.com/2008/09/10/where-have-all-the-new-operators-gone/" rel="nofollow">http://misko.hevery.com/2008/09/10/where-have-all-the-new-operators-gone/</a>), linked to from Google Testing Blog (<a href="http://googletesting.blogspot.com/2008/10/dependency-injection-myth-reference.html" rel="nofollow">http://googletesting.blogspot.com/2008/10/dependency-injection-myth-reference.html</a>).</p>
+<p>I was surprised by the statement &#8220;The few benefits that [dependency injection] may provide are greatly outweighed by the flexibility inherent in JavaScript and our ability to work around the problem that dependency injection solves.&#8221; JS is indeed a very flexible language and at our shop we regularly work around the lack of dependency injection in our codebase (and the corresponding preponderance of globals) with Jasmin Spies on globals. But I see that as a stop-gap survival technique; not the right solution. For new code that I write, I try to make the dependencies clear and to solve the pain of needing to always pass dependencies via factories. As Uncle Bob argues in Clean Code (ch11, http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) it boils down to Separation of Concerns. For a very simple system with few dependencies, it&#8217;s fine to just use the &#8220;new&#8221; operator and pass dependencies where they&#8217;re needed. But as a system grows more complex, as the dependencies grow and things are refactored to be more fine-grained, it makes sense to consolidate the concern of construction &#8212; what dependencies are required and in what order &#8212; into a factory.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2331">
+        <div id="dsq-comment-header-2331" class="dsq-comment-header">
+            <cite id="dsq-cite-2331">
+http://mutedsolutions.com                <span id="dsq-author-user-2331">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2331" class="dsq-comment-body">
+            <div id="dsq-comment-message-2331" class="dsq-comment-message"><p>Hey Peter,</p>
+<p>Good point about memory vs doing what&#8217;s right, etc. I was a little iffy when i wrote that part about memory, but kept it in anyways.</p>
+<p>And thanks for the tremendous info and set of links and resources! There&#8217;s definitely a lot that I need to dig through. </p>
+<p>I generally agree with the statements about DI in JS, though. I find very little need for this, from an architectural / structural level. Of course, I still pass dependencies around for individual method calls, but the idea of an IoC container and some of the other hoops and tricks and jumps we have to go through with a language like C# make me cringe in the JS world. :)</p>
+<p>I definitely like the idea of factories, too. Even if an IoC container is just a mega-meta-uber-factory, keeping simple factories around for specific purposes is usually a good way to keep code clean.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2332">
+        <div id="dsq-comment-header-2332" class="dsq-comment-header">
+            <cite id="dsq-cite-2332">
+                <span id="dsq-author-user-2332">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2332" class="dsq-comment-body">
+            <div id="dsq-comment-message-2332" class="dsq-comment-message"><p>Thanks for this great write-up, Derick!  </p>
+<p>I plan on using the &#8220;global&#8221; aggregator for app-wide events.  I have a different idea for sub-module aggregators, however, since in my case I have a multi-tabbed application where several tabs might be backed by different instances of the same view.  In that case, I can&#8217;t just hang sub-module aggregators off the global namespace, since each instance of the view should have its own aggregator.</p>
+<p>What I&#8217;m thinking of is a kind of &#8220;aggregator dispatcher&#8221;.  Stay with me here&#8230; it&#8217;s not as bad as it sounds. :)</p>
+<p>I&#8217;m thinking of this like someone who&#8217;s driving around lost, and has an emergency.  They don&#8217;t know where they are, and they don&#8217;t know which local police department to call, so they just call 911 and get routed to the proper operator based on their location.  </p>
+<p>Similarly, the component wishing to dispatch an event doesn&#8217;t know which module it belongs to, so it just calls a central dispatcher which looks up the proper &#8220;vent&#8221; based on the view&#8217;s parent (recursively traversed until the view which registered its own vent is matched).</p>
+<p>// 911dispatcher.js</p>
+<p>MyApp.registeredVents = { };</p>
+<p>MyApp.dispatchToProperVent = function(source, event) {</p>
+<p>    if (MyApp.registeredVents[source.attr(id)]){<br />
+        MyApp.registeredVents[source.attr(id)].trigger(event);<br />
+    } else if(source.parent() {<br />
+        MyApp.dispatchToProperVent(source.parent());<br />
+    }</p>
+<p>}</p>
+<p>// some-parent-view.js</p>
+<p>return new Backbone.View.extend({<br />
+     var myVent = Backbone.Marionette.EventAggregator();<br />
+     MyApp.registerVent($el, myVent);<br />
+});</p>
+<p>// some-child-view.js (child view of some-parent-view.js)<br />
+&#8230;<br />
+MyApp.dispatchToProperVent($el, someEvent);</p>
+<p>For very deeply-nested sub-views, I could see this being a performance issue.  But it would allow dynamic views &amp; subviews to share events within dynamic aggregators without having to hang aggregators off a statically-named namespace.</p>
+<p>Am I totally crazy?  Or could this possibly work?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2594">
+        <div id="dsq-comment-header-2594" class="dsq-comment-header">
+            <cite id="dsq-cite-2594">
+http://truffles.me.uk                <span id="dsq-author-user-2594">Tim Ruffles</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2594" class="dsq-comment-body">
+            <div id="dsq-comment-message-2594" class="dsq-comment-message"><p>Have been researching Marionette today and it&#8217;s full of interesting ideas &#8211; thanks for your hard work on it!</p>
+<p>I was interested in how you test your apps based upon it though? Looking at the example code, there seems to be a lot of reliance on globals. </p>
+<p>I&#8217;ve pasted a good example below &#8211; how would you test this?</p>
+<p><a href="https://github.com/derickbailey/bbclonemail/blob/master/public/javascripts/contacts/bbclonemail.contactsapp.js#L34" rel="nofollow">https://github.com/derickbailey/bbclonemail/blob/master/public/javascripts/contacts/bbclonemail.contactsapp.js#L34</a></p>
+<p>You&#8217;re relying on two other modules setting up some global state. I understand using a global for vent as a tradeoff (though I might go for sth like <a href="https://gist.github.com/3047279" rel="nofollow">https://gist.github.com/3047279</a>), but I can&#8217;t see how code like the above avoids the common issues with global vars? Namely, for testing, having to mock all the globals then tear them down, needing quite a large graph of objects (BBCM.CA.CL, rather than passing only the required objects for each test), etc.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2659">
+        <div id="dsq-comment-header-2659" class="dsq-comment-header">
+            <cite id="dsq-cite-2659">
+                <span id="dsq-author-user-2659">Eric Barr</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2659" class="dsq-comment-body">
+            <div id="dsq-comment-message-2659" class="dsq-comment-message"><p>Big fan &#8212; you&#8217;re articles are great.     I&#8217;m in total agreement that an event aggregator (EA) is appropriate for any backbone app beyond &#8216;ToDo&#8217;.</p>
+<p>Looking at the above, however, it seems that the sample goes beyond being an EA.  My gut tells me that  *vent* will become a dumping ground for logic.  Fowler describes a simple EA as &#8220;aggregat[ing] events from multiple objects into itself, passing that same event onto its observers.&#8221;  It&#8217;s the &#8216;passing it on&#8217; or &#8216;listening&#8217; portion that seems to be missing.    </p>
+<p>Wouldn&#8217;t you get the same effect, but without the potential logic clutter, by doing something like the following:<br />
+  *  creating a global model,  one field per &#8216;channel&#8217;<br />
+  *  Observers use backbone&#8217;s built in event infrastructure and subscribe to changes on the applicable attribute.<br />
+ * Objects that want to issue events can simply update the appropriate global model&#8217;s field.  </p>
+<p>This structure would prevent anything but the simplest events from being passed (without additional work).  Although phrased in terms of a global model, the structure is probably 50% serivce bus, and 50% EA.  </p>
+<p>Thoughts?</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2660">
+        <div id="dsq-comment-header-2660" class="dsq-comment-header">
+            <cite id="dsq-cite-2660">
+http://mutedsolutions.com                <span id="dsq-author-user-2660">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2660" class="dsq-comment-body">
+            <div id="dsq-comment-message-2660" class="dsq-comment-message"><p>+1 to everything you&#8217;re saying about what an EA should be doing. Using a model for the EA would only change the implementation and wouldn&#8217;t prevent a developer from doing things they shouldn&#8217;t do, though. </p>
+<p>There are a few problems with using a model for the EA, too. The introduction of unwanted overhead, for example. There&#8217;s far more code that gets run in a model than there is in the basic EA that I use. And the destruction of important semantics, by using a model, is also a very bad idea. Semantics are important, and using a model as an EA will lead to confusion at some point, either when trying to use it or when trying to make it do something it shouldn&#8217;t do.</p>
+<p>Backbone&#8217;s built in event system is what I use for my event aggregators:<br />
+var vent = _.extend({}, Backbone.Events);<br />
+Backbone&#8217;s models use the same Backbone.Events object in the same manner. I&#8217;m just creating an object with less overhead, for a specific purpose, and with a more appropriate name to cut down on semantic confusion for the people reading and writing the code.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2661">
+        <div id="dsq-comment-header-2661" class="dsq-comment-header">
+            <cite id="dsq-cite-2661">
+                <span id="dsq-author-user-2661">Eric Barr</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2661" class="dsq-comment-body">
+            <div id="dsq-comment-message-2661" class="dsq-comment-message"><p>+1 for speed &#8212; what was that a 9 minute response time?  </p>
+<p>Good point about the infrastructure overhead from a model vs. an<br />
+ event.  Although, in most scenarios the volume of events is low enough to make this a minor point. </p>
+<p>The stronger point you make is that semantics are important.   You&#8217;re right that using a global model destroys those semantics &#8212; point taken.    </p>
+<p>SUBSCRIPTIONS<br />
+This brings us back to my point on subscribing to *vent*.  The post suggests that when creating the *vent*, the callback is where you should &#8220;do stuff&#8221;.   I suspect you were thinking about observing/subscribing, but the code snippets push in a different direction.</p>
+<p>If it were me, i would change   &#8220;1.js&#8221; to read more like (attached image) or : <a href="https://gist.github.com/3230913#file_1.js" rel="nofollow">https://gist.github.com/3230913#file_1.js</a></p>
+<p>This way the example shows triggering &amp; observing.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-4" id="dsq-comment-2662">
+        <div id="dsq-comment-header-2662" class="dsq-comment-header">
+            <cite id="dsq-cite-2662">
+http://mutedsolutions.com                <span id="dsq-author-user-2662">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2662" class="dsq-comment-body">
+            <div id="dsq-comment-message-2662" class="dsq-comment-message"><p>right&#8230; we&#8217;re saying the same thing, then. :) </p>
+<p>i just showed a really poor example, because &#8230; well&#8230; it&#8217;s an example :D</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2689">
+        <div id="dsq-comment-header-2689" class="dsq-comment-header">
+            <cite id="dsq-cite-2689">
+http://robert-agthe.de                <span id="dsq-author-user-2689">Robert Agthe</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2689" class="dsq-comment-body">
+            <div id="dsq-comment-message-2689" class="dsq-comment-message"><p>Thanks for your post Derick, very helpful. Speaks something against jQuerys &#8220;custom events&#8221; as an Event Aggregator? As far as i know is it more or less the same thing. And because backbone relies already on jquery, an additional event aggregator should become obsolete.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2691">
+        <div id="dsq-comment-header-2691" class="dsq-comment-header">
+            <cite id="dsq-cite-2691">
+http://mutedsolutions.com                <span id="dsq-author-user-2691">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2691" class="dsq-comment-body">
+            <div id="dsq-comment-message-2691" class="dsq-comment-message"><p>why does backbone provide it&#8217;s own event system if jquery&#8217;s would work good enough? partially because jquery isn&#8217;t a requirement. zepto and others can be used. you can also leave DOM manipulation out of your backbone apps entirely. you just can&#8217;t use Backbone.view. </p>
+<p>also, semantics and separation of concerns are important. i don&#8217;t want my event aggregator to be associated with or require a DOM manipulation library because event aggregation has nothing to do with DOM manipulation.</p>
+<p>but there&#8217;s no reason you can&#8217;t use jquery for your event aggregator in your apps.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2747">
+        <div id="dsq-comment-header-2747" class="dsq-comment-header">
+            <cite id="dsq-cite-2747">
+http://twitter.com/Kerry350                <span id="dsq-author-user-2747">Kerry Gallagher</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2747" class="dsq-comment-body">
+            <div id="dsq-comment-message-2747" class="dsq-comment-message"><p>Great post as always Derick, your posts have really helped me get to grips with Backbone.js over the past couple of months &#8211; thank you, but I was wondering if I could just pick your brains on something&#8230;</p>
+<p>I&#8217;ve been implementing your idea of an event aggregator, but also much of the advice that you give on Zombie views and proper cleanup. How do you deal with cleanup code not accidentally unbinding global event aggregator events for other views? I&#8217;ll elaborate, because I know that makes no sense on it&#8217;s own!</p>
+<p>Say you hit a route, this route passes off to a controller method that instantiates some views, models etc &#8211; standard stuff, lastly the controller calls the app level showView method to swap in the new view, and clean up the old one. So the following happens:</p>
+<p>- When the controller method is called View A is instantiated, View A makes some bindings to the global event aggregator.</p>
+<p>- The last part of the controller method is calling showView, showView calls close on View B, who had some bindings to the same type of event that A is now bound to. So as part of View B&#8217;s cleanup all of it&#8217;s bindings to the global event aggregator are unbound. </p>
+<p>- View B&#8217;s cleanup includes, for example, something like App.vent.off(&#8220;thing:clicked&#8221;, this.openMe);</p>
+<p>- As this is a global, View A&#8217;s newly bound events are also unbound at the same time. </p>
+<p>Should I just not be making event aggregator bindings in my &#8216;top-level&#8217; view? (e.g. View A renders in sub-views, they&#8217;re okay, events unaffected, as they&#8217;re not actually instantiated until render() is called on view A as the last part of showView)</p>
+<p>Or should I be namespacing these events or something similar?</p>
+<p>Sorry that took so long to explain, and many thanks if you can offer any help :)</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2762">
+        <div id="dsq-comment-header-2762" class="dsq-comment-header">
+            <cite id="dsq-cite-2762">
+http://mutedsolutions.com                <span id="dsq-author-user-2762">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2762" class="dsq-comment-body">
+            <div id="dsq-comment-message-2762" class="dsq-comment-message"><p>Hi Kerry &#8211; I&#8217;m sorry I haven&#8217;t responded until now. It&#8217;s been a rather busy few weeks for me. </p>
+<p>For handling global events with an event binder, and needing to clean up just the ones that were for the specific part of the app that I&#8217;m in, I just create my own instance of an event binder and add only the events that I need at that point in time. Then I can &#8220;unbindAll&#8221; on that event binder instance when I need to, and not worry about destroying all of the app level events.</p>
+<p>you can see an example of this in the wiki here: <a href="https://github.com/marionettejs/backbone.marionette/wiki/When-to-use-the-EventBinder" rel="nofollow">https://github.com/marionettejs/backbone.marionette/wiki/When-to-use-the-EventBinder</a></p>
+<p>Hope that helps. If you have any more questions about this, it would be best to ask on the google group for marionette: <a href="https://groups.google.com/forum/#!forum/backbone-marionette" rel="nofollow">https://groups.google.com/forum/#!forum/backbone-marionette</a></p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2772">
+        <div id="dsq-comment-header-2772" class="dsq-comment-header">
+            <cite id="dsq-cite-2772">
+http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry Gallagher</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2772" class="dsq-comment-body">
+            <div id="dsq-comment-message-2772" class="dsq-comment-message"><p>Thanks Derick, no need to apologise at all :)</p>
+<p>That makes perfect sense &#8211; I realise now at the time I posted the comment I was also unaware of the third argument in .off, the context, which also answers my own question. Backbone.js has really made me learn about things like events (which you almost take for granted when doing JS development), object lifespan etc in depth &#8211; which can only be a good thing, but also kinda scary when things you thought you knew&#8230;you really don&#8217;t. But, posts like yours have really helped me along the way, so thank you :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/';
+    var disqus_identifier = '863 http://lostechies.com/derickbailey/?p=863';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "Revisiting The Backbone Event Aggregator: Lessons Learned";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=863';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2012\/04\/03\/revisiting-the-backbone-event-aggregator-lessons-learned\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
+Make your Backbone applications dance with a composite application architecture!
+
+
+The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2012<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:46:07 -->

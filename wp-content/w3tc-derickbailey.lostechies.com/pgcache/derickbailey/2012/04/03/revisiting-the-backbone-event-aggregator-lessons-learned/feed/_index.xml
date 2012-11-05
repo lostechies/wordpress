@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Revisiting The Backbone Event Aggregator: Lessons Learned</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Mon, 05 Nov 2012 04:46:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Kerry Gallagher</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2772</link>
+		<dc:creator>Kerry Gallagher</dc:creator>
+		<pubDate>Mon, 08 Oct 2012 13:22:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2772</guid>
+		<description>Thanks Derick, no need to apologise at all :)
+
+
+That makes perfect sense - I realise now at the time I posted the comment I was also unaware of the third argument in .off, the context, which also answers my own question. Backbone.js has really made me learn about things like events (which you almost take for granted when doing JS development), object lifespan etc in depth - which can only be a good thing, but also kinda scary when things you thought you knew...you really don&#039;t. But, posts like yours have really helped me along the way, so thank you :)</description>
+		<content:encoded><![CDATA[<p>Thanks Derick, no need to apologise at all :)</p>
+<p>That makes perfect sense &#8211; I realise now at the time I posted the comment I was also unaware of the third argument in .off, the context, which also answers my own question. Backbone.js has really made me learn about things like events (which you almost take for granted when doing JS development), object lifespan etc in depth &#8211; which can only be a good thing, but also kinda scary when things you thought you knew&#8230;you really don&#8217;t. But, posts like yours have really helped me along the way, so thank you :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2762</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Sat, 29 Sep 2012 01:40:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2762</guid>
+		<description>Hi Kerry - I&#039;m sorry I haven&#039;t responded until now. It&#039;s been a rather busy few weeks for me. 
+
+
+For handling global events with an event binder, and needing to clean up just the ones that were for the specific part of the app that I&#039;m in, I just create my own instance of an event binder and add only the events that I need at that point in time. Then I can &quot;unbindAll&quot; on that event binder instance when I need to, and not worry about destroying all of the app level events.
+
+
+you can see an example of this in the wiki here: https://github.com/marionettejs/backbone.marionette/wiki/When-to-use-the-EventBinder
+
+
+Hope that helps. If you have any more questions about this, it would be best to ask on the google group for marionette: https://groups.google.com/forum/#!forum/backbone-marionette</description>
+		<content:encoded><![CDATA[<p>Hi Kerry &#8211; I&#8217;m sorry I haven&#8217;t responded until now. It&#8217;s been a rather busy few weeks for me. </p>
+<p>For handling global events with an event binder, and needing to clean up just the ones that were for the specific part of the app that I&#8217;m in, I just create my own instance of an event binder and add only the events that I need at that point in time. Then I can &#8220;unbindAll&#8221; on that event binder instance when I need to, and not worry about destroying all of the app level events.</p>
+<p>you can see an example of this in the wiki here: <a href="https://github.com/marionettejs/backbone.marionette/wiki/When-to-use-the-EventBinder" rel="nofollow">https://github.com/marionettejs/backbone.marionette/wiki/When-to-use-the-EventBinder</a></p>
+<p>Hope that helps. If you have any more questions about this, it would be best to ask on the google group for marionette: <a href="https://groups.google.com/forum/#!forum/backbone-marionette" rel="nofollow">https://groups.google.com/forum/#!forum/backbone-marionette</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Kerry Gallagher</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2747</link>
+		<dc:creator>Kerry Gallagher</dc:creator>
+		<pubDate>Thu, 13 Sep 2012 16:41:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2747</guid>
+		<description>Great post as always Derick, your posts have really helped me get to grips with Backbone.js over the past couple of months - thank you, but I was wondering if I could just pick your brains on something...
+
+
+I&#039;ve been implementing your idea of an event aggregator, but also much of the advice that you give on Zombie views and proper cleanup. How do you deal with cleanup code not accidentally unbinding global event aggregator events for other views? I&#039;ll elaborate, because I know that makes no sense on it&#039;s own!
+
+Say you hit a route, this route passes off to a controller method that instantiates some views, models etc - standard stuff, lastly the controller calls the app level showView method to swap in the new view, and clean up the old one. So the following happens:
+
+- When the controller method is called View A is instantiated, View A makes some bindings to the global event aggregator.
+
+- The last part of the controller method is calling showView, showView calls close on View B, who had some bindings to the same type of event that A is now bound to. So as part of View B&#039;s cleanup all of it&#039;s bindings to the global event aggregator are unbound. 
+
+
+- View B&#039;s cleanup includes, for example, something like App.vent.off(&quot;thing:clicked&quot;, this.openMe);
+
+
+- As this is a global, View A&#039;s newly bound events are also unbound at the same time. 
+
+Should I just not be making event aggregator bindings in my &#039;top-level&#039; view? (e.g. View A renders in sub-views, they&#039;re okay, events unaffected, as they&#039;re not actually instantiated until render() is called on view A as the last part of showView)
+
+Or should I be namespacing these events or something similar?
+
+
+Sorry that took so long to explain, and many thanks if you can offer any help :)</description>
+		<content:encoded><![CDATA[<p>Great post as always Derick, your posts have really helped me get to grips with Backbone.js over the past couple of months &#8211; thank you, but I was wondering if I could just pick your brains on something&#8230;</p>
+<p>I&#8217;ve been implementing your idea of an event aggregator, but also much of the advice that you give on Zombie views and proper cleanup. How do you deal with cleanup code not accidentally unbinding global event aggregator events for other views? I&#8217;ll elaborate, because I know that makes no sense on it&#8217;s own!</p>
+<p>Say you hit a route, this route passes off to a controller method that instantiates some views, models etc &#8211; standard stuff, lastly the controller calls the app level showView method to swap in the new view, and clean up the old one. So the following happens:</p>
+<p>- When the controller method is called View A is instantiated, View A makes some bindings to the global event aggregator.</p>
+<p>- The last part of the controller method is calling showView, showView calls close on View B, who had some bindings to the same type of event that A is now bound to. So as part of View B&#8217;s cleanup all of it&#8217;s bindings to the global event aggregator are unbound. </p>
+<p>- View B&#8217;s cleanup includes, for example, something like App.vent.off(&#8220;thing:clicked&#8221;, this.openMe);</p>
+<p>- As this is a global, View A&#8217;s newly bound events are also unbound at the same time. </p>
+<p>Should I just not be making event aggregator bindings in my &#8216;top-level&#8217; view? (e.g. View A renders in sub-views, they&#8217;re okay, events unaffected, as they&#8217;re not actually instantiated until render() is called on view A as the last part of showView)</p>
+<p>Or should I be namespacing these events or something similar?</p>
+<p>Sorry that took so long to explain, and many thanks if you can offer any help :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2691</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Thu, 16 Aug 2012 15:29:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2691</guid>
+		<description>why does backbone provide it&#039;s own event system if jquery&#039;s would work good enough? partially because jquery isn&#039;t a requirement. zepto and others can be used. you can also leave DOM manipulation out of your backbone apps entirely. you just can&#039;t use Backbone.view. 
+
+
+also, semantics and separation of concerns are important. i don&#039;t want my event aggregator to be associated with or require a DOM manipulation library because event aggregation has nothing to do with DOM manipulation.
+
+
+but there&#039;s no reason you can&#039;t use jquery for your event aggregator in your apps.</description>
+		<content:encoded><![CDATA[<p>why does backbone provide it&#8217;s own event system if jquery&#8217;s would work good enough? partially because jquery isn&#8217;t a requirement. zepto and others can be used. you can also leave DOM manipulation out of your backbone apps entirely. you just can&#8217;t use Backbone.view. </p>
+<p>also, semantics and separation of concerns are important. i don&#8217;t want my event aggregator to be associated with or require a DOM manipulation library because event aggregation has nothing to do with DOM manipulation.</p>
+<p>but there&#8217;s no reason you can&#8217;t use jquery for your event aggregator in your apps.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Robert Agthe</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2689</link>
+		<dc:creator>Robert Agthe</dc:creator>
+		<pubDate>Thu, 16 Aug 2012 12:29:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2689</guid>
+		<description>Thanks for your post Derick, very helpful. Speaks something against jQuerys &quot;custom events&quot; as an Event Aggregator? As far as i know is it more or less the same thing. And because backbone relies already on jquery, an additional event aggregator should become obsolete.</description>
+		<content:encoded><![CDATA[<p>Thanks for your post Derick, very helpful. Speaks something against jQuerys &#8220;custom events&#8221; as an Event Aggregator? As far as i know is it more or less the same thing. And because backbone relies already on jquery, an additional event aggregator should become obsolete.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2662</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Wed, 01 Aug 2012 22:16:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2662</guid>
+		<description>right... we&#039;re saying the same thing, then. :) 
+
+
+i just showed a really poor example, because ... well... it&#039;s an example :D</description>
+		<content:encoded><![CDATA[<p>right&#8230; we&#8217;re saying the same thing, then. :) </p>
+<p>i just showed a really poor example, because &#8230; well&#8230; it&#8217;s an example :D</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Eric Barr</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2661</link>
+		<dc:creator>Eric Barr</dc:creator>
+		<pubDate>Wed, 01 Aug 2012 21:43:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2661</guid>
+		<description>+1 for speed -- what was that a 9 minute response time?  
+
+Good point about the infrastructure overhead from a model vs. an
+ event.  Although, in most scenarios the volume of events is low enough to make this a minor point. 
+
+The stronger point you make is that semantics are important.   You&#039;re right that using a global model destroys those semantics -- point taken.    
+
+SUBSCRIPTIONS
+This brings us back to my point on subscribing to *vent*.  The post suggests that when creating the *vent*, the callback is where you should &quot;do stuff&quot;.   I suspect you were thinking about observing/subscribing, but the code snippets push in a different direction.
+
+If it were me, i would change   &quot;1.js&quot; to read more like (attached image) or : https://gist.github.com/3230913#file_1.js
+
+This way the example shows triggering &amp; observing.
+
+
+
+</description>
+		<content:encoded><![CDATA[<p>+1 for speed &#8212; what was that a 9 minute response time?  </p>
+<p>Good point about the infrastructure overhead from a model vs. an<br />
+ event.  Although, in most scenarios the volume of events is low enough to make this a minor point. </p>
+<p>The stronger point you make is that semantics are important.   You&#8217;re right that using a global model destroys those semantics &#8212; point taken.    </p>
+<p>SUBSCRIPTIONS<br />
+This brings us back to my point on subscribing to *vent*.  The post suggests that when creating the *vent*, the callback is where you should &#8220;do stuff&#8221;.   I suspect you were thinking about observing/subscribing, but the code snippets push in a different direction.</p>
+<p>If it were me, i would change   &#8220;1.js&#8221; to read more like (attached image) or : <a href="https://gist.github.com/3230913#file_1.js" rel="nofollow">https://gist.github.com/3230913#file_1.js</a></p>
+<p>This way the example shows triggering &amp; observing.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2660</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Wed, 01 Aug 2012 20:35:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2660</guid>
+		<description>+1 to everything you&#039;re saying about what an EA should be doing. Using a model for the EA would only change the implementation and wouldn&#039;t prevent a developer from doing things they shouldn&#039;t do, though. 
+
+
+There are a few problems with using a model for the EA, too. The introduction of unwanted overhead, for example. There&#039;s far more code that gets run in a model than there is in the basic EA that I use. And the destruction of important semantics, by using a model, is also a very bad idea. Semantics are important, and using a model as an EA will lead to confusion at some point, either when trying to use it or when trying to make it do something it shouldn&#039;t do.
+
+
+Backbone&#039;s built in event system is what I use for my event aggregators:
+var vent = _.extend({}, Backbone.Events);
+Backbone&#039;s models use the same Backbone.Events object in the same manner. I&#039;m just creating an object with less overhead, for a specific purpose, and with a more appropriate name to cut down on semantic confusion for the people reading and writing the code.</description>
+		<content:encoded><![CDATA[<p>+1 to everything you&#8217;re saying about what an EA should be doing. Using a model for the EA would only change the implementation and wouldn&#8217;t prevent a developer from doing things they shouldn&#8217;t do, though. </p>
+<p>There are a few problems with using a model for the EA, too. The introduction of unwanted overhead, for example. There&#8217;s far more code that gets run in a model than there is in the basic EA that I use. And the destruction of important semantics, by using a model, is also a very bad idea. Semantics are important, and using a model as an EA will lead to confusion at some point, either when trying to use it or when trying to make it do something it shouldn&#8217;t do.</p>
+<p>Backbone&#8217;s built in event system is what I use for my event aggregators:<br />
+var vent = _.extend({}, Backbone.Events);<br />
+Backbone&#8217;s models use the same Backbone.Events object in the same manner. I&#8217;m just creating an object with less overhead, for a specific purpose, and with a more appropriate name to cut down on semantic confusion for the people reading and writing the code.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Eric Barr</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2659</link>
+		<dc:creator>Eric Barr</dc:creator>
+		<pubDate>Wed, 01 Aug 2012 20:26:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2659</guid>
+		<description>Big fan -- you&#039;re articles are great.     I&#039;m in total agreement that an event aggregator (EA) is appropriate for any backbone app beyond &#039;ToDo&#039;.
+ 
+Looking at the above, however, it seems that the sample goes beyond being an EA.  My gut tells me that  *vent* will become a dumping ground for logic.  Fowler describes a simple EA as &quot;aggregat[ing] events from multiple objects into itself, passing that same event onto its observers.&quot;  It&#039;s the &#039;passing it on&#039; or &#039;listening&#039; portion that seems to be missing.    
+
+Wouldn&#039;t you get the same effect, but without the potential logic clutter, by doing something like the following:
+  *  creating a global model,  one field per &#039;channel&#039;  
+  *  Observers use backbone&#039;s built in event infrastructure and subscribe to changes on the applicable attribute.   
+ * Objects that want to issue events can simply update the appropriate global model&#039;s field.  
+
+This structure would prevent anything but the simplest events from being passed (without additional work).  Although phrased in terms of a global model, the structure is probably 50% serivce bus, and 50% EA.  
+
+Thoughts?
+ </description>
+		<content:encoded><![CDATA[<p>Big fan &#8212; you&#8217;re articles are great.     I&#8217;m in total agreement that an event aggregator (EA) is appropriate for any backbone app beyond &#8216;ToDo&#8217;.</p>
+<p>Looking at the above, however, it seems that the sample goes beyond being an EA.  My gut tells me that  *vent* will become a dumping ground for logic.  Fowler describes a simple EA as &#8220;aggregat[ing] events from multiple objects into itself, passing that same event onto its observers.&#8221;  It&#8217;s the &#8216;passing it on&#8217; or &#8216;listening&#8217; portion that seems to be missing.    </p>
+<p>Wouldn&#8217;t you get the same effect, but without the potential logic clutter, by doing something like the following:<br />
+  *  creating a global model,  one field per &#8216;channel&#8217;<br />
+  *  Observers use backbone&#8217;s built in event infrastructure and subscribe to changes on the applicable attribute.<br />
+ * Objects that want to issue events can simply update the appropriate global model&#8217;s field.  </p>
+<p>This structure would prevent anything but the simplest events from being passed (without additional work).  Although phrased in terms of a global model, the structure is probably 50% serivce bus, and 50% EA.  </p>
+<p>Thoughts?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Tim Ruffles</title>
+		<link>http://lostechies.com/derickbailey/2012/04/03/revisiting-the-backbone-event-aggregator-lessons-learned/#comment-2594</link>
+		<dc:creator>Tim Ruffles</dc:creator>
+		<pubDate>Wed, 04 Jul 2012 13:24:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=863#comment-2594</guid>
+		<description>Have been researching Marionette today and it&#039;s full of interesting ideas - thanks for your hard work on it!
+
+
+I was interested in how you test your apps based upon it though? Looking at the example code, there seems to be a lot of reliance on globals. 
+
+
+I&#039;ve pasted a good example below - how would you test this?
+
+https://github.com/derickbailey/bbclonemail/blob/master/public/javascripts/contacts/bbclonemail.contactsapp.js#L34
+
+You&#039;re relying on two other modules setting up some global state. I understand using a global for vent as a tradeoff (though I might go for sth like https://gist.github.com/3047279), but I can&#039;t see how code like the above avoids the common issues with global vars? Namely, for testing, having to mock all the globals then tear them down, needing quite a large graph of objects (BBCM.CA.CL, rather than passing only the required objects for each test), etc.</description>
+		<content:encoded><![CDATA[<p>Have been researching Marionette today and it&#8217;s full of interesting ideas &#8211; thanks for your hard work on it!</p>
+<p>I was interested in how you test your apps based upon it though? Looking at the example code, there seems to be a lot of reliance on globals. </p>
+<p>I&#8217;ve pasted a good example below &#8211; how would you test this?</p>
+<p><a href="https://github.com/derickbailey/bbclonemail/blob/master/public/javascripts/contacts/bbclonemail.contactsapp.js#L34" rel="nofollow">https://github.com/derickbailey/bbclonemail/blob/master/public/javascripts/contacts/bbclonemail.contactsapp.js#L34</a></p>
+<p>You&#8217;re relying on two other modules setting up some global state. I understand using a global for vent as a tradeoff (though I might go for sth like <a href="https://gist.github.com/3047279" rel="nofollow">https://gist.github.com/3047279</a>), but I can&#8217;t see how code like the above avoids the common issues with global vars? Namely, for testing, having to mock all the globals then tear them down, needing quite a large graph of objects (BBCM.CA.CL, rather than passing only the required objects for each test), etc.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:04:37 -->

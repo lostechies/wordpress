@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Backbone.js: Object Literals, Views Events, jQuery, and `el`</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Mon, 05 Nov 2012 04:46:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Janne</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2805</link>
+		<dc:creator>Janne</dc:creator>
+		<pubDate>Fri, 26 Oct 2012 06:11:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2805</guid>
+		<description>You. Are. My. Hero! :) I&#039;m just a noob practicing backbone and have been struggling with this exact problem for the past hour. This was the best explanation ever and with it I got it fixed.
+
+Thank you Derick!</description>
+		<content:encoded><![CDATA[<p>You. Are. My. Hero! :) I&#8217;m just a noob practicing backbone and have been struggling with this exact problem for the past hour. This was the best explanation ever and with it I got it fixed.</p>
+<p>Thank you Derick!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Stanislas Marion</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2491</link>
+		<dc:creator>Stanislas Marion</dc:creator>
+		<pubDate>Tue, 29 May 2012 11:39:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2491</guid>
+		<description>&gt; Object literals in JavaScript are also known by a number of other names: hashes, associative arrays, key/value sets, JSON,I really like your articles, but this put me off. It is simply not true that an object is a hash and saying that is very misleading. See http://www.devthought.com/2012/01/18/an-object-is-not-a-hash/ </description>
+		<content:encoded><![CDATA[<p>&gt; Object literals in JavaScript are also known by a number of other names: hashes, associative arrays, key/value sets, JSON,I really like your articles, but this put me off. It is simply not true that an object is a hash and saying that is very misleading. See http://www.devthought.com/2012/01/18/an-object-is-not-a-hash/ </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Don</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2408</link>
+		<dc:creator>Don</dc:creator>
+		<pubDate>Tue, 01 May 2012 01:31:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2408</guid>
+		<description>Oops. She told me it worked using the class selector, but I guess she didn&#039;t understand. Mea culpa, typo</description>
+		<content:encoded><![CDATA[<p>Oops. She told me it worked using the class selector, but I guess she didn&#8217;t understand. Mea culpa, typo</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Don Mitchell</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2407</link>
+		<dc:creator>Don Mitchell</dc:creator>
+		<pubDate>Mon, 30 Apr 2012 17:36:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2407</guid>
+		<description>We can&#039;t get the id based selector to work (&quot;click #someButton&quot; in your example). When we replace it w/ a class-based selector (&quot;click .someButtonClass&quot;), it works. This seems fairly fundamental but is mystifying us [next step, look at the source code.]</description>
+		<content:encoded><![CDATA[<p>We can&#8217;t get the id based selector to work (&#8220;click #someButton&#8221; in your example). When we replace it w/ a class-based selector (&#8220;click .someButtonClass&#8221;), it works. This seems fairly fundamental but is mystifying us [next step, look at the source code.]</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Peter Rust</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2341</link>
+		<dc:creator>Peter Rust</dc:creator>
+		<pubDate>Tue, 10 Apr 2012 18:40:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2341</guid>
+		<description>orlybriceno: off the top of my head, I don&#039;t know why the events aren&#039;t being triggered, but here is a good blog post by derick that covers a common problem with events not being triggered: 
+http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/</description>
+		<content:encoded><![CDATA[<p>orlybriceno: off the top of my head, I don&#8217;t know why the events aren&#8217;t being triggered, but here is a good blog post by derick that covers a common problem with events not being triggered: <br />
+<a href="http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/" rel="nofollow">http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2336</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Mon, 09 Apr 2012 21:38:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2336</guid>
+		<description>Hey there, thanks for the explanation. I want to ask you something would this work for backbone 0.5.3? that&#039;s the version we&#039;re using, and I&#039;m specifying both tagName and className, the elements are being created and rendered correctly (I do an alert with this.el in the render method and see the markup is as I indicated), and as you said I have a single element view that renders itself and a &#039;directory&#039; view that call the single one and appends the singles to the document ; but still the events are not being triggered, and I don&#039;t have any control of the ready section since Im working as a part of a bigger project and the architecture is basically inamovible . Thanks in advance.</description>
+		<content:encoded><![CDATA[<p>Hey there, thanks for the explanation. I want to ask you something would this work for backbone 0.5.3? that&#8217;s the version we&#8217;re using, and I&#8217;m specifying both tagName and className, the elements are being created and rendered correctly (I do an alert with this.el in the render method and see the markup is as I indicated), and as you said I have a single element view that renders itself and a &#8216;directory&#8217; view that call the single one and appends the singles to the document ; but still the events are not being triggered, and I don&#8217;t have any control of the ready section since Im working as a part of a bigger project and the architecture is basically inamovible . Thanks in advance.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Paul Garvin</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2315</link>
+		<dc:creator>Paul Garvin</dc:creator>
+		<pubDate>Mon, 26 Mar 2012 16:29:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2315</guid>
+		<description>Thanks so much for this post. I&#039;m writing my first Backbone app and I&#039;ve been pulling my hair out wondering why nothing was working.</description>
+		<content:encoded><![CDATA[<p>Thanks so much for this post. I&#8217;m writing my first Backbone app and I&#8217;ve been pulling my hair out wondering why nothing was working.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Phillip Lackey</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2045</link>
+		<dc:creator>Phillip Lackey</dc:creator>
+		<pubDate>Fri, 16 Dec 2011 18:21:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2045</guid>
+		<description>Ha, I actually just realized what I did - I loaded all my script tags on the bottom of the main html page and your code was the last one so, like you said,  I guess that&#039;s another way to avoid the problem.  :)</description>
+		<content:encoded><![CDATA[<p>Ha, I actually just realized what I did &#8211; I loaded all my script tags on the bottom of the main html page and your code was the last one so, like you said,  I guess that&#8217;s another way to avoid the problem.  :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2044</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Fri, 16 Dec 2011 18:17:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2044</guid>
+		<description>it&#039;s hit or miss, and depends on the size and complexity of the html / js involved. you run the risk of the DOM not being available when the JS is evaluated. if you put that JS at the  bottom of the HTML, you&#039;re less likely to have a problem, but it&#039;s still possible. 
+
+i&#039;d rather not have that risk. :)</description>
+		<content:encoded><![CDATA[<p>it&#8217;s hit or miss, and depends on the size and complexity of the html / js involved. you run the risk of the DOM not being available when the JS is evaluated. if you put that JS at the  bottom of the HTML, you&#8217;re less likely to have a problem, but it&#8217;s still possible. </p>
+<p>i&#8217;d rather not have that risk. :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Phillip Lackey</title>
+		<link>http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/#comment-2043</link>
+		<dc:creator>Phillip Lackey</dc:creator>
+		<pubDate>Fri, 16 Dec 2011 18:11:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=646#comment-2043</guid>
+		<description>Great article!  But the first batch of code that isn&#039;t supposed to work  actually works (at least for me).  Even in IE.</description>
+		<content:encoded><![CDATA[<p>Great article!  But the first batch of code that isn&#8217;t supposed to work  actually works (at least for me).  Even in IE.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 09:51:18 -->

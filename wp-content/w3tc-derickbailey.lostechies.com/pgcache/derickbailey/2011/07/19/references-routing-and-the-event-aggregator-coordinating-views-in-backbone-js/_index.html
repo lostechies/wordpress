@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Debugging Cucumber Tests With Ruby-Debug' href='http://lostechies.com/derickbailey/2011/06/29/debugging-cucumber-tests-with-ruby-debug/' />
+<link rel='next' title='A Better Team: Arrogance And Accepting Your Own Strengths' href='http://lostechies.com/derickbailey/2011/07/21/a-better-team-arrogance-and-accepting-your-own-strengths/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=472' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-472" class="post-472 post type-post status-publish format-standard hentry category-backbone category-design-patterns category-javascript category-model-view-controller category-principles-and-patterns">
+					<h1 class="entry-title">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/" title="9:01 am" rel="bookmark"><span class="entry-date">July 19, 2011</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>I recently found myself needing to facilitate communication between two backbone views. The first view is a medication &#8211; one that is currently being taken by a particular patient. The second view is the add/edit view that allows the patient to either add new medications or edit existing ones. When the edit icon is clicked for an existing medication, the edit form should be populated and the user should be able to edit the medication.</p>
+<p>Here&#8217;s what the screen looks like after I click on the edit icon (the pencil):</p>
+<p><img title="Screen shot 2011-07-19 at 9.02.38 AM.png" src="http://lostechies.com/derickbailey/files/2011/07/Screen-shot-2011-07-19-at-9.02.38-AM.png" border="0" alt="Screen shot 2011 07 19 at 9 02 38 AM" width="600" height="498" /></p>
+<h2><span style="font-weight: normal; font-size: medium;">There are a number of ways to make this work &#8211; the most basic of which is to have the views reference each other so that they can either call methods on each other or raise events.</span></h2>
+<h3>References</h3>
+<p>I&#8217;ve done this a number of times and it works well.</p>
+<div id="gist-1092444" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MedicationView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click #edit&quot;</span><span class="o">:</span> <span class="s2">&quot;editMedication&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">editView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AddEditView</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">});</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">editView</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC10'><span class="p">});</span></div><div class='line' id='LC11'><br/></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/1092444/114a81c42aab8f03d78d3d0609b8fdfccd7bf833/1-referencing.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/1092444#file_1_referencing.js" style="float:right;margin-right:10px;color:#666">1-referencing.js</a>
+            <a href="https://gist.github.com/1092444">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>In this simple example, I have an event setup that listens to the edit icon click. When it&#8217;s clicked, I instantiate a new add/edit view with the model from the current medication display view. I then render it, and we&#8217;re on our way &#8211; the add/edit view will display the correct model and life is good.</p>
+<p>In some cases, though, this isn&#8217;t really an option &#8211; or, it may be an option that would cause a little extra code and work to make sure it works correctly. The screen shot above is one of those cases. Both the &#8220;Add Medication&#8221; button and the add/edit form are part of the same view. I did this because it did not seem necessary to have a view just for the &#8220;Add Medication&#8221; button when something as simple as a jQuery click event would suffice. Rather than code the jQuery on it&#8217;s own, though, I decided to put the &#8220;Add Medication&#8221; button into my add/edit view. It makes sense to me &#8211; the button allows you to add a new medication, so it should be part of the add/edit view.</p>
+<p>Because of the choice I made, though, having the edit button for a medication instantiate a new add/edit form was not an option for me. I could have the medication view reference the existing instance of the add/edit view, though.</p>
+<div id="gist-1092444" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MedicationView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click #edit&quot;</span><span class="o">:</span> <span class="s2">&quot;editMedication&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">addEditView</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">addEditView</span><span class="p">;</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">addEditView</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC13'><span class="p">});</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'><span class="c1">// initialize everything here... </span></div><div class='line' id='LC16'><span class="c1">// &#39;medicationList&#39; is a collection of medications</span></div><div class='line' id='LC17'><span class="kd">var</span> <span class="nx">addEditView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AddEditView</span><span class="p">(...);</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'><span class="nx">medicationlist</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">med</span><span class="p">){</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="k">new</span> <span class="nx">MedicationView</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="nx">med</span><span class="p">,</span> <span class="nx">addEditView</span><span class="o">:</span> <span class="nx">addEditView</span><span class="p">});</span></div><div class='line' id='LC21'><span class="p">}</span></div><div class='line' id='LC22'><br/></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/1092444/8cff3769deaaa5f6a05b644278513c478088aa97/2-reference-instance.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/1092444#file_2_reference_instance.js" style="float:right;margin-right:10px;color:#666">2-reference-instance.js</a>
+            <a href="https://gist.github.com/1092444">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>This also works, giving me the functionality i need with one instance of the add/edit view. Not being satisfied with what works, though, I wanted to explore my other options to see what else would work. Specifically, I wanted to see if I could completely decouple these two views and still provide the functionality that I needed.</p>
+<h3>Routing</h3>
+<p>My next thought was to take advantage of the routing in backbone. I thought I could have the edit button changed from a clickable button to a simple &lt;a href=&#8221;#edit/id&#8221;&gt; link. I could then have the router pick the correct model from the collection and pass it to the add/edit view.</p>
+<div id="gist-1092444" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MedicationRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">routes</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;edit/:id&quot;</span><span class="o">:</span> <span class="s2">&quot;editMedication&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">med</span> <span class="o">=</span> <span class="nx">medicationList</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">addEditView</span><span class="p">.</span><span class="nx">editMedication</span><span class="p">(</span><span class="nx">med</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC10'><span class="p">});</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'><span class="nx">AddEditView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC13'><br/></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">medication</span><span class="p">){</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="nx">medication</span><span class="p">;</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC17'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'><span class="p">});</span></div><div class='line' id='LC20'><br/></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/1092444/3bd931656f8812c547f47ae4a25e659507e2ff6c/3-routing.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/1092444#file_3_routing.js" style="float:right;margin-right:10px;color:#666">3-routing.js</a>
+            <a href="https://gist.github.com/1092444">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>Once again, this would work perfectly fine. The router would pick up the change to the #hash url, use the id passed into it as the parameter to load the medication, and then send it over to the add/edit view.</p>
+<p>However, I don&#8217;t need all of the functionality of the router in this case. I don&#8217;t need the browser back / forward button. I don&#8217;t need a url change to create some uniquely identifiable url for a user to hit directly, and I don&#8217;t need a router for anything else on this page. Since all of the medications are listed on the page and the add/edit view is on the page with them, there&#8217;s no need for me to route things around. Sure it works, but it comes with more functionality than I wanted.</p>
+<h3>The Event Aggregator</h3>
+<p>Digging back into my Winforms development days of the last 4 years, I decided to go after a tried and true pattern that I&#8217;ve used more times than I can remember: the event aggregator. If you&#8217;re not familiar with event aggregators, here&#8217;s a handful of links that talk about them in-depth including my own blog post posts and sample code for Winforms (C#/.NET).</p>
+<ul>
+<li><a href="http://martinfowler.com/eaaDev/EventAggregator.html">Martin Fowler: Event Aggregator</a></li>
+<li><a href="http://codebetter.com/jeremymiller/2009/07/22/braindump-on-the-event-aggregator-pattern/">Jeremy Miller: Braindump On The Event Aggregator</a></li>
+<li><a href="http://codebetter.com/jeremymiller/2009/08/01/latching-an-event-aggregator-subscriber/">Jeremy Miller: &#8220;Latching&#8221; an Event Aggregator Subscriber</a></li>
+<li><a href="http://lostechies.com/derickbailey/2009/12/23/understanding-the-application-controller-through-object-messaging-patterns/">Me: Understanding The Application Controller Through Object Messaging Patterns</a></li>
+<li><a href="https://github.com/derickbailey/appcontroller">Me: An example App Controller Implementation (code via Github)</a></li>
+</ul>
+<p>The gist of the event aggregator is that you have a central object that manages the raising of events and the subscribers for those events. In terms of messaging patterns, the event aggregator is an in-memory, object based publish-subscribe model. It allows you have to have disparate parts of your system react to the events of other parts of the system, without having them directly coupled. I use event aggregators in my winforms apps to communication between various parts of my views and and other parts of my apps that are already up and running and need to be notified of changes that have happened.</p>
+<p>Given my experience with event aggregators, it felt like a perfect fit for my desire to decouple the views in my medication screen. All I needed was an event aggregation object &#8211; one that could have many event subscribers and /  or publishers. Fortunately, backbone provides just the thing I need with it&#8217;s event system. All I had to do was create an object that could be shared between my views.</p>
+<p>Here&#8217;s the entire code listing for my event aggregator object, built with <a href="http://documentcloud.github.com/backbone/#Events">backbone&#8217;s event system</a>:</p>
+<div id="gist-1092444" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">vent</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC2'><br/></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/1092444/778e4e84236492f6e2caa41542b7f05befb7f54e/4-vent.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/1092444#file_4_vent.js" style="float:right;margin-right:10px;color:#666">4-vent.js</a>
+            <a href="https://gist.github.com/1092444">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>That&#8217;s it! No, really. That&#8217;s all I needed, because backbone already handles events very well. To make use of this, though, I need each of the event publishers and / or subscribers to have a reference to my &#8216;vent&#8217; object. Once they have a reference, they can either subscribe or publish events as needed.</p>
+<div id="gist-1092444" class="gist">
+    
+
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">AddEditView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;editMedication&quot;</span><span class="p">);</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">options</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;editMedication&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">editMedication</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">medication</span><span class="p">){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="nx">medication</span><span class="p">;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC11'><span class="p">});</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="nx">MedicationView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click #edit&quot;</span><span class="o">:</span> <span class="s2">&quot;editMedication&quot;</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC17'><br/></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">vent</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">vent</span><span class="p">;</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC21'><br/></div><div class='line' id='LC22'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;editMedication&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">);</span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC25'><span class="p">});</span></div><div class='line' id='LC26'><br/></div><div class='line' id='LC27'><span class="c1">// initialize everything, and tie it all together</span></div><div class='line' id='LC28'><span class="c1">// with the event aggregator object: vent</span></div><div class='line' id='LC29'><br/></div><div class='line' id='LC30'><span class="kd">var</span> <span class="nx">vent</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC31'><br/></div><div class='line' id='LC32'><span class="kd">var</span> <span class="nx">addEditView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AddEditView</span><span class="p">({</span><span class="nx">vent</span><span class="o">:</span> <span class="nx">vent</span><span class="p">});</span></div><div class='line' id='LC33'><br/></div><div class='line' id='LC34'><span class="nx">medicationList</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">med</span><span class="p">){</span></div><div class='line' id='LC35'>&nbsp;&nbsp;<span class="k">new</span> <span class="nx">MedicationView</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="nx">med</span><span class="p">,</span> <span class="nx">vent</span><span class="o">:</span> <span class="nx">vent</span><span class="p">});</span></div><div class='line' id='LC36'><span class="p">});</span></div><div class='line' id='LC37'><br/></div></pre></div>
+          </div>
+
+          <div class="gist-meta">
+            <a href="https://gist.github.com/raw/1092444/c2cf72b0c68768c636af9ffef6693a81493d63db/5-event-aggregation.js" style="float:right;">view raw</a>
+            <a href="https://gist.github.com/1092444#file_5_event_aggregation.js" style="float:right;margin-right:10px;color:#666">5-event-aggregation.js</a>
+            <a href="https://gist.github.com/1092444">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
+          </div>
+        </div>
+</div>
+
+<p>When the edit icon is clicked, the the vent is triggered with an &#8220;editMedication&#8221; event, passing the model that needs to be edited directly to any subscribers. The add/edit view has subscribed to the &#8220;editMedication&#8221; event and receives the medication directly as a parameter. Note that I also used <a href="http://lostechies.com/derickbailey/2011/06/15/solving-backbones-this-model-view-problem-with-underscore-js/">the underscore.js bindAll method</a> to ensure that the editMedication method is executed in the correct context. If you omit this line, the editMedication method will execute with &#8216;this&#8217; being the event aggregator, not the view.</p>
+<p>Now that&#8217;s some code that I can really fall in love with! My application functions perfectly &#8211; I can click the edit icon and have the correct medication populated into the add/edit view, for editing. Yet my views know nothing about each other. I have completely decoupled them from each other. The only thing the views need to know about is the event aggregator object.</p>
+<h3>Decoupling The Views</h3>
+<p>With the event aggregator in place, my views are decoupled from each other. This means that they can change independently of each other. In fact, the MedicationView can go away entirely if I want it to.</p>
+<p>I can rename this class, change it&#8217;s implementation, delete it and put something else in place or whatever else I want to do. As long as something in my backbone code triggers the &#8220;editMedication&#8221; event and provides and provides a model as an argument for that event, my add/edit view will respond correctly.</p>
+<p>Conversely, I can also modify or remove the add/edit view as needed. As long as some part of my backbone code binds to the &#8220;editMedication&#8221; event from the event aggregator, and expects to receive a model as the argument for the event handler method, things will continue to work fine.</p>
+<p>This set up also lets me have multiple parts of my app listen to the event and respond accordingly. I could easy add other views or other other javascript objects that bind to the &#8220;editMedication&#8221; event. Each of these binding objects would then be able to respond to the edit click and manipulate the medication model in any way necessary &#8211; and all without having to couple any additional views together.</p>
+<h3>I&#8217;ll Take The Event Aggregator, Thanks</h3>
+<p>The event aggregator is a powerful little pattern. I&#8217;m glad I was able to lean on my prior experience with this pattern and introduce it into my backbone code. It made my code significantly easier to work with. Bringing along a simple implementation of a pattern like the event aggregator can help you keep your code clean and maintainable.</p>
+<p>The other options I&#8217;ve shown do work, of course. There is nothing technically wrong with writing backbone code like that. However, I don&#8217;t like having my views coupled together like that. It tends to create a mess when you have multiple nested views and that all need to coordinate with each other.</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts in Backbone" rel="category tag">Backbone</a>, <a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts in Design Patterns" rel="category tag">Design Patterns</a>, <a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts in Javascript" rel="category tag">Javascript</a>, <a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts in Model-View-Controller" rel="category tag">Model-View-Controller</a>, <a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts in Principles and Patterns" rel="category tag">Principles and Patterns</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/" title="Permalink to References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/feed/" title="Comments RSS to References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-472 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2011/06/29/debugging-cucumber-tests-with-ruby-debug/" rel="prev"><span class="meta-nav">&larr;</span> Debugging Cucumber Tests With Ruby-Debug</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2011/07/21/a-better-team-arrogance-and-accepting-your-own-strengths/" rel="next">A Better Team: Arrogance And Accepting Your Own Strengths <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-1654">
+        <div id="dsq-comment-header-1654" class="dsq-comment-header">
+            <cite id="dsq-cite-1654">
+                <span id="dsq-author-user-1654">Matt</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1654" class="dsq-comment-body">
+            <div id="dsq-comment-message-1654" class="dsq-comment-message"><p>This is exactly what I was looking for! I&#8217;ve been struggling with several solutions in my backbone app. In my case, I have a toolbar that applies operations to the &#8220;active&#8221; view. I didn&#8217;t really like the code I had for discovering the active view when a toolbar button is clicked. Event aggregator is much cleaner. Btw, this talk: <a href="http://channel9.msdn.com/Events/MIX/MIX11/EXT23 " rel="nofollow">http://channel9.msdn.com/Events/MIX/MIX11/EXT23 </a> by Andrew Dupont makes mention of using an event broker and is worth watching.</p>
+<p>Thanks!</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1655">
+        <div id="dsq-comment-header-1655" class="dsq-comment-header">
+            <cite id="dsq-cite-1655">
+                <span id="dsq-author-user-1655">Paul</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1655" class="dsq-comment-body">
+            <div id="dsq-comment-message-1655" class="dsq-comment-message"><p>Love the simplicity</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-1656">
+        <div id="dsq-comment-header-1656" class="dsq-comment-header">
+            <cite id="dsq-cite-1656">
+                <span id="dsq-author-user-1656">Zerowaste</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1656" class="dsq-comment-body">
+            <div id="dsq-comment-message-1656" class="dsq-comment-message"><p>verynice! thank you</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1659">
+        <div id="dsq-comment-header-1659" class="dsq-comment-header">
+            <cite id="dsq-cite-1659">
+http://www.hanselman.com                <span id="dsq-author-user-1659">shanselman</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1659" class="dsq-comment-body">
+            <div id="dsq-comment-message-1659" class="dsq-comment-message"><p>Rock on. That&#8217;s hot. Great writeup.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-1708">
+        <div id="dsq-comment-header-1708" class="dsq-comment-header">
+            <cite id="dsq-cite-1708">
+http://www.easyate.com/                <span id="dsq-author-user-1708">Viceroy</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1708" class="dsq-comment-body">
+            <div id="dsq-comment-message-1708" class="dsq-comment-message"><p>Fine posting would make consistent develop, thanks a ton promote, a build-up with awareness will be to continue to keep knowing, particular attention is definitely the start of huge selection.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1710">
+        <div id="dsq-comment-header-1710" class="dsq-comment-header">
+            <cite id="dsq-cite-1710">
+http://www.astwoodevents.co.uk/                <span id="dsq-author-user-1710">event management companies</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1710" class="dsq-comment-body">
+            <div id="dsq-comment-message-1710" class="dsq-comment-message"><p>Well written article.I appreciate your writing skills.Its great.You have done a great job by sharing this article with us.I like this article.Keep sharing with us.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-1735">
+        <div id="dsq-comment-header-1735" class="dsq-comment-header">
+            <cite id="dsq-cite-1735">
+                <span id="dsq-author-user-1735">Dav_twix</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1735" class="dsq-comment-body">
+            <div id="dsq-comment-message-1735" class="dsq-comment-message"><p>First search in google and I found the solution, thanks, I came from actionscript / Flex developpement and already use this way to let views communicate each other</p>
+<p>Thanks a lot</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-1738">
+        <div id="dsq-comment-header-1738" class="dsq-comment-header">
+            <cite id="dsq-cite-1738">
+                <span id="dsq-author-user-1738">Dav_twix</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1738" class="dsq-comment-body">
+            <div id="dsq-comment-message-1738" class="dsq-comment-message"><p>Just a question, why not use a Singleton ?</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-1739">
+        <div id="dsq-comment-header-1739" class="dsq-comment-header">
+            <cite id="dsq-cite-1739">
+                <span id="dsq-author-user-1739">Dav_twix</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1739" class="dsq-comment-body">
+            <div id="dsq-comment-message-1739" class="dsq-comment-message"><p>for exemple : <br />
+function Notifier() {      _.extend( this, Backbone.Events ) ;        if ( Notifier.caller != Notifier.getInstance )    {          throw new Error(&#8220;This object cannot be instanciated&#8221;);      }  }    Notifier.instance = null;  Notifier.getInstance = function() {      if (this.instance == null) {          this.instance = new Notifier();      }        return this.instance;  } </p>
+<p>And to use it : </p>
+<p>//Listen to &#8216;menu_changed&#8217; event<br />
+Notifier.getInstance().bind(&#8220;menu_changed&#8221;, this.menu_changedHandler ) ;</p>
+<p>//dispatch the &#8216;menu_changed&#8217; event with a argument<br />
+Notifier.getInstance().trigger(&#8216;menu_changed&#8217;, { myArgument : &#8216;test&#8217; } ) ;</p>
+<p>Now, I can instantiate my views in differents scripts with closures without passing the Event aggregator in options</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-4" id="dsq-comment-1740">
+        <div id="dsq-comment-header-1740" class="dsq-comment-header">
+            <cite id="dsq-cite-1740">
+http://mutedsolutions.com                <span id="dsq-author-user-1740">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1740" class="dsq-comment-body">
+            <div id="dsq-comment-message-1740" class="dsq-comment-message"><p>I like your intent: &#8220;Now, I can instantiate my views in differents scripts with closures without passing the Event aggregator in options&#8221; but i don&#8217;t think the implementation of a singleton is necessary.</p>
+<p>you could just do this:</p>
+<p>Notifier = Backbone.Events.extend({});</p>
+<p>since Notifier is attached to the global javascript object at this point (the same as in your example), its&#8217; available everywhere. there&#8217;s really no need to add a getInstance method to it.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-5" id="dsq-comment-1741">
+        <div id="dsq-comment-header-1741" class="dsq-comment-header">
+            <cite id="dsq-cite-1741">
+                <span id="dsq-author-user-1741">Dav_twix</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1741" class="dsq-comment-body">
+            <div id="dsq-comment-message-1741" class="dsq-comment-message"><p>Thanks a lot ! <br />
+it&#8217;s really simple and clear now.</p>
+<p>note : if I try to use your proposition, I got an error : &#8220;no method extend in Events Object&#8221;, so I use the syntaxe in the Backbone&#8217;s documentation and i&#8217;s great</p>
+<p><a href="http://documentcloud.github.com/backbone/#Events" rel="nofollow">http://documentcloud.github.com/backbone/#Events</a></p>
+<p>happy coding</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt depth-5" id="dsq-comment-1742">
+        <div id="dsq-comment-header-1742" class="dsq-comment-header">
+            <cite id="dsq-cite-1742">
+http://mutedsolutions.com                <span id="dsq-author-user-1742">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1742" class="dsq-comment-body">
+            <div id="dsq-comment-message-1742" class="dsq-comment-message"><p>oops &#8211; yeah, i make that mistake all the time. :P</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-1799">
+        <div id="dsq-comment-header-1799" class="dsq-comment-header">
+            <cite id="dsq-cite-1799">
+http://www.facebook.com/profile.php?id=2012258                <span id="dsq-author-user-1799">Patrick Doran</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1799" class="dsq-comment-body">
+            <div id="dsq-comment-message-1799" class="dsq-comment-message"><p>Totally awesome! I was stuck with a bit of code that I was writing that seemed sloppy or incorrectly implemented and this totally solved my issue.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-1801">
+        <div id="dsq-comment-header-1801" class="dsq-comment-header">
+            <cite id="dsq-cite-1801">
+http://mutedsolutions.com                <span id="dsq-author-user-1801">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1801" class="dsq-comment-body">
+            <div id="dsq-comment-message-1801" class="dsq-comment-message"><p>glad it helped! :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-1800">
+        <div id="dsq-comment-header-1800" class="dsq-comment-header">
+            <cite id="dsq-cite-1800">
+http://www.facebook.com/profile.php?id=2012258                <span id="dsq-author-user-1800">Patrick Doran</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1800" class="dsq-comment-body">
+            <div id="dsq-comment-message-1800" class="dsq-comment-message"><p>Totally awesome! I was stuck with a bit of code that I was writing that seemed sloppy or incorrectly implemented and this totally solved my issue.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1894">
+        <div id="dsq-comment-header-1894" class="dsq-comment-header">
+            <cite id="dsq-cite-1894">
+http://www.facebook.com/profile.php?id=694648721                <span id="dsq-author-user-1894">Vikram Malhotra</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1894" class="dsq-comment-body">
+            <div id="dsq-comment-message-1894" class="dsq-comment-message"><p>Can&#8217;t thank you enough for this. Just one question &#8211; when triggering an event, you have passed a model to the listeners (editMedication, this.model). I want to know if I can other parameters as well?</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-2" id="dsq-comment-1895">
+        <div id="dsq-comment-header-1895" class="dsq-comment-header">
+            <cite id="dsq-cite-1895">
+http://mutedsolutions.com                <span id="dsq-author-user-1895">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1895" class="dsq-comment-body">
+            <div id="dsq-comment-message-1895" class="dsq-comment-message"><p>you can pass as many parameters as you want. the first parameter is always the event name, and after that, pass anything / everything:</p>
+<p>vent.trigger(&#8220;myEvent&#8221;, something, another, whatever, more, stuff, here);</p>
+<p>on the binding end, where you listen to the event, you can either specify all of the parameters manually:</p>
+<p>vent.bind(&#8220;myEvent&#8221;, function(something, another, whatever, more, stuff, here){&#8230;});</p>
+<p>or you can use the build in javascript &#8220;arguments&#8221; to get them all:</p>
+<p>vent.bind(&#8220;myEvent&#8221;, function(){<br />
+  var something = arguments[0];<br />
+  //  etc<br />
+}</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-1989">
+        <div id="dsq-comment-header-1989" class="dsq-comment-header">
+            <cite id="dsq-cite-1989">
+                <span id="dsq-author-user-1989">justin</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1989" class="dsq-comment-body">
+            <div id="dsq-comment-message-1989" class="dsq-comment-message"><p>Thanks!</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2001">
+        <div id="dsq-comment-header-2001" class="dsq-comment-header">
+            <cite id="dsq-cite-2001">
+http://www.slideshare.net/tjercus/ontwikkelen-in-debrowser1                <span id="dsq-author-user-2001">Tjerk</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2001" class="dsq-comment-body">
+            <div id="dsq-comment-message-2001" class="dsq-comment-message"><p>You can also use jquery  to bind/trigger custom events on the document object. I guess your solution is more testable since it uses a separate event object instead of a global singleton (the document object).</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2002">
+        <div id="dsq-comment-header-2002" class="dsq-comment-header">
+            <cite id="dsq-cite-2002">
+http://mutedsolutions.com                <span id="dsq-author-user-2002">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2002" class="dsq-comment-body">
+            <div id="dsq-comment-message-2002" class="dsq-comment-message"><p>Yeah, the backbone way i&#8217;m showing is a little more testable off-hand&#8230; but even that can be solved with jquery. I&#8217;ve been reading the &#8220;JavaScript Web Applications&#8221; book from OReilly Media recently and it shows several examples of using jQuery to create an event aggregator, in a manner that would be easily testable.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2003">
+        <div id="dsq-comment-header-2003" class="dsq-comment-header">
+            <cite id="dsq-cite-2003">
+                <span id="dsq-author-user-2003">Tjercus</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2003" class="dsq-comment-body">
+            <div id="dsq-comment-message-2003" class="dsq-comment-message"><p>Thanks for the book tip! And complements on the article, there are not a lot good sources of information on backbone, especially the practical implementation details in real world situations.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2047">
+        <div id="dsq-comment-header-2047" class="dsq-comment-header">
+            <cite id="dsq-cite-2047">
+                <span id="dsq-author-user-2047">Thomas Wieczorek</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2047" class="dsq-comment-body">
+            <div id="dsq-comment-message-2047" class="dsq-comment-message"><p>Awesome!<br />
+Thank you very much, it made my Backbone code much easier.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2091">
+        <div id="dsq-comment-header-2091" class="dsq-comment-header">
+            <cite id="dsq-cite-2091">
+http://profiles.google.com/dan.meierotto                <span id="dsq-author-user-2091">Dan Meierotto</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2091" class="dsq-comment-body">
+            <div id="dsq-comment-message-2091" class="dsq-comment-message"><p>Just came across this tip, very nice!  How do you deal with context?  Lets say you have two different views both with &#8220;ready&#8221; events using the same vent. Would you just adopt a naming convention?  e.g. vent.trigger(&#8216;ViewA.Ready&#8217;).</p>
+<p>Thanks!</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2093">
+        <div id="dsq-comment-header-2093" class="dsq-comment-header">
+            <cite id="dsq-cite-2093">
+                <span id="dsq-author-user-2093">Dharani</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2093" class="dsq-comment-body">
+            <div id="dsq-comment-message-2093" class="dsq-comment-message"><p>I really like this solution and the idea of decoupling vieews. On side note, may be even a less than a side note i dont understand this particular line at all,<br />
+Because of the choice I made, though, having the edit button for a medication instantiate a new add/edit form was not an option for me.</p>
+<p>I guess this led to inject the addeditview instance in the medication view constructor.<br />
+In other words u have exposed 3 ways of programming for the same scenario i understood the first and the third and i guess third is awesome and I dont understand the second at all.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2098">
+        <div id="dsq-comment-header-2098" class="dsq-comment-header">
+            <cite id="dsq-cite-2098">
+http://www.facebook.com/profile.php?id=4302094                <span id="dsq-author-user-2098">Ben Regenspan</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2098" class="dsq-comment-body">
+            <div id="dsq-comment-message-2098" class="dsq-comment-message"><p>This is very useful, thanks!</p>
+<p>One thing I really like in Backbone is the `events` property of a view &#8211; it&#8217;s nice to be able to bind in one clear place.</p>
+<p>It&#8217;s arguably a total hack and I&#8217;m still playing with it, but one way of supporting this still is to extend Backbone.View with a view implementing this custom events function:</p>
+<p>        events: function () {            if (!this._events || !this.options.vent) {                return {};            }            var events = $.extend({}, this._events);            for (var key in events) {                if (key.indexOf(&#8216;:&#8217;) === 0) {                    delete this._events[key];                    var method = this[events[key]];                    method = _.bind(method, this);                    this.options.vent.bind(key, method);                }            }            return this._events;        }</p>
+<p>And in implementations of the view, supplying an `_events` property rather than `events` property, starting event names that should be passed to the aggregator with &#8220;:&#8221;</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2105">
+        <div id="dsq-comment-header-2105" class="dsq-comment-header">
+            <cite id="dsq-cite-2105">
+                <span id="dsq-author-user-2105">Dharani</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2105" class="dsq-comment-body">
+            <div id="dsq-comment-message-2105" class="dsq-comment-message"><p>sorryf or posting the previous comment in reply to Dan,</p>
+<p>Here it is to Derik,</p>
+<p>I really like this solution and the idea of decoupling vieews. On side note, may be even a less than a side note i dont understand this particular line at all,<br />
+Because of the choice I made, though, having the edit button for a medication instantiate a new add/edit form was not an option for me.</p>
+<p>I guess this led to inject the addeditview instance in the medication view constructor.<br />
+In other words u have exposed 3 ways of programming for the same scenario i understood the first and the third and i guess third is awesome and I dont understand the second at al</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2107">
+        <div id="dsq-comment-header-2107" class="dsq-comment-header">
+            <cite id="dsq-cite-2107">
+                <span id="dsq-author-user-2107">Anzor B</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2107" class="dsq-comment-body">
+            <div id="dsq-comment-message-2107" class="dsq-comment-message"><p>This is awesome. Thanks!</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2108">
+        <div id="dsq-comment-header-2108" class="dsq-comment-header">
+            <cite id="dsq-cite-2108">
+                <span id="dsq-author-user-2108">Josh Gum</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2108" class="dsq-comment-body">
+            <div id="dsq-comment-message-2108" class="dsq-comment-message"><p>Piece of cake, and so freakin&#8217; handy. </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2166">
+        <div id="dsq-comment-header-2166" class="dsq-comment-header">
+            <cite id="dsq-cite-2166">
+                <span id="dsq-author-user-2166">Prasath</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2166" class="dsq-comment-body">
+            <div id="dsq-comment-message-2166" class="dsq-comment-message"><p>Derick, <br />
+Thanks for the good article. Do you have the html code for the above one so that I can run &amp; test locally ?</p>
+<p>Thanks</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2174">
+        <div id="dsq-comment-header-2174" class="dsq-comment-header">
+            <cite id="dsq-cite-2174">
+http://mutedsolutions.com                <span id="dsq-author-user-2174">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2174" class="dsq-comment-body">
+            <div id="dsq-comment-message-2174" class="dsq-comment-message"><p>I don&#8217;t &#8211; that code was part of a client&#8217;s project, so I&#8217;m not allowed to share it. There are other examples available, though. The technique I&#8217;ve described here has become very popular, recently. </p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2178">
+        <div id="dsq-comment-header-2178" class="dsq-comment-header">
+            <cite id="dsq-cite-2178">
+                <span id="dsq-author-user-2178">Prasath</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2178" class="dsq-comment-body">
+            <div id="dsq-comment-message-2178" class="dsq-comment-message"><p>Thanks for your reply. Can you please provide an example of this which is available in online. Thanks for your time.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2168">
+        <div id="dsq-comment-header-2168" class="dsq-comment-header">
+            <cite id="dsq-cite-2168">
+                <span id="dsq-author-user-2168">Randy</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2168" class="dsq-comment-body">
+            <div id="dsq-comment-message-2168" class="dsq-comment-message"><p>Pardon my ignorance on this, but can you give a quick reason as to why an event aggregator is needed?  What&#8217; wrong with one object subscribing to an event, and another one publishing that event?  What advantage do you gain by creating the aggregator?  Trying to see the value add in this&#8230;thanks. </p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-2" id="dsq-comment-2175">
+        <div id="dsq-comment-header-2175" class="dsq-comment-header">
+            <cite id="dsq-cite-2175">
+http://mutedsolutions.com                <span id="dsq-author-user-2175">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2175" class="dsq-comment-body">
+            <div id="dsq-comment-message-2175" class="dsq-comment-message"><p>There&#8217;s not necessarily anything wrong with two objects knowing about each other and triggering / subscribing to events directly. It&#8217;s impossible to say if it&#8217;s a good idea or bad idea without context  - without knowing what the circumstances are, what the objective is, whether or not the objects are already related to each other or not, etc.</p>
+<p>When you have a scenario where two parts of the application need to communicate, but it would cause design problems, tight coupling, spaghetti code messes, or other issues to have them know about each other directly, then an event aggregator is a good option. It&#8217;s not the only option, but it is one option.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-3" id="dsq-comment-2177">
+        <div id="dsq-comment-header-2177" class="dsq-comment-header">
+            <cite id="dsq-cite-2177">
+                <span id="dsq-author-user-2177">Randy</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2177" class="dsq-comment-body">
+            <div id="dsq-comment-message-2177" class="dsq-comment-message"><p>Ok, I think I just had a light bulb moment.  The value add is that by extracting out the pub/sub into a separate entity, the triggering object does not need to have a reference to the exact object that is publishing the event, where as it will without that abstraction.  Duh, I was forgetting that that is actually a coupling process in most cases.  We do have a global view element that will always be there, and we publish and subscribe against that object&#8230;so in essence that is an event aggregator&#8230;but only for certain events that are view related.  Better to have a dedicated event aggregator for ALL events.   </p>
+<p>I guess I was expecting to see some &#8220;extra&#8221; functionality going on in an aggregator other than just the abstraction and decoupling, but that is probably well worth having it by itself.  It might however, provide a good point for adding code to e.a. object to perform analytics calls against Omniture or Google for each event.  Hmmm&#8230;</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2199">
+        <div id="dsq-comment-header-2199" class="dsq-comment-header">
+            <cite id="dsq-cite-2199">
+http://www.facebook.com/austin.fatheree                <span id="dsq-author-user-2199">Austin Fatheree</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2199" class="dsq-comment-body">
+            <div id="dsq-comment-message-2199" class="dsq-comment-message"><p>This really helped backbone &#8216;click&#8217; for me.  Any reason that this isn&#8217;t just part of backbone?  It seems like they could implement a Notifier singleton pretty easily.  Then you&#8217;d just have to do Backbone.Notifier.bind(&#8216;editMed&#8217;, this.editMed);</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2204">
+        <div id="dsq-comment-header-2204" class="dsq-comment-header">
+            <cite id="dsq-cite-2204">
+                <span id="dsq-author-user-2204">Kaustubh</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2204" class="dsq-comment-body">
+            <div id="dsq-comment-message-2204" class="dsq-comment-message"><p>Thanks Derick.</p>
+<p>This is second time you&#8217;ve helped me in the same day!</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2219">
+        <div id="dsq-comment-header-2219" class="dsq-comment-header">
+            <cite id="dsq-cite-2219">
+http://twitter.com/arnislapsa                <span id="dsq-author-user-2219">Arnis Lapsa</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2219" class="dsq-comment-body">
+            <div id="dsq-comment-message-2219" class="dsq-comment-message"><p>Thanks a lot, this is useful stuff. Was right looking for it.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2225">
+        <div id="dsq-comment-header-2225" class="dsq-comment-header">
+            <cite id="dsq-cite-2225">
+                <span id="dsq-author-user-2225">Alphatester001</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2225" class="dsq-comment-body">
+            <div id="dsq-comment-message-2225" class="dsq-comment-message"><p>in a case of collection, where each item of the collection spawn nested view. How would trigger an event on the child view, so only the parent &#8220;answer to it&#8221; and not all the items of the collection? </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2228">
+        <div id="dsq-comment-header-2228" class="dsq-comment-header">
+            <cite id="dsq-cite-2228">
+http://twitter.com/edwardbc                <span id="dsq-author-user-2228">Edward Barboza</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2228" class="dsq-comment-body">
+            <div id="dsq-comment-message-2228" class="dsq-comment-message"><p>Just awesome! thanks for the tips</p>
+<p>I think it&#8217;s also worth to mention that you need to unbind the from the events when you no longer needed, otherwise if you&#8217;re using that specific event in other place it will trigger the previously set function.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2252">
+        <div id="dsq-comment-header-2252" class="dsq-comment-header">
+            <cite id="dsq-cite-2252">
+                <span id="dsq-author-user-2252">littlejim84</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2252" class="dsq-comment-body">
+            <div id="dsq-comment-message-2252" class="dsq-comment-message"><p>I&#8217;m using Require.js (AMD) throughout my application. How is it possible to have a global event dispatcher that can work with modules and not resort to having the event dispatcher on the global namespace? I could pass the event dispatcher object around to every single model/collection/view module, but that seems a little messy. Any other way of doing this?</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-2" id="dsq-comment-2274">
+        <div id="dsq-comment-header-2274" class="dsq-comment-header">
+            <cite id="dsq-cite-2274">
+                <span id="dsq-author-user-2274">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2274" class="dsq-comment-body">
+            <div id="dsq-comment-message-2274" class="dsq-comment-message"><p>Here&#8217;s how I&#8217;m doing it &#8211; works like a charm:</p>
+<p><code><br />
+define([   <br />
+  'underscore',   <br />
+  'backbone'<br />
+], function(_, Backbone) {   <br />
+  var vent = _.extend({}, Backbone.Events);   <br />
+  return vent;  <br />
+});<br />
+</code></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2267">
+        <div id="dsq-comment-header-2267" class="dsq-comment-header">
+            <cite id="dsq-cite-2267">
+                <span id="dsq-author-user-2267">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2267" class="dsq-comment-body">
+            <div id="dsq-comment-message-2267" class="dsq-comment-message"><p>I really like this concept, but I have two questions:</p>
+<p>1. Is it a bad idea to make the event aggregator global or in a namespace like MyNamespace.App.someEvents ?   One of the benefits here is that you can decrease some of the object passing from view to view or model to model.</p>
+<p>2. Do you keep all events for an aggregator within the view context or can a model subscribe to as well?  One main example I see is if you have a collection of Items that have an enabled/disabled state.  There are events, maybe some ajax etc  (triggered through the aggregator) based on a view action.  However, you still want your ItemView to derive it&#8217;s active/inactive change from the model Item object&#8217;s state.  So should the model itself subscribe?</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-2" id="dsq-comment-2268">
+        <div id="dsq-comment-header-2268" class="dsq-comment-header">
+            <cite id="dsq-cite-2268">
+http://mutedsolutions.com                <span id="dsq-author-user-2268">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2268" class="dsq-comment-body">
+            <div id="dsq-comment-message-2268" class="dsq-comment-message"><p>1) i recommend doing that. this post is old and reflects my C# way of thinking as I was bringing this stuff in to JavaScript. create a top level namespace where all of your code hangs from, and put the event aggregator on it. </p>
+<p>2) Any code in your app can publish to or subscribe to the app&#8217;s event aggregator. some times it&#8217;s best to decouple the views and models from the event aggregator, though. For example, you might want to have an event handler sitting out in the middle of nowhere, and the handler method fires up a view with a model. This is all contextual, though. Do what makes the most sense. Keep in mind the goal of decoupling the various functional areas of your app.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2313">
+        <div id="dsq-comment-header-2313" class="dsq-comment-header">
+            <cite id="dsq-cite-2313">
+                <span id="dsq-author-user-2313">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2313" class="dsq-comment-body">
+            <div id="dsq-comment-message-2313" class="dsq-comment-message"><p>very helpful. thanks so much!!</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2384">
+        <div id="dsq-comment-header-2384" class="dsq-comment-header">
+            <cite id="dsq-cite-2384">
+http://twitter.com/plukevdh                <span id="dsq-author-user-2384">Lukas</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2384" class="dsq-comment-body">
+            <div id="dsq-comment-message-2384" class="dsq-comment-message"><p>We decoupled it a little bit further and made it more pubsub-esque:</p>
+<p><a href="https://gist.github.com/1302766" rel="nofollow">https://gist.github.com/1302766</a></p>
+<p>Kinda mimics Redis in this way now.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2453">
+        <div id="dsq-comment-header-2453" class="dsq-comment-header">
+            <cite id="dsq-cite-2453">
+                <span id="dsq-author-user-2453">Dgabriel</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2453" class="dsq-comment-body">
+            <div id="dsq-comment-message-2453" class="dsq-comment-message"><p>I just started working on my first very complex backbone app, and you have saved me a lot of pain, agony, and irritation here.  Thank you.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2524">
+        <div id="dsq-comment-header-2524" class="dsq-comment-header">
+            <cite id="dsq-cite-2524">
+http://twitter.com/rymodi                <span id="dsq-author-user-2524">Ryan Dick</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2524" class="dsq-comment-body">
+            <div id="dsq-comment-message-2524" class="dsq-comment-message"><p>Isn&#8217;t it true that with Backbone 0.5.2, instead of doing:</p>
+<p>    _.bindAll(this, &#8220;editMedication&#8221;);     options.vent.bind(&#8220;editMedication&#8221;, this.editMedication);</p>
+<p>we can do:</p>
+<p>   options.vent.bind(&#8220;editMedication&#8221;, this.editMedication, this)</p>
+<p>?</p>
+<p>Got the idea here: http://stackoverflow.com/a/7102686</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2539">
+        <div id="dsq-comment-header-2539" class="dsq-comment-header">
+            <cite id="dsq-cite-2539">
+                <span id="dsq-author-user-2539">The Random Guy</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2539" class="dsq-comment-body">
+            <div id="dsq-comment-message-2539" class="dsq-comment-message"><p>Hi I am a newbie and I have implemented the Vent and triggered it when i wanted to edit a particular model inside a view like you did in your example.I am currently faced with an issue ,let me explain in context to your example, how do i show the details of the shops  on clicking the pencil icon for medication based on the medication name and route name,I need to pass the shops model which is not related to the medication model, but i should be able to display the shop model view</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-2" id="dsq-comment-2540">
+        <div id="dsq-comment-header-2540" class="dsq-comment-header">
+            <cite id="dsq-cite-2540">
+http://mutedsolutions.com                <span id="dsq-author-user-2540">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2540" class="dsq-comment-body">
+            <div id="dsq-comment-message-2540" class="dsq-comment-message"><p>there&#8217;s far more detail and code needed to be able to answer this. you should post a question on <a href="http://stackoverflow.com" rel="nofollow">http://stackoverflow.com</a> where you can post all the detail, including the code in question</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-3" id="dsq-comment-2552">
+        <div id="dsq-comment-header-2552" class="dsq-comment-header">
+            <cite id="dsq-cite-2552">
+                <span id="dsq-author-user-2552">The Random Guy again</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2552" class="dsq-comment-body">
+            <div id="dsq-comment-message-2552" class="dsq-comment-message"><p>Hi I have made a backbone.js simple app using asp.net mvc 4 webapi, but i am not sure if i have done it the right way,can you look at my code and suggest me the better approach than I have followed in it.I can give you the  source code of it,let me know if you are willing :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment even depth-2" id="dsq-comment-2541">
+        <div id="dsq-comment-header-2541" class="dsq-comment-header">
+            <cite id="dsq-cite-2541">
+                <span id="dsq-author-user-2541">The Random Guy</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2541" class="dsq-comment-body">
+            <div id="dsq-comment-message-2541" class="dsq-comment-message"><p> To be more clear suppose I have one view which shows the list of courses,now on clicking on each and every course i want to show the students enrolled in that course,so inside &#8220;click&#8221; of the course item view,i called the vent.trigger(&#8220;loadStudents&#8221;,&#8221;model of student&#8230;?&#8221;) inside the courseitemview,but how do i get the student model for that</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-3" id="dsq-comment-2542">
+        <div id="dsq-comment-header-2542" class="dsq-comment-header">
+            <cite id="dsq-cite-2542">
+http://mutedsolutions.com                <span id="dsq-author-user-2542">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2542" class="dsq-comment-body">
+            <div id="dsq-comment-message-2542" class="dsq-comment-message"><p>please post the question on stackoverflow</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-4" id="dsq-comment-2546">
+        <div id="dsq-comment-header-2546" class="dsq-comment-header">
+            <cite id="dsq-cite-2546">
+                <span id="dsq-author-user-2546">The Random Guy</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2546" class="dsq-comment-body">
+            <div id="dsq-comment-message-2546" class="dsq-comment-message"><p> Hi I have posted the question on stackoverflow. Please go through it and suggest me a good approach</p>
+<p><a href="http://stackoverflow.com/questions/10959267/using-event-aggrevator-to-load-a-view-with-different-model-in-backbone-js" rel="nofollow">http://stackoverflow.com/questions/10959267/using-event-aggrevator-to-load-a-view-with-different-model-in-backbone-js</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2586">
+        <div id="dsq-comment-header-2586" class="dsq-comment-header">
+            <cite id="dsq-cite-2586">
+http://twitter.com/braveheart1723                <span id="dsq-author-user-2586">Braveheart</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2586" class="dsq-comment-body">
+            <div id="dsq-comment-message-2586" class="dsq-comment-message"><p>Beautiful post Derick &#8211; saved me 3 hours work :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2608">
+        <div id="dsq-comment-header-2608" class="dsq-comment-header">
+            <cite id="dsq-cite-2608">
+                <span id="dsq-author-user-2608">Tony Smith</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2608" class="dsq-comment-body">
+            <div id="dsq-comment-message-2608" class="dsq-comment-message"><p>I am a total newb but I need some help with something very simple: Where is this global variable, yours is &#8220;vent&#8221;, supposed to go???</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2612">
+        <div id="dsq-comment-header-2612" class="dsq-comment-header">
+            <cite id="dsq-cite-2612">
+http://mutedsolutions.com                <span id="dsq-author-user-2612">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2612" class="dsq-comment-body">
+            <div id="dsq-comment-message-2612" class="dsq-comment-message"><p>not as a global variable. this is sample code just to show how to define it. you should attach it to a namespace object for your app, or some other object that represents your app and is available to use from your other objects (a module, for example).</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2652">
+        <div id="dsq-comment-header-2652" class="dsq-comment-header">
+            <cite id="dsq-cite-2652">
+                <span id="dsq-author-user-2652">Suresh Rathord</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2652" class="dsq-comment-body">
+            <div id="dsq-comment-message-2652" class="dsq-comment-message"><p>Hi,</p>
+<p>I have a question a very basic one though and please correct me if I am wrong. Isn&#8217;t vent object a global object ? And isn&#8217;t having global variables considered wrong ?</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2653">
+        <div id="dsq-comment-header-2653" class="dsq-comment-header">
+            <cite id="dsq-cite-2653">
+                <span id="dsq-author-user-2653">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2653" class="dsq-comment-body">
+            <div id="dsq-comment-message-2653" class="dsq-comment-message"><p>It&#8217;s recommended to namespace it to your app:</p>
+<p>We use rt.app.events as a global event handler.  Everything under rt.app is an instance variable of some sort so it falls right inline with the structure of our application.  </p>
+<p>Other than that as long as you keep global events properly named you should avoid any confusion as to what they do.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2654">
+        <div id="dsq-comment-header-2654" class="dsq-comment-header">
+            <cite id="dsq-cite-2654">
+                <span id="dsq-author-user-2654">Suresh Rathord</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2654" class="dsq-comment-body">
+            <div id="dsq-comment-message-2654" class="dsq-comment-message"><p>@johnml:disqus Meaning that, using a global variables under a namespace is fine. Thanks </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2814">
+        <div id="dsq-comment-header-2814" class="dsq-comment-header">
+            <cite id="dsq-cite-2814">
+http://profiles.google.com/eric.bichara                <span id="dsq-author-user-2814">Eric Bichara</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2814" class="dsq-comment-body">
+            <div id="dsq-comment-message-2814" class="dsq-comment-message"><p>Great post thanks</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/';
+    var disqus_identifier = '472 http://lostechies.com/derickbailey/?p=472';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=472';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2011\/07\/19\/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
+Make your Backbone applications dance with a composite application architecture!
+
+
+The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2012<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-11-05 10:02:03 -->
