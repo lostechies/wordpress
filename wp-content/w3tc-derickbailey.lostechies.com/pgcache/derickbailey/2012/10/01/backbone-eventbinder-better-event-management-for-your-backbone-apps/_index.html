@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -88,22 +87,31 @@
 <p>Views are not the only place that this applies, though, and not the only use case for `EventBinder`.</p>
 <p>If you are working with handful of objects, binding to their events, and those objects can be replaced with other object instances, then an `EventBinder` would be useful. In this case, think of the EventBinder as a collection or group of events for related objects.</p>
 <p>Let&#8217;s say you have ObjA, ObjB and ObjC. Each of these fires some events, and you want to make sure you clean up the event handlers when your code is done. This is easy with an `EventBinder`:</p>
-<div id="gist-3812055" class="gist">
-    
+<script src="https://gist.github.com/3812055.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">doStuff = {
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">doStuff</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">start</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">events</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">EventBinder</span><span class="p">();</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">bindTo</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">doSomething</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">bindTo</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">anotherThing</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">bindTo</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="s2">&quot;baz&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">whatever</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="p">},</span> </div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="nx">doSomething</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> <span class="cm">/* ... */</span> <span class="p">},</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="nx">anotherThing</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> <span class="cm">/* ... */</span> <span class="p">},</span></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="nx">whatever</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> <span class="cm">/* ... */</span> <span class="p">},</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="nx">stop</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">unbindAll</span><span class="p">();</span></div><div class='line' id='LC17'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'><span class="p">}</span></div><div class='line' id='LC20'><br/></div><div class='line' id='LC21'><span class="nx">doStuff</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="nx">ObjA</span><span class="p">,</span> <span class="nx">ObjB</span><span class="p">,</span> <span class="nx">ObjC</span><span class="p">);</span></div><div class='line' id='LC22'><br/></div><div class='line' id='LC23'><span class="c1">// ... some time later in the code, stop it</span></div><div class='line' id='LC24'><br/></div><div class='line' id='LC25'><span class="nx">doStuff</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span></div></pre></div>
-          </div>
+  start: function(a, b, c){
+    this.events = new Backbone.EventBinder();
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3812055/f97f8090493ff85823e390da03b3529424e5ccb5/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3812055#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/3812055">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    this.events.bindTo(a, &quot;foo&quot;, this.doSomething, this);
+    this.events.bindTo(b, &quot;bar&quot;, this.anotherThing, this);
+    this.events.bindTo(c, &quot;baz&quot;, this.whatever, this);
+  }, 
 
+  doSomething: function(){ /* ... */ },
+  anotherThing: function(){ /* ... */ },
+  whatever: function(){ /* ... */ },
+
+  stop: function(){
+    this.events.unbindAll();
+  }
+
+}
+
+doStuff.start(ObjA, ObjB, ObjC);
+
+// ... some time later in the code, stop it
+
+doStuff.stop();</code></pre></noscript>
 <p>Calling `stop` in this code will properly clean up all the event handlers for this use.</p>
 <h3>When To Use on/off Directly</h3>
 <p>The converse to all of this, is to say that you don&#8217;t always need to use an `EventBinder`. You can get away without it, always. But you need to remember to clean up your events when necessary.</p>
@@ -257,6 +265,22 @@ http://twitter.com/daniellidstrom                <span id="dsq-author-user-2796"
 </li>
 </ul>
 </li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2879">
+        <div id="dsq-comment-header-2879" class="dsq-comment-header">
+            <cite id="dsq-cite-2879">
+                <span id="dsq-author-user-2879">Naresh Bhatia</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2879" class="dsq-comment-body">
+            <div id="dsq-comment-message-2879" class="dsq-comment-message"><p>Derick,</p>
+<p>I like EventBinder, but somewhere between the Zombies post and this one, I am lost on how to use EventBinder with Backbone views (which is the most popular use case). Do you still recommend adding a close() method to the Backbone.View prototype and a onClose() method to the view? Also where does one store the binder object, so that binder.unbindAll() can be called on close? What is the recommended way to close child views (e.g. a parent view on a collection which has child views on the associated models). A working example would be a great addition to the Backbone.EventBinder project.</p>
+<p>Thanks.<br />
+Naresh</p>
+</div>
+        </div>
+    </li>
+
+    </li>
             </ul>
 
 
@@ -333,14 +357,15 @@ http://twitter.com/daniellidstrom                <span id="dsq-author-user-2796"
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -576,11 +601,7 @@ http://twitter.com/daniellidstrom                <span id="dsq-author-user-2796"
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -839,4 +860,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:54:03 -->
+Served from: lostechies.com @ 2012-12-19 07:14:00 -->

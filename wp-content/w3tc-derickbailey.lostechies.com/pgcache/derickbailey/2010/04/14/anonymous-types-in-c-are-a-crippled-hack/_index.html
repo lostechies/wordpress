@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>Anonymous Types In C# Are A Crippled Hack | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Compact Framework: Global Hotkeys' href='http://lostechies.com/derickbailey/2010/04/13/compact-framework-global-hotkeys/' />
+<link rel='next' title='Help! I’m Terrible At Migrating/Restructuring Code In A Test-First Manner' href='http://lostechies.com/derickbailey/2010/04/14/help-i-m-terrible-at-migrating-restructuring-code-in-a-test-first-manner/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2010/04/14/anonymous-types-in-c-are-a-crippled-hack/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=138' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-138" class="post-138 post type-post status-publish format-standard hentry category-net category-android category-c category-java">
+					<h1 class="entry-title">Anonymous Types In C# Are A Crippled Hack</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2010/04/14/anonymous-types-in-c-are-a-crippled-hack/" title="12:00 pm" rel="bookmark"><span class="entry-date">April 14, 2010</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>I’ve been learning a bit of Java recently, reading <a href="http://manning.com/ableson/">Unlocking Android</a> and playing with the <a href="http://developer.android.com">Android SDK</a> to try and learn how to write apps for my <a href="http://www.motorola.com/Consumers/US-EN/Consumer-Product-and-Services/Mobile-Phones/Motorola-DROID-US-EN">Droid</a>. I have known, intellectually, about some of the key differences between .NET and Java for quite some times now – how Java doesn’t have properties, how events are done through an Observer pattern, and various other differences. Now that I’m trying to put some of these differences in practice, though, I find some of them to be very intriguing – especially the way events are handled.</p>
+<p>Most of the sample code that I see with event handling in Android apps look like this:</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> someButton.setOnClickListener(</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span>     <span style="color: #0000ff">new</span> OnClickListener(){</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span>         <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> onClick(View v){</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span>             <span style="color: #008000">//do something here to handle the click</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span>         }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   6:</span>     }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   7:</span> );</pre>
+<p><!--CRLF--></div>
+</div>
+<p>The setOnClickListener method expects a parameter of type OnClickListener with a method called onClick(View). Rather than declaring this as a full fledged class definition and instantiating it, we are using an anonymous type with inline instantiation. We are new’ing up an OnClickListener class and declaring the methods of the class instance inline with the object initializer. </p>
+<p>Now look at what we have to do in C#, by comparison:</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> SomeMethodSomewhere()</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span>     someButton.SetOnClickListener(<span style="color: #0000ff">new</span> MyClickListener());</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span> }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   6:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> MyClickListener: OnClickListener</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   7:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   8:</span>     <span style="color: #0000ff">public</span> override <span style="color: #0000ff">void</span> OnClick(View v)</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   9:</span>     {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  10:</span>         <span style="color: #008000">//handle the click here</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  11:</span>     }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  12:</span> }</pre>
+<p><!--CRLF--></div>
+</div>
+<p>(Please don’t start complaining about my C# example not using the .NET event system saying that we don’t need anonymous types because we have delegates and multi-cast delegates. I’m well aware of delegates and the .NET eventing system. Honestly, I’m very happy with the .NET eventing system. It works very well and is easy to use. I show this example because it illustrates an apples-to-apples implementation difference between Java and C#.)</p>
+<p>The difference may be minor in this small example but it can be rather tedious to have to declare a new class for every single OnClickListener that we want to use. Even if we make OnClickListener an interface, such as IOnClickListener, we will have the same problem and have to declare a new class and implement that interface.</p>
+<p>The problem as I see it is that anonymous types in C# are a crippled, lame hack that were only put in place to <a href="http://msdn.microsoft.com/en-us/library/bb397696.aspx">support the functionality needed for LINQ queries</a>. We can’t declare methods on our anonymous types or instantiate an anonymous type that inherits from anything other than the default Object in C#. This severely limits the capabilities and possibilities of we can do with anonymous types. Honestly, other than ASP.NET MVC Routing declarations and LINQ queries, I have yet to see anyone use an anonymous type in C#.</p>
+<p>…</p>
+<p>Dear Microsoft, </p>
+<p>Please give us full fledged anonymous types in .NET/C# instead of the crippled hack that was put in place to support LINQ. I would especially love to instantiate an interface as an anonymous type:</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> PleaseLetMeDoThis()</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span>     SomeMethod(<span style="color: #0000ff">new</span> ISomeInterface()</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span>     {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span>         <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> DoIt()</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   6:</span>         {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   7:</span>             <span style="color: #008000">//do something here.</span></pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   8:</span>         }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   9:</span>     })</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  10:</span> }</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  11:</span>&#160; </pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  12:</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> SomeMethod(ISomeInterface something)</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  13:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  14:</span>     something.DoIt();</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">  15:</span> }</pre>
+<p><!--CRLF--></div>
+</div>
+<p>You’ve given us anonymous methods with delegates. You’ve given us read-only properties in anonymous types. It wouldn’t take that much work to marry the two concepts into a nice syntax like this.</p>
+<p>kthxbye,</p>
+<p>&#160;&#160;&#160; -Derick.</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/net/" title="View all posts in .NET" rel="category tag">.NET</a>, <a href="http://lostechies.com/derickbailey/category/android/" title="View all posts in Android" rel="category tag">Android</a>, <a href="http://lostechies.com/derickbailey/category/c/" title="View all posts in C#" rel="category tag">C#</a>, <a href="http://lostechies.com/derickbailey/category/java/" title="View all posts in Java" rel="category tag">Java</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2010/04/14/anonymous-types-in-c-are-a-crippled-hack/" title="Permalink to Anonymous Types In C# Are A Crippled Hack" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2010/04/14/anonymous-types-in-c-are-a-crippled-hack/feed/" title="Comments RSS to Anonymous Types In C# Are A Crippled Hack" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-138 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2010/04/13/compact-framework-global-hotkeys/" rel="prev"><span class="meta-nav">&larr;</span> Compact Framework: Global Hotkeys</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2010/04/14/help-i-m-terrible-at-migrating-restructuring-code-in-a-test-first-manner/" rel="next">Help! I’m Terrible At Migrating/Restructuring Code In A Test-First Manner <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-778">
+        <div id="dsq-comment-header-778" class="dsq-comment-header">
+            <cite id="dsq-cite-778">
+http://priscimon.com                <span id="dsq-author-user-778">Eddy Young</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-778" class="dsq-comment-body">
+            <div id="dsq-comment-message-778" class="dsq-comment-message"><p>It&#8217;s interesting reading the reaction of someone from .NET to a useful feature of Java. And, yes, I&#8217;ve longed for anonymous classes in C# for a very long time. Imagine the pain that would be taken out of writing stub classes for unit tests if we had this.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-779">
+        <div id="dsq-comment-header-779" class="dsq-comment-header">
+            <cite id="dsq-cite-779">
+                <span id="dsq-author-user-779">Ben Hyrman</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-779" class="dsq-comment-body">
+            <div id="dsq-comment-message-779" class="dsq-comment-message"><p>Some of my code lately has taken the form</p>
+<p>button.Click += (sender, eventArgs) => { //action here };</p>
+<p>It&#8217;s a bit nicer than wiring up to an event handler method. </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-780">
+        <div id="dsq-comment-header-780" class="dsq-comment-header">
+            <cite id="dsq-cite-780">
+http://www.lostechies.com/members/jflanagan/default.aspx                <span id="dsq-author-user-780">Joshua Flanagan</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-780" class="dsq-comment-body">
+            <div id="dsq-comment-message-780" class="dsq-comment-message"><p>You admit the eventing system was a bad example because there is a better alternative in c#. Can you provide an example of where you are feeling the pain of not having full anonymous types (ie, somwhere that a simple lambda doesn&#8217;t suffice)?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-781">
+        <div id="dsq-comment-header-781" class="dsq-comment-header">
+            <cite id="dsq-cite-781">
+http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-781">MM</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-781" class="dsq-comment-body">
+            <div id="dsq-comment-message-781" class="dsq-comment-message"><p>&#8220;I show this example because it illustrates an apples-to-apples implementation difference between Java and C#.&#8221;</p>
+<p>but if i can get all of the nutrition that i need from oranges, why should i care about apples? </p>
+<p>ok that was lame, but the point is, if delegates solve the problem at hand (which i think they do), doesn&#8217;t this just become an argument over minor style differences?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-782">
+        <div id="dsq-comment-header-782" class="dsq-comment-header">
+            <cite id="dsq-cite-782">
+http://www.lostechies.com/members/dahlbyk/default.aspx                <span id="dsq-author-user-782">Keith Dahlby</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-782" class="dsq-comment-body">
+            <div id="dsq-comment-message-782" class="dsq-comment-message"><p>It&#8217;s worth mentioning that you can mimic this Java functionality in F# with Object Expressions:<br />
+<a href="http://msdn.microsoft.com/en-us/library/dd233237%28v=VS.100%29.aspx" rel="nofollow">http://msdn.microsoft.com/en-us/library/dd233237%28v=VS.100%29.aspx</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-783">
+        <div id="dsq-comment-header-783" class="dsq-comment-header">
+            <cite id="dsq-cite-783">
+http://jarrettmeyer.com                <span id="dsq-author-user-783">Jarrett Meyer</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-783" class="dsq-comment-body">
+            <div id="dsq-comment-message-783" class="dsq-comment-message"><p>+1 @ Ben Hyrman.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-784">
+        <div id="dsq-comment-header-784" class="dsq-comment-header">
+            <cite id="dsq-cite-784">
+                <span id="dsq-author-user-784">Dave</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-784" class="dsq-comment-body">
+            <div id="dsq-comment-message-784" class="dsq-comment-message"><p>First: you are wrong, the inline class is meaningless. It is javas way of doing delegates. </p>
+<p>Second: .net 4 have &#8220;dynamic&#8221;, that lets you do what you want, call methods that the compiler do not know about.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-785">
+        <div id="dsq-comment-header-785" class="dsq-comment-header">
+            <cite id="dsq-cite-785">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-785">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-785" class="dsq-comment-body">
+            <div id="dsq-comment-message-785" class="dsq-comment-message"><p>@BenHyr &#8211; i do that too. like i said, i like the event system in .net. it&#8217;s nice. i should have provided a better example of where it would really benefit .net</p>
+<p>@Josh &#8211; unit testing w/ manual mock objects (as @Eddy pointed out). the lambda style mocking that we currently have works well, but it gets obtuse really fast. also &#8211; object composition, decorator and proxy patterns (no more need to IL weaving to do dynamic proxies) and other scenarios like that.</p>
+<p>@MM &#8211; ha! :) events aren&#8217;t actually the issue. </p>
+<p>@keith &#8211; i&#8217;m not surprised that some .net languages support this. after all, it&#8217;s just a compiler trick the same way anonymous types are currently done. </p>
+<p>&#8230;</p>
+<p>we&#8217;re missing out on a lot of possibilities by not having anonymous types. i use delegates every day because they make my life easier. i love having lambda expressions as anonymous delegates. i also really like object initializers so that i don&#8217;t have to declare all my properties in 20 different constructors. imagine having all of that wrapped up in one nice syntax that gave us all of those things at once. </p>
+<p>mixins would finally be possible in .net if we could assign methods to our anonymous types, which would give us a great decorator pattern. proxy classes would be so much easier to write and we wouldn&#8217;t have to do all that magic IL weaving. and i&#8217;m sure there are other possibilities that i&#8217;m not thinking off at the moment.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-786">
+        <div id="dsq-comment-header-786" class="dsq-comment-header">
+            <cite id="dsq-cite-786">
+http://simpleprogrammer.com                <span id="dsq-author-user-786">John Sonmez</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-786" class="dsq-comment-body">
+            <div id="dsq-comment-message-786" class="dsq-comment-message"><p>I agree 100%.  I been saying this for a while now.  I even wrote about it here, when I compared C# to Java. <a href="http://simpleprogrammer.com/2010/02/01/c-vs-java-part-1-the-languages/" rel="nofollow">http://simpleprogrammer.com/2010/02/01/c-vs-java-part-1-the-languages/</a></p>
+<p>The very first thing I talk about is this missing feature from C#.</p>
+<p>The uses where it is a good practice are limited, but it is a really good way to unit test legacy code.  If you have some very tightly coupled piece of legacy code, and it has some methods that call out to 5 other different concrete classes, you can &#8220;skip&#8221; that call and return a mock value by making that method protected and anonymously overriding the method in your unit test.  It sounds a little weird, but it can be really useful.</p>
+<p>I would especially like to be able to provide a anonymous implementation for an interface.  There are many instances I can think of where that would be useful.</p>
+<p>I&#8217;m also working on creating apps for my Droid.  I found that the development environment is pretty nice, but there is one MAJOR complaint I have.  Why the heck did they not make the code generator that generates the R file also generate strongly typed references to the resources?  It seems silly to cast out each control or resource value you get to the appropriate type, when it can be inferred and auto-generated.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-787">
+        <div id="dsq-comment-header-787" class="dsq-comment-header">
+            <cite id="dsq-cite-787">
+                <span id="dsq-author-user-787">Mike</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-787" class="dsq-comment-body">
+            <div id="dsq-comment-message-787" class="dsq-comment-message"><p>After reading this article I came to a lot of the conclusions that others have mentioned.  Using delegates for the events (I actually like this better then using a new anonymous class).  Using mock objects for testing versus creating our own stubs even if they are anonymous.  </p>
+<p>However I really like the potential of what John Sonmez said when he talked about fulfilling an interface.  I know that programming to an interface is often preferred and if you took out the capability to re-use a concrete implementation instead of the interface, since the concrete implementation is an anonymous type, other developers would be forced to program to the interface.    </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-788">
+        <div id="dsq-comment-header-788" class="dsq-comment-header">
+            <cite id="dsq-cite-788">
+http://www.tavaresstudios.com                <span id="dsq-author-user-788">Chris Tavares</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-788" class="dsq-comment-body">
+            <div id="dsq-comment-message-788" class="dsq-comment-message"><p>&#8220;mixins would finally be possible in .net if we could assign methods to our anonymous types&#8221;</p>
+<p>Yes, except Java doesn&#8217;t have that feature either! At least not dynamically. If you look at the feature, Java inner classes are pretty much explicitly designed for implementing events in the absence of delegates. The mixin idea you&#8217;re talking about isn&#8217;t possible in Java that I know of &#8211; do you have an example of what you&#8217;d like to see that works Java that doesn&#8217;t work in C#?</p>
+<p>If mocking is your specific concern, have you looked at Moles yet? It&#8217;s a pretty cool package that works pretty much the way you&#8217;re asking.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-789">
+        <div id="dsq-comment-header-789" class="dsq-comment-header">
+            <cite id="dsq-cite-789">
+                <span id="dsq-author-user-789">Thomas Eyde</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-789" class="dsq-comment-body">
+            <div id="dsq-comment-message-789" class="dsq-comment-message"><p>C# is missing anonymous classes, but Java on the other hand is missing anonymous methods. At least it did when I last checked, which is a long time ago.</p>
+<p>How would the comparison look if you chose to compare lambda expressions in C# with the missing (?) Java feature?</p>
+<p>In my opinion, and totally besides the point, anonymous methods is the better approach. From what I have seen, Java uses anonymous classes when what we really want is a single method.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-790">
+        <div id="dsq-comment-header-790" class="dsq-comment-header">
+            <cite id="dsq-cite-790">
+http://cem.me                <span id="dsq-author-user-790">Carl Mehner</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-790" class="dsq-comment-body">
+            <div id="dsq-comment-message-790" class="dsq-comment-message"><p>@Thomas Eyde &#8211; I&#8217;ve used the anonymous inner class in Java for much more than just a single method. I wrote a network protocol in Java and accompanying program to use the protocol that used the anonymous inner classes extensively. Each of these classes had multiple methods and objects.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-791">
+        <div id="dsq-comment-header-791" class="dsq-comment-header">
+            <cite id="dsq-cite-791">
+http://www.adverseconditionals.com                <span id="dsq-author-user-791">Harry M</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-791" class="dsq-comment-body">
+            <div id="dsq-comment-message-791" class="dsq-comment-message"><p>How does this float your boat?</p>
+<p>public class ActionClickListener: OnClickListener<br />
+{<br />
+    Action<view> action;<br />
+    public ActionClickListener(Action</view><view> action)<br />
+    {<br />
+           _action = action<br />
+    }<br />
+    public override void OnClick(View v)<br />
+    {<br />
+        _action(v);<br />
+    }<br />
+}</view></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-792">
+        <div id="dsq-comment-header-792" class="dsq-comment-header">
+            <cite id="dsq-cite-792">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-792">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-792" class="dsq-comment-body">
+            <div id="dsq-comment-message-792" class="dsq-comment-message"><p>@Chris / @Thomas &#8211; i&#8217;m not saying java has everything c# does. never said that, never will. i&#8217;m not even going to go down that path because i&#8217;m just learning java so i don&#8217;t know what all i would want in java</p>
+<p>@harry &#8211; hey, now that&#8217;s a nice looking work around! i&#8217;ve used that type of technique before, but didn&#8217;t think about doing in in a situation like this. thanks! </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-793">
+        <div id="dsq-comment-header-793" class="dsq-comment-header">
+            <cite id="dsq-cite-793">
+http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-793">MM</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-793" class="dsq-comment-body">
+            <div id="dsq-comment-message-793" class="dsq-comment-message"><p>wait, what i am missing here? why are you suddenly OK with a delegate as an alternative?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-794">
+        <div id="dsq-comment-header-794" class="dsq-comment-header">
+            <cite id="dsq-cite-794">
+                <span id="dsq-author-user-794">Adam Cooper</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-794" class="dsq-comment-body">
+            <div id="dsq-comment-message-794" class="dsq-comment-message"><p>Derick, I agree. </p>
+<p>Our company is doing hybrid .NET and Java development (GWT front-end with a legacy .NET backend), which has given me a unique chance to develop in both languages on a day-to-day basis. While there are a lot of C# niceties I miss when I&#8217;m in Java, I really do like Java&#8217;s more grown-up version of anonymous classes. </p>
+<p>Like Harry, I tend to pass Action and Func classes a lot when I&#8217;m in C#, which is great when all you need to pass is a method or two. But I think a more powerful anonymous class syntax could still be handy in some situations.</p>
+<p>I have yet to hear anyone voice a genuine reason why this would be bad for C#, other than &#8220;I don&#8217;t like it because C# is better than Java.&#8221; As far as I&#8217;m concerned, this would  be a welcome feature. Nice suggestion.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-795">
+        <div id="dsq-comment-header-795" class="dsq-comment-header">
+            <cite id="dsq-cite-795">
+http://mattmc3.blogspot.com                <span id="dsq-author-user-795">mattmc3</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-795" class="dsq-comment-body">
+            <div id="dsq-comment-message-795" class="dsq-comment-message"><p>@Harry M -</p>
+<p>THANK YOU!  I read this post and my BS meter went off the carts.  I immediately cracked open a C# editor to write this very same code.  Then I popped back in to post it and caught your reply.  Just to complete the code, here&#8217;s how the author would use your class with an inline method:</p>
+<p>OnClickListener ocl = new ActionClickListener(<br />
+  delegate(View v) {<br />
+    // do whatever I want to here<br />
+    // Console.WriteLine(&#8220;delegate&#8221;);<br />
+  }<br />
+);</p>
+<p>This is exactly how this problem should be handled in C#.  I think the author wanted to rant about Java and Microsoft rather than just asking a simple question of any experienced C# dev.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-796">
+        <div id="dsq-comment-header-796" class="dsq-comment-header">
+            <cite id="dsq-cite-796">
+                <span id="dsq-author-user-796">Michael Chandler</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-796" class="dsq-comment-body">
+            <div id="dsq-comment-message-796" class="dsq-comment-message"><p>Clearly this is a necessary idiom within Java as they don&#8217;t support delegates. I&#8217;ve been working with .NET for the past 3 years and have never felt the need to use &#8216;anonymous inner classes&#8217;.</p>
+<p>A few of the comments mention testing as a candidate of this. I partly agree &#8212; but why not use a good isolation framework instead?</p>
+<p>As others have said, are you able to give some concrete examples on when you would use this?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-797">
+        <div id="dsq-comment-header-797" class="dsq-comment-header">
+            <cite id="dsq-cite-797">
+http://olabini.com/blog                <span id="dsq-author-user-797">Ola Bini</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-797" class="dsq-comment-body">
+            <div id="dsq-comment-message-797" class="dsq-comment-message"><p>As lots of other people have mentioned, the eventing example is unfortunate. There is a real missing piece of functionality from C# here, though &#8211; that is totally correct. Lambda expressions and delegates solve the one-function problem, but the real trouble is handling the case where you want to send something in with more than one method, or something that has both state and a method. This is powerful and used a lot in Java (not only for events). In those circumstances I&#8217;ve found myself using an API where I send in several delegates/lambdas that all take a self as an explicit argument. Ugly, but useful.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-798">
+        <div id="dsq-comment-header-798" class="dsq-comment-header">
+            <cite id="dsq-cite-798">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-798">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-798" class="dsq-comment-body">
+            <div id="dsq-comment-message-798" class="dsq-comment-message"><p>@MM &#8211; there&#8217;s a difference between accepting a workaround and wanting a solution, and they are not in conflict with each other. just because i want full anonymous types doesn&#8217;t mean i won&#8217;t use a workaround.</p>
+<p>@John Sonmez and @Adam Cooper &#8211; thanks! glad i&#8217;m not alone. :)</p>
+<p>@matmc3 &#8211; thanks for putting words in my mouth and assuming you know why i&#8217;m posting this! i&#8217;m a full time C# developer. have been doing .NET for 8 years, but i obviously just want to bash on the company that makes such a great platform. and it&#8217;s obviously better to be a fanboy and assume that microsoft is product perfection rather than questioning why a useful feature is missing and show some use cases for it. nice one. you got me.</p>
+<p>@Michael Chandler,</p>
+<p>proxy classes&#8230; i really want this for proxy classes.</p>
+<p>I don&#8217;t have the luxury of using Castle.DynamicProxy and it&#8217;s IL weaving in the Compact Framework. If I had a full featured anonymous type, I would have been able to make better use of the proxy classes I had to create by hand without polluting my solution with dozens of copies of the workaround that Harry M posted.</p>
+<p>as it stands, I used the solution that Harry M posted and was very happy to have see his reply and to be able to use it. it is an acceptable way of handling the proxy classes that I need since we don&#8217;t have full anonymous types. i&#8217;m just annoyed that i need to create one instance of this solution for every proxy that I need, so that i can inject them into my dependencies via my IoC container. but hey, at least its a working solution! </p>
+<p>@Harry M. &#8211; your suggestion is indeed very useful. thanks again. :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-799">
+        <div id="dsq-comment-header-799" class="dsq-comment-header">
+            <cite id="dsq-cite-799">
+http://simpleprogrammer.com                <span id="dsq-author-user-799">John Sonmez</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-799" class="dsq-comment-body">
+            <div id="dsq-comment-message-799" class="dsq-comment-message"><p>@mattmc3</p>
+<p>While your code is an example of using C# to write equivalent code.  It still is not quite the same thing you can do with anonymous overrides in Java.  (Don&#8217;t get me wrong here.  I prefer C# to Java, but working in both, I have learned to appreciate the pros of each.)</p>
+<p>In Java you can do something like this&#8230;.</p>
+<p>ComplicatedClass class = new ComplicatedClass()<br />
+{<br />
+    @override<br />
+    protected void hitTheDataBase()<br />
+    {<br />
+        // do nothing, want to mock this call out.<br />
+    }</p>
+<p>    @override<br />
+    protected int pickARandomNumber()<br />
+    {<br />
+       return 2; // I like two, it doesn&#8217;t get enough credit.<br />
+    }<br />
+}</p>
+<p>You can also create an anonymous static block, which is actually kind of scary, but JMock uses it for making it real easy to set up recording.</p>
+<p>Don&#8217;t get me wrong.  Java needs real delegates&#8230; But it does have this pretty cool feature.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-800">
+        <div id="dsq-comment-header-800" class="dsq-comment-header">
+            <cite id="dsq-cite-800">
+http://www.lostechies.com/members/jcteague/default.aspx                <span id="dsq-author-user-800">jcteague</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-800" class="dsq-comment-body">
+            <div id="dsq-comment-message-800" class="dsq-comment-message"><p>Full anonymous classes would be awesome in C#! Will have to play with 4.0 and see whats possible with dynamic.  This is the first Java feature that I&#8217;ve seen that is superior to C#.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-801">
+        <div id="dsq-comment-header-801" class="dsq-comment-header">
+            <cite id="dsq-cite-801">
+                <span id="dsq-author-user-801">AviS</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-801" class="dsq-comment-body">
+            <div id="dsq-comment-message-801" class="dsq-comment-message"><p>Sorry (and maybe i&#8217;m missing the whole point here), but to me it looks like Java&#8217;s implementation is a crippled hack for anonymous methods (not to mention the lack of lambda expressions). Functional programming is all about the functions, and that is so easy and elegant in C#. Defining inline stuff (classes or methods) should be very readable since, well, it&#8217;s defined inline. And I think inline methods are much more readable than inline classes.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-802">
+        <div id="dsq-comment-header-802" class="dsq-comment-header">
+            <cite id="dsq-cite-802">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-802">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-802" class="dsq-comment-body">
+            <div id="dsq-comment-message-802" class="dsq-comment-message"><p>@AviS &#8211; i agree that java is missing delegates (anonymous methods). wrong perspective for this post, though. i&#8217;m looking at c# from a java lens, not java from a c# lens.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-803">
+        <div id="dsq-comment-header-803" class="dsq-comment-header">
+            <cite id="dsq-cite-803">
+                <span id="dsq-author-user-803">James</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-803" class="dsq-comment-body">
+            <div id="dsq-comment-message-803" class="dsq-comment-message"><p>Sigh.</p>
+<p>Depressing that so many people miss the point. You cannot do a method-inline implementation in C#. You can in Java.</p>
+<p>Some times, for interfaces with 2 or 3 methods, it would be real handy to be able to implement it inline in C#. But you can&#8217;t. You can in Java.</p>
+<p>Support for delegates is not the same thing.</p>
+<p>Can you implement an interface inline in C#? No, you can&#8217;t. But in Java you can.</p>
+<p>Got that? </p>
+<p>Idiots.</p>
+<p>(9-year MS developer, but that doesn&#8217;t cause me to turn off my brain).</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-804">
+        <div id="dsq-comment-header-804" class="dsq-comment-header">
+            <cite id="dsq-cite-804">
+                <span id="dsq-author-user-804">Esteban</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-804" class="dsq-comment-body">
+            <div id="dsq-comment-message-804" class="dsq-comment-message"><p>@James:<br />
+Sometimes when you&#8217;ve stated a dependency on an interface but really only depended on a single method&#8217;s declaration from that interface, you probably exaggerated your needs. </p>
+<p>Got that?</p>
+<p>Of course, as a consumer of such a stupid class, the functionality you suggest is desperately wanted.</p>
+<p>By the way, why are you so angry?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-805">
+        <div id="dsq-comment-header-805" class="dsq-comment-header">
+            <cite id="dsq-cite-805">
+http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-805">MM</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-805" class="dsq-comment-body">
+            <div id="dsq-comment-message-805" class="dsq-comment-message"><p>@James</p>
+<p>My neighbor and I both drive compact cars. The other day we were standing outside and someone drove by in a big van. My neighbor started lamenting about how he wished he had a big van. So I said to my neighbor, &#8220;Neighbor, the only thing I&#8217;ve ever seen you use your compact car for is driving yourself, and only yourself, to work. Why would you need a big van?&#8221;</p>
+<p>Please note that I did not ask him to explain the difference between a compact car and a big van.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-806">
+        <div id="dsq-comment-header-806" class="dsq-comment-header">
+            <cite id="dsq-cite-806">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-806">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-806" class="dsq-comment-body">
+            <div id="dsq-comment-message-806" class="dsq-comment-message"><p>@MM</p>
+<p>I own two compact cars (one for me, one for my wife). I have to rent a truck every time I want to buy anything larger than half a cubic meter. what you&#8217;re saying is that i shouldn&#8217;t wish my car was bigger when i need to buy something that won&#8217;t fit in it&#8230; that i shouldn&#8217;t want to a bigger vehicle so that i can be larger things. </p>
+<p>you&#8217;ve only ever seen your neighbor drive himself to work&#8230; is that because that&#8217;s all he ever does? or is that because that&#8217;s all his car will let him do? perhaps there are times when your neighbor really needed a large van, but only had a compact car and therefore was only able to drive to work instead of being able to do all the things a large van would let them do.</p>
+<p>&#8230; don&#8217;t confuse &#8220;can&#8217;t&#8221; with &#8220;don&#8217;t need to&#8221;.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-807">
+        <div id="dsq-comment-header-807" class="dsq-comment-header">
+            <cite id="dsq-cite-807">
+http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-807">MM</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-807" class="dsq-comment-body">
+            <div id="dsq-comment-message-807" class="dsq-comment-message"><p>@derick</p>
+<p>no, no, no. that&#8217;s not what i&#8217;m saying at all. i&#8217;m saying what you&#8217;re saying. i don&#8217;t think anyone was unclear on the difference between the language constructs. we were unclear on what problem it was trying to solve. i actually chose the word &#8220;seen&#8221; very deliberately in my post above. because that gets right to the point. the question we were all asking is &#8220;why do you want this thing?&#8221; not &#8220;what is this thing that you want?&#8221; </p>
+<p>hope that clears it up (it made so much sense in my head). sorry for the confusion</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-808">
+        <div id="dsq-comment-header-808" class="dsq-comment-header">
+            <cite id="dsq-cite-808">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-808">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-808" class="dsq-comment-body">
+            <div id="dsq-comment-message-808" class="dsq-comment-message"><p>@MM &#8211; ok, yeah. it was the word &#8220;seen&#8221; that sparked that response. i see your point now.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-809">
+        <div id="dsq-comment-header-809" class="dsq-comment-header">
+            <cite id="dsq-cite-809">
+http://wizardsofsmart.net/                <span id="dsq-author-user-809">Ryan Riley</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-809" class="dsq-comment-body">
+            <div id="dsq-comment-message-809" class="dsq-comment-message"><p>I think the conclusion here is, F# ftw. That said, while you can&#8217;t do interface or class instantiation, you can mimic anonymous methods within anonymous types by using delegate properties. Yes, I know that&#8217;s still not the same, but it gets you closer.</p>
+<p>With the Reactive Extensions release, I see more people wanting to move to the Observable pattern, and that will likely have us wanting a lot of these features in C#.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-2" id="dsq-comment-1711">
+        <div id="dsq-comment-header-1711" class="dsq-comment-header">
+            <cite id="dsq-cite-1711">
+                <span id="dsq-author-user-1711">Gusman_Bjork</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-1711" class="dsq-comment-body">
+            <div id="dsq-comment-message-1711" class="dsq-comment-message"><p>        void CreateDinaClass()<br />
+        {</p>
+<p>            var dinaclass = new<br />
+            {</p>
+<p>                DoThis = new Func(s =&gt; int.Parse(s)),<br />
+                DoThat = new Func<br />
+                    ((a, b) =&gt; <br />
+                        {<br />
+ <br />
+                            if(a  45)<br />
+                                System.Windows.Forms.MessageBox.Show(&#8220;Oh god!!!!&#8221;);</p>
+<p>                            return a + b;</p>
+<p>                        }<br />
+                    )</p>
+<p>            };</p>
+<p>            UseDinaClass(dinaclass);<br />
+        <br />
+        }</p>
+<p>        void UseDinaClass(dynamic AnonClass)<br />
+        {</p>
+<p>            AnonClass.DoThis(&#8220;33&#8243;);<br />
+            AnonClass.DoThat(12,89);<br />
+        <br />
+        }<br />
+So, doesn&#8217;t this works like a Java anonymous class?There&#8217;s no need for an interface with the dynamic keyword and witha multiline lambda expression a function can be created.I know it&#8217;s an old post but I wanted to show this way of creatinganonymous classes with a very similar functionality to Java anonymousclasses.I hate the anonymous classes in Java, i had to program during two yearswith it and really hated the inner classes. And that&#8217;s not because C#doesn&#8217;t have them, it&#8217;s because the readability of the code gets killed.In a function where you hook to multiple events, the code becomes a truly mess which nobody can read without struggling his brain.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2497">
+        <div id="dsq-comment-header-2497" class="dsq-comment-header">
+            <cite id="dsq-cite-2497">
+                <span id="dsq-author-user-2497">dan</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2497" class="dsq-comment-body">
+            <div id="dsq-comment-message-2497" class="dsq-comment-message"><p>I&#8217;ve coded much in both C# and Java, and I really prefer Java&#8217;s anonymous classes. They&#8217;re much more powerful, they allow you to have clearly defined shared data between methods of a protocol unlike the &#8220;closures everywhere&#8221; and &#8220;a separate decoupled delegate class for each little action&#8221; hack of C#. Say I need to load data from disk in a separate thread and then &#8220;finalize/complete&#8221; it in another thread (the underlying library is thread-unsafe). In Java I create an abstract class with two abstract methods &#8220;executeAsync&#8221; and &#8220;complete&#8221;. Then I can create an anonymous class where method &#8220;executeAsync&#8221; stores its results inside a shared field, which &#8220;complete&#8221; later picks on. In C# I would need to create two absolutely separate delegate types, then instantiate two delegates, and the only data they can sure are closured method variables, which is pretty dangerous because C# doesn&#8217;t have a &#8220;final&#8221; constraint on closures like in Java and there can be data mismatch if you change the variable somewhere. Bugs, bugs everywhere. But of course for simple GUI, C#&#8217;s delegates are good. The funny thing is that delegate-based GUI programming is outdated and they&#8217;re moving to declarative WPF etc. now, so C#&#8217;s delegates aren&#8217;t that needed anymore.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2010/04/14/anonymous-types-in-c-are-a-crippled-hack/';
+    var disqus_identifier = '138 /blogs/derickbailey/archive/2010/04/14/anonymous-types-in-c-are-a-crippled-hack.aspx';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "Anonymous Types In C# Are A Crippled Hack";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=138';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2010\/04\/14\/anonymous-types-in-c-are-a-crippled-hack\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2012<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 06:55:43 -->

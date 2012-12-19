@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Zombies! RUN! (Managing Page Transitions In Backbone Apps)</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Sun, 16 Dec 2012 23:48:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Weft</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2847</link>
+		<dc:creator>Weft</dc:creator>
+		<pubDate>Tue, 20 Nov 2012 13:51:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2847</guid>
+		<description>Great article!. thanks you for help me to kill the zombies</description>
+		<content:encoded><![CDATA[<p>Great article!. thanks you for help me to kill the zombies</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Christian Behrens</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2838</link>
+		<dc:creator>Christian Behrens</dc:creator>
+		<pubDate>Tue, 13 Nov 2012 10:46:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2838</guid>
+		<description>Very comprehensive and informative post. Keep up the great work!</description>
+		<content:encoded><![CDATA[<p>Very comprehensive and informative post. Keep up the great work!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: dcz.switcher</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2809</link>
+		<dc:creator>dcz.switcher</dc:creator>
+		<pubDate>Mon, 29 Oct 2012 10:47:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2809</guid>
+		<description>Thanks to share your knowlesges, just a question, imagine a list view of something and a detail view
+can I just define a new model for detail view and render it ?</description>
+		<content:encoded><![CDATA[<p>Thanks to share your knowlesges, just a question, imagine a list view of something and a detail view<br />
+can I just define a new model for detail view and render it ?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2808</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Sun, 28 Oct 2012 19:42:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2808</guid>
+		<description>semantics, and purpose.
+
+the remove method is a convenience method that wraps &quot;this.$el.remove()&quot; and is used to remove the view&#039;s &quot;el&quot; from the DOM. this has a very different set of semantics than &quot;close&quot; does.</description>
+		<content:encoded><![CDATA[<p>semantics, and purpose.</p>
+<p>the remove method is a convenience method that wraps &#8220;this.$el.remove()&#8221; and is used to remove the view&#8217;s &#8220;el&#8221; from the DOM. this has a very different set of semantics than &#8220;close&#8221; does.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Miguel</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2807</link>
+		<dc:creator>Miguel</dc:creator>
+		<pubDate>Sun, 28 Oct 2012 16:54:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2807</guid>
+		<description>Is there a reason why you chose to create a &#039;close&#039; method rather than overriding the &#039;remove&#039; method?</description>
+		<content:encoded><![CDATA[<p>Is there a reason why you chose to create a &#8216;close&#8217; method rather than overriding the &#8216;remove&#8217; method?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Salman</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2733</link>
+		<dc:creator>Salman</dc:creator>
+		<pubDate>Wed, 05 Sep 2012 05:23:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2733</guid>
+		<description>Thank you Derick. We are also working with backbone on a large scale app and the first thing we hit upon was this very issue. 
+This was a great help and nice read.</description>
+		<content:encoded><![CDATA[<p>Thank you Derick. We are also working with backbone on a large scale app and the first thing we hit upon was this very issue.<br />
+This was a great help and nice read.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Stark</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2687</link>
+		<dc:creator>Stark</dc:creator>
+		<pubDate>Wed, 15 Aug 2012 14:29:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2687</guid>
+		<description>You should mention this in an update on this post - I was having same issues with this, but the updated code is way more solid!</description>
+		<content:encoded><![CDATA[<p>You should mention this in an update on this post &#8211; I was having same issues with this, but the updated code is way more solid!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Tom Moor</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2686</link>
+		<dc:creator>Tom Moor</dc:creator>
+		<pubDate>Wed, 15 Aug 2012 07:45:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2686</guid>
+		<description>This approach seems to work really well, I&#039;ve combined it with also having an optional onClose event so that individual views can tidy up anything specific such as events bound directly to the window.</description>
+		<content:encoded><![CDATA[<p>This approach seems to work really well, I&#8217;ve combined it with also having an optional onClose event so that individual views can tidy up anything specific such as events bound directly to the window.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2684</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Tue, 14 Aug 2012 11:32:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2684</guid>
+		<description>ah, sorry. somehow missed that you were passing in the context variable. that might work. i don&#039;t know for sure, but you could test it out and see pretty easily :)</description>
+		<content:encoded><![CDATA[<p>ah, sorry. somehow missed that you were passing in the context variable. that might work. i don&#8217;t know for sure, but you could test it out and see pretty easily :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Michiel van Eerd</title>
+		<link>http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2683</link>
+		<dc:creator>Michiel van Eerd</dc:creator>
+		<pubDate>Tue, 14 Aug 2012 10:19:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=548#comment-2683</guid>
+		<description>Hi Derick, thank you. Maybe I&#039;m wrong, but the code above only removes the callbacks for the model of *one specific view*, not all. If you look at the backbone documentation:
+
+
+// Removes all callbacks for `context` for all events.
+object.off(null, null, context);
+
+// Removes all callbacks on `object`.
+object.off();
+
+So when a view calls this.model.off(null, null, this), where &quot;this&quot; references
+the view, only the callbacks for the model of this view are removed,
+and no other views are affected.</description>
+		<content:encoded><![CDATA[<p>Hi Derick, thank you. Maybe I&#8217;m wrong, but the code above only removes the callbacks for the model of *one specific view*, not all. If you look at the backbone documentation:</p>
+<p>// Removes all callbacks for `context` for all events.<br />
+object.off(null, null, context);</p>
+<p>// Removes all callbacks on `object`.<br />
+object.off();</p>
+<p>So when a view calls this.model.off(null, null, this), where &#8220;this&#8221; references<br />
+the view, only the callbacks for the model of this view are removed,<br />
+and no other views are affected.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 05:31:09 -->

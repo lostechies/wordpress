@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -80,39 +79,38 @@
 <h2>Problem: Routing A Delete</h2>
 <p>I&#8217;ve seen this a number of times &#8211; and have built it at least once, myself. When a developer who normally works with rails or another MVC server technology gets to the point where they need to delete one of the Backbone models, they add a route for delete. Then they use a link in the html to hit the route and cause the delete to happen.</p>
 <p>The delete route and view often look like this:</p>
-<div id="gist-1123795" class="gist">
-    
+<script src="https://gist.github.com/1123795.js?file=1-routing-delete.js"></script><noscript><pre><code class="language-javascript javascript">SomeModel = Backbone.Model.extend({});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">SomeModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({});</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">SomeCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">SomeModel</span></div><div class='line' id='LC5'><span class="p">});</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="nx">SomeView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nx">el</span><span class="o">:</span> <span class="s2">&quot;#some-model&quot;</span><span class="p">,</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="nx">template</span><span class="o">:</span> <span class="s2">&quot;#some-template&quot;</span><span class="p">,</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">template</span><span class="p">).</span><span class="nx">tmpl</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">);</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC15'><span class="p">});</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'><span class="nx">SomeRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="nx">routes</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s1">&#39;#/delete/:id&#39;</span><span class="o">:</span> <span class="s1">&#39;delete&#39;</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC21'><br/></div><div class='line' id='LC22'>&nbsp;&nbsp;<span class="k">delete</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">model</span> <span class="o">=</span> <span class="nx">someCollection</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">();</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#some-model&quot;</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span></div><div class='line' id='LC26'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC27'><span class="p">});</span></div></pre></div>
-          </div>
+SomeCollection = Backbone.Collection.extend({
+  model: SomeModel
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1123795/9bc53dd5bf826fd9c6666a4c37175a507357af15/1-routing-delete.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1123795#file_1_routing_delete.js" style="float:right;margin-right:10px;color:#666">1-routing-delete.js</a>
-            <a href="https://gist.github.com/1123795">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+SomeView = Backbone.view.extend({
+  el: &quot;#some-model&quot;,
+  template: &quot;#some-template&quot;,
 
+  render: function(){
+    var html = $(this.template).tmpl(this.model);
+    $(this.el).html(html);
+  }
+});
+
+SomeRouter = Backbone.Router.extend({
+  routes: {
+    '#/delete/:id': 'delete'
+  },
+
+  delete: function(id){
+    model = someCollection.find(id);
+    model.destroy();
+    $(&quot;#some-model&quot;).remove();
+  }
+});</code></pre></noscript>
 <p>With an HTML layout that looks like this (after being rendered):</p>
-<div id="gist-1123795" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;some-model&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nt">&lt;p&gt;</span>display some data from the model, here<span class="nt">&lt;/p&gt;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;delete&quot;</span> <span class="na">href=</span><span class="s">&quot;#/delete/1&quot;</span><span class="nt">&gt;</span>delete<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC4'><span class="nt">&lt;/div&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1123795/a2d12c64461fda96f1e4ec8ca34c9959d92fc4e0/2-routing-delete.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1123795#file_2_routing_delete.html" style="float:right;margin-right:10px;color:#666">2-routing-delete.html</a>
-            <a href="https://gist.github.com/1123795">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1123795.js?file=2-routing-delete.html"></script><noscript><pre><code class="language-html html">&lt;div id=&quot;some-model&quot;&gt;
+  &lt;p&gt;display some data from the model, here&lt;/p&gt;
+  &lt;a class=&quot;delete&quot; href=&quot;#/delete/1&quot;&gt;delete&lt;/a&gt;
+&lt;/div&gt;</code></pre></noscript>
 <p>Yes, this is functional. You can click on that link and it will delete the model in question. The rendered view for that model will also be removed from the HTML that is displayed on the screen. As functional as this is, though, there are several problems with it.</p>
 <h3>Browser History</h3>
 <p>One of the features that we get with Backbone&#8217;s router is the ability to control the browser&#8217;s history and the back button. Every time we send the browser to a new url#route, Backbone records it in the browser&#8217;s history. This allows us to move backward and forward in the application, using the browser&#8217;s backward and forward navigation button.</p>
@@ -132,39 +130,37 @@
 <h2>Solution: Let The View Be In Control</h2>
 <p>Given the number of problems that have been identified, it should hopefully be apparent that a route for a delete is probably not the best thing to do. Fortunately, we can solve these problems by building our Backbone views the way they were meant to be built, allowing them to encapsulate control of a model, including the model&#8217;s deletion.</p>
 <p>Here&#8217;s an example of the code that we can use to allow deletion of the model via the view, directly:</p>
-<div id="gist-1123795" class="gist">
-    
+<script src="https://gist.github.com/1123795.js?file=3-view-delete.js"></script><noscript><pre><code class="language-javascript javascript">SomeModel = Backbone.Model.extend({});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">SomeModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({});</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">SomeCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">SomeModel</span></div><div class='line' id='LC5'><span class="p">});</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="nx">SomeView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nx">el</span><span class="o">:</span> <span class="s2">&quot;#some-model&quot;</span><span class="p">,</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="nx">template</span><span class="o">:</span> <span class="s2">&quot;#some-template&quot;</span><span class="p">,</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click a.delete&quot;</span><span class="o">:</span> <span class="s2">&quot;delete&quot;</span></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">template</span><span class="p">).</span><span class="nx">tmpl</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">);</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="k">delete</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">();</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC25'><span class="p">});</span></div><div class='line' id='LC26'><br/></div></pre></div>
-          </div>
+SomeCollection = Backbone.Collection.extend({
+  model: SomeModel
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1123795/d98d03b450b402c8aeabd19988939b652fd4b5ac/3-view-delete.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1123795#file_3_view_delete.js" style="float:right;margin-right:10px;color:#666">3-view-delete.js</a>
-            <a href="https://gist.github.com/1123795">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+SomeView = Backbone.view.extend({
+  el: &quot;#some-model&quot;,
+  template: &quot;#some-template&quot;,
 
+  events: {
+    &quot;click a.delete&quot;: &quot;delete&quot;
+  },
+
+  render: function(){
+    var html = $(this.template).tmpl(this.model);
+    $(this.el).html(html);
+  },
+
+  delete: function(e){
+    e.preventDefault();
+    this.model.destroy();
+    this.remove();
+  }
+});
+</code></pre></noscript>
 <p>And the view can be simplified a little, too:</p>
-<div id="gist-1123795" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;some-model&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nt">&lt;p&gt;</span>display some data from the model, here<span class="nt">&lt;/p&gt;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;delete&quot;</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>delete<span class="nt">&lt;/a&gt;</span></div><div class='line' id='LC4'><span class="nt">&lt;/div&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1123795/0c0dc4bb1b8d8d63632efe1489c6df7ab6cfb333/4-view-delete.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1123795#file_4_view_delete.html" style="float:right;margin-right:10px;color:#666">4-view-delete.html</a>
-            <a href="https://gist.github.com/1123795">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1123795.js?file=4-view-delete.html"></script><noscript><pre><code class="language-html html">&lt;div id=&quot;some-model&quot;&gt;
+  &lt;p&gt;display some data from the model, here&lt;/p&gt;
+  &lt;a class=&quot;delete&quot; href=&quot;#&quot;&gt;delete&lt;/a&gt;
+&lt;/div&gt;</code></pre></noscript>
 <p>You&#8217;ll notice that this is roughly the same amount of code. There may be 1 or 2 lines less in the new version, but that&#8217;s negligible at best. We don&#8217;t get any advantage from this perspective. However, we do get a number of advantages with regards to the previous problems that I described.</p>
 <h3>No Browser History For The Delete</h3>
 <p>We&#8217;ve changed the delete link in the HTML from &#8220;#/delete/1&#8243; to &#8220;#&#8221;. This could cause a browser history entry to be created, if the browser is currently pointing to a route other than &#8220;#&#8221;. However, there is a line of code in our delete method that will prevent this from happening. The first line, &#8220;e.preventDefault();&#8221;, tells jQuery to prevent the link from causing the browser to change it&#8217;s url. Thus, when we click the delete link, the item will be deleted but we will not navigate to &#8220;#&#8221; and therefore will not have a new route fired or a browser history entry created.</p>
@@ -678,14 +674,15 @@ http://twitter.com/GertSallaerts                <span id="dsq-author-user-2486">
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -921,11 +918,7 @@ http://twitter.com/GertSallaerts                <span id="dsq-author-user-2486">
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1184,4 +1177,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:56:56 -->
+Served from: lostechies.com @ 2012-12-19 07:06:01 -->

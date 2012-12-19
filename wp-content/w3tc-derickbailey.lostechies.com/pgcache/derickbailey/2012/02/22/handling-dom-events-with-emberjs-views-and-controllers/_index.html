@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -74,152 +73,107 @@
 <h2>The View And Template Setup</h2>
 <p>The basics of getting this set up are the same no matter how I decide to handle the specific click. There will be some details of this that change with the different options, but this is a good starting point to render the view with a template.</p>
 <p>The Handlebars template for the list and items looks like this:</p>
-<div id="gist-1880628" class="gist">
-    
+<script src="https://gist.github.com/1880628.js?file=2.html"></script><noscript><pre><code class="language-html html">&lt;script data-template-name=&quot;email-list-view&quot; type=&quot;text/x-handlebars&quot;&gt;
+  {{#each EmberCloneMail.emailListController}}
+      {{view EmberCloneMail.EmailPreview contentBinding=&quot;this&quot;}}
+  {{/each}}
+&lt;/script&gt;
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">data-template-name=</span><span class="s">&quot;email-list-view&quot;</span> <span class="na">type=</span><span class="s">&quot;text/x-handlebars&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">#</span><span class="nx">each</span> <span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">emailListController</span><span class="p">}}</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{{</span><span class="nx">view</span> <span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">EmailPreview</span> <span class="nx">contentBinding</span><span class="o">=</span><span class="s2">&quot;this&quot;</span><span class="p">}}</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">/each}}</span></div><div class='line' id='LC5'><span class="nt">&lt;/script&gt;</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="nt">&lt;script </span><span class="na">data-template-name=</span><span class="s">&quot;email-preview&quot;</span> <span class="na">type=</span><span class="s">&quot;text/x-handlebars&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">#</span><span class="kd">with</span> <span class="nx">content</span><span class="p">}}</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;from&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="nx">from</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;subject&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="nx">subject</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="nx">date</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">/with}}</span></div><div class='line' id='LC13'><span class="nt">&lt;/script&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1880628/eca7a893b044d1118615533e56fd6a525889cb60/2.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1880628#file_2.html" style="float:right;margin-right:10px;color:#666">2.html</a>
-            <a href="https://gist.github.com/1880628">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+&lt;script data-template-name=&quot;email-preview&quot; type=&quot;text/x-handlebars&quot;&gt;
+  {{#with content}}
+    &lt;span class=&quot;from&quot;&gt;{{from}}&lt;/span&gt;
+    &lt;span class=&quot;subject&quot;&gt;{{subject}}&lt;/span&gt;
+    &lt;span class=&quot;date&quot;&gt;{{date}}&lt;/span&gt;
+  {{/with}}
+&lt;/script&gt;</code></pre></noscript>
 <p>Note that there&#8217;s two templates in this &#8211; one of the &lt;ul&gt; and the &#8220;collection&#8221; information, and one for individual &lt;li&gt; items that represent the emails I&#8217;ll be displaying. This follows the same idea that I&#8217;ve talked about with Backbone&#8217;s collection / child rendering, but it puts the loop directly in the template instead of in the JavaScript view object.</p>
 <p>The Ember view then looks like this:</p>
-<div id="gist-1880628" class="gist">
-    
+<script src="https://gist.github.com/1880628.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">EmberCloneMail.EmailListView = Em.View.extend({
+  tagName: &quot;ul&quot;,
+  classNames: [&quot;email-list&quot;, &quot;email-view&quot;],
+  templateName: &quot;email-list-view&quot;
+});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">EmailListView</span> <span class="o">=</span> <span class="nx">Em</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;ul&quot;</span><span class="p">,</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">classNames</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;email-list&quot;</span><span class="p">,</span> <span class="s2">&quot;email-view&quot;</span><span class="p">],</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">templateName</span><span class="o">:</span> <span class="s2">&quot;email-list-view&quot;</span></div><div class='line' id='LC5'><span class="p">});</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">EmailPreview</span> <span class="o">=</span> <span class="nx">Em</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;li&quot;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="nx">templateName</span><span class="o">:</span> <span class="s2">&quot;email-preview&quot;</span></div><div class='line' id='LC10'><span class="p">});</span></div><div class='line' id='LC11'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1880628/79f4d3eac3d4abe2e97677b90bebb2263c71edd5/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1880628#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/1880628">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+EmberCloneMail.EmailPreview = Em.View.extend({
+  tagName: &quot;li&quot;
+  templateName: &quot;email-preview&quot;
+});
+</code></pre></noscript>
 <p>There are also two views &#8211; one for the &lt;ul&gt; list and one for each of the &lt;li&gt; items.</p>
 <p>You can either use another Handlebars template block to render the list in to the HTML directly, or use JavaScript to instantiate, render and display the view in the right spot. How you do that makes no difference in handling the DOM clicks.</p>
 <h2>Option 1: Let The View Handle It</h2>
 <p>This is pretty much &#8220;the Backbone way&#8221; and it can be done in Ember in much the same manner. In the view, you add a &#8220;click&#8221; method and it receives the standard jQuery &#8220;events&#8221; argument for jQuery DOM events.</p>
-<div id="gist-1880628" class="gist">
-    
+<script src="https://gist.github.com/1880628.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">EmberCloneMail.EmailPreview = Em.View.extend({
+  tagName: &quot;li&quot;
+  templateName: &quot;email-preview&quot;,
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">EmailPreview</span> <span class="o">=</span> <span class="nx">Em</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;li&quot;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">templateName</span><span class="o">:</span> <span class="s2">&quot;email-preview&quot;</span><span class="p">,</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">click</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// handle the view click here</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC8'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1880628/d0cc3bf8dcd5fbd02ebf5ba7a8d818067d550f7b/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1880628#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/1880628">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  click: function(e){
+    // handle the view click here
+  }
+});</code></pre></noscript>
 <p>From there, you can do things as you would expect &#8211; manipulating the view, manipulating the model and generally getting on about the job of working with the view and model. This is very much the &#8220;presenter&#8221; approach to view objects, creating the vertical path between Model -&gt; Presenters -&gt; View (HTML in this case) in an MVP style.</p>
 <p>The problem with this approach is that it pretty listens to all of the clicks for any HTML element within the view template. If you have a very simple template and you want the click to behave this way, it works out well. But if you want to listen to a click on a specific element within the view, that&#8217;s where the next option comes in to play.</p>
 <h2>Option 2: {{action}} Helpers</h2>
 <p>Handlebars lets you register view helper functions that can pretty much do anything you want. One of the helpers that comes with Ember is the {{action}} function that let&#8217;s you specify a method on your view to handle on a DOM event.</p>
-<div id="gist-1880628" class="gist">
-    
+<script src="https://gist.github.com/1880628.js?file=4.html"></script><noscript><pre><code class="language-html html">&lt;script data-template-name=&quot;email-preview&quot; type=&quot;text/x-handlebars&quot;&gt;
+  {{#with content}}
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">data-template-name=</span><span class="s">&quot;email-preview&quot;</span> <span class="na">type=</span><span class="s">&quot;text/x-handlebars&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">#</span><span class="kd">with</span> <span class="nx">content</span><span class="p">}}</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;from&quot;</span> <span class="p">{{</span><span class="nx">action</span> <span class="s2">&quot;doStuff&quot;</span> <span class="nx">on</span><span class="o">=</span><span class="s2">&quot;click&quot;</span><span class="p">}}</span><span class="o">&gt;</span><span class="p">{{</span><span class="nx">from</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;subject&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="nx">subject</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="nx">date</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">/with}}</span></div><div class='line' id='LC9'><span class="nt">&lt;/script&gt;</span></div></pre></div>
-          </div>
+    &lt;span class=&quot;from&quot; {{action &quot;doStuff&quot; on=&quot;click&quot;}}&gt;{{from}}&lt;/span&gt;
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1880628/0f47faca7c9e4b6dacbaeb73b103b52ad9ca6900/4.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1880628#file_4.html" style="float:right;margin-right:10px;color:#666">4.html</a>
-            <a href="https://gist.github.com/1880628">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+    &lt;span class=&quot;subject&quot;&gt;{{subject}}&lt;/span&gt;
+    &lt;span class=&quot;date&quot;&gt;{{date}}&lt;/span&gt;
+  {{/with}}
+&lt;/script&gt;</code></pre></noscript>
 <p>In this case, we&#8217;re putting the {{action}} on the &#8220;from&#8221; portion of the view, so that when you click the email sender&#8217;s name it will be handled by the view. Like the first option, the methods that you specify with an {{action}} are methods on the view, directly:</p>
-<div id="gist-1880628" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">EmailPreview</span> <span class="o">=</span> <span class="nx">Em</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;li&quot;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">templateName</span><span class="o">:</span> <span class="s2">&quot;email-preview&quot;</span><span class="p">,</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">doStuff</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// do stuff here, based on the click of the HTML element</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC8'><span class="p">});</span></div></pre></div>
-          </div>
+<script src="https://gist.github.com/1880628.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">EmberCloneMail.EmailPreview = Em.View.extend({
+  tagName: &quot;li&quot;
+  templateName: &quot;email-preview&quot;,
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1880628/7b7aa3d259174bb6b59797332de8a819c476c8a5/5.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1880628#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
-            <a href="https://gist.github.com/1880628">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  doStuff: function(){
+    // do stuff here, based on the click of the HTML element
+  }
+});</code></pre></noscript>
 <p>You can also specify a different view to handle the event using {{action target=&#8221;someOtherView&#8221;}} in the template.</p>
 <p>The benefit here, as stated above, is that you can handle any DOM event you want with any method in the view that you want. This is largely the functionality as Backbone&#8217;s declarative &#8220;events&#8221; hash on a view, but has the added advantage that you can target a different view. You&#8217;re also specifying this in the template directly &#8211; which may or may not be an advantage, depending on your perspective.</p>
 <h2>Option 3: Targeting A Controller Action</h2>
 <p>In looking through some of the example apps, I noticed that the several of the views included sub-view rendering of &#8220;Ember.Button&#8221; in order to create a button on the screen. These sub-views were then told to target a specific controller and action for the clicking of the button. I thought this sounded like a pretty cool option and I wanted to see what it would take to make my EmailPreview view work this way. Turns out, it was very easy.</p>
 <p>I found <a href="https://github.com/emberjs/ember.js/blob/master/packages/ember-handlebars/lib/controls/button.js">the Ember.Button view in the source code</a> with the help of Github&#8217;s awesome search feature (just hit &#8220;t&#8221; and then start typing. It will find file names in the current repo for you). From that code, I learned about the <a href="https://github.com/emberjs/ember.js/blob/master/packages/ember-runtime/lib/mixins/target_action_support.js">Ember.TargetActionSupport</a> object. This is the object that let&#8217;s you specify the controller and action to target when you are setting up the view render in Handlebars templates.</p>
 <p>To get your view to work with this, just extend the view with this object:</p>
-<div id="gist-1880628" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">EmailPreview</span> <span class="o">=</span> <span class="nx">Em</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Ember</span><span class="p">.</span><span class="nx">TargetActionSupport</span><span class="p">,</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="c1">// tag, template, etc here</span></div><div class='line' id='LC3'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1880628/9978a3528a67b697399c012515bd80785ef02967/6.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1880628#file_6.js" style="float:right;margin-right:10px;color:#666">6.js</a>
-            <a href="https://gist.github.com/1880628">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1880628.js?file=6.js"></script><noscript><pre><code class="language-javascript javascript">EmberCloneMail.EmailPreview = Em.View.extend(Ember.TargetActionSupport, {
+  // tag, template, etc here
+});</code></pre></noscript>
 <p>Then in your templates, when you call in to this view, you specify the target controller and action:</p>
-<div id="gist-1880628" class="gist">
-    
+<script src="https://gist.github.com/1880628.js?file=7.html"></script><noscript><pre><code class="language-html html">&lt;script data-template-name=&quot;email-list-view&quot; type=&quot;text/x-handlebars&quot;&gt;
+  {{#each EmberCloneMail.emailListController}}
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">data-template-name=</span><span class="s">&quot;email-list-view&quot;</span> <span class="na">type=</span><span class="s">&quot;text/x-handlebars&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">#</span><span class="nx">each</span> <span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">emailListController</span><span class="p">}}</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{{</span><span class="nx">view</span> <span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">EmailPreview</span> <span class="nx">contentBinding</span><span class="o">=</span><span class="s2">&quot;this&quot;</span> </div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">target</span><span class="o">=</span><span class="s2">&quot;EmberCloneMail.emailController&quot;</span> </div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">action</span><span class="o">=</span><span class="s2">&quot;showEmail&quot;</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}}</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">/each}}</span></div><div class='line' id='LC12'><span class="nt">&lt;/script&gt;</span></div><div class='line' id='LC13'><br/></div><div class='line' id='LC14'><span class="nt">&lt;script </span><span class="na">data-template-name=</span><span class="s">&quot;email-preview&quot;</span> <span class="na">type=</span><span class="s">&quot;text/x-handlebars&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">#</span><span class="kd">with</span> <span class="nx">content</span><span class="p">}}</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;from&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="nx">from</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;subject&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="nx">subject</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="o">&gt;</span><span class="p">{{</span><span class="nx">date</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/span&gt;</span></div><div class='line' id='LC19'>&nbsp;&nbsp;<span class="p">{{</span><span class="err">/with}}</span></div><div class='line' id='LC20'><span class="nt">&lt;/script&gt;</span></div></pre></div>
-          </div>
+      {{view EmberCloneMail.EmailPreview contentBinding=&quot;this&quot; 
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1880628/f529e385a132167f429750f9e8008245d384cbc4/7.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1880628#file_7.html" style="float:right;margin-right:10px;color:#666">7.html</a>
-            <a href="https://gist.github.com/1880628">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+        target=&quot;EmberCloneMail.emailController&quot; 
+        action=&quot;showEmail&quot;
 
+      }}
+
+  {{/each}}
+&lt;/script&gt;
+
+&lt;script data-template-name=&quot;email-preview&quot; type=&quot;text/x-handlebars&quot;&gt;
+  {{#with content}}
+    &lt;span class=&quot;from&quot;&gt;{{from}}&lt;/span&gt;
+    &lt;span class=&quot;subject&quot;&gt;{{subject}}&lt;/span&gt;
+    &lt;span class=&quot;date&quot;&gt;{{date}}&lt;/span&gt;
+  {{/with}}
+&lt;/script&gt;</code></pre></noscript>
 <p>To finish this out, you need to handle the DOM event that will trigger the controller / action the way you would use option #1 above. In my case, I added a &#8220;click&#8221; method. Within this method, you call out to the target action:</p>
-<div id="gist-1880628" class="gist">
-    
+<script src="https://gist.github.com/1880628.js?file=8.js"></script><noscript><pre><code class="language-javascript javascript">EmberCloneMail.EmailPreview = Em.View.extend(Ember.TargetActionSupport, {
+  // tag, template, etc her
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">EmberCloneMail</span><span class="p">.</span><span class="nx">EmailPreview</span> <span class="o">=</span> <span class="nx">Em</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Ember</span><span class="p">.</span><span class="nx">TargetActionSupport</span><span class="p">,</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="c1">// tag, template, etc her</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">click</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// call the targeted controller / action</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">triggerAction</span><span class="p">();</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC10'><span class="p">});</span></div></pre></div>
-          </div>
+  click: function(e){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1880628/732d4d0f4057381bee9411b8ef826e77e027a913/8.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1880628#file_8.js" style="float:right;margin-right:10px;color:#666">8.js</a>
-            <a href="https://gist.github.com/1880628">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    // call the targeted controller / action
+    this.triggerAction();
 
+  }
+});</code></pre></noscript>
 <p>The benefit in this case is that you can re-use a view and template across multiple behaviors in your app. When you specify which view you are rendering in the template, you tell it which controller and action to use. Therefore, when you are using the same view in multiple places, you can target different controllers and actions, based on what&#8217;s appropriate for the current use.</p>
 <p>The drawback to this, though, is that you&#8217;re just about limited to a single controller and action target. This makes more sense when you consider that an HTML button typically only has the one click event. In the case of an HTML &lt;li&gt; like I&#8217;m using, it might not make quite as much sense to limit  your template and view to a single action. My use case called for this, though. I want to handle the click of the &lt;li&gt; and only the click of the &lt;li&gt;, so I was able to properly use the TargetActionSupport correctly.</p>
 <h2>Option ???: Something Else ???</h2>
@@ -489,14 +443,15 @@ http://twitter.com/dagda1                <span id="dsq-author-user-2250">dagda1<
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -732,11 +687,7 @@ http://twitter.com/dagda1                <span id="dsq-author-user-2250">dagda1<
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -995,4 +946,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:40:14 -->
+Served from: lostechies.com @ 2012-12-19 06:47:47 -->

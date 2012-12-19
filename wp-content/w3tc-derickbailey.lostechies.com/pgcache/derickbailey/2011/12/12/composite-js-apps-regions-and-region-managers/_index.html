@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -87,41 +86,53 @@
 <li>Call any required cleanup for content views when they are removed</li>
 </ul>
 <p>What I came up with as an initial pass at handling these needs, is the following (hard coded specifically to use a &#8220;#mainregion&#8221; element from the DOM):</p>
-<div id="gist-1468250" class="gist">
-    
+<script src="https://gist.github.com/1468250.js?file=regionmanager.js"></script><noscript><pre><code class="language-javascript javascript">RegionManager = (function (Backbone, $) {
+    var currentView;
+    var el = &quot;#mainregion&quot;;
+    var region = {};
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">RegionManager</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">Backbone</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">currentView</span><span class="p">;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="s2">&quot;#mainregion&quot;</span><span class="p">;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">region</span> <span class="o">=</span> <span class="p">{};</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">closeView</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">view</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="nx">view</span> <span class="o">&amp;&amp;</span> <span class="nx">view</span><span class="p">.</span><span class="nx">close</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">view</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">};</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">openView</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">view</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">onShow</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">view</span><span class="p">.</span><span class="nx">onShow</span><span class="p">();</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">};</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">region</span><span class="p">.</span><span class="nx">show</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">view</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">closeView</span><span class="p">(</span><span class="nx">currentView</span><span class="p">);</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">currentView</span> <span class="o">=</span> <span class="nx">view</span><span class="p">;</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">openView</span><span class="p">(</span><span class="nx">currentView</span><span class="p">);</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">};</span></div><div class='line' id='LC25'><br/></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">region</span><span class="p">;</span></div><div class='line' id='LC27'><span class="p">})(</span><span class="nx">Backbone</span><span class="p">,</span> <span class="nx">jQuery</span><span class="p">);</span></div></pre></div>
-          </div>
+    var closeView = function (view) {
+        if (view &amp;&amp; view.close) {
+            view.close();
+        }
+    };
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1468250/92c6dca60b8b10c823f42c26a3e32668199d5365/regionmanager.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1468250#file_regionmanager.js" style="float:right;margin-right:10px;color:#666">regionmanager.js</a>
-            <a href="https://gist.github.com/1468250">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    var openView = function (view) {
+        view.render();
+        $(el).html(view.el);
+        if (view.onShow) {
+            view.onShow();
+        }
+    };
 
+    region.show = function (view) {
+        closeView(currentView);
+        currentView = view;
+        openView(currentView);
+    };
+
+    return region;
+})(Backbone, jQuery);</code></pre></noscript>
 <p>Does that look familiar? It certainly does to me. I&#8217;ve written this same code dozens of times and blogged about it in my <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/">Zombies! RUN!</a> post. So, it turns out that I&#8217;ve been using what I&#8217;m now calling a &#8220;region manager&#8221; for a while &#8211; I just didn&#8217;t realize it, previously. Oh, happy day! I&#8217;m just formalizing a concept I had introduced somewhere else, instead of having to create something new and unknown. :)</p>
 <h2>Using The Region Manager</h2>
 <p>An in-depth use of the region manager has been covered in my Zombies post already. As a refresher, though, you only need to provide a Backbone view to the `show` method and the region manager will take over from there.</p>
-<div id="gist-1468250" class="gist">
-    
+<script src="https://gist.github.com/1468250.js?file=view.js"></script><noscript><pre><code class="language-javascript javascript">MyView = Backbone.View.extend({
+  render: function(){
+    $(this.el).html(&quot;some html contents&quot;);
+    $(this.el).hide();
+  },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;some html contents&quot;</span><span class="p">);</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">close</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">unbind</span><span class="p">();</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="nx">onShow</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">show</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC15'><span class="p">});</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'><span class="nx">RegionManager</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="k">new</span> <span class="nx">MyView</span><span class="p">());</span></div></pre></div>
-          </div>
+  close: function(){
+    this.remove();
+    this.unbind();
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1468250/0713fc684d0ca24bdcefc0e1c68d7b32935c10be/view.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1468250#file_view.js" style="float:right;margin-right:10px;color:#666">view.js</a>
-            <a href="https://gist.github.com/1468250">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  onShow: function(){
+    $(this.el).show(500);
+  }
+});
 
+RegionManager.show(new MyView());</code></pre></noscript>
 <p>The usual `close` method exists so we can handle our zombie problems. I&#8217;ve also added a bit more to the API that the region manager can handle, making it more robust and allowing it to handle more complex UI needs. Specifically, an `onShow` method fires on your view if you&#8217;ve provided one, just after the view&#8217;s `el` has been added to the DOM. This method will let you call into code that expects the DOM elements to exist, to manipulate them.</p>
 <p>In this simple example, I&#8217;m using the `onShow` to fade the contents of the view in to view, using jQuery&#8217;s `.show` method and giving it a 500 milliseconds (1/2 of 1 second) time to do the fade. It&#8217;s a simple idea, but one that I&#8217;ve found is needed when using some libraries, such as the jQuery layout plugin. Again, this isn&#8217;t an idea that I came up with, either. I took this directly from my experience in working with WinForms applications. `onShow` is a standard event in the lifecycle of a Windows form, in .NET. It works well there, and it works well here in JavaScript, too.</p>
 <h2>But Wait! There&#8217;s More!</h2>
@@ -284,14 +295,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2414">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -527,11 +539,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2414">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -790,4 +798,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:57:47 -->
+Served from: lostechies.com @ 2012-12-19 06:40:11 -->

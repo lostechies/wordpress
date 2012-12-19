@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -70,62 +69,81 @@
 
 					<div class="entry-content">
 						<p>In my last post, I briefly touched on a small problem in the relationship between the view and the model. Here&#8217;s the relevant code, again:</p>
-<div id="gist-1028505" class="gist">
-    
+<script src="https://gist.github.com/1028505.js?file=1-theproblem.js"></script><noscript><pre><code class="language-javascript javascript">  var Credentials = Backbone.Model.extend({
+    // ... code for a validated event here
+  });
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">Credentials</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// ... code for a validated event here</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">LoginView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">loginButton</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#login&quot;</span><span class="p">);</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// tight coupling and leaky code...</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">view</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;validated&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">validated</span><span class="p">);</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">validated</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">valid</span><span class="p">){</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// even more tight coupling between the view and model</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// worse yet, the method, even though it&#39;s in the view,</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// executes within the scope of the view!</span></div><div class='line' id='LC20'><br/></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="nx">valid</span><span class="p">){</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">loginButton</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">);</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span> <span class="k">else</span> <span class="p">{</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">loginButton</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">);</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC27'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC28'><br/></div><div class='line' id='LC29'><br/></div></pre></div>
-          </div>
+  var LoginView = Backbone.View.extend({
+    initialize: function(){
+      this.loginButton = $(&quot;#login&quot;);
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1028505/db560f9b51d831104599790177292a5211bfeadd/1-theproblem.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1028505#file_1_theproblem.js" style="float:right;margin-right:10px;color:#666">1-theproblem.js</a>
-            <a href="https://gist.github.com/1028505">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+      // tight coupling and leaky code...
+      this.model.view = this;
+      
+      this.model.bind(&quot;validated&quot;, this.validated);
+    },
 
+    validated: function(valid){
+      
+      // even more tight coupling between the view and model
+      // worse yet, the method, even though it's in the view,
+      // executes within the scope of the view!
+
+      if (valid){
+        this.loginButton.removeAttr(&quot;disabled&quot;);
+      } else {
+        this.loginButton.attr(&quot;disabled&quot;, &quot;true&quot;);
+      }
+    }
+  });
+
+</code></pre></noscript>
 <p> </p>
 <p>This is some awful code, honestly. I didn&#8217;t like it when I first wrote it, and I still don&#8217;t like it. It coupled my view and my model together in ways that I don&#8217;t like. It broke the Law of Demeter. It also confused me &#8211; why would the &#8220;validated&#8221; method of the view execute in the context of the model?! This method is clearly not on the model&#8230; but &#8220;this&#8221; always evaluated as the model, not the view.</p>
 <p> </p>
 <h3>Understanding This Problem</h3>
 <p>I&#8217;ve read about &#8220;this&#8221; in javascript a number of times. It represents the current scope of the code that&#8217;s executing, similar to &#8220;self&#8221; in ruby or &#8220;this&#8221; in C#. Like ruby and c#, javascript has some interesting rules about what &#8220;this&#8221; evaluates to depending on when and where you are executing code. In effect, &#8220;this&#8221; can change at times that you wouldn&#8217;t expect based on closures, callback methods, and other code that can modify the scope of the executing code.</p>
 <p>Look at the following code for some examples of when you might expect &#8220;this&#8221; to be something other than what it actually is.</p>
-<div id="gist-1028505" class="gist">
-    
+<script src="https://gist.github.com/1028505.js?file=2-thereisnospoon.js"></script><noscript><pre><code class="language-javascript javascript">$(function(){
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">SomeModel</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">raiseIt</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">data</span><span class="o">:</span> <span class="nx">data</span><span class="p">});</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;someEvent&quot;</span><span class="p">);</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">SomeView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">el</span><span class="o">:</span> <span class="s2">&quot;#input&quot;</span><span class="p">,</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span> <span class="s2">&quot;change #input&quot;</span><span class="o">:</span> <span class="s2">&quot;showIt&quot;</span> <span class="p">},</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;someEvent&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showIt</span><span class="p">);</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#input&quot;</span><span class="p">).</span><span class="nx">change</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">showIt</span><span class="p">);</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">showIt</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">)</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">));</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">else</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;there is no model attribute!&quot;</span><span class="p">);</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC26'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC27'><br/></div><div class='line' id='LC28'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">someModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SomeModel</span><span class="p">();</span></div><div class='line' id='LC29'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">someView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SomeView</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="nx">someModel</span><span class="p">});</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'>&nbsp;&nbsp;<span class="c1">// what do you expect the alert boxes to show for these two lines?</span></div><div class='line' id='LC32'>&nbsp;&nbsp;<span class="c1">// what do you expect it to show when you change the text input field?</span></div><div class='line' id='LC33'>&nbsp;&nbsp;<span class="nx">someModel</span><span class="p">.</span><span class="nx">raiseIt</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">);</span></div><div class='line' id='LC34'>&nbsp;&nbsp;<span class="nx">someView</span><span class="p">.</span><span class="nx">showIt</span><span class="p">();</span></div><div class='line' id='LC35'><br/></div><div class='line' id='LC36'><span class="p">});</span></div><div class='line' id='LC37'><br/></div></pre></div>
-          </div>
+  var SomeModel = Backbone.Model.extend({
+    raiseIt: function(data){
+      this.set({data: data});
+      this.trigger(&quot;someEvent&quot;);
+    }
+  });
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1028505/883352190331497e5d4cfd028c5f040ba1a0790d/2-thereisnospoon.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1028505#file_2_thereisnospoon.js" style="float:right;margin-right:10px;color:#666">2-thereisnospoon.js</a>
-            <a href="https://gist.github.com/1028505">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  var SomeView = Backbone.View.extend({
+    el: &quot;#input&quot;,
 
+    events: { &quot;change #input&quot;: &quot;showIt&quot; },
+
+    initialize: function(){
+      this.model.bind(&quot;someEvent&quot;, this.showIt);
+      $(&quot;#input&quot;).change(this.showIt);
+    },
+
+    showIt: function(){
+      if (this.model)
+        alert(this.model.get('data'));
+      else
+        alert(&quot;there is no model attribute!&quot;);
+    }
+  });
+
+  var someModel = new SomeModel();
+  var someView = new SomeView({model: someModel});
+
+  // what do you expect the alert boxes to show for these two lines?
+  // what do you expect it to show when you change the text input field?
+  someModel.raiseIt(&quot;foo&quot;);
+  someView.showIt();
+
+});
+</code></pre></noscript>
 <p> </p>
 <p>And here&#8217;s the html to run this:</p>
-<div id="gist-1028505" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;html&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nt">&lt;head&gt;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;jquery-1.6.1.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span> </div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;underscore-min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span> </div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;backbone-min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span> </div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;example.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nt">&lt;/head&gt;</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nt">&lt;body&gt;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;/login&quot;</span> <span class="na">id=</span><span class="s">&quot;login-form&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">id=</span><span class="s">&quot;input&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&lt;/form&gt;</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="nt">&lt;/body&gt;</span></div><div class='line' id='LC13'><span class="nt">&lt;/html&gt;</span></div><div class='line' id='LC14'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1028505/bd196685345ef460046662b321126f89a6d279d1/3-thereisnospoon.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1028505#file_3_thereisnospoon.html" style="float:right;margin-right:10px;color:#666">3-thereisnospoon.html</a>
-            <a href="https://gist.github.com/1028505">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<div>Could not embed GitHub Gist 1028505: API Rate Limit Exceeded for 70.169.150.251</div>
 <p> </p>
 <p>Before you continue on to the next images, try to imagine what you&#8217;re going to see when you run this code in your browser. Load the page and watch the first two alert boxes go by, then type some text into the input box and tab or click out of it to see the third alert box. Here&#8217;s the results, in order:</p>
 <p><img title="Screen shot 2011-06-15 at 9.17.36 PM.png" src="http://lostechies.com/derickbailey/files/2011/06/Screen-shot-2011-06-15-at-9.17.36-PM.png" border="0" alt="Screen shot 2011 06 15 at 9 17 36 PM" width="459" height="193" /></p>
@@ -140,22 +158,12 @@
 <h3>Underscore.js To The Rescue!</h3>
 <p>Backbone is built with the Underscore.js library. This little library provides a lot of functionality for Backbone&#8217;s models, collections, view, controllers, etc. One of the things that it provides is the &#8220;_.bindAll&#8221; method, which as it turns out, is our savior to make the showIt method behave consistently.</p>
 <p>The Backbone documentation has a brief discussion on <a href="http://documentcloud.github.com/backbone/#FAQ-this">Binding &#8220;this&#8221;</a>. It&#8217;s worth reading this section to see what Backbone has to say. The gist of it is that &#8220;_.bindAll&#8221; will allow you to change the context in which a method is fired, so that the scope of &#8220;this&#8221; is changed to any object you want. What this means for us, is that we can tell our view to always execute shotIt with &#8220;this&#8221; scoped to the view! Best of all, it&#8217;s a one line change:</p>
-<div id="gist-1028505" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;showIt&quot;</span><span class="p">);</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;someEvent&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showIt</span><span class="p">);</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#input&quot;</span><span class="p">).</span><span class="nx">change</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">showIt</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1028505/d562e415003a963c4a7c9cc32df96f88aa77b5c7/4-bindall.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1028505#file_4_bindall.js" style="float:right;margin-right:10px;color:#666">4-bindall.js</a>
-            <a href="https://gist.github.com/1028505">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1028505.js?file=4-bindall.js"></script><noscript><pre><code class="language-javascript javascript">    initialize: function(){
+      _.bindAll(this, &quot;showIt&quot;);
+      this.model.bind(&quot;someEvent&quot;, this.showIt);
+      $(&quot;#input&quot;).change(this.showIt);
+    },
+</code></pre></noscript>
 <p> </p>
 <p>Line 2 was added to the initialize method of our view, to bind the view as the context in which showIt is executed. This gives us the view as &#8220;this&#8221; in the showIt method, and our problems are magically solved! Now when we execute the script again, we get the following results:</p>
 <p><img title="Screen shot 2011-06-15 at 9.42.01 PM.png" src="http://lostechies.com/derickbailey/files/2011/06/Screen-shot-2011-06-15-at-9.42.01-PM.png" border="0" alt="Screen shot 2011 06 15 at 9 42 01 PM" width="466" height="192" /></p>
@@ -166,21 +174,7 @@
 <p> </p>
 <h3>Fixing this.model.view and this.view.loginButton</h3>
 <p>Now that we understand what&#8217;s really going on, we can finally get back to the original login example and fix it.</p>
-<div id="gist-1028505" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;validated&quot;</span><span class="p">);</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#username&quot;</span><span class="p">);</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">password</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#password&quot;</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">loginButton</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#login&quot;</span><span class="p">);</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;validated&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">validated</span><span class="p">);</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">validated</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">valid</span><span class="p">){</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="nx">valid</span><span class="p">){</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">loginButton</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">);</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span> <span class="k">else</span> <span class="p">{</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">loginButton</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">);</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC16'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1028505/704db213539095733cd33b8f8bbc37ebbd64a45c/5-fixingtheloginview.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1028505#file_5_fixingtheloginview.js" style="float:right;margin-right:10px;color:#666">5-fixingtheloginview.js</a>
-            <a href="https://gist.github.com/1028505">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<div>Could not embed GitHub Gist 1028505: API Rate Limit Exceeded for 70.169.150.251</div>
 <p> </p>
 <p>There&#8217;s only a couple of changes we made to the view. We added line 2 to bind the view as the validated method&#8217;s scope. We removed the line that assigned &#8220;this.mode.view = this;&#8221;. And then in the validated method, we changed &#8220;this.view.loginButton&#8221; to &#8220;this.loginButton&#8221; because &#8220;this&#8221; is now the view, which has our login button!</p>
 <p>Our sample application still works the way we expect, but we&#8217;ve now cleaned up the coupling issue between the view and the model, fixed the Law of Demeter violation, and generally made the code more consistent in behavior by ensuring that the validated method always executes in the scope of the view.</p>
@@ -462,14 +456,15 @@ This was exactly what I needed</p>
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -705,11 +700,7 @@ This was exactly what I needed</p>
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -968,4 +959,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:44:08 -->
+Served from: lostechies.com @ 2012-12-19 06:49:01 -->

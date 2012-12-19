@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -84,22 +83,13 @@
 <p>This is the one step the everyone does, and does well.</p>
 <h2>Stage 2: The Application&#8217;s Initialization</h2>
 <p>Every application has an initialization stage. Some are more elaborate than others. At times you can get away with the over-simplified &#8220;app&#8221; object with an &#8220;init&#8221; method on it, like many of the sample apps and boilerplate codes will suggest:</p>
-<div id="gist-1731648" class="gist">
-    
+<script src="https://gist.github.com/1731648.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">App = {
+  init: function(){
+    // app initialization and startup goes here
+  }
+}
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">App</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">init</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// app initialization and startup goes here</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC5'><span class="p">}</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="nx">App</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1731648/5d7d6d280ce51e71ccf1f103954fad1a99e5b4b2/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1731648#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/1731648">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+App.init();</code></pre></noscript>
 <p>But when you get in to an application of any significant size and complexity, the single &#8220;init&#8221; method becomes a junk drawer where you tend to throw code because you haven&#8217;t yet identified where it should belong. Using a series of small initializer functions for each area of your application will help to alleviate this problem, as I&#8217;ve mentioned before. But the real question is:</p>
 <p>What goes in the initializers?</p>
 <p>Initializers are the bits of code, functionality, data and display that are absolutely required for your app to do it&#8217;s job, no matter what part of the application the user is trying to load up and use. They are the bits that must be initialized before the user can do anything meaningful with your application.</p>
@@ -112,77 +102,54 @@
 <p>So… what goes in the contextual start, other than just saying route callbacks?</p>
 <p>Your route callbacks should be as simple as possible. They shouldn&#8217;t initialize your system as a whole. Rather, they should be used to determine the state of the application that the user wishes to see. Therefore, the code that goes in to a route callback should be the smallest amount of code that you can write, to get your application from it&#8217;s initial state (the state that it was in when the initializers completed) to the desired state.</p>
 <p>In an image gallery application, a user may hit a bookmark that points to a specific image. For example, &#8220;#images/4&#8243;. The route callback that executes should load the requested image and display it on the screen:</p>
-<div id="gist-1731648" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">routes</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;image/:id&quot;</span><span class="o">:</span> <span class="s2">&quot;imageById&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'>&nbsp;</div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">imageById</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">image</span> <span class="o">=</span> <span class="nx">imageCollection</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">App</span><span class="p">.</span><span class="nx">showImage</span><span class="p">(</span><span class="nx">image</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC10'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1731648/89de647c4000cb1aad368e7b9e58072e55b8b2b9/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1731648#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/1731648">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1731648.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.Router.extend({
+  routes: {
+    &quot;image/:id&quot;: &quot;imageById&quot;
+  },
+ 
+  imageById: function(id){
+    var image = imageCollection.get(id);
+    App.showImage(image);
+  }
+});</code></pre></noscript>
 <p>In a multi-room chat application, a user may hit a bookmark that should take them directly in to a specific chat room. For example, &#8220;#backbone&#8221;. The route callback that executes should take this room name and call the code that is necessary to enter the chat room.</p>
 <p>Chances are this is a fairly involved set of code. You&#8217;ll need to load the list of users in the chat room. You&#8217;ll need to clear the current chat windows and possibly pre-load recent messages to be displayed. You may also need to change a browser&#8217;s websocket event listeners to pick up events for this specific room instead, so that messages for this room can be displayed as they come in.</p>
 <p>This is a lot of code to run, and it&#8217;s fare more code than should be allowed in a route callback method. It should, then, be encapsulated in an object that is responsible for registering the user as having entered that chat room. This object is then called from the router:</p>
-<div id="gist-1731648" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">routes</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;:roomname&quot;</span><span class="o">:</span> <span class="s2">&quot;chatroom&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'>&nbsp;</div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">chatroom</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">roomname</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">ChatApp</span><span class="p">.</span><span class="nx">enterRoom</span><span class="p">(</span><span class="nx">roomname</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC9'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1731648/124f65b2e0709143308b84f18e4cc4c9e11d6adf/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1731648#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/1731648">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1731648.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.Router.extend({
+  routes: {
+    &quot;:roomname&quot;: &quot;chatroom&quot;
+  },
+ 
+  chatroom: function(roomname){
+    ChatApp.enterRoom(roomname);
+  }
+});</code></pre></noscript>
 <p>Furthermore, there&#8217;s a high likelihood that the user will be able to enter chat rooms using some interaction on the web page. They may click on a chat room name in their favorite&#8217;s list, or they may type in a command like &#8220;/join #backbone&#8221; in to the chat application&#8217;s command area. For any of the the multiple ways to enter a chatroom, the code that is executed should be the same. Having the route callback be as simple and stupid as possible will promote code re-use and allow these three options to be easily implemented. If you only need to call &#8220;ChatApp.enterRoom(&#8216;someRoom&#8217;)&#8221; to enter any room that the user specifies, providing options for how the user enters a room becomes trivial.</p>
 <h2>Putting It All Together</h2>
 <p>There are many different ways of stringing these different stages together. There are many different tools that help us to easily create the HTML that we need, include the CSS and JavaScript assets, and kick things off. Some applications are small enough that an initialization step and contextual start step can be combined. Most applications of any significant size, though, should think about separating these in to explicit steps in order to promote better architecture, clean code, and re-use of code.</p>
 <p>For me, I&#8217;m accomplishing stages 2 and 3 with my Backbone.Marionette add-on. It provides a very clean way to create initializers:</p>
-<div id="gist-1731648" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">App</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">App</span><span class="p">.</span><span class="nx">addInitializer</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="c1">// add some app initialization code, here</span></div><div class='line' id='LC5'><span class="p">});</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="nx">App</span><span class="p">.</span><span class="nx">addInitializer</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="c1">// more initialization stuff </span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="c1">// for a different part of the app</span></div><div class='line' id='LC10'><span class="p">});</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'><span class="c1">// run all the initializers and start the app</span></div><div class='line' id='LC13'><span class="nx">App</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span></div></pre></div>
-          </div>
+<script src="https://gist.github.com/1731648.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">App = new Backbone.Marionette.Application();
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1731648/bbd27a6654733f3d4ecfb49aadc29a536d5fbb8f/4.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1731648#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
-            <a href="https://gist.github.com/1731648">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+App.addInitializer(function(){
+  // add some app initialization code, here
+});
 
+App.addInitializer(function(){
+  // more initialization stuff 
+  // for a different part of the app
+});
+
+// run all the initializers and start the app
+App.start();</code></pre></noscript>
 <p>At the time of this writing, though, I don&#8217;t have an explicit &#8220;startup&#8221; callback mechanism in place. I have a &#8220;start&#8221; method on my Marionette.Application object. But right now this really only fires up the initializer callbacks. So, I&#8217;m currently using the &#8220;initialize:after&#8221; event to run my start code. I see this as a problem, though &#8211; not of a technical nature, but of a semantic nature. And yes, semantics are important.</p>
-<div id="gist-1731648" class="gist">
-    
+<script src="https://gist.github.com/1731648.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">App = new Backbone.Marionette.Application();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">App</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="cm">/* ... initializers go here ... */</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="c1">// contextual startup</span></div><div class='line' id='LC6'><span class="nx">App</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;initialize:after&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span></div><div class='line' id='LC8'><span class="p">});</span></div></pre></div>
-          </div>
+/* ... initializers go here ... */
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1731648/102becd9b2b776c4569830f2383ae625105885a2/5.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1731648#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
-            <a href="https://gist.github.com/1731648">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+// contextual startup
+App.on(&quot;initialize:after&quot;, function(){
+  Backbone.history.start();
+});</code></pre></noscript>
 <p>I&#8217;m not sure what the new implementation will look like, but it may end up being a &#8220;startup&#8221; callback method, similar to the initializer methods. The startup callback (or callbacks?) would execute after all of the initialization is done. This will provide a cleaner separation between the two concerns of initialization vs startup. I&#8217;ll have to see where this leads me, though, as right now, the majority of what I do for a contextual start is simply call &#8220;Backbone.history.start()&#8221;, as I showed in the above example.</p>
 											</div><!-- .entry-content -->
 
@@ -417,14 +384,15 @@ http://twitter.com/craftbluedev                <span id="dsq-author-user-2719">C
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -660,11 +628,7 @@ http://twitter.com/craftbluedev                <span id="dsq-author-user-2719">C
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -923,4 +887,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:39:43 -->
+Served from: lostechies.com @ 2012-12-19 06:58:51 -->

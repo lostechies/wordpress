@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Dear Open Source Project Leader: Quit Being A Jerk</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Sun, 16 Dec 2012 23:48:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Rage Against Fraudy</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940</link>
+		<dc:creator>Rage Against Fraudy</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 14:25:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2940</guid>
+		<description>Communists are always mean people. The Richard Stallman model has made any sensible programmer flee the programming profession. Open Sourcers all think they are going to further the cause of communism by destroying all value in proprietary trade secrets. They are on a mission with an agenda - an agenda no one wants and has always failed. That is why they are so mean. They still believe in the superiority of communism and thus they still believe THEY are superior to everyone. Hence the behavior. Open Source Commies have done more to turn a once-respected profession into some kind of bohemian hippie club for communist losers. No wonder people are fleeing the programming profession in droves.... &quot;Open Source is tantamount to communism&quot; -- Bill Gates</description>
+		<content:encoded><![CDATA[<p>Communists are always mean people. The Richard Stallman model has made any sensible programmer flee the programming profession. Open Sourcers all think they are going to further the cause of communism by destroying all value in proprietary trade secrets. They are on a mission with an agenda &#8211; an agenda no one wants and has always failed. That is why they are so mean. They still believe in the superiority of communism and thus they still believe THEY are superior to everyone. Hence the behavior. Open Source Commies have done more to turn a once-respected profession into some kind of bohemian hippie club for communist losers. No wonder people are fleeing the programming profession in droves&#8230;. &#8220;Open Source is tantamount to communism&#8221; &#8212; Bill Gates</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Toni Korpela</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941</link>
+		<dc:creator>Toni Korpela</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 14:25:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2941</guid>
+		<description>Leaders being jerk can be applied pretty much in every field. Only the power they have over others might make them jerks, though everyone has their own reasons to be jerks. 
+
+OSS leaders often have to be jerks in public which creates fear of working for them even before new volunteer has submitted pull requests. 
+
+I probably could partly say why Torvalds is a jerk for example, which comes down to the fact that he is from Finland where we have a culture of saying straight to you what we want even if it makes you sad. 
+
+Then again I understand that OSS leaders should use more of their time to guide the new people or at least forward those pull request to someone who can be the guide. Because the job of reading pull requests and understanding the code is task which takes quite bit of time to make the decision if the pull request is good or not. Would you start mentoring this newbie when you have twenty to hundred pull request left to read. 
+
+Leaving the newbie unanswered is worse than replying with harsh quick words, because if they were not replied they will come back to harrass you asking why the pull request was not merged and they did not learn that something in their code sucks. If you say that the code sucks they will either make it better or drop it depending on their motivation and if they actually make it better you can see that they are motivated to help the project which gives you as the leader more security over the code the newbie is requesting to be merged.
+
+</description>
+		<content:encoded><![CDATA[<p>Leaders being jerk can be applied pretty much in every field. Only the power they have over others might make them jerks, though everyone has their own reasons to be jerks. </p>
+<p>OSS leaders often have to be jerks in public which creates fear of working for them even before new volunteer has submitted pull requests. </p>
+<p>I probably could partly say why Torvalds is a jerk for example, which comes down to the fact that he is from Finland where we have a culture of saying straight to you what we want even if it makes you sad. </p>
+<p>Then again I understand that OSS leaders should use more of their time to guide the new people or at least forward those pull request to someone who can be the guide. Because the job of reading pull requests and understanding the code is task which takes quite bit of time to make the decision if the pull request is good or not. Would you start mentoring this newbie when you have twenty to hundred pull request left to read. </p>
+<p>Leaving the newbie unanswered is worse than replying with harsh quick words, because if they were not replied they will come back to harrass you asking why the pull request was not merged and they did not learn that something in their code sucks. If you say that the code sucks they will either make it better or drop it depending on their motivation and if they actually make it better you can see that they are motivated to help the project which gives you as the leader more security over the code the newbie is requesting to be merged.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Toni Korpela</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939</link>
+		<dc:creator>Toni Korpela</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 13:55:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2939</guid>
+		<description>Still we would be able to write code from the start if we can understand the programming languages documentation and form logical expressions with the language. Though this would require much more thinking which would drop those who ask questions from the world of programming even before thinking how to find the information themselves or how to create what they want. We would be just reinventing the wheel much more. 
+
+Never forget those who share information for sheer joy or even for cash would share their accumulated knowledge of programming algorithms and practices anyway. If you read a book covering the domain you are having problem at you possibly could have your answer in your hands without knowing that.
+
+</description>
+		<content:encoded><![CDATA[<p>Still we would be able to write code from the start if we can understand the programming languages documentation and form logical expressions with the language. Though this would require much more thinking which would drop those who ask questions from the world of programming even before thinking how to find the information themselves or how to create what they want. We would be just reinventing the wheel much more. </p>
+<p>Never forget those who share information for sheer joy or even for cash would share their accumulated knowledge of programming algorithms and practices anyway. If you read a book covering the domain you are having problem at you possibly could have your answer in your hands without knowing that.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Marino Hernandez</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2938</link>
+		<dc:creator>Marino Hernandez</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 06:20:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2938</guid>
+		<description>I&#039;m not sure how communities of open source are usually set up to handle requests, but it could help to build a Quora type of question-answer system where bad questions can be edited and people can downvote bad answers. The more people that can see the entire process of questions, requests, and patch submissions and the more recognition a good answerer can earn, the more quality and helpfulness we&#039;d see in a community. 
+
+Also, there are free resources for building a community that is more open and better moderated, such as Google+ Communities.</description>
+		<content:encoded><![CDATA[<p>I&#8217;m not sure how communities of open source are usually set up to handle requests, but it could help to build a Quora type of question-answer system where bad questions can be edited and people can downvote bad answers. The more people that can see the entire process of questions, requests, and patch submissions and the more recognition a good answerer can earn, the more quality and helpfulness we&#8217;d see in a community. </p>
+<p>Also, there are free resources for building a community that is more open and better moderated, such as Google+ Communities.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Ric</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2937</link>
+		<dc:creator>Ric</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 05:38:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2937</guid>
+		<description>This ego of some programmers, usually very good coders, has been the case for decades. As a very accomplished Assembler programmer of the 80&#039;s I was totally flattened by insults from a power hungry jerk of considerable talent himself, that drove me back into my private programming space. I contributed many many early freeware programs in those MSDOS days but I stayed in my own mental space versus being mind-fucked by ruthless idiots who were also very good programmers. Very sad. Now as an older programmer doing current stuff, I find myself very willing to put out free completed products but shy to contribute where peer review is the game, possibly the same game as those many years ago.</description>
+		<content:encoded><![CDATA[<p>This ego of some programmers, usually very good coders, has been the case for decades. As a very accomplished Assembler programmer of the 80&#8242;s I was totally flattened by insults from a power hungry jerk of considerable talent himself, that drove me back into my private programming space. I contributed many many early freeware programs in those MSDOS days but I stayed in my own mental space versus being mind-fucked by ruthless idiots who were also very good programmers. Very sad. Now as an older programmer doing current stuff, I find myself very willing to put out free completed products but shy to contribute where peer review is the game, possibly the same game as those many years ago.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Tim Pope</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2936</link>
+		<dc:creator>Tim Pope</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 03:53:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2936</guid>
+		<description>Where are these open source elite bullies? I don&#039;t think I&#039;ve *ever* seen a tweet by someone making fun of a would-be contributor. Is this the status quo in some niche (or not so niche) community I&#039;m just not exposed to?</description>
+		<content:encoded><![CDATA[<p>Where are these open source elite bullies? I don&#8217;t think I&#8217;ve *ever* seen a tweet by someone making fun of a would-be contributor. Is this the status quo in some niche (or not so niche) community I&#8217;m just not exposed to?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: pwightman</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2935</link>
+		<dc:creator>pwightman</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 01:50:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2935</guid>
+		<description>RTFM and mocking pull requests are two *very* different things. Users that don&#039;t bother to read directions, and those that are trying to contribute are *very* different. This article was not targeting those who tell users to RTFM (nicely), but those that public mock and shame those who are trying to contribute.
+
+
+Shame on you for trying to get &quot;moobs&quot; out of the community.</description>
+		<content:encoded><![CDATA[<p>RTFM and mocking pull requests are two *very* different things. Users that don&#8217;t bother to read directions, and those that are trying to contribute are *very* different. This article was not targeting those who tell users to RTFM (nicely), but those that public mock and shame those who are trying to contribute.</p>
+<p>Shame on you for trying to get &#8220;moobs&#8221; out of the community.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Nicolas</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2934</link>
+		<dc:creator>Nicolas</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 01:06:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2934</guid>
+		<description>Yet, if everyone in the community behaved as you say, then you would have not had any answers to learn from..
+</description>
+		<content:encoded><![CDATA[<p>Yet, if everyone in the community behaved as you say, then you would have not had any answers to learn from..</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Matt</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2933</link>
+		<dc:creator>Matt</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 00:57:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2933</guid>
+		<description>Unfortunately, you&#039;ve also quite accurately described your average IT workplace</description>
+		<content:encoded><![CDATA[<p>Unfortunately, you&#8217;ve also quite accurately described your average IT workplace</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: David</title>
+		<link>http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2932</link>
+		<dc:creator>David</dc:creator>
+		<pubDate>Fri, 14 Dec 2012 23:57:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1037#comment-2932</guid>
+		<description>I think there is a missunderstand here. Look at the perspective of a OSS leader. Usually he has a long todo list, and then is bombarded daily with questions from active developers and external contributors. As he has limited time (usually spending his evening doing this and not his day job), he has to make sure that people who come back actually dont ask again and again consuming more and more time from him. Thats what all the RTFM is about. Read the manual, understand how things work, then come back and make a good effort, people will help you.
+
+
+If you just go ahead and always instantly ask, people will tell you to RTFM as you they need to spend time on other things and the other 50 mails in their inbox.
+
+
+It&#039;s 10minutes for him it&#039;s 10 seconds for ihm, but he is asked that 100 times a day.</description>
+		<content:encoded><![CDATA[<p>I think there is a missunderstand here. Look at the perspective of a OSS leader. Usually he has a long todo list, and then is bombarded daily with questions from active developers and external contributors. As he has limited time (usually spending his evening doing this and not his day job), he has to make sure that people who come back actually dont ask again and again consuming more and more time from him. Thats what all the RTFM is about. Read the manual, understand how things work, then come back and make a good effort, people will help you.</p>
+<p>If you just go ahead and always instantly ask, people will tell you to RTFM as you they need to spend time on other things and the other 50 mails in their inbox.</p>
+<p>It&#8217;s 10minutes for him it&#8217;s 10 seconds for ihm, but he is asked that 100 times a day.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 05:27:26 -->

@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -81,61 +80,50 @@
 <p>Here is the screen shot from the previous post, showing a list of medications with an add/edit form above that.</p>
 <p><img title="NewImage.png" src="http://lostechies.com/derickbailey/files/2011/07/NewImage.png" border="0" alt="NewImage" width="600" height="498" /></p>
 <p>There are 7 input fields and one select box on this form. To code to bind these fields to my model previously looked like this:</p>
-<div id="gist-1102944" class="gist">
-    
+<script src="https://gist.github.com/1102944.js?file=1-old.js"></script><noscript><pre><code class="language-javascript javascript">AddEditView = Backbone.View.extend({
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">AddEditView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;change input&quot;</span><span class="o">:</span> <span class="s2">&quot;fieldChanged&quot;</span><span class="p">,</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;change select&quot;</span><span class="o">:</span> <span class="s2">&quot;selectionChanged&quot;</span><span class="p">,</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nx">selectionChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">field</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">);</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;option:selected&quot;</span><span class="p">,</span> <span class="nx">field</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{};</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">data</span><span class="p">[</span><span class="nx">field</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="nx">fieldChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">field</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">);</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{};</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">data</span><span class="p">[</span><span class="nx">field</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="nx">field</span><span class="p">.</span><span class="nx">val</span><span class="p">();</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span></div><div class='line' id='LC21'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC22'><br/></div><div class='line' id='LC23'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// various jquery template things, here</span></div><div class='line' id='LC25'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC26'><span class="p">});</span></div></pre></div>
-          </div>
+  events: {
+    &quot;change input&quot;: &quot;fieldChanged&quot;,
+    &quot;change select&quot;: &quot;selectionChanged&quot;,
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1102944/4f065d5123d14d215903064d3dcff211844dfd57/1-old.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1102944#file_1_old.js" style="float:right;margin-right:10px;color:#666">1-old.js</a>
-            <a href="https://gist.github.com/1102944">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  selectionChanged: function(e){
+    var field = $(e.currentTarget);
+    var value = $(&quot;option:selected&quot;, field).val();
+    var data = {};
+    data[field.attr('id')] = value;
+    this.model.set(data);
+  },
 
+  fieldChanged: function(e){
+    var field = $(e.currentTarget);
+    var data = {};
+    data[field.attr('id')] = field.val();
+    this.model.set(data);
+  },
+
+  render: function(){
+    // various jquery template things, here
+  }
+});</code></pre></noscript>
 <p>Given the number of inputs on this form, this code isn&#8217;t too bad. I was able to use some javascript and jQuery magic to reduce the amount of code I needed for each of the input boxes. However, I ended up with code to handle input fields and select fields, separately.</p>
 <p>Now let&#8217;s look at this code with Backbone.ModelBinding in place.</p>
-<div id="gist-1102944" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">AddEditView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// various jquery template things, here</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">Backbone</span><span class="p">.</span><span class="nx">ModelBinding</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC6'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1102944/eca09e3e32d28c569c30f03210981830da4cee8b/2-new.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1102944#file_2_new.js" style="float:right;margin-right:10px;color:#666">2-new.js</a>
-            <a href="https://gist.github.com/1102944">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1102944.js?file=2-new.js"></script><noscript><pre><code class="language-javascript javascript">AddEditView = Backbone.View.extend({
+  render: function(){
+    // various jquery template things, here
+    Backbone.ModelBinding.call(this);
+  }
+});</code></pre></noscript>
 <p>Notice a small difference in the amount of code needed to bind all 8 of those fields (7 inputs, 1 select)? What this comparison doesn&#8217;t show is the code that would have been needed to bind a model change back out to the form&#8217;s input fields. The one line of code in the render function, though, to call the Backbone.ModelBinding plugin handles this as well.</p>
 <p>Now I can not only get my form bound to my models with a simple convention, but I can also have any other code on the page update my model and if the model happens to be bound to the form, the form will be updated as well.</p>
 <h2>A Simiple Convention, With Unconventional Support</h2>
 <p>The Backbone.ModelBinding convention to make this work is very simple. The #id of the html form element is used as the model&#8217;s attribute and vice-versa. For example, in the above screen shot my &#8220;Trade name&#8221; field has an id of #trade_name. The model, then, has an attribute called trade_name.</p>
 <p>If you don&#8217;t have your fields and model attributes aligned to this convention, though, Backbone.ModelBinding still supports you! But you have to drop back to manual configuration of the binding.</p>
-<div id="gist-1102944" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">AddEditView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">formBindings</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;change #someInput&quot;</span><span class="o">:</span> <span class="s2">&quot;modelAttribute&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC5'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1102944/762461b2861982cae87892c68cdbe7445b1da19d/3-formBinding.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1102944#file_3_form_binding.js" style="float:right;margin-right:10px;color:#666">3-formBinding.js</a>
-            <a href="https://gist.github.com/1102944">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1102944.js?file=3-formBinding.js"></script><noscript><pre><code class="language-javascript javascript">AddEditView = Backbone.View.extend({
+  formBindings: {
+    &quot;change #someInput&quot;: &quot;modelAttribute&quot;
+  }
+});</code></pre></noscript>
 <p>Still, this is pretty simple. All you need to do is specify which form element is being bound to which model attribute and Backbone.ModelBinding takes care of the rest for you. The only requirement is that the html element you specify must fire a &#8216;change&#8217; event that jQuery can bind to, and must be able to have it&#8217;s value set via jQuery&#8217;s &#8216;.val&#8217; method.</p>
 <h2>What Are You Waiting For?</h2>
 <p>Well? What are you waiting for? <a href="https://github.com/derickbailey/backbone.modelbinding">Go grab a copy of Backbone.ModelBinding and try it out!</a> It&#8217;s still verfdy early in it&#8217;s development, so it only supports input and select elements, right now. But! It&#8217;s open source &#8211; MIT License &#8211; and hosted on Github. If it doesn&#8217;t do what you need or does something you don&#8217;t want it to do, I&#8217;m always open to receiving pull requests.</p>
@@ -520,14 +508,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2176">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -763,11 +752,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2176">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1026,4 +1011,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:01:38 -->
+Served from: lostechies.com @ 2012-12-19 05:52:30 -->

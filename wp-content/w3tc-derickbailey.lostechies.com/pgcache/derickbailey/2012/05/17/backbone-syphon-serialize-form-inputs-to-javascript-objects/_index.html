@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -78,56 +77,36 @@
 <h2>Backbone.Syphon</h2>
 <p><a href="https://github.com/derickbailey/backbone.syphon">Backbone.Syphon</a> aims to make it easy to serialize the form inputs of a Backbone.View in to a simple JSON object that contains all of the values from the form. All you need to do is call `Backbone.Syphon.serialize(view)` and it will return a JavaScript object to you with key / value pairs that match the input element ids and values.</p>
 <p>For example, with this underscore template:</p>
-<div id="gist-2710848" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;my-form-template&quot;</span> <span class="na">type=</span><span class="s">&quot;text/html&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">form</span><span class="o">&gt;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="o">&gt;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;chk&quot;</span> <span class="nx">checked</span><span class="o">&gt;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="err">/form&gt;</span></div><div class='line' id='LC6'><span class="nt">&lt;/script&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2710848/c80c5422081a73a58b90584249f3b1607cfe9799/1.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2710848#file_1.html" style="float:right;margin-right:10px;color:#666">1.html</a>
-            <a href="https://gist.github.com/2710848">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/2710848.js?file=1.html"></script><noscript><pre><code class="language-html html">&lt;script id=&quot;my-form-template&quot; type=&quot;text/html&quot;&gt;
+  &lt;form&gt;
+    &lt;input type=&quot;text&quot; id=&quot;foo&quot; value=&quot;bar&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; id=&quot;chk&quot; checked&gt;
+  &lt;/form&gt;
+&lt;/script&gt;</code></pre></noscript>
 <p>And this Backbone.View setup:</p>
-<div id="gist-2710848" class="gist">
-    
+<script src="https://gist.github.com/2710848.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.View.extend({
+  events: {
+    &quot;submit form&quot;: &quot;formSubmitted&quot;
+  },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;submit form&quot;</span><span class="o">:</span> <span class="s2">&quot;formSubmitted&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">formSubmitted</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Syphon</span><span class="p">.</span><span class="nx">serialize</span><span class="p">(</span><span class="k">this</span><span class="p">);</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// build the view&#39;s form, here</span></div><div class='line' id='LC17'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC18'><span class="p">});</span></div></pre></div>
-          </div>
+  formSubmitted: function(e){
+    e.preventDefault();
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2710848/619c5696ee741d1640d668740ff6202e5bc74dc9/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2710848#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/2710848">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    var data = Backbone.Syphon.serialize(this);
+    this.model.set(data);
 
+    this.model.save();
+  },
+
+  render: function(){
+    // build the view's form, here
+  }
+});</code></pre></noscript>
 <p>When you click the &#8220;save&#8221; button, the handler for the click calls `Backbone.Syphon.serialize(this)`. This returns an object that looks like this:</p>
-<div id="gist-2710848" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">foo</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">chk</span><span class="o">:</span> <span class="kc">true</span></div><div class='line' id='LC4'><span class="p">}</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2710848/93cda89340165c36472fa4cf05aed0b5c085f7a8/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2710848#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/2710848">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/2710848.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">{
+  foo: &quot;bar&quot;,
+  chk: true
+}</code></pre></noscript>
 <p>The large benefit of this output is that you can immediately pass it to a Backbone.Model instance via the `set` method. There&#8217;s no need to sift through it and pull out the bits you need, like the jQuery serialize methods. Of course you can use it for more than just Backbone models, too. Anywhere that you need the data from your form, you can get it with Syphon and use it right away.</p>
 <p>I use this plugin in several of my projects already &#8211; well, precursors that were poorly written and not tested thoroughly, at least. But I plan on continuing to use this plugin in scenarios where I need to get data out of my forms. Data-binding plugins just don&#8217;t interest me anymore, as I&#8217;ve gone down that path and abandoned it. </p>
 <h2>Serializes By Element Id</h2>
@@ -458,6 +437,19 @@ http://thomasdavis.github.com/                <span id="dsq-author-user-2763">Th
     </li>
 
     </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2837">
+        <div id="dsq-comment-header-2837" class="dsq-comment-header">
+            <cite id="dsq-cite-2837">
+http://www.facebook.com/jan.roesner                <span id="dsq-author-user-2837">Jan Roesner</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2837" class="dsq-comment-body">
+            <div id="dsq-comment-message-2837" class="dsq-comment-message"><p>Derick, could it be, that Syphon does not work well with Backbone 0.9.2? Followed your instructions but serialize is always undefined.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
             </ul>
 
 
@@ -534,14 +526,15 @@ http://thomasdavis.github.com/                <span id="dsq-author-user-2763">Th
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -777,11 +770,7 @@ http://thomasdavis.github.com/                <span id="dsq-author-user-2763">Th
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1040,4 +1029,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:47:48 -->
+Served from: lostechies.com @ 2012-12-19 06:43:51 -->

@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -74,41 +73,29 @@
 <p><span style="font-size: 18px; font-weight: bold;">Option: Fetch The Model From The Server</span></p>
 <p>The most basic option, and probably the easiest to deal with, is just to fetch the model from the server based on the id parameter that you get from the route.</p>
 <p>In this case you just need to create a new model instance, set the `id` attribute on the model directly and then call `.fetch` on the model. It will make the trip to the server to get the data. You can either listen to a &#8220;change&#8221; event on the model or provide a &#8220;success&#8221; callback in the fetch method, to know when the data has been returned so that you can load it in to your view and display it as needed.</p>
-<div id="gist-1730803" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">personById</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">person</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">person</span><span class="p">.</span><span class="nx">fetch</span><span class="p">({</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">,</span> <span class="nx">response</span><span class="p">){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">App</span><span class="p">.</span><span class="nx">showPerson</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">})</span></div><div class='line' id='LC9'><span class="p">}</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1730803/766ff0b3d93a3c2409d8f6d196581e8e1ec28477/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1730803#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/1730803">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1730803.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">personById: function(id){
+  var person = new Person();
+  person.id = id;
+  person.fetch({
+    success: function(model, response){
+      App.showPerson(model);
+    }
+  })
+}</code></pre></noscript>
 <p>The major problem here is that you have not loaded the persons collection at all. If the persons collection is expected to be loaded because it&#8217;s being used for something related to displaying or working with the individual person model, then this option might not work for you. You could run some additional code to load the collection separately (asynchronously, since it works that way by default). This might help get around any potential issues of needing the collection.</p>
 <h2>Option: Use The Collection&#8217;s &#8220;reset&#8221; Event</h2>
 <p>Another easy option may be to load the collection when the request for the route is made. You would set up a new collection instance, bind a callback function to the collection&#8217;s &#8220;reset&#8221; event, and then call `.fetch` on the collection. The callback method would be responsible for retrieving the specific model from the collection and then creating and displaying the view.</p>
-<div id="gist-1730803" class="gist">
-    
+<script src="https://gist.github.com/1730803.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">personById: function(id){
+  var persons = new PersonCollection();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">personById</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">persons</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PersonCollection</span><span class="p">();</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="c1">// note that &quot;bind&quot; is now &quot;on&quot; in Backbone v0.9.x</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">persons</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">collection</span><span class="p">,</span> <span class="nx">response</span><span class="p">){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">App</span><span class="p">.</span><span class="nx">showPerson</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="nx">persons</span><span class="p">.</span><span class="nx">fetch</span><span class="p">();</span></div><div class='line' id='LC11'><span class="p">}</span></div></pre></div>
-          </div>
+  // note that &quot;bind&quot; is now &quot;on&quot; in Backbone v0.9.x
+  persons.on(&quot;reset&quot;, function(collection, response){
+    var person = collection.get(id);
+    App.showPerson(person);
+  });
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1730803/68fa47edcd14d5be22ff12f63298766a11d11970/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1730803#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/1730803">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  persons.fetch();
+}</code></pre></noscript>
 <p>There are some potential issues with this solution, though. If you already have the persons collection loaded, then you&#8217;re going to load it a second time just to get the one model from it. To mitigate this problem, you would need two different entry points in to the display of the person: one for when you hit the route directly through a bookmark, and one for when the user is already in the app and navigates to the person display through other means.</p>
 <p>Having two different entry points in to this part of the app may not be a bad idea. This largely depends on how the application is architected. You wouldn&#8217;t want to duplicate all of the code that sets up the display of the person&#8217;s details in both of the entry points, but you wouldn&#8217;t want to have a bunch of ugly if-statements in that code to determine how to set things up, either. Some simple abstractions of the common bits would help keep this code manageable.</p>
 <h2>Option: Building An &#8220;onReset&#8221; Callback</h2>
@@ -121,41 +108,59 @@
 <p>If you don&#8217;t control when the `.fetch` method is called, then you may end up binding to the reset event after the collection has already been reset. In that scenario &#8211; which is very likely to happen when working in a local development environment &#8211; your view for the specific person model will never get displayed.</p>
 <p>The solution I came up with is to have a callback mechanism built in to the collection, that pays attention to the collection&#8217;s reset event and knows to either wait for the reset event to be fired, or to fire the callbacks immediately because the collection has already been loaded. I&#8217;m calling this an &#8220;onReset&#8221; callback, for lack of a better description at this point.</p>
 <p>The code to use the onReset callbacks would look something like this:</p>
-<div id="gist-1730803" class="gist">
-    
+<script src="https://gist.github.com/1730803.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">// App.js
+// ------
+// some initialization code that happens elsewhere, using Backbone.Marionette
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// App.js</span></div><div class='line' id='LC2'><span class="c1">// ------</span></div><div class='line' id='LC3'><span class="c1">// some initialization code that happens elsewhere, using Backbone.Marionette</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="nx">App</span><span class="p">.</span><span class="nx">addInitializer</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">App</span><span class="p">.</span><span class="nx">persons</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PersonCollection</span><span class="p">();</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">App</span><span class="p">.</span><span class="nx">persons</span><span class="p">.</span><span class="nx">fetch</span><span class="p">();</span></div><div class='line' id='LC8'><span class="p">});</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'><span class="c1">// PersonRouter.js</span></div><div class='line' id='LC13'><span class="c1">// ---------------</span></div><div class='line' id='LC14'><span class="c1">// The router callback that needs to get the person</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'><span class="nx">personById</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span></div><div class='line' id='LC17'>&nbsp;&nbsp;<span class="nx">App</span><span class="p">.</span><span class="nx">persons</span><span class="p">.</span><span class="nx">onReset</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">collection</span><span class="p">){</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">App</span><span class="p">.</span><span class="nx">showPerson</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC21'><span class="p">}</span></div></pre></div>
-          </div>
+App.addInitializer(function(){
+  App.persons = new PersonCollection();
+  App.persons.fetch();
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1730803/956ae14990497446c30ffb762d3c903461698df3/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1730803#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/1730803">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
 
+
+// PersonRouter.js
+// ---------------
+// The router callback that needs to get the person
+
+personById: function(id){
+  App.persons.onReset(function(collection){
+    var person = collection.get(id);
+    App.showPerson(person);
+  });
+}</code></pre></noscript>
 <p>In this setup, adding an onReset callback guarantees the callback&#8217;s execution. If the collection has not yet been loaded, then it stores the callback and waits for the reset event to fire. If the reset event has already been fired, then it simply executes the callback immediately. Either way, your callback will be executed and you will have the collection available when it does.</p>
 <h2>Race Condition Reduced. Eliminated?</h2>
 <p>Here&#8217;s the implementation for the onReset code. It&#8217;s generally functional and I haven&#8217;t yet run in to any problems, yet.</p>
-<div id="gist-1730803" class="gist">
-    
+<script src="https://gist.github.com/1730803.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">OnResetCollection = Backbone.Collection.extend({
+  constructor: function(){
+    var args = slice(arguments);
+    Backbone.Collection.prototype.constructor.apply(this, args);
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">OnResetCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="nx">slice</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">onResetCallbacks</span> <span class="o">=</span> <span class="p">[];</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">collectionReset</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="nx">onReset</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">onResetCallbacks</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">collectionLoaded</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">fireResetCallbacks</span><span class="p">();</span></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="nx">collectionReset</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">collectionLoaded</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">collectionLoaded</span> <span class="o">=</span> <span class="kc">true</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">fireResetCallbacks</span><span class="p">();</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC21'><br/></div><div class='line' id='LC22'>&nbsp;&nbsp;<span class="nx">fireResetCallbacks</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">callback</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">onResetCallbacks</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="nx">callback</span><span class="p">){</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">callback</span><span class="p">(</span><span class="k">this</span><span class="p">);</span></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">fireResetCallbacks</span><span class="p">();</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC28'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC29'><span class="p">});</span></div></pre></div>
-          </div>
+    this.onResetCallbacks = [];
+    this.on(&quot;reset&quot;, this.collectionReset, this);
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1730803/8507df0b66d1788cf02245b8fd2bb05fcd4e8df5/4.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1730803#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
-            <a href="https://gist.github.com/1730803">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  onReset: function(callback){
+    this.onResetCallbacks.push(callback);
+    this.collectionLoaded &amp;&amp; this.fireResetCallbacks();
+  },
 
+  collectionReset: function(){
+    if (!this.collectionLoaded) {
+      this.collectionLoaded = true
+    }
+    this.fireResetCallbacks();
+  },
+
+  fireResetCallbacks: function(){
+    var callback = this.onResetCallbacks.pop();
+    if (callback){
+      callback(this);
+      this.fireResetCallbacks();
+    }
+  }
+});</code></pre></noscript>
 <p>You can then extend from OnResetCollection instead of Backbone.Collection to get this functionality.</p>
 <p>I still worry that there&#8217;s a potential race condition in between the logic and the pop&#8217;ing of items off the array. I&#8217;ve travelled every logical path of execution for the asynchronous call and onReset call that I can think of, and I can&#8217;t find any issue. I would love to hear from someone more experienced with race conditions in JavaScript, though.</p>
 											</div><!-- .entry-content -->
@@ -290,14 +295,15 @@ http://twitter.com/ojohnnyo                <span id="dsq-author-user-2194">Johnn
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -533,11 +539,7 @@ http://twitter.com/ojohnnyo                <span id="dsq-author-user-2194">Johnn
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -796,4 +798,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:45:13 -->
+Served from: lostechies.com @ 2012-12-19 05:51:24 -->

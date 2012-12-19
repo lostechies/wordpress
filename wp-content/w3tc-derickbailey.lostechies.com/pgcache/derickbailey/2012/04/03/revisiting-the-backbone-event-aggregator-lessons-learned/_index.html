@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -73,77 +72,62 @@
 <h2>Dependency Injection: Bad Idea</h2>
 <p>This is the first of the obvious mistakes that I made my original blog post and implementation. Passing around an event aggregator as a dependency for various objects is just plain painful in JavaScript. There&#8217;s no real value in doing this, either. The few benefits that it may provide are greatly outweighed by the flexibility inherent in JavaScript and our ability to work around the problem that dependency injection solves.</p>
 <p>You can see the obvious problems in the original code, pretty easily:</p>
-<div id="gist-1092444" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">AddEditView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;editMedication&quot;</span><span class="p">);</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">options</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;editMedication&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">editMedication</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">medication</span><span class="p">){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="nx">medication</span><span class="p">;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC11'><span class="p">});</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="nx">MedicationView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click #edit&quot;</span><span class="o">:</span> <span class="s2">&quot;editMedication&quot;</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC17'><br/></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">vent</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">vent</span><span class="p">;</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC21'><br/></div><div class='line' id='LC22'>&nbsp;&nbsp;<span class="nx">editMedication</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;editMedication&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">);</span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC25'><span class="p">});</span></div><div class='line' id='LC26'><br/></div><div class='line' id='LC27'><span class="c1">// initialize everything, and tie it all together</span></div><div class='line' id='LC28'><span class="c1">// with the event aggregator object: vent</span></div><div class='line' id='LC29'><br/></div><div class='line' id='LC30'><span class="kd">var</span> <span class="nx">vent</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC31'><br/></div><div class='line' id='LC32'><span class="kd">var</span> <span class="nx">addEditView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AddEditView</span><span class="p">({</span><span class="nx">vent</span><span class="o">:</span> <span class="nx">vent</span><span class="p">});</span></div><div class='line' id='LC33'><br/></div><div class='line' id='LC34'><span class="nx">medicationList</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">med</span><span class="p">){</span></div><div class='line' id='LC35'>&nbsp;&nbsp;<span class="k">new</span> <span class="nx">MedicationView</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="nx">med</span><span class="p">,</span> <span class="nx">vent</span><span class="o">:</span> <span class="nx">vent</span><span class="p">});</span></div><div class='line' id='LC36'><span class="p">});</span></div><div class='line' id='LC37'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1092444/c2cf72b0c68768c636af9ffef6693a81493d63db/5-event-aggregation.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1092444#file_5_event_aggregation.js" style="float:right;margin-right:10px;color:#666">5-event-aggregation.js</a>
-            <a href="https://gist.github.com/1092444">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<div>Could not embed GitHub Gist 1092444: API Rate Limit Exceeded for 70.169.150.251</div>
 <p>Having to pass the `vent` object to every single constructor gets frustrating, fast. It turns in to a real nightmare, though, when you want to trigger an event from an object that is 5 or 6 levels deep in an object graph. If this is the only place that needs to trigger an event, you still have to pass the aggregator around to all of the objects in the graph.</p>
 <h3>Solution: Application Level Aggregator</h3>
 <p>One of the solutions, and the easiest way to start using an event aggregator, is to attach the aggregator to your application&#8217;s namespace object. This becomes the application level event aggregator that any code in your application can attach to and trigger events from.</p>
-<div id="gist-2146930" class="gist">
-    
+<script src="https://gist.github.com/2146930.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">MyApp = {};
+MyApp.vent = _.extend({}, Backbone.Events);
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span> <span class="o">=</span> <span class="p">{};</span></div><div class='line' id='LC2'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;some:event&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;some event was fired!&quot;</span><span class="p">);</span></div><div class='line' id='LC6'><span class="p">});</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;some:event&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
+MyApp.vent.on(&quot;some:event&quot;, function(){
+  alert(&quot;some event was fired!&quot;);
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2146930/36eaa491aae029e1deae839a6585ac1a8adaed14/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2146930#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+MyApp.vent.trigger(&quot;some:event&quot;);</code></pre></noscript>
 <p>I&#8217;ve baked this idea directly in to my Marionette.Application object. When you instantiate a Marionette.Application, you get the `vent` attribute with it.</p>
-<div id="gist-2146930" class="gist">
-    
+<script src="https://gist.github.com/2146930.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">MyApp = new Backbone.Marionette.Application();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;some:event&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;some event was fired!&quot;</span><span class="p">);</span></div><div class='line' id='LC5'><span class="p">});</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;some:event&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
+MyApp.vent.on(&quot;some:event&quot;, function(){
+  alert(&quot;some event was fired!&quot;);
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2146930/6797a4a6c49af01c2db9e32702665081c4460fd4/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2146930#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+MyApp.vent.trigger(&quot;some:event&quot;);</code></pre></noscript>
 <p><span style="font-size: 14px; font-weight: bold;">Solution: Sub-Module Aggregators</span></p>
 <p>Along with the application level event aggregator, there are times when you&#8217;ll want to have some events tossed around within an application sub-module. When I run in to this need, I don&#8217;t rely on the application&#8217;s `vent`, instead I&#8217;ll build one specific to the module.</p>
 <p>For example, if I were building an application module to manage users and I needed to run some events in between various parts of the user management screens, I might do it like this:</p>
-<div id="gist-2146930" class="gist">
-    
+<script src="https://gist.github.com/2146930.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">MyApp = new Backbone.Marionette.Application();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">UserManagement</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">mgmt</span> <span class="o">=</span> <span class="p">{};</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">mgmtEvents</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">EventAggregator</span><span class="p">();</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">mgmt</span><span class="p">.</span><span class="nx">UserListView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click .user&quot;</span><span class="o">:</span> <span class="s2">&quot;userClicked&quot;</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">userClicked</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="c1">// get the user that was clicked</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">mgmtEvents</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;user:selected&quot;</span><span class="p">,</span> <span class="nx">user</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="nx">mgmt</span><span class="p">.</span><span class="nx">UserDetailView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC22'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC23'><br/></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="nx">mgmtEvents</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;user:selected&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">user</span><span class="p">){</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mgmt</span><span class="p">.</span><span class="nx">UserDetailView</span><span class="p">({</span></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">user</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#detail&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC30'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC31'><br/></div><div class='line' id='LC32'>&nbsp;&nbsp;<span class="k">return</span> <span class="nx">mgmt</span><span class="p">;</span></div><div class='line' id='LC33'><span class="p">})(</span><span class="nx">Backbone</span><span class="p">);</span></div></pre></div>
-          </div>
+MyApp.UserManagement = (function(Backbone){
+  var mgmt = {};
+  var mgmtEvents = new Backbone.Marionette.EventAggregator();
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2146930/d7ff0b5df8c0463756173fbf948de68d714c9414/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2146930#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  mgmt.UserListView = Backbone.View.extend({
+    events: {
+      &quot;click .user&quot;: &quot;userClicked&quot;
+    },
 
+    userClicked: function(){
+      var user = // get the user that was clicked
+      mgmtEvents.trigger(&quot;user:selected&quot;, user);
+    },
+
+    // ...
+  });
+
+  mgmt.UserDetailView = Backbone.View.extend({
+    // ...
+  });
+
+  mgmtEvents.on(&quot;user:selected&quot;, function(user){
+    var view = new mgmt.UserDetailView({
+      model: user
+    });
+    view.render();
+    $(&quot;#detail&quot;).html(view.el);
+  });
+
+  return mgmt;
+})(Backbone);</code></pre></noscript>
 <p>Note that I&#8217;m also showing the Marionette.EventAggregator object in this example. This object is a tiny bit more than the standard `_.extend({}, Backbone.Events);` that I typically use, but not by much.</p>
 <p>I still have access to the application&#8217;s event aggregator, but now I also have access to an aggregator that is specific to the module. This lets me publish and subscribe to events that are local to the module. Other modules in the application are not able to see this aggregator, so they are not able to publish / subscribe with it. If I need this module to talk to other modules, then, I use the application&#8217;s aggregator.</p>
 <p> </p>
@@ -155,22 +139,11 @@
 <h3>The Problems</h3>
 <p>The same principle is often applied in service-bus architectures, where standing up multiple services buses for communication is expensive. But this doesn&#8217;t translate too well in to JavaScript &#8211; at least not with simple event aggregators like I&#8217;m using.</p>
 <p>A simple use of an event aggregator that supports channels might look something like this:</p>
-<div id="gist-2146930" class="gist">
-    
+<script src="https://gist.github.com/2146930.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">MyApp.vent.on(&quot;myChannel&quot;, &quot;myEvent&quot;, function(){
+  // do stuff here
+});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;myChannel&quot;</span><span class="p">,</span> <span class="s2">&quot;myEvent&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="c1">// do stuff here</span></div><div class='line' id='LC3'><span class="p">});</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;myChannel&quot;</span><span class="p">,</span> <span class="s2">&quot;myEvent&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2146930/0d34059a77ed93ae3b5d408211648afebc3557a3/4.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2146930#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
-            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+MyApp.vent.trigger(&quot;myChannel&quot;, &quot;myEvent&quot;);</code></pre></noscript>
 <p>In this example, we&#8217;re standing up an aggregator and then subscribing to an even on a channel. We then trigger the event on that channel, and our handler is called. This seems easy enough and it shouldn&#8217;t take that much work to implement channels.</p>
 <p>The real problem, though, is that the number of publishers and subscribers using this one event aggregator can quickly get out of hand. Every time we trigger an event through a channel, we have to filter the list of subscribers so that we only publish the event to those listening on the correct channel. This filtering is going to take time. If we have a large number of subscribers in our aggregator, and we only need to send the event to one of them, why should we have to sift through the rest of them?</p>
 <p>There are some optimizations that we can put in place, of course. We could set up the &#8220;on&#8221; method so that when you specify what channel to listen on, it stores your handler in a collection of listeners specifically for that channel. Then when you trigger an event, the channel can be matched to the collection of subscribers more quickly.</p>
@@ -178,41 +151,24 @@
 <p>Again, I understand why this seems like a good idea. When you&#8217;re dealing with actual network communications and distributed systems where a service bus is an expensive thing to stand up, you&#8217;ll want to make this kind of optimization. But when you&#8217;re dealing with an in-memory application and event aggregator, you&#8217;re adding overhead that is not needed. The easier option, instead, is to use multiple event aggregators: one per &#8220;channel&#8221;.</p>
 <h3>A Simple Solution: Many Event Aggregators</h3>
 <p>By setting up multiple event aggregators, we can more effectively optimize the memory and performance of our application.</p>
-<div id="gist-2146930" class="gist">
-    
+<script src="https://gist.github.com/2146930.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">MyApp.myChannel = _.extend({}, Backbone.Events);
+MyApp.anotherChannel = _.extend({}, Backbone.Events);
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">myChannel</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC2'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">anotherChannel</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">myChannel</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;someEvent&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC6'><span class="p">});</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">myChannel</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;anotherEvent&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC10'><span class="p">});</span></div></pre></div>
-          </div>
+MyApp.myChannel.on(&quot;someEvent&quot;, function(){
+  // ...
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2146930/f436796eed5572446c5ee909adcc660df0a2cb4c/5.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2146930#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
-            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+MyApp.myChannel.on(&quot;anotherEvent&quot;, function(){
+  // ...
+});</code></pre></noscript>
 <p>Now when we have many overall subscribers to many event aggregators, publishing to a single event aggregator doesn&#8217;t have to think about which subscribers should and should not be checked, based on channels. When you publish to a specific event aggregator, it checks all of the subscribers that it has registered, and that&#8217;s it.</p>
 <h3>A Built In Solution: Event Namspacing</h3>
 <p>The other option that we see in Backbone events is the use of namespaced events. For example, when you set some data on a Backbone model, you get multiple events:</p>
-<div id="gist-2146930" class="gist">
-    
+<script src="https://gist.github.com/2146930.js?file=6.js"></script><noscript><pre><code class="language-javascript javascript">MyApp.vent.on(&quot;some:namespaced:event&quot;, function(){
+  // ...
+});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;some:namespaced:event&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC3'><span class="p">});</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;some:namespaced:event&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2146930/c309097dd7e553a9df33860b23188310ed9af846/6.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2146930#file_6.js" style="float:right;margin-right:10px;color:#666">6.js</a>
-            <a href="https://gist.github.com/2146930">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+MyApp.vent.trigger(&quot;some:namespaced:event&quot;);</code></pre></noscript>
 <p>Now this isn&#8217;t truly a namespace in the event handler. There is no parsing of the event name to try and figure out where the : is in the event name, to filter out which subscribers should be receiving the event. This is only a convention that helps us, as developers, see which events belong together.</p>
 <h3>But Events Will Be Filtered Anyways</h3>
 <p>In the end, the event aggregator object does have to filter out the subscribers that don&#8217;t care about the event being triggered. There&#8217;s simply no way around this. When you have an event subscriber, you tell it what specific event to listen to. If a different event is triggered, that subscriber doesn&#8217;t get called. This is filtering by it&#8217;s nature and we can&#8217;t reasonably get away from that. My argument, though, is that we should limit the filtering as much as possible because it&#8217;s more expensive to filter a larger list than it is to split the list out in to multiple, separate objects.</p>
@@ -593,14 +549,15 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -836,11 +793,7 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1099,4 +1052,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:46:07 -->
+Served from: lostechies.com @ 2012-12-19 06:59:05 -->

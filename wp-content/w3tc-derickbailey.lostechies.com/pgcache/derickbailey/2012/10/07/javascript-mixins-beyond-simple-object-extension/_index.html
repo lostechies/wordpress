@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -73,55 +72,47 @@
 <h2>Object Extension Is A Poor Man&#8217;s Mixin</h2>
 <p>I love the &#8220;extend&#8221; methods of <a href="http://api.jquery.com/jQuery.extend/">jQuery</a> and <a href="http://underscorejs.org/#extend">Underscore</a>. I use them a lot. They&#8217;re powerful and simple and make it easy to transfer data and behavior from one object to another &#8211; the essence of a mixin. But in spite of my love of underscore.js and jQuery&#8217;s &#8220;extend&#8221; methods, there&#8217;s a problem with them in that they apply every attribute from one or more source objects to a target objects. </p>
 <p>You can see the effect of this in <a href="http://lostechies.com/chrismissal/2012/10/05/extending-objects-in-underscore/">Chris&#8217; underscore example</a>:</p>
-<div id="gist-3797198" class="gist">
-    
+<script src="https://gist.github.com/3797198.js"></script><noscript><pre><code class="language-javascript javascript">{
+    &quot;id&quot;: 123,
+    &quot;count&quot;: 42,
+    &quot;title&quot;: null,
+    &quot;tag&quot;: &quot;javascript&quot;,
+    &quot;values&quot;: [1,3,6,10],
+    &quot;name&quot;: &quot;Los Techies&quot;
+}</code></pre><pre><code class="language-javascript javascript">var start = {
+    id: 123,
+    count: 41,
+    desc: 'this is information',
+    title: 'Base Object',
+    tag: 'uncategorized',
+    values: [1,1,2,3,5,8,13]
+};
+var more = {
+    name: 'Los Techies',
+    tag: 'javascript'
+};
+var extra = {
+    count: 42,
+    title: null,
+    desc: undefined,
+    values: [1,3,6,10]
+};
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">id</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">count</span><span class="o">:</span> <span class="mi">41</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;this is information&#39;</span><span class="p">,</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Base Object&#39;</span><span class="p">,</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">tag</span><span class="o">:</span> <span class="s1">&#39;uncategorized&#39;</span><span class="p">,</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">values</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">13</span><span class="p">]</span></div><div class='line' id='LC8'><span class="p">};</span></div><div class='line' id='LC9'><span class="kd">var</span> <span class="nx">more</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Los Techies&#39;</span><span class="p">,</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">tag</span><span class="o">:</span> <span class="s1">&#39;javascript&#39;</span></div><div class='line' id='LC12'><span class="p">};</span></div><div class='line' id='LC13'><span class="kd">var</span> <span class="nx">extra</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">count</span><span class="o">:</span> <span class="mi">42</span><span class="p">,</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">title</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">desc</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">values</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span></div><div class='line' id='LC18'><span class="p">};</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'><span class="kd">var</span> <span class="nx">extended</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">more</span><span class="p">,</span> <span class="nx">extra</span><span class="p">);</span></div><div class='line' id='LC21'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">extended</span><span class="p">));</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3797198/9057da4b195ae9287e51db97658a3746737890b1/extending-objects-in-underscore-1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3797198#file_extending_objects_in_underscore_1.js" style="float:right;margin-right:10px;color:#666">extending-objects-in-underscore-1.js</a>
-            <a href="https://gist.github.com/3797198">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">123</span><span class="p">,</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;count&quot;</span><span class="o">:</span> <span class="mi">42</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;tag&quot;</span><span class="o">:</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Los Techies&quot;</span></div><div class='line' id='LC8'><span class="p">}</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3797198/9b54f4b69b22a42004175db3c8afdf6307cd6f55/extending-objects-in-underscore-2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3797198#file_extending_objects_in_underscore_2.js" style="float:right;margin-right:10px;color:#666">extending-objects-in-underscore-2.js</a>
-            <a href="https://gist.github.com/3797198">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+var extended = _.extend(start, more, extra);
+console.log(JSON.stringify(extended));</code></pre></noscript>
 <p>In this example, the first object contains a key named &#8220;values&#8221; and the third object also contains a key named &#8220;values&#8221;. When the extend method is called, the last one in wins. This means that the &#8220;values&#8221; from the third object end up being the values on the final target object.</p>
 <p>So, what happens if we want to mix two behavioral sets in to one target object, but both of those behavior sets use the same underlying &#8220;values&#8221;, or &#8220;config&#8221;, or &#8220;bindings&#8221; (as reported in <a href="https://github.com/marionettejs/backbone.marionette/issues/269">this Marionette issue</a>)? One or both of them will break, and that&#8217;s definitely not a good thing.</p>
 <h2>A Problem Of Context</h2>
 <p>The good news is there&#8217;s an easy way to solve the mixin problem with JavaScript: only copy the methods you need from the behavior set in to the target.</p>
 <p>That is, if the object you want to mix in to another has a method called &#8220;doSomething&#8221;, you shouldn&#8217;t be forced to copy the &#8220;config&#8221; and &#8220;_whatever&#8221; and &#8220;foo&#8221; and all the other methods and attributes off this object just to get access to the &#8220;doSomething&#8221; method. Instead, you should only have to copy the &#8220;doSomething&#8221; method from the behavior source to your target.</p>
-<div id="gist-3847156" class="gist">
-    
+<script src="https://gist.github.com/3847156.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">var foo = {
+  doSomething: function(){
+    // ...
+  }
+}
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">doSomething</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC5'><span class="p">}</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="p">{};</span></div><div class='line' id='LC8'><span class="nx">bar</span><span class="p">.</span><span class="nx">doSomething</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">.</span><span class="nx">doSomething</span><span class="p">;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3847156/865b22a0bbaf7300ce35e6cfa0c5859e86e1cd12/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3847156#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/3847156">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+var bar = {};
+bar.doSomething = foo.doSomething;</code></pre></noscript>
 <p>But this poses it&#8217;s own challenge: the source of the behavior likely calls &#8220;this.config&#8221; and &#8220;this._whatever()&#8221; and other context-based methods and attributes to do it&#8217;s work. Simply copying the &#8220;doSomething&#8221; function from one object to another won&#8217;t work because the context of the function will change and the support methods / data won&#8217;t be found.</p>
 <p>[Note: For more detail on context and how it changes, check out my <a href="http://www.watchmecode.net/javascript-context">JavaScript Context screencast</a>.]</p>
 <h2>Solving The Mixin Problem</h2>
@@ -132,79 +123,113 @@
 </ol>
 <p>This is easier than it sounds. We&#8217;ve already seen how requirement #1 can be solved, and requirement #2 can be handled in a number of ways, including the raw <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function/bind">ECMAScript 5 &#8220;bind&#8221;</a> method, the use of <a href="http://underscorejs.org/#bind">Underscore&#8217;s &#8220;bind&#8221;</a> method, writing our own, or by using one of a number of other shims and plugins.</p>
 <p>The way to facilitate a mixin from one object to another, then, looks something like this:</p>
-<div id="gist-3847156" class="gist">
-    
+<script src="https://gist.github.com/3847156.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">var foo = {
+  baz: function(){ 
+    // ...
+  },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">baz</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> </div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">config</span><span class="o">:</span> <span class="p">[</span> <span class="p">...</span> <span class="p">]</span></div><div class='line' id='LC7'><span class="p">}</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'><span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="nx">config</span><span class="o">:</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span></div><div class='line' id='LC11'><span class="p">};</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="c1">// ECMAScript &quot;bind&quot;</span></div><div class='line' id='LC14'><span class="nx">bar</span><span class="p">.</span><span class="nx">baz</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">.</span><span class="nx">baz</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'><span class="c1">// Undescore &quot;bind&quot;</span></div><div class='line' id='LC17'><span class="nx">bar</span><span class="p">.</span><span class="nx">baz</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">baz</span><span class="p">,</span> <span class="nx">foo</span><span class="p">);</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'><span class="c1">// ... many more options</span></div></pre></div>
-          </div>
+  config: [ ... ]
+}
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3847156/ac65ce609ae6eea06cb60c3176c3272cbec018b4/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3847156#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/3847156">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+var bar = {
+  config: { ... }
+};
 
+// ECMAScript &quot;bind&quot;
+bar.baz = foo.baz.bind(foo);
+
+// Undescore &quot;bind&quot;
+bar.baz = _.bind(foo.baz, foo);
+
+// ... many more options</code></pre></noscript>
 <p>In this example, both the source object and the target object have a &#8220;config&#8221; attribute. Each object needs to use that config attribute to store and retrieve certain bits of data without clobbering each the other one, but I still want the &#8220;baz&#8221; function to be available directly on the &#8220;foo&#8221; object. To make this all work, I assign a bound version of the &#8220;baz&#8221; function to foo where the binding is set to to the bar object. That way whenever the baz function is called from foo, it will always run in the context of the original source &#8211; bar. </p>
 <h2>A Real Example</h2>
 <p>Ok, enough &#8220;foo, bar, baz&#8221; nonsense. Let&#8217;s look at a real example of where I&#8217;m doing this: Marionette&#8217;s use of Backbone.EventBinder. I want to bring the &#8220;bindTo&#8221;, &#8220;unbindFrom&#8221; and &#8220;unbindAll&#8221; methods from the EventBinder in to Marionette&#8217;s Application object, as one example. To do this while allowing the EventBinder to manage it&#8217;s own internal state and implementation details, I use the above technique of assigning the methods as bound functions:</p>
-<div id="gist-3847156" class="gist">
-    
+<script src="https://gist.github.com/3847156.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">Marionette.addEventBinder = function(target){
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Marionette</span><span class="p">.</span><span class="nx">addEventBinder</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">){</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="c1">// create the &quot;source&quot; of the functionality i need</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">eventBinder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">EventBinder</span><span class="p">();</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="c1">// add the methods i need to the target object, binding them correctly</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">target</span><span class="p">.</span><span class="nx">bindTo</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">eventBinder</span><span class="p">.</span><span class="nx">bindTo</span><span class="p">,</span> <span class="nx">eventBinder</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nx">target</span><span class="p">.</span><span class="nx">unbindFrom</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">eventBinder</span><span class="p">.</span><span class="nx">unbindFrom</span><span class="p">,</span> <span class="nx">eventBinder</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="nx">target</span><span class="p">.</span><span class="nx">unbindAll</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">eventBinder</span><span class="p">.</span><span class="nx">unbindAll</span><span class="p">,</span> <span class="nx">eventBinder</span><span class="p">);</span></div><div class='line' id='LC10'><span class="p">};</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><br/></div><div class='line' id='LC14'><span class="c1">// use the mixin method</span></div><div class='line' id='LC15'><span class="kd">var</span> <span class="nx">myApp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC16'><span class="nx">Marionette</span><span class="p">.</span><span class="nx">addEventBinder</span><span class="p">(</span><span class="nx">myApp</span><span class="p">);</span></div></pre></div>
-          </div>
+  // create the &quot;source&quot; of the functionality i need
+  var eventBinder = new Marionette.EventBinder();
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3847156/002d448e75c7906eba147e7a9bdbe8659f5952ef/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3847156#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/3847156">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  // add the methods i need to the target object, binding them correctly
+  target.bindTo = _.bind(eventBinder.bindTo, eventBinder);
+  target.unbindFrom = _.bind(eventBinder.unbindFrom, eventBinder);
+  target.unbindAll = _.bind(eventBinder.unbindAll, eventBinder);
+};
 
+
+
+// use the mixin method
+var myApp = new Marionette.Application();
+Marionette.addEventBinder(myApp);</code></pre></noscript>
 <p>Now when I call any of those three methods from my application instance, they still run in the context of my eventBinder object instance and they can access all of their internal state, configuration and behavior. But at the same time, I can worry less about whether or not the implementation details of the EventBinder are going to clobber the implementation details of the Application object. Since I&#8217;m being very explicit about which methods and attributes are brought over from the EventBinder, I can spend the small amount of cognitive energy that I need to determine whether or not the method I&#8217;m creating on the Application instance already exists. I don&#8217;t have to worry about the internal details like &#8220;_eventBindings&#8221; and other bits because they are not going to be copied over.</p>
 <h2>Simplifying Mixins</h2>
 <p>Given the repetition of creating mixins like this, it should be pretty easy to create a function that can handle the grunt work for you. All you need to supply is a target object, a source object and a list of methods to copy. The mixin function can handle the rest:</p>
-<div id="gist-3847156" class="gist">
-    
+<script src="https://gist.github.com/3847156.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">// build a mixin function to take a target that receives the mixin, 
+// a source that is the mixin, and a list of methods / attributes to
+// copy over to the target
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// build a mixin function to take a target that receives the mixin, </span></div><div class='line' id='LC2'><span class="c1">// a source that is the mixin, and a list of methods / attributes to</span></div><div class='line' id='LC3'><span class="c1">// copy over to the target</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="kd">function</span> <span class="nx">mixInto</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">methodNames</span><span class="p">){</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="c1">// ignore the actual args list and build from arguments so we can</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="c1">// be sure to get all of the method names</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="nx">target</span> <span class="o">=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="nx">source</span> <span class="o">=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="nx">methodNames</span> <span class="o">=</span> <span class="nx">args</span><span class="p">;</span></div><div class='line' id='LC13'><br/></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">method</span><span class="p">;</span></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">methodNames</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">method</span> <span class="o">=</span> <span class="nx">methodNames</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// bind the function from the source and assign the</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// bound function to the target</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">target</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">source</span><span class="p">[</span><span class="nx">method</span><span class="p">],</span> <span class="nx">source</span><span class="p">);</span></div><div class='line' id='LC22'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC23'><br/></div><div class='line' id='LC24'><span class="p">}</span></div><div class='line' id='LC25'><br/></div><div class='line' id='LC26'><br/></div><div class='line' id='LC27'><span class="c1">// make use of the mixin function</span></div><div class='line' id='LC28'><span class="kd">var</span> <span class="nx">myApp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC29'><span class="nx">mixInto</span><span class="p">(</span><span class="nx">myApp</span><span class="p">,</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">EventBinder</span><span class="p">,</span> <span class="s2">&quot;bindTo&quot;</span><span class="p">,</span> <span class="s2">&quot;unbindFrom&quot;</span><span class="p">,</span> <span class="s2">&quot;unbindAll&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
+function mixInto(target, source, methodNames){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3847156/1f31e0dec3849d266d09cf97d531795dc9a0990b/4.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3847156#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
-            <a href="https://gist.github.com/3847156">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  // ignore the actual args list and build from arguments so we can
+  // be sure to get all of the method names
+  var args = Array.prototype.slice.apply(arguments);
+  target = args.shift();
+  source = args.shift();
+  methodNames = args;
 
+  var method;
+  var length = methodNames.length;
+  for(var i = 0; i &lt; length; i++){
+    method = methodNames[i];
+
+    // bind the function from the source and assign the
+    // bound function to the target
+    target[method] = _.bind(source[method], source);
+  }
+
+}
+
+
+// make use of the mixin function
+var myApp = new Marionette.Application();
+mixInto(myApp, Marionette.EventBinder, &quot;bindTo&quot;, &quot;unbindFrom&quot;, &quot;unbindAll&quot;);</code></pre></noscript>
 <p>This should be functionally equivalent to the previous code that was manually binding and assigning the methods. But keep in mind that this code is not robust at all. Bad things will happen if you get the source&#8217;s method names wrong, for example. These little details should be handled in a more complete mixin function.</p>
 <h2>An Alternate Implementation: Closures</h2>
 <p>An alternate implementation for this can be facilitated without the use of a &#8220;bind&#8221; function. Instead, a simple closure can be set up around the source object, with a wrapper function that simply forwards calls to the source:</p>
-<div id="gist-3847156" class="gist">
-    
+<script src="https://gist.github.com/3847156.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">// build a mixin function to take a target that receives the mixin, 
+// a source that is the mixin, and a list of methods / attributes to
+// copy over to the target
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// build a mixin function to take a target that receives the mixin, </span></div><div class='line' id='LC2'><span class="c1">// a source that is the mixin, and a list of methods / attributes to</span></div><div class='line' id='LC3'><span class="c1">// copy over to the target</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="kd">function</span> <span class="nx">mixInto</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">source</span><span class="p">,</span> <span class="nx">methodNames</span><span class="p">){</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="c1">// ignore the actual args list and build from arguments so we can</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="c1">// be sure to get all of the method names</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="nx">target</span> <span class="o">=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="nx">source</span> <span class="o">=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="nx">methodNames</span> <span class="o">=</span> <span class="nx">args</span><span class="p">;</span></div><div class='line' id='LC13'><br/></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">method</span><span class="p">;</span></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">methodNames</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">method</span> <span class="o">=</span> <span class="nx">methodNames</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// build a function with a closure around the source</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// and forward the method call to the source, passing</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// along the method parameters and setting the context</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">target</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">source</span><span class="p">[</span><span class="nx">method</span><span class="p">].</span><span class="nx">apply</span><span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC26'><br/></div><div class='line' id='LC27'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC28'><br/></div><div class='line' id='LC29'><span class="p">}</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'><br/></div><div class='line' id='LC32'><span class="c1">// make use of the mixin function</span></div><div class='line' id='LC33'><span class="kd">var</span> <span class="nx">myApp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC34'><span class="nx">mixInto</span><span class="p">(</span><span class="nx">myApp</span><span class="p">,</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">EventBinder</span><span class="p">,</span> <span class="s2">&quot;bindTo&quot;</span><span class="p">,</span> <span class="s2">&quot;unbindFrom&quot;</span><span class="p">,</span> <span class="s2">&quot;unbindAll&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
+function mixInto(target, source, methodNames){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3847156/3d08cc79fb8bc2748c10b8eb984cb05c05b0ad58/5.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3847156#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
-            <a href="https://gist.github.com/3847156">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  // ignore the actual args list and build from arguments so we can
+  // be sure to get all of the method names
+  var args = Array.prototype.slice.apply(arguments);
+  target = args.shift();
+  source = args.shift();
+  methodNames = args;
 
+  var method;
+  var length = methodNames.length;
+  for(var i = 0; i &lt; length; i++){
+    method = methodNames[i];
+
+    // build a function with a closure around the source
+    // and forward the method call to the source, passing
+    // along the method parameters and setting the context
+    target[method] = function(){
+      var args = Array.prototype.slice(arguments);
+      source[method].apply(source, args);
+    }
+
+  }
+
+}
+
+
+// make use of the mixin function
+var myApp = new Marionette.Application();
+mixInto(myApp, Marionette.EventBinder, &quot;bindTo&quot;, &quot;unbindFrom&quot;, &quot;unbindAll&quot;);</code></pre></noscript>
 <p>I&#8217;m not sure if this version is really &#8220;better&#8221; or not, but it would at least provide more backward compatibility support and fewer requirements. You wouldn&#8217;t need to patch &#8216;Function.prototype.bind&#8217; or use a third party shim or library for older browsers. It should work with any browser that supports JavaScript, though I&#8217;m not sure how far back it would go. Chances are, though, that any browser people are still using would be able to handle this, including &#8211; dare I say it? &#8211; IE6 (maybe… I think… I&#8217;m not going to test that, though :P )</p>
 <h2>Potential Drawbacks</h2>
 <p>As great as all this looks and sounds, there are some limitations and drawbacks &#8211; and probably more than I&#8217;m even aware of right now. </p>
@@ -426,6 +451,19 @@ http://mutedsolutions.com                <span id="dsq-author-user-2804">Derick 
     </li>
 </ul>
 </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2858">
+        <div id="dsq-comment-header-2858" class="dsq-comment-header">
+            <cite id="dsq-cite-2858">
+                <span id="dsq-author-user-2858">Sara Lisa</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2858" class="dsq-comment-body">
+            <div id="dsq-comment-message-2858" class="dsq-comment-message"><p>Hi Bailey! this was unique. the logic used really helped me in many ways. there is always a challenging life for programmers. thanks <a href="http://www.a2zonlinetraining.com/datawarehousing-online-training/business-objects-online-training.php" rel="nofollow">Business Objects Online Training</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
             </ul>
 
 
@@ -502,14 +540,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2804">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -745,11 +784,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2804">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1008,4 +1043,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:54:27 -->
+Served from: lostechies.com @ 2012-12-19 06:49:59 -->

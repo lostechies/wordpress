@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Sun, 16 Dec 2012 23:48:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: no one</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942</link>
+		<dc:creator>no one</dc:creator>
+		<pubDate>Sat, 15 Dec 2012 15:34:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2942</guid>
+		<description>G-d forbid you ever link to a demo in any of your posts</description>
+		<content:encoded><![CDATA[<p>G-d forbid you ever link to a demo in any of your posts</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: josé tomás albornoz</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2881</link>
+		<dc:creator>josé tomás albornoz</dc:creator>
+		<pubDate>Fri, 07 Dec 2012 08:56:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2881</guid>
+		<description>This post has helped me a lot. Thanks.</description>
+		<content:encoded><![CDATA[<p>This post has helped me a lot. Thanks.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Eric Bichara</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2814</link>
+		<dc:creator>Eric Bichara</dc:creator>
+		<pubDate>Wed, 31 Oct 2012 15:35:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2814</guid>
+		<description>Great post thanks</description>
+		<content:encoded><![CDATA[<p>Great post thanks</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Suresh Rathord</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2654</link>
+		<dc:creator>Suresh Rathord</dc:creator>
+		<pubDate>Fri, 27 Jul 2012 16:41:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2654</guid>
+		<description>@johnml:disqus Meaning that, using a global variables under a namespace is fine. Thanks 
+
+
+
+
+</description>
+		<content:encoded><![CDATA[<p>@johnml:disqus Meaning that, using a global variables under a namespace is fine. Thanks </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2653</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Fri, 27 Jul 2012 16:08:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2653</guid>
+		<description>It&#039;s recommended to namespace it to your app:
+
+
+We use rt.app.events as a global event handler.  Everything under rt.app is an instance variable of some sort so it falls right inline with the structure of our application.  
+
+
+Other than that as long as you keep global events properly named you should avoid any confusion as to what they do.</description>
+		<content:encoded><![CDATA[<p>It&#8217;s recommended to namespace it to your app:</p>
+<p>We use rt.app.events as a global event handler.  Everything under rt.app is an instance variable of some sort so it falls right inline with the structure of our application.  </p>
+<p>Other than that as long as you keep global events properly named you should avoid any confusion as to what they do.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Suresh Rathord</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2652</link>
+		<dc:creator>Suresh Rathord</dc:creator>
+		<pubDate>Fri, 27 Jul 2012 15:59:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2652</guid>
+		<description>Hi,
+
+
+I have a question a very basic one though and please correct me if I am wrong. Isn&#039;t vent object a global object ? And isn&#039;t having global variables considered wrong ?
+</description>
+		<content:encoded><![CDATA[<p>Hi,</p>
+<p>I have a question a very basic one though and please correct me if I am wrong. Isn&#8217;t vent object a global object ? And isn&#8217;t having global variables considered wrong ?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2612</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Thu, 12 Jul 2012 13:47:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2612</guid>
+		<description>not as a global variable. this is sample code just to show how to define it. you should attach it to a namespace object for your app, or some other object that represents your app and is available to use from your other objects (a module, for example).</description>
+		<content:encoded><![CDATA[<p>not as a global variable. this is sample code just to show how to define it. you should attach it to a namespace object for your app, or some other object that represents your app and is available to use from your other objects (a module, for example).</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Tony Smith</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2608</link>
+		<dc:creator>Tony Smith</dc:creator>
+		<pubDate>Thu, 12 Jul 2012 04:04:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2608</guid>
+		<description>I am a total newb but I need some help with something very simple: Where is this global variable, yours is &quot;vent&quot;, supposed to go???</description>
+		<content:encoded><![CDATA[<p>I am a total newb but I need some help with something very simple: Where is this global variable, yours is &#8220;vent&#8221;, supposed to go???</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Braveheart</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2586</link>
+		<dc:creator>Braveheart</dc:creator>
+		<pubDate>Fri, 29 Jun 2012 05:17:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2586</guid>
+		<description>Beautiful post Derick - saved me 3 hours work :)</description>
+		<content:encoded><![CDATA[<p>Beautiful post Derick &#8211; saved me 3 hours work :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: The Random Guy again</title>
+		<link>http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2552</link>
+		<dc:creator>The Random Guy again</dc:creator>
+		<pubDate>Thu, 14 Jun 2012 06:40:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=472#comment-2552</guid>
+		<description>Hi I have made a backbone.js simple app using asp.net mvc 4 webapi, but i am not sure if i have done it the right way,can you look at my code and suggest me the better approach than I have followed in it.I can give you the  source code of it,let me know if you are willing :)</description>
+		<content:encoded><![CDATA[<p>Hi I have made a backbone.js simple app using asp.net mvc 4 webapi, but i am not sure if i have done it the right way,can you look at my code and suggest me the better approach than I have followed in it.I can give you the  source code of it,let me know if you are willing :)</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 05:30:29 -->

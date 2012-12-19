@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Binding A Backbone View To A Model, To Enable and Disable A Button</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Sun, 16 Dec 2012 23:48:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Renne</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-2746</link>
+		<dc:creator>Renne</dc:creator>
+		<pubDate>Tue, 11 Sep 2012 14:57:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-2746</guid>
+		<description>So why don&#039;t you do that?...</description>
+		<content:encoded><![CDATA[<p>So why don&#8217;t you do that?&#8230;</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: jturo</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-2743</link>
+		<dc:creator>jturo</dc:creator>
+		<pubDate>Sun, 09 Sep 2012 02:20:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-2743</guid>
+		<description>Great tutorial, I just wanted to say that i just discovered that instead of writing this
+
+
+...
+setUsername: function(e){    this.model.set({username: this.username.val()});},
+...
+
+You could do this
+
+...
+setUsername: function(e){    this.model.set({username: $(this.el).val()});},
+...
+</description>
+		<content:encoded><![CDATA[<p>Great tutorial, I just wanted to say that i just discovered that instead of writing this</p>
+<p>&#8230;<br />
+setUsername: function(e){    this.model.set({username: this.username.val()});},<br />
+&#8230;</p>
+<p>You could do this</p>
+<p>&#8230;<br />
+setUsername: function(e){    this.model.set({username: $(this.el).val()});},<br />
+&#8230;</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: dsauced</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-2587</link>
+		<dc:creator>dsauced</dc:creator>
+		<pubDate>Fri, 29 Jun 2012 06:00:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-2587</guid>
+		<description>keyup vs change should change it on keystroke
+
+events: {
+    &quot;click #login&quot;: &quot;performLogin&quot;,
+    &quot;keyup #username&quot;: &quot;setUsername&quot;,
+    &quot;keyup #password&quot;: &quot;setPassword&quot;
+},</description>
+		<content:encoded><![CDATA[<p>keyup vs change should change it on keystroke</p>
+<p>events: {<br />
+    &#8220;click #login&#8221;: &#8220;performLogin&#8221;,<br />
+    &#8220;keyup #username&#8221;: &#8220;setUsername&#8221;,<br />
+    &#8220;keyup #password&#8221;: &#8220;setPassword&#8221;<br />
+},</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Neha</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-2424</link>
+		<dc:creator>Neha</dc:creator>
+		<pubDate>Fri, 04 May 2012 06:14:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-2424</guid>
+		<description>Thanks.. useful tutorial.
+</description>
+		<content:encoded><![CDATA[<p>Thanks.. useful tutorial.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-2406</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Mon, 30 Apr 2012 15:10:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-2406</guid>
+		<description>when you create a view instance, you tell it what model to use:
+
+new WhateverView({
+  model: someModelInstance
+})</description>
+		<content:encoded><![CDATA[<p>when you create a view instance, you tell it what model to use:</p>
+<p>new WhateverView({<br />
+  model: someModelInstance<br />
+})</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: umar</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-2405</link>
+		<dc:creator>umar</dc:creator>
+		<pubDate>Mon, 30 Apr 2012 15:03:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-2405</guid>
+		<description>how does the view &#039;know&#039; which model it has bound to. specifially, why does this.model know that the model is the Credentials model? </description>
+		<content:encoded><![CDATA[<p>how does the view &#8216;know&#8217; which model it has bound to. specifially, why does this.model know that the model is the Credentials model? </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Phil</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-2224</link>
+		<dc:creator>Phil</dc:creator>
+		<pubDate>Wed, 15 Feb 2012 11:06:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-2224</guid>
+		<description>I agree , 
+this.model.bind(&quot;validated&quot;, this.validated, this); seems to make more sense to me!</description>
+		<content:encoded><![CDATA[<p>I agree , <br />
+this.model.bind(&#8220;validated&#8221;, this.validated, this); seems to make more sense to me!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Benjamin Kreeger</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-2023</link>
+		<dc:creator>Benjamin Kreeger</dc:creator>
+		<pubDate>Fri, 09 Dec 2011 21:43:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-2023</guid>
+		<description>I should add (about the View code) that…
+
+I was having the same frustrating problem with ensuring that &quot;this&quot; actually referred to the View in the bound-from-model method (in your case, `this.validate()`. In my case, it was `this.render()`). Updating my backbone.js and underscore.js files to their newest versions fixed this for me, as you can now pass in a context for &quot;this&quot; into the call to `bind()`.
+
+As such, your amended view code would look something like…
+
+    initialize: function(){
+        this.username = $(&quot;#username&quot;);
+        this.password = $(&quot;#password&quot;);
+        this.loginButton = $(&quot;#login&quot;);
+        this.model.bind(&quot;validated&quot;, this.validated, this);
+      },</description>
+		<content:encoded><![CDATA[<p>I should add (about the View code) that…</p>
+<p>I was having the same frustrating problem with ensuring that &#8220;this&#8221; actually referred to the View in the bound-from-model method (in your case, `this.validate()`. In my case, it was `this.render()`). Updating my backbone.js and underscore.js files to their newest versions fixed this for me, as you can now pass in a context for &#8220;this&#8221; into the call to `bind()`.</p>
+<p>As such, your amended view code would look something like…</p>
+<p>    initialize: function(){<br />
+        this.username = $(&#8220;#username&#8221;);<br />
+        this.password = $(&#8220;#password&#8221;);<br />
+        this.loginButton = $(&#8220;#login&#8221;);<br />
+        this.model.bind(&#8220;validated&#8221;, this.validated, this);<br />
+      },</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Irina Dumitrascu</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-1906</link>
+		<dc:creator>Irina Dumitrascu</dc:creator>
+		<pubDate>Tue, 25 Oct 2011 09:41:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-1906</guid>
+		<description>This example would be a lot more MVC if you would bind the &quot;validated&quot; method to the view object. That way, you don&#039;t have to set the view reference in the model, and the code in &quot;validated&quot; would be more natural (&quot;this.loginButton&quot; instead of &quot;this.view.loginButton&quot;)</description>
+		<content:encoded><![CDATA[<p>This example would be a lot more MVC if you would bind the &#8220;validated&#8221; method to the view object. That way, you don&#8217;t have to set the view reference in the model, and the code in &#8220;validated&#8221; would be more natural (&#8220;this.loginButton&#8221; instead of &#8220;this.view.loginButton&#8221;)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/06/15/binding-a-backbone-view-to-a-model-to-enable-and-disable-a-button/#comment-1792</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Mon, 05 Sep 2011 15:55:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=430#comment-1792</guid>
+		<description>+1
+
+with backbone, setting a &quot;valid&quot; attribute via the &#039;set&#039; method would do this automatically: 
+
+myModel.set({valid: true})
+
+this will raise a &quot;change:valid&quot; event on the model. if you set the same value multiple times, it won&#039;t raise the event.</description>
+		<content:encoded><![CDATA[<p>+1</p>
+<p>with backbone, setting a &#8220;valid&#8221; attribute via the &#8216;set&#8217; method would do this automatically: </p>
+<p>myModel.set({valid: true})</p>
+<p>this will raise a &#8220;change:valid&#8221; event on the model. if you set the same value multiple times, it won&#8217;t raise the event.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 06:26:01 -->

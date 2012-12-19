@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -86,22 +85,56 @@
 <h2>A SocketAdapter</h2>
 <p>There are two basic things that you&#8217;ll need to build a socket adapter in the manner that I like. a web sockets setup and an <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/">event aggregator</a>. Pick a web sockets library &#8211; any of them will do. For this example, I&#8217;ll be using Socket.IO. As for an event aggregator, I&#8217;ve got my default setup with <a href="https://github.com/derickbailey/backbone.marionette">Backbone.Marionette</a> which provides one for us. Or you can pick any of a number of other pub/sub libraries for JavaScript.</p>
 <p>Here&#8217;s the trick to decoupling the application code from the web sockets library: all of the events that the web socket publishes will be forwarded to the event aggregator, and your application will only pay attention to the event aggregator. For example:</p>
-<div id="gist-2405897" class="gist">
-    
+<script src="https://gist.github.com/2405897.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">  HIT = new Backbone.Marionette.Application();
+  // ... other settings here
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>&nbsp;&nbsp;<span class="nx">HIT</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="c1">// ... other settings here</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="c1">// Socket.io Adapter</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="c1">// -----------------</span></div><div class='line' id='LC9'>&nbsp;&nbsp;</div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="c1">// This adapter forwards all socket.io events</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="c1">// to the application&#39;s event aggregator. The</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="c1">// intention of this is to decouple the specific</span></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="c1">// websockets implementation from the application&#39;s</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="c1">// use of it.</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">socket</span><span class="p">;</span></div><div class='line' id='LC17'><br/></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">initialize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">HIT</span><span class="p">.</span><span class="nx">socketUrl</span><span class="p">);</span></div><div class='line' id='LC20'><br/></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;connect&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">SocketAdapter</span><span class="p">.</span><span class="nx">connected</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">HIT</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;socket:connected&quot;</span><span class="p">);</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC25'><br/></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;someData&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">HIT</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;someData&quot;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span></div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC29'><br/></div><div class='line' id='LC30'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;disconnect&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">SocketAdapter</span><span class="p">.</span><span class="nx">connected</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC32'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">HIT</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;socket:disconnected&quot;</span><span class="p">);</span></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC34'><br/></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;ERROR: &quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC38'><br/></div><div class='line' id='LC39'>&nbsp;&nbsp;<span class="p">};</span></div><div class='line' id='LC40'><br/></div><div class='line' id='LC41'>&nbsp;&nbsp;<span class="nx">HIT</span><span class="p">.</span><span class="nx">addInitializer</span><span class="p">(</span><span class="nx">initialize</span><span class="p">);</span></div><div class='line' id='LC42'><br/></div><div class='line' id='LC43'><br/></div><div class='line' id='LC44'>&nbsp;&nbsp;<span class="c1">// Handle the event, start the app and the socket adapter</span></div><div class='line' id='LC45'><br/></div><div class='line' id='LC46'>&nbsp;&nbsp;<span class="nx">HIT</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;someData&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span></div><div class='line' id='LC47'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;some data came through!&quot;</span><span class="p">);</span></div><div class='line' id='LC48'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC49'><br/></div><div class='line' id='LC50'>&nbsp;&nbsp;<span class="nx">HIT</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span></div></pre></div>
-          </div>
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2405897/06c5abf2d52dd9509dcf67f09d2a27257cbd1dea/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2405897#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/2405897">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
 
+
+  // Socket.io Adapter
+  // -----------------
+  
+  // This adapter forwards all socket.io events
+  // to the application's event aggregator. The
+  // intention of this is to decouple the specific
+  // websockets implementation from the application's
+  // use of it.
+
+  var socket;
+
+  var initialize = function() {
+    socket = io.connect(HIT.socketUrl);
+
+    socket.on(&quot;connect&quot;, function() {
+      SocketAdapter.connected = true;
+      HIT.vent.trigger(&quot;socket:connected&quot;);
+    });
+
+    socket.on(&quot;someData&quot;, function(data){
+      HIT.vent.trigger(&quot;someData&quot;, data);
+    });
+
+    socket.on(&quot;disconnect&quot;, function() {
+      SocketAdapter.connected = false;
+      HIT.vent.trigger(&quot;socket:disconnected&quot;);
+    });
+
+    socket.on(&quot;error&quot;, function(err){
+      console.log(&quot;ERROR: &quot;, err);
+    });
+
+  };
+
+  HIT.addInitializer(initialize);
+
+
+  // Handle the event, start the app and the socket adapter
+
+  HIT.vent.on(&quot;someData&quot;, function(data){
+    alert(&quot;some data came through!&quot;);
+  });
+
+  HIT.start();</code></pre></noscript>
 <p>In this case we&#8217;re listening for an event called &#8220;someData&#8221; on the socket library. When that event fires, we&#8217;re just forwarding the event in to our application&#8217;s event aggregator. Our application listens for the necessary events from it&#8217;s event aggregator, and does it&#8217;s thing.</p>
 <p>From there, you just extend the adapter to listen to your specific events, and continue to forward them on. In some cases, you can even create very generic socket event handlers so that you don&#8217;t have to constantly add new ones. In other cases, you might need to add a very specific event handler and have it do some manipulation of the data that it receives before forwarding it on to the application. No matter the case, though, you now have a single place in your application where this needs to happen.</p>
 <p>Yes, it&#8217;s really that simple.</p>
@@ -267,6 +300,19 @@ http://mutedsolutions.com                <span id="dsq-author-user-2395">Derick 
     </li>
 </ul>
 </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2861">
+        <div id="dsq-comment-header-2861" class="dsq-comment-header">
+            <cite id="dsq-cite-2861">
+http://twitter.com/akashbad                <span id="dsq-author-user-2861">Akash Badshah</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2861" class="dsq-comment-body">
+            <div id="dsq-comment-message-2861" class="dsq-comment-message"><p>Great article! I am thinking of using signalr and backbone for an asp .net backend. I am new to all of these, do you have any tips on ramping up quickly on these frameworks?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
             </ul>
 
 
@@ -343,14 +389,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2395">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -586,11 +633,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2395">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -849,4 +892,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:07:47 -->
+Served from: lostechies.com @ 2012-12-19 06:58:52 -->

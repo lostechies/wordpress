@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -73,22 +72,7 @@
 <h2>Backbone.History</h2>
 <p>The primary responsibility of the History object is managing the browser&#8217;s navigation history, which facilitates the forward and back buttons and more.</p>
 <p>This is one of the little-known pieces of Backbone as it sits behind the scenes 99% of the time. Typically, the only time you see it come in to play is when you have a Router and you call the history object to kick off the browser&#8217;s history manipulation:</p>
-<div id="gist-1522091" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1522091/f1594b744e009e928ffdd5ed85e116956712776f/history.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1522091#file_history.js" style="float:right;margin-right:10px;color:#666">history.js</a>
-            <a href="https://gist.github.com/1522091">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1522091.js?file=history.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.history.start();</code></pre></noscript>
 <p>In truth, the History object does most of the work that you think a Router does. It facilitates the browser&#8217;s forward and back buttons by manipulating the browser&#8217;s history. It updates the URL&#8217;s route (either hash fragment or pushState) and it monitors changes in the URL&#8217;s route. It basically does everything that needs to be done with history, so that we can define and use one or more Routers in our application.</p>
 <h2>Backbone.Router And Routes</h2>
 <p>A router&#8217;s primary responsibility is to organize the route definitions and callback methods into logical groupings (typically based on related objects or related functionality). In reality, the Router organizes an app&#8217;s code for doing this but actually making the update to the route and paying attention to the route happen through the History object. Hence, the Router is used to organize our code and facilitate history manipulation and response, but not to directly manipulate or manage history.</p>
@@ -99,40 +83,18 @@
 <p><img title="Screen Shot 2011-12-23 at 2.24.45 PM.png" src="http://lostechies.com/derickbailey/files/2011/12/Screen-Shot-2011-12-23-at-2.24.45-PM.png" border="0" alt="Screen Shot 2011 12 23 at 2 24 45 PM" width="175" height="30" /></p>
 <p>This token is a bookmark-able state that the application transitioned into. When I hit refresh on my browser window, GMail will display the same email message to me that I saw when I clicked on the mail item originally.</p>
 <p>When our Backbone applications reach various states, such as viewing an email, we use a router to update the browser&#8217;s URL. We do that through `router.navigate`:</p>
-<div id="gist-1522091" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">myRouter</span><span class="p">.</span><span class="nx">navigate</span><span class="p">(</span><span class="s2">&quot;some/route&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1522091/8b4cb96a2a9f6f1c7e6901b7057366718104caa2/navigate.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1522091#file_navigate.js" style="float:right;margin-right:10px;color:#666">navigate.js</a>
-            <a href="https://gist.github.com/1522091">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1522091.js?file=navigate.js"></script><noscript><pre><code class="language-javascript javascript">myRouter.navigate(&quot;some/route&quot;);</code></pre></noscript>
 <h3>Rehydrating From A Tokenized State:</h3>
 <p>A router responds to changes in the route and calls the least amount of code possible to put our application in to the state we need. We do this through the use of the router&#8217;s callback methods (or events):</p>
-<div id="gist-1522091" class="gist">
-    
+<script src="https://gist.github.com/1522091.js?file=router.js"></script><noscript><pre><code class="language-javascript javascript">MyRouter = Backbone.Router.extend({
+  routes: {
+    &quot;some/route&quot;: &quot;someMethod&quot;
+  },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">routes</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;some/route&quot;</span><span class="o">:</span> <span class="s2">&quot;someMethod&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">someMethod</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// do stuff here</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC9'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1522091/33d95b649294381f734c4c08e492ec3028b0e048/router.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1522091#file_router.js" style="float:right;margin-right:10px;color:#666">router.js</a>
-            <a href="https://gist.github.com/1522091">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  someMethod: function(){
+    // do stuff here
+  }
+});</code></pre></noscript>
 <p>But the router is not in control the application, the application&#8217;s state, or anything else. It does not control the views or models. A router simply takes the route and figures out which part of the application to call.</p>
 <p>Think about a Rails or ASP.NET MVC router. Would you have the router in either of those generate some HTML and send it back to the browser? Not a chance! You would use a controller and view for that. In the same way, we shouldn&#8217;t use a backbone router to &#8220;control&#8221; our application. Rather, we should let the router figure out which route callback needs to be fired, and from there we should call some part of our application that can be in control of the application state.</p>
 <p>Sometimes a route callback is a 1-liner that calls out to another objects. Sometimes it is 2 or 3 lines to find an item by id and then call out to another part of our app to get things running. But a router should never instantiate a view and manipulate the DOM directly with jQuery or placing the view in to the DOM. That&#8217;s the responsibility of the application and it&#8217;s state, and a route callback is only one possible entry point into the application&#8217;s state.</p>
@@ -140,85 +102,53 @@
 <p>Models and collections have one primary responsibility: maintaining application state. They do this by remaining in memory, with all of their associated data remaining in tact, until we change that data or de-reference the object allowing it to be cleaned up. They also do this by managing persistence with a back-end server, when needed.</p>
 <h3>In-Memory State</h3>
 <p>A stateful object is one that lives in memory with a set of specified data, even after we&#8217;re done calling methods on it. A backbone model and collection are typically stateful objects because we hold references to them in our app. This keeps them in memory and allows us to read and change the state of the object. Changing the state of an object may change the state of the overall application.</p>
-<div id="gist-1522091" class="gist">
-    
+<script src="https://gist.github.com/1522091.js?file=memorystate.js"></script><noscript><pre><code class="language-javascript javascript">myModel.set({someAttr: &quot;some value&quot;});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">myModel</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">someAttr</span><span class="o">:</span> <span class="s2">&quot;some value&quot;</span><span class="p">});</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="c1">// ... later in the code ...</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="nx">alert</span><span class="p">(</span><span class="nx">myModel</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;someAttr&quot;</span><span class="p">));</span> <span class="c1">// =&gt; alerts &quot;some value&quot;</span></div></pre></div>
-          </div>
+// ... later in the code ...
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1522091/111f9099813abdec1440ff39f7d2c7adc564bd9f/memorystate.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1522091#file_memorystate.js" style="float:right;margin-right:10px;color:#666">memorystate.js</a>
-            <a href="https://gist.github.com/1522091">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+alert(myModel.get(&quot;someAttr&quot;)); // =&gt; alerts &quot;some value&quot;</code></pre></noscript>
 <h3>Persistent State</h3>
 <p>When the state changes, it sticks around in that state until we explicitly change it again. But the state of a model or collection in Backbone can be rather volatile. If a user leaves our application, closes their browser or hits the refresh button on the browser, the state of our application may be lost. If we need to maintain the application state between sessions of our app, we have to persist the state somewhere. We do this by calling various persistence methods on our models and collections:</p>
-<div id="gist-1522091" class="gist">
-    
+<script src="https://gist.github.com/1522091.js?file=persistence.js"></script><noscript><pre><code class="language-javascript javascript">// save changes to the model, back to a server
+myModel.save();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// save changes to the model, back to a server</span></div><div class='line' id='LC2'><span class="nx">myModel</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><span class="c1">// get all of the models for this collection, from a server</span></div><div class='line' id='LC5'><span class="nx">myCollection</span><span class="p">.</span><span class="nx">fetch</span><span class="p">();</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1522091/c9b673abd925bb5d8beda1109b59d9d939ee06d6/persistence.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1522091#file_persistence.js" style="float:right;margin-right:10px;color:#666">persistence.js</a>
-            <a href="https://gist.github.com/1522091">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+// get all of the models for this collection, from a server
+myCollection.fetch();</code></pre></noscript>
 <h2>Backbone.Sync</h2>
 <p>Backbone.Sync is responsible for the network communications of the persistence operations found in models and collections. It does this by delegating to jQuery&#8217;s $.ajax method, and by default will communicate using JSON data over a RESTful API on a server.</p>
 <p>You typically don&#8217;t touch or notice Backbone.Sync because it&#8217;s hidden behind the model and collection APIs for persistence. When Backbone&#8217;s persistence mechanisms don&#8217;t fit your needs, though, Backbone.Sync is where you want to change things to match what your back-end server requires. There are many different implementations of Backbone.Sync, including some for non-RESTful server, for use with Socket.io, and much much more.</p>
 <h2>Backbone.View</h2>
 <p>The primary responsibility of a view is to coordinate interactions between the end user and the application&#8217;s services.</p>
 <p>The interactions between the user and the application&#8217;s services are facilitated through many different means, including the use of jQuery or Zepto.js to handle DOM level events, calling in to models and collections directly through the user of `this.model` and `this.collection` respectively, and generating new HTML that will be displayed to the end-user in response to changes in the application state.</p>
-<div id="gist-1522091" class="gist">
-    
+<script src="https://gist.github.com/1522091.js?file=view.js"></script><noscript><pre><code class="language-javascript javascript">MyView = Backbone.View.extend({
+  events: {
+    &quot;click #someElement&quot;: &quot;someMethod&quot;
+  },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click #someElement&quot;</span><span class="o">:</span> <span class="s2">&quot;someMethod&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">someMethod</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;you clicked it!&quot;</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&lt;button id=&#39;someElement&#39; value=&#39;click me&#39;&gt;&lt;/button&gt;&quot;</span><span class="p">);</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC13'><span class="p">});</span></div></pre></div>
-          </div>
+  someMethod: function(){
+    alert(&quot;you clicked it!&quot;);
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1522091/cf83161c53c4085a866984589aeb76c373681730/view.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1522091#file_view.js" style="float:right;margin-right:10px;color:#666">view.js</a>
-            <a href="https://gist.github.com/1522091">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  render: function(){
+    $(this.el).html(&quot;&lt;button id='someElement' value='click me'&gt;&lt;/button&gt;&quot;);
+  }
+});</code></pre></noscript>
 <p>In spite of their importance and having their fingers in all the pies of Backbone, views are not in control. They respond to changes in the application state in order to render the right HTML at the right time. They also facilitate changing the state by calling other objects that can change the state, but only on behalf of the user who initiates a state change by interacting with the DOM. Views are effectively the middle-man of a Backbone app.</p>
 <p>Of course views can be used in some very simple scenarios where they respond to, manipulate, and maintain the state of an application. But this should only be done when you&#8217;re using a Backbone view to help organize some jQuery code without building a full Backbone application.</p>
 <h2>Backbone.Events</h2>
 <p>The primary responsibility of Backbone.Events is to decouple the knowledge of state changes from the response to those state changes, through the use of the observer pattern.</p>
 <p>Backbone.Events is the little powerhouse that facilitates nearly every aspect of a Backbone application. This is the one piece of Backbone that is found in every other piece of Backbone. Every time you call &#8220;bind&#8221; or &#8220;trigger&#8221; on any Backbone object, you&#8217;re using Backbone.Events.</p>
-
+<div>Could not embed GitHub Gist 152209: API Rate Limit Exceeded for 70.169.150.251</div>
 <p>Events let us decouple the various pieces of our app while still providing a unified way for all of those pieces to communicate. Aside from being used in every other piece of Backbone, we can also use Backbone.Events in our own objects. One of my personal favorite ways to do this is through the use of an <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/">event aggregator</a> to decouple and facilitate communication between higher level application concerns.</p>
-<div id="gist-1522091" class="gist">
-    
+<script src="https://gist.github.com/1522091.js?file=vent.js"></script><noscript><pre><code class="language-javascript javascript">var vent = _.extend({}, Backbone.Events);
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">vent</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">vent</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">);</span></div><div class='line' id='LC5'><span class="p">});</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'><span class="c1">// ... later in the code</span></div><div class='line' id='LC9'><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">);</span> <span class="c1">// =&gt; alerts &quot;bar&quot;</span></div></pre></div>
-          </div>
+vent.bind(&quot;foo&quot;, function(){
+  alert(&quot;bar&quot;);
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1522091/7483b11c753ee34abfe438ad490e343b62c8a0fa/vent.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1522091#file_vent.js" style="float:right;margin-right:10px;color:#666">vent.js</a>
-            <a href="https://gist.github.com/1522091">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
 
+// ... later in the code
+vent.trigger(&quot;foo&quot;); // =&gt; alerts &quot;bar&quot;</code></pre></noscript>
 <h2>Your Code</h2>
 <p>Understanding what each of these pieces is responsible for will help guide our decisions in how we use them. Can I put this jQuery selector and DOM manipulation directly in my model? Sure, I can. Should I? Heh &#8211; no. A clear separation between DOM manipulation and data manipulation is important. Separating the other concerns of the application are equally as important, of course.</p>
 <p>Here&#8217;s the kicker, though. You&#8217;ll notice that none of what I&#8217;ve talked about in any of these responsibilities includes workflow, large scale structure, managing dependencies or any of a number of other subjects. There&#8217;s a lot that Backbone gives us, and it&#8217;s a great tool set to own. But beyond a specific set of tools that should be used to facilitate a specific set of responsibilities in our applications, you still need to know <a href="http://www.watchmecode.net/">how to write good JavaScript</a>. And you <a href="http://lostechies.com/derickbailey/2011/08/30/dont-limit-your-backbone-apps-to-backbone-constructs/">still need to write your own code</a> to handle the rest of your applications&#8217; needs.</p>
@@ -475,14 +405,15 @@ it was a bit weird, i felt like i am asking my self all the time if i am writin
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -718,11 +649,7 @@ it was a bit weird, i felt like i am asking my self all the time if i am writin
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -981,4 +908,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:13:11 -->
+Served from: lostechies.com @ 2012-12-19 06:58:56 -->

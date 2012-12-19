@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Don&#8217;t Do Role-Based Authorization Checks; Do Activity-Based Checks</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Sun, 16 Dec 2012 23:48:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: likethesky</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2811</link>
+		<dc:creator>likethesky</dc:creator>
+		<pubDate>Tue, 30 Oct 2012 22:44:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2811</guid>
+		<description>Sorry to resurrect a year-old thread, but YES!  I am about to implement a system similar to what @ttutko:disqus describes here, which is that Administrators are able to assign to new users what I call a &quot;sub-admin&quot; role (with that name being a role which is semantically the same or--most probably--*less* than &quot;Administrator&quot;, with a corresponding set of the same or less [data] items [as available to Administrator] and with the same or less permissions on those items--jointly, these last two [items &amp; permissions on them] define an &quot;activity&quot; [as @derickbailey:disqus defines it in the original post here--I think!] that then either can -or- can&#039;t be performed by that [sub-admin] user).
+
+Then--in my system--this sub-admin user should be able to further sub-assign other sub-admins or sub-users (the only distinction between sub-admins &amp; sub-users being whether they can further assign users; sub-admins can assign *the same or less* rights they have to other users, sub-users cannot--it&#039;s really just another permission that is strictly on the User model/resource).  Anyway, I digress...
+
+Anyone know of any GitHub projects that do something similar (or @ttutko, have you open-sourced any of your system--or do you plan to? Or could share some snippets of code for it)?  I&#039;d be most interested in anything done using CanCan/Rolify in Ruby/Rails, but am open to any solutions that implement some form of this nested system, with sub-admins able to further delegate the same or &#039;tighter&#039; permissions for resources (uh, I mean &#039;items&#039;) that they have those (or greater) permissions to already.
+
+One question I have is--let&#039;s say there are a dozen &#039;items&#039; with the four main CRUD actions on them (defining 48 possible activities) and of course we will be adding more &#039;items&#039; to these dozen all the time.  Should I just create a &#039;custom role&#039; (hash into the 4 x 12 table of &#039;checkmarks&#039;) in Rolify for whatever permissions any particular user is given by a sub-admin (meaning, create a new &#039;custom&#039; role each time some combination of those 48 &#039;checkmarks&#039; are checked by a sub-admin for one of their sub-users/admins--we would share a combination that reoccurs, of course)?  Or better to just keep adding the &#039;items&#039; x 4 into a separate table linked to from the User table itself?  IOW, not use custom roles at all for these sub-permissions/activity-based authorizations, but simply make that &#039;hash of permissions on items&#039; a part of the identity of that user?
+
+Thanks all!</description>
+		<content:encoded><![CDATA[<p>Sorry to resurrect a year-old thread, but YES!  I am about to implement a system similar to what @ttutko:disqus describes here, which is that Administrators are able to assign to new users what I call a &#8220;sub-admin&#8221; role (with that name being a role which is semantically the same or&#8211;most probably&#8211;*less* than &#8220;Administrator&#8221;, with a corresponding set of the same or less [data] items [as available to Administrator] and with the same or less permissions on those items&#8211;jointly, these last two [items &amp; permissions on them] define an &#8220;activity&#8221; [as @derickbailey:disqus defines it in the original post here--I think!] that then either can -or- can&#8217;t be performed by that [sub-admin] user).</p>
+<p>Then&#8211;in my system&#8211;this sub-admin user should be able to further sub-assign other sub-admins or sub-users (the only distinction between sub-admins &amp; sub-users being whether they can further assign users; sub-admins can assign *the same or less* rights they have to other users, sub-users cannot&#8211;it&#8217;s really just another permission that is strictly on the User model/resource).  Anyway, I digress&#8230;</p>
+<p>Anyone know of any GitHub projects that do something similar (or @ttutko, have you open-sourced any of your system&#8211;or do you plan to? Or could share some snippets of code for it)?  I&#8217;d be most interested in anything done using CanCan/Rolify in Ruby/Rails, but am open to any solutions that implement some form of this nested system, with sub-admins able to further delegate the same or &#8216;tighter&#8217; permissions for resources (uh, I mean &#8216;items&#8217;) that they have those (or greater) permissions to already.</p>
+<p>One question I have is&#8211;let&#8217;s say there are a dozen &#8216;items&#8217; with the four main CRUD actions on them (defining 48 possible activities) and of course we will be adding more &#8216;items&#8217; to these dozen all the time.  Should I just create a &#8216;custom role&#8217; (hash into the 4 x 12 table of &#8216;checkmarks&#8217;) in Rolify for whatever permissions any particular user is given by a sub-admin (meaning, create a new &#8216;custom&#8217; role each time some combination of those 48 &#8216;checkmarks&#8217; are checked by a sub-admin for one of their sub-users/admins&#8211;we would share a combination that reoccurs, of course)?  Or better to just keep adding the &#8216;items&#8217; x 4 into a separate table linked to from the User table itself?  IOW, not use custom roles at all for these sub-permissions/activity-based authorizations, but simply make that &#8216;hash of permissions on items&#8217; a part of the identity of that user?</p>
+<p>Thanks all!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Manfred Lange</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2744</link>
+		<dc:creator>Manfred Lange</dc:creator>
+		<pubDate>Sun, 09 Sep 2012 02:24:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2744</guid>
+		<description>Derick, I like in particular your approach of thinking in terms of activities as opposed to roles. I gave it a try and it is driving the design of systems in a much better direction. Thank you for sharing!</description>
+		<content:encoded><![CDATA[<p>Derick, I like in particular your approach of thinking in terms of activities as opposed to roles. I gave it a try and it is driving the design of systems in a much better direction. Thank you for sharing!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Shurller</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2696</link>
+		<dc:creator>Shurller</dc:creator>
+		<pubDate>Sat, 18 Aug 2012 18:35:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2696</guid>
+		<description>Can you explain further how you achieve this? Or better still if you can share your sample code.</description>
+		<content:encoded><![CDATA[<p>Can you explain further how you achieve this? Or better still if you can share your sample code.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Spamme</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2690</link>
+		<dc:creator>Spamme</dc:creator>
+		<pubDate>Thu, 16 Aug 2012 12:47:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2690</guid>
+		<description>Nice article, alas you don&#039;t give any sample project from where people can begin, it would be very useful.</description>
+		<content:encoded><![CDATA[<p>Nice article, alas you don&#8217;t give any sample project from where people can begin, it would be very useful.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: rbac_abac</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2568</link>
+		<dc:creator>rbac_abac</dc:creator>
+		<pubDate>Sun, 24 Jun 2012 00:10:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2568</guid>
+		<description>Modern authorization architecture is based on XACML processing model (where the authorisation system provides distributed, embeddable PDP -- policy decision engine).
+That engine must be consulted by the application before the end user gets to access a protected resouce:
+checkAuthorisationAccess(user, activity, target_resource, application-context-attributes)  would return allow or deny
+The application must not even be aware of the roles that a user has (storing the roles, and interpreting them is the job of PIP and PDP).  PDP engine also implements what&#039; is caled ABAC (attribute based access control, typically by embedding a light weight rules engine).</description>
+		<content:encoded><![CDATA[<p>Modern authorization architecture is based on XACML processing model (where the authorisation system provides distributed, embeddable PDP &#8212; policy decision engine).<br />
+That engine must be consulted by the application before the end user gets to access a protected resouce:<br />
+checkAuthorisationAccess(user, activity, target_resource, application-context-attributes)  would return allow or deny<br />
+The application must not even be aware of the roles that a user has (storing the roles, and interpreting them is the job of PIP and PDP).  PDP engine also implements what&#8217; is caled ABAC (attribute based access control, typically by embedding a light weight rules engine).</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2492</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Tue, 29 May 2012 13:06:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2492</guid>
+		<description>I share your sentiment here, we realized this problem years ago. Indeed I&#039;m very surprised that you didn&#039;t mention the biggest paing we had with role based security, what about dynamic roles?
+
+What happens when the client wants to change dynamically roles and assign then different permissions overtime? The whole role based security fails when dynamic roles appear.
+
+So, in essence we did the same as you, as we allowed dynamic roles to be created, we needed to check some other fixed point, so we decided to check directly for permissions.
+
+As you did, our permissions represented activities in the systems, so we are doing the same here. 
+
+I still think that the whole role based security is broken, and only works for very simple scenarios that do not change over time. But what scenario does not change over time?</description>
+		<content:encoded><![CDATA[<p>I share your sentiment here, we realized this problem years ago. Indeed I&#8217;m very surprised that you didn&#8217;t mention the biggest paing we had with role based security, what about dynamic roles?</p>
+<p>What happens when the client wants to change dynamically roles and assign then different permissions overtime? The whole role based security fails when dynamic roles appear.</p>
+<p>So, in essence we did the same as you, as we allowed dynamic roles to be created, we needed to check some other fixed point, so we decided to check directly for permissions.</p>
+<p>As you did, our permissions represented activities in the systems, so we are doing the same here. </p>
+<p>I still think that the whole role based security is broken, and only works for very simple scenarios that do not change over time. But what scenario does not change over time?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Warren Sentient</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2428</link>
+		<dc:creator>Warren Sentient</dc:creator>
+		<pubDate>Mon, 07 May 2012 12:58:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2428</guid>
+		<description>Thank you for the excellent article.</description>
+		<content:encoded><![CDATA[<p>Thank you for the excellent article.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derrick Becker</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2301</link>
+		<dc:creator>Derrick Becker</dc:creator>
+		<pubDate>Tue, 20 Mar 2012 21:43:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2301</guid>
+		<description>Hey Derick.  Do you know if there is a practical size limit for claims?  We are investigating using claims based authorization in SharePoint and .Net WCF services.  If I store claims in Active Directory as activity level permissions, then a user with many roles that are tied to many permissions could end up with a very large claims token.  Just wondering if you have advice on this and if there is any limitations or size considerations.</description>
+		<content:encoded><![CDATA[<p>Hey Derick.  Do you know if there is a practical size limit for claims?  We are investigating using claims based authorization in SharePoint and .Net WCF services.  If I store claims in Active Directory as activity level permissions, then a user with many roles that are tied to many permissions could end up with a very large claims token.  Just wondering if you have advice on this and if there is any limitations or size considerations.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Christian Koenig</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2263</link>
+		<dc:creator>Christian Koenig</dc:creator>
+		<pubDate>Wed, 29 Feb 2012 08:49:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2263</guid>
+		<description>Got it on my own! 
+User Reflection to scan the namespace, in my example the controllers. Store all ActionMethods (in relation to their controller) as Entities. Create associations: ActionMethod  Functionality(Activity)  Role  Group  User.
+ Make your custom authorization filter check this information.  Thanks! I finally got rid of those code based access restrictions.</description>
+		<content:encoded><![CDATA[<p>Got it on my own!<br />
+User Reflection to scan the namespace, in my example the controllers. Store all ActionMethods (in relation to their controller) as Entities. Create associations: ActionMethod  Functionality(Activity)  Role  Group  User.<br />
+ Make your custom authorization filter check this information.  Thanks! I finally got rid of those code based access restrictions.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Christian Koenig</title>
+		<link>http://lostechies.com/derickbailey/2011/05/24/dont-do-role-based-authorization-checks-do-activity-based-checks/#comment-2229</link>
+		<dc:creator>Christian Koenig</dc:creator>
+		<pubDate>Fri, 17 Feb 2012 15:39:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=358#comment-2229</guid>
+		<description>This is what I have been thinking about the last months. Seen it gone wrong in PHP and Play Framework. Began to learn .NET and seen it again. 
+I could totally follow you, up to the following point:
+&quot;We can use run time reflection and conventions to know that the activity that needs authorization is “Administrators Only” and omit the declaration of the activity entirely.&quot;
+This is where you lost me... could you point me to the right direction where I can use Reflection within a ActionFilter to omit the Activity declaration?
+greetings
+Christian</description>
+		<content:encoded><![CDATA[<p>This is what I have been thinking about the last months. Seen it gone wrong in PHP and Play Framework. Began to learn .NET and seen it again.<br />
+I could totally follow you, up to the following point:<br />
+&#8220;We can use run time reflection and conventions to know that the activity that needs authorization is “Administrators Only” and omit the declaration of the activity entirely.&#8221;<br />
+This is where you lost me&#8230; could you point me to the right direction where I can use Reflection within a ActionFilter to omit the Activity declaration?<br />
+greetings<br />
+Christian</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 05:30:24 -->

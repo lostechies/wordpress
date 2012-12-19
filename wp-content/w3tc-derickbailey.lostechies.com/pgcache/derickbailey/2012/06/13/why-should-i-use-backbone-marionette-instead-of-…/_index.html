@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -121,44 +120,26 @@
 <h2>Modularization</h2>
 <p>Modularization of code is tremendously important. Creating small, well encapsulated packages that have a singular focus with well defined entry and exit points is a must for any system of any significant size and complexity.</p>
 <p>Marionette provides modularization directly through it&#8217;s `module` definitions. But I also recognize that some people like RequireJS and want to use that. So I provide both a standard build and a RequireJS compatible build.</p>
-<div id="gist-2924369" class="gist">
-    
+<script src="https://gist.github.com/2924369.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">MyApp = new Backbone.Marionette.Application();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;MyModule&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">MyModule</span><span class="p">,</span> <span class="nx">MyApp</span><span class="p">,</span> <span class="nx">Backbone</span><span class="p">,</span> <span class="nx">Marionette</span><span class="p">,</span> <span class="nx">$</span><span class="p">,</span> <span class="nx">_</span><span class="p">){</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="c1">// your module code goes here</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="p">});</span></div><div class='line' id='LC8'><br/></div></pre></div>
-          </div>
+MyApp.module(&quot;MyModule&quot;, function(MyModule, MyApp, Backbone, Marionette, $, _){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2924369/a29a7678107e9d10ea1016145b87f7060e63214f/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2924369#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/2924369">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  // your module code goes here
 
+});
+</code></pre></noscript>
 <p>(No blog post available for this, yet)</p>
 <h2>Incremental Use</h2>
 <p>This is one of the core philosophies that I bake in to every part of Marionette that I can: no &#8220;all-or-nothing&#8221; requirement for use of Marionette.</p>
 <p>Backbone itself takes a very incremental and modular approach with all of it&#8217;s building block objects. You are free to choose which ones you want to use, when. I strongly believe in this principle and strive to make sure Marionette works the same way.</p>
 <p>To that end, the majority of the pieces that I have built in to Marionette are built to stand alone, to work with the core pieces of Backbone, and to work together even better.</p>
 <p>For example, nearly every Backbone application needs to dynamically show a Backbone view in a particular place on the screen. The apps also need to handle closing old views and cleaning up memory when a new one is put in place. This is where Marionette&#8217;s `Region` comes in to play. A region handles the boilerplate code of taking a view, calling render on it, and stuffing the result in to the DOM for you. Then will close that view and clean it up for you, provided your view has a &#8220;close&#8221; method on it.</p>
-<div id="gist-2924369" class="gist">
-    
+<script src="https://gist.github.com/2924369.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">MyApp.addRegions({
+  someRegion: &quot;#some-div&quot;
+});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">addRegions</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">someRegion</span><span class="o">:</span> <span class="s2">&quot;#some-div&quot;</span></div><div class='line' id='LC3'><span class="p">});</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">someRegion</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="k">new</span> <span class="nx">MyView</span><span class="p">());</span></div><div class='line' id='LC6'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2924369/efc6d12bc81adf89e06ebd137d57879cda5a157d/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2924369#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/2924369">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+MyApp.someRegion.show(new MyView());
+</code></pre></noscript>
 <p>But you&#8217;re not required to use Marionette&#8217;s views in order to use a region. The only requirement is that you are extending from Backbone.View at some point in the object&#8217;s prototype chain. If you choose to provide a `close` method, a `onShow` method, or others, Marionette&#8217;s Region will call it for you at the right time.</p>
 <ul>
 <li><a href="http://lostechies.com/derickbailey/2011/12/12/composite-js-apps-regions-and-region-managers/">http://lostechies.com/derickbailey/2011/12/12/composite-js-apps-regions-and-region-managers/</a></li>
@@ -186,22 +167,11 @@
 <p>In my effort to reduce boilerplate code and provide sensible defaults (which is an idea that I directly &#8220;borrowed&#8221; from Tim Branyen&#8217;s LayoutManager), I recognize the need for other developers to use slightly different implementations than I do.</p>
 <p>I provide rendering based on inline `&lt;script&gt;` tags for templates, using Underscore.js templating by default. But you can replace this by changing the `Renderer` and/or `TempalteCache` objects in Marionette. These two objects provide the core of the rendering capabilities, and there are wiki pages that show how to change this out for specific templating engines and different ways of loading templates.</p>
 <p>With v0.9 of Marionette, it gets even easier. For example, if you want to replace the use of inline template script blocks with pre-compiled templates, you only have to replace one method on the Renderer:</p>
-<div id="gist-2924369" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// use pre-compiled template functions</span></div><div class='line' id='LC2'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Renderer</span><span class="p">.</span><span class="nx">render</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="k">return</span> <span class="nx">template</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span></div><div class='line' id='LC4'><span class="p">};</span></div><div class='line' id='LC5'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2924369/74c365fd8d706c9c1250c2916749e198d8af571a/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2924369#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/2924369">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/2924369.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">// use pre-compiled template functions
+Backbone.Marionette.Renderer.render = function(template, data){
+  return template(data);
+};
+</code></pre></noscript>
 <p>and now the entire application will use pre-compiled templates that you attach to your view&#8217;s `template` attribute.</p>
 <p>I even provide a Marionette.Async add-on with v0.9 that allows you to support asynchronously rendering views. I continuously strive to make it as easy as possible to replace the default behaviors in Marionette.</p>
 <h2>Code As Configuration</h2>
@@ -528,14 +498,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2730">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -771,11 +742,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2730">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1034,4 +1001,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:05:05 -->
+Served from: lostechies.com @ 2012-12-19 07:06:28 -->

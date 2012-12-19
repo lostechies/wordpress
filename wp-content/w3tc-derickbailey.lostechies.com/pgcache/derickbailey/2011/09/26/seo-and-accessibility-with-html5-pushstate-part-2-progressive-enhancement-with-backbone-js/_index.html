@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -75,78 +74,99 @@
 <h2>A Trivial Example: Say My Name!</h2>
 <p>Before we get into enabling PushState with our Backbone.js code, let&#8217;s take a look at a trivial example of progressive enhancement.</p>
 <p>Start by having a web server produce a very simple HTML form with a single textbox and button:</p>
-<div id="gist-1243356" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">&quot;foo&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;Name: <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;&lt;button</span> <span class="na">id=</span><span class="s">&quot;say&quot;</span><span class="nt">&gt;</span>Say My Name!<span class="nt">&lt;/button&gt;</span></div><div class='line' id='LC3'><span class="nt">&lt;/form&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1243356/f8d906564ad42b4644d487088822ae450b9237f7/1-form.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1243356#file_1_form.html" style="float:right;margin-right:10px;color:#666">1-form.html</a>
-            <a href="https://gist.github.com/1243356">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1243356.js?file=1-form.html"></script><noscript><pre><code class="language-html html">&lt;form id=&quot;foo&quot;&gt;
+  Name: &lt;input id=&quot;name&quot;&gt;&lt;button id=&quot;say&quot;&gt;Say My Name!&lt;/button&gt;
+&lt;/form&gt;</code></pre></noscript>
 <p>After the server renders this and delivers it down to the browser, the JavaScript for the page (a Backbone.js view in this case) would pick it up and run with it:</p>
-<div id="gist-1243356" class="gist">
-    
+<script src="https://gist.github.com/1243356.js?file=2-sayname.js"></script><noscript><pre><code class="language-javascript javascript">FooView = Backbone.View.extend({
+  events: {
+    &quot;change #name&quot;: &quot;setName&quot;,
+    &quot;click #say&quot;: &quot;sayName&quot;
+  },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">FooView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;change #name&quot;</span><span class="o">:</span> <span class="s2">&quot;setName&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click #say&quot;</span><span class="o">:</span> <span class="s2">&quot;sayName&quot;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">setName</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="nx">name</span><span class="p">});</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="nx">sayName</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hello &quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">);</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC17'><br/></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// do some rendering here, for when this is just running javascript</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC21'><span class="p">});</span></div><div class='line' id='LC22'><br/></div><div class='line' id='LC23'><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyModel</span><span class="p">();</span></div><div class='line' id='LC25'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FooView</span><span class="p">({</span></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">model</span><span class="p">,</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">el</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#foo&quot;</span><span class="p">)</span></div><div class='line' id='LC28'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC29'><span class="p">});</span></div></pre></div>
-          </div>
+  setName: function(e){
+    var name = $(e.currentTarget).val();
+    this.model.set({name: name});
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1243356/bc9d3ed4f6a68ffc6934bb2140d5efd5f3c0f1cf/2-sayname.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1243356#file_2_sayname.js" style="float:right;margin-right:10px;color:#666">2-sayname.js</a>
-            <a href="https://gist.github.com/1243356">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  sayName: function(e){
+    e.preventDefault();
+    var name = this.model.get(&quot;name&quot;);
+    alert(&quot;Hello &quot; + name);
+  },
 
+  render: function(){
+    // do some rendering here, for when this is just running javascript
+  }
+});
+
+$(function(){
+  var model = new MyModel();
+  var view = new FooView({
+    model: model,
+    el: $(&quot;#foo&quot;)
+  });
+});</code></pre></noscript>
 <p>When i instantiate the view after the page loads, I&#8217;m providing the existing content of the form that was rendered by the server to the view instance as the &#8216;el&#8217; of the view. I am not calling render or having the view generate an for me when the first view is loaded. I have a render method available for after the view is up and running and the page is all javascript, though. This lets me re-render the view later if i need to. (In all honestly, though, this example doesn&#8217;t need a render method and it could easily be left out).</p>
 <p>Clicking the &#8220;Say My Name&#8221; button with JavaScript enabled will cause an alert box.</p>
 <p><img title="Screen Shot 2011-09-26 at 3.56.12 PM.png" src="http://lostechies.com/derickbailey/files/2011/09/Screen-Shot-2011-09-26-at-3.56.12-PM.png" border="0" alt="Screen Shot 2011 09 26 at 3 56 12 PM" width="479" height="238" /></p>
 <p>Without javascript, it would post back to the server and the server could render the name to an html element somewhere.</p>
 <h2>A Less Trivial Example: A List Of Users</h2>
 <p>Now say we have a list of users in a `ul` tag. This list is rendered by the server when the browser makes a request and the result looks something like this:</p>
-<div id="gist-1243356" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;user-list&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nt">&lt;li</span> <span class="na">data-id=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>Bob</div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nt">&lt;li</span> <span class="na">data-id=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>Mary</div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nt">&lt;li</span> <span class="na">data-id=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>Frank</div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nt">&lt;li</span> <span class="na">data-id=</span><span class="s">&quot;4&quot;</span><span class="nt">&gt;</span>Jane</div><div class='line' id='LC6'><span class="nt">&lt;/ul&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1243356/d8a078aee3e0500a92206752d51cb8269860377d/3-list.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1243356#file_3_list.html" style="float:right;margin-right:10px;color:#666">3-list.html</a>
-            <a href="https://gist.github.com/1243356">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1243356.js?file=3-list.html"></script><noscript><pre><code class="language-html html">&lt;ul id=&quot;user-list&quot;&gt;
+  &lt;li data-id=&quot;1&quot;&gt;Bob
+  &lt;li data-id=&quot;2&quot;&gt;Mary
+  &lt;li data-id=&quot;3&quot;&gt;Frank
+  &lt;li data-id=&quot;4&quot;&gt;Jane
+&lt;/ul&gt;</code></pre></noscript>
 <p>Now we need to loop through this list and attach a backbone view and model to each of the `&lt;li&gt;` items. With the use of the `data-id` attribute, we can find the model that each tag comes from easily. We&#8217;ll then need a collection view and item view that is smart enough to attach to this html.</p>
-<div id="gist-1243356" class="gist">
-    
+<script src="https://gist.github.com/1243356.js?file=4-list.js"></script><noscript><pre><code class="language-javascript javascript">User = Backbone.Model.extend({});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">User</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({});</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">UserCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">User</span></div><div class='line' id='LC5'><span class="p">});</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'><span class="nx">UserListView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nx">attachToView</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#user-list&quot;</span><span class="p">);</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">){</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">userEl</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">userEl</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;data-id&quot;</span><span class="p">);</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">new</span> <span class="nx">UserView</span><span class="p">({</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">user</span><span class="p">,</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">el</span><span class="o">:</span> <span class="nx">userEl</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC21'><span class="p">});</span></div><div class='line' id='LC22'><br/></div><div class='line' id='LC23'><span class="nx">UserView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;change:name&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">updateName</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC26'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC27'><br/></div><div class='line' id='LC28'>&nbsp;&nbsp;<span class="nx">updateName</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">,</span> <span class="nx">val</span><span class="p">){</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">val</span><span class="p">);</span></div><div class='line' id='LC30'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC31'><span class="p">});</span></div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC34'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">userData</span> <span class="o">=</span> <span class="p">[</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Bob&quot;</span><span class="p">},</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Mary&quot;</span><span class="p">},</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Frank&quot;</span><span class="p">},</span></div><div class='line' id='LC38'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Jane&quot;</span><span class="p">},</span></div><div class='line' id='LC39'>&nbsp;&nbsp;<span class="p">];</span></div><div class='line' id='LC40'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">userList</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserCollection</span><span class="p">(</span><span class="nx">userData</span><span class="p">);</span></div><div class='line' id='LC41'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">userListView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UserListView</span><span class="p">({</span><span class="nx">collection</span><span class="o">:</span> <span class="nx">userList</span><span class="p">});</span></div><div class='line' id='LC42'>&nbsp;&nbsp;<span class="nx">userListView</span><span class="p">.</span><span class="nx">attachToView</span><span class="p">();</span></div><div class='line' id='LC43'><br/></div><div class='line' id='LC44'>&nbsp;&nbsp;<span class="nx">userList</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">set</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;No Longer Bob&quot;</span><span class="p">});</span></div><div class='line' id='LC45'><br/></div><div class='line' id='LC46'><span class="p">});</span></div><div class='line' id='LC47'><br/></div></pre></div>
-          </div>
+UserCollection = Backbone.Collection.extend({
+  model: User
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1243356/7d34830ff3f5f271fa5b575699fe564e79606dff/4-list.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1243356#file_4_list.js" style="float:right;margin-right:10px;color:#666">4-list.js</a>
-            <a href="https://gist.github.com/1243356">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+UserListView = Backbone.View.extend({
+  attachToView: function(){
+    this.el = $(&quot;#user-list&quot;);
+    self = this;
+    this.$(&quot;li&quot;).each(function(index){
+      var userEl = $(this);
+      var id = userEl.attr(&quot;data-id&quot;);
+      var user = self.collection.get(id);
+      new UserView({
+        model: user,
+        el: userEl
+      });
+    });
+  }
+});
 
+UserView = Backbone.View.extend({
+  initialize: function(){
+    this.model.bind(&quot;change:name&quot;, this.updateName, this);
+  },
+
+  updateName: function(model, val){
+    this.el.text(val);
+  }
+});
+
+$(function(){
+  var userData = [
+    {id: 1, name: &quot;Bob&quot;},
+    {id: 2, name: &quot;Mary&quot;},
+    {id: 3, name: &quot;Frank&quot;},
+    {id: 4, name: &quot;Jane&quot;},
+  ];
+  var userList = new UserCollection(userData);
+  var userListView = new UserListView({collection: userList});
+  userListView.attachToView();
+
+  userList.get(1).set({name: &quot;No Longer Bob&quot;});
+
+});
+</code></pre></noscript>
 <p>In this example, the `UserListView` will loop through all of the `&lt;li&gt;` tags and attach a view object with the correct model for each one. It also sets up an event handler for the model&#8217;s `change:name` event and updates the displayed text of the element when a change occurs.</p>
 <p>Then after we initialize everything and attach it to the HTML, we grab the first item in the collection and change the name. The list is then updated through the use of the event binding:</p>
 <p><img title="Screen Shot 2011-09-26 at 4.19.00 PM.png" src="http://lostechies.com/derickbailey/files/2011/09/Screen-Shot-2011-09-26-at-4.19.00-PM.png" border="0" alt="Screen Shot 2011 09 26 at 4 19 00 PM" width="144" height="95" /></p>
@@ -154,41 +174,16 @@
 <p>We don&#8217;t want to duplicate the HTML templates that our server uses, in our front-end HTML and JavaScript code. This would become a nightmare to maintain. Fortunately, we have some very sophisticated and malleable templating systems in both our server side frameworks and our client side frameworks, these days.</p>
 <h2>Server Side And Client Side HTML Templates</h2>
 <p>Looking back at a few of my previous posts, we can see the beginnings of what we need to do, to handle this situation. In my post on <a href="http://lostechies.com/derickbailey/2011/06/22/rendering-a-rails-partial-as-a-jquery-template/">Rendering A Rails Partial As A jQuery Template</a>, I covered the subject of re-using an ERB template from a Rails application in the front-end JavaScript with jQuery Templates. In this post, I show how to use a Rails model and populate it with data that looks like the jQuery Template markers:</p>
-<div id="gist-1041780" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="k">class</span> <span class="nc">SomeController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="k">def</span> <span class="nf">show</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="vi">@template_model</span> <span class="o">=</span> <span class="no">SomeModel</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:value</span> <span class="o">=&gt;</span> <span class="s2">&quot;${value}&quot;</span><span class="p">)</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="k">end</span></div><div class='line' id='LC5'><span class="k">end</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1041780/81d91536ec3a5c33e5cf098b4f726ef987e1cdb4/some_controller.rb" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1041780#file_some_controller.rb" style="float:right;margin-right:10px;color:#666">some_controller.rb</a>
-            <a href="https://gist.github.com/1041780">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1041780.js?file=some_controller.rb"></script><noscript><pre><code class="language-ruby ruby">class SomeController &lt; ApplicationController
+  def show
+    @template_model = SomeModel.new(:value =&gt; &quot;${value}&quot;)
+  end
+end</code></pre></noscript>
 <p>You can see in this example that I&#8217;m populating a model&#8217;s `value` attribute with the data &#8220;${value}&#8221;. When this gets rendered into HTML via an ERB template, it will produce HTML that can be used with jQuery Templates.</p>
 <p>In addition to this double-rendering technique, you may want to provide some functional or unit testing around your Backbone.js application code. To handle this with Jasmine-BDD and again re-use the existing templates in the Jasmine fixtures, you can combine the double-rendering of templates with my post on <a href="http://lostechies.com/derickbailey/2011/09/06/test-driving-backbone-views-with-jquery-templates-the-jasmine-gem-and-jasmine-jquery/">test-driving Backbone views with jQuery Templates</a>.</p>
 <h2>Backbone.js And HTML5 PushState</h2>
 <p>With all of this in place &#8211; server rendered HTML and progressive enhancement to enable client side JavaScript &#8211; we can set our Backbone application up to use PushState. To do this, we only need to enable PushState via the `Backbone.history.start` function:</p>
-<div id="gist-1243356" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span><span class="nx">pushState</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1243356/61bc35c3c2ffd4eaddf68bf2604badab4f8fd7f5/5-pushstate.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1243356#file_5_pushstate.js" style="float:right;margin-right:10px;color:#666">5-pushstate.js</a>
-            <a href="https://gist.github.com/1243356">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1243356.js?file=5-pushstate.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.history.start({pushState: true});</code></pre></noscript>
 <p>Using Backbone&#8217;s `history` requires a Router with at least one route, of course. While I haven&#8217;t shown how to use a router in this post, there are plenty of example of using routers out there on the web, including <a href="http://lostechies.com/derickbailey/category/backbone/">my own blog posts on backbone.js</a> and <a href="http://backbonetraining.net">my training course</a>. Once a router is in place, though, and Backbone&#8217;s history is started, the browser will have it&#8217;s URL updated with full URLs instead of URL hash fragments.</p>
 <p>If we have set everything up correctly, a user will be able to hit the root of our application and Backbone will pick up and start the application from there. Then, once the user has progressed through the application and the browser&#8217;s URL has been updated appropriately, they can either bookmark the URL, copy &amp; paste it or simply hit the refresh button in their browser. Doing this will cause the browser to make a request back to the server for the page that the browser was previously looking at. Once the page is rendered by the server and sent down to the browser, our JavaScript will kick in and enhance the functionality of the page, allowing the full experience of the page for those browsers that can support it.</p>
 <h2>The Result: SEO And Accessibility Friendly</h2>
@@ -406,6 +401,19 @@ http://mutedsolutions.com                <span id="dsq-author-user-2761">Derick 
     </li>
 </ul>
 </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2842">
+        <div id="dsq-comment-header-2842" class="dsq-comment-header">
+            <cite id="dsq-cite-2842">
+                <span id="dsq-author-user-2842">mattcrider</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2842" class="dsq-comment-body">
+            <div id="dsq-comment-message-2842" class="dsq-comment-message"><p>Are there any frameworks or projects (PHP preferably) where this consideration is built in?  E.g. a framework where controllers send back a fully function static html page by default but JSON data if requested by Backbone &#8212; and shares the same templates between the front end and back-end?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
             </ul>
 
 
@@ -482,14 +490,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2761">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -725,11 +734,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2761">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -988,4 +993,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:00:26 -->
+Served from: lostechies.com @ 2012-12-19 07:06:00 -->

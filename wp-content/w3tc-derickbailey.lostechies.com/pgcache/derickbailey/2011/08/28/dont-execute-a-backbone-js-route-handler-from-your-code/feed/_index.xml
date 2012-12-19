@@ -9,10 +9,28 @@
 	<atom:link href="http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/feed/" rel="self" type="application/rss+xml" />
 	<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/</link>
 	<description>Better Than Yesterday</description>
-	<lastBuildDate>Fri, 05 Oct 2012 08:53:00 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 16 Dec 2012 23:48:00 +0000</lastBuildDate>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
 	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Edan</title>
+		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2813</link>
+		<dc:creator>Edan</dc:creator>
+		<pubDate>Wed, 31 Oct 2012 12:50:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2813</guid>
+		<description>Hi Derick - 
+Thanks for the great article! Could you talk a little bit about directly accessing a route from the `href` tag? I know that your code snippet is a distillation of a more complex application, But I&#039;m wondering if you could have, in this instance, created the route directly in an HTML template?
+
+eg. &lt;a href=&quot;#posts/&quot;&gt;&lt;/a&gt;
+
+In other words, why do you need to bind this link in the javascript code at all? What are the advantages/disadvantages of this method?</description>
+		<content:encoded><![CDATA[<p>Hi Derick &#8211;<br />
+Thanks for the great article! Could you talk a little bit about directly accessing a route from the `href` tag? I know that your code snippet is a distillation of a more complex application, But I&#8217;m wondering if you could have, in this instance, created the route directly in an HTML template?</p>
+<p>eg. &lt;a href=&quot;#posts/&#8221;&gt;</p>
+<p>In other words, why do you need to bind this link in the javascript code at all? What are the advantages/disadvantages of this method?</p>
+]]></content:encoded>
+	</item>
 	<item>
 		<title>By: Derick Bailey</title>
 		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2496</link>
@@ -175,16 +193,6 @@ Thoughts?
 <p>Thoughts?</p>
 ]]></content:encoded>
 	</item>
-	<item>
-		<title>By: Kevin Warner</title>
-		<link>http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/#comment-2067</link>
-		<dc:creator>Kevin Warner</dc:creator>
-		<pubDate>Tue, 27 Dec 2011 17:03:00 +0000</pubDate>
-		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=525#comment-2067</guid>
-		<description>I actually think a combination of these approaches is a good one. Like you said earlier, there is no perfect approach to solving these challenges. One problem with my approach, as I am finding out, is that it my views that listen to changes to state re-render their entire view. This is not a huge deal, but if the views are complex, it could be more work than is necessary. With the event model, you might run into this as well, but you might be able to have finer control over what happens in your views. Thanks again for the great posts!</description>
-		<content:encoded><![CDATA[<p>I actually think a combination of these approaches is a good one. Like you said earlier, there is no perfect approach to solving these challenges. One problem with my approach, as I am finding out, is that it my views that listen to changes to state re-render their entire view. This is not a huge deal, but if the views are complex, it could be more work than is necessary. With the event model, you might run into this as well, but you might be able to have finer control over what happens in your views. Thanks again for the great posts!</p>
-]]></content:encoded>
-	</item>
 </channel>
 </rss>
 
@@ -192,4 +200,4 @@ Thoughts?
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 08:51:18 -->
+Served from: lostechies.com @ 2012-12-19 05:30:31 -->

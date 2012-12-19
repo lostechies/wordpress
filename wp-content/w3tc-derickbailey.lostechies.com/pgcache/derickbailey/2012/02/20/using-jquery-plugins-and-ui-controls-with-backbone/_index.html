@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -79,22 +78,19 @@
 <h2>Simple Manipulations And Events</h2>
 <p>Most of the simple manipulations that we perform with jQuery are DOM-independent. We can call them and manipulate a document fragment or a DOM element directly, whenever we want to. This includes not only showing / hiding HTML elements, but also adding and removing them, attaching events, and more.</p>
 <p>Consider this example:</p>
-<div id="gist-1865366" class="gist">
-    
+<script src="https://gist.github.com/1865366.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.View.extend({
+  // this is the default for backbone views
+  // tagName: &quot;div&quot; 
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="c1">// this is the default for backbone views</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="c1">// tagName: &quot;div&quot; </span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">);</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">html</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;&lt;li&gt;foo&lt;/li&gt;&quot;</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">html</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC13'><span class="p">});</span></div></pre></div>
-          </div>
+  render: function(){
+    var html = $(&quot;ul&quot;);
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1865366/f0ba9d284e78bd12a62c2992997971609881e5a6/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1865366#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/1865366">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    html.append(&quot;&lt;li&gt;foo&lt;/li&gt;&quot;);
+    html.hide();
 
+    this.$el.html(html);
+  }
+});</code></pre></noscript>
 <p>Here we can see a number of jQuery manipulations and events in place.</p>
 <p>Starting with the core of Backbone&#8217;s View, an HTML element is generated when a view instance is created. This gets populated into &#8220;this.el&#8221; and cached in a jQuery selector object as &#8220;this.$el&#8221;.</p>
 <p>In the render view, then, we see that we are using jQuery to create additional document fragments. For performance reasons (since it&#8217;s possible that the view&#8217;s &#8220;el&#8221; was attached to the DOM without the view knowing it), we&#8217;re populating the document fragment with content entirely in memory. This includes the addition of some data and calling &#8220;hide&#8221; on the fragment. We can manipulate the fragment with DOM-independent functions as much as we want, at this point.</p>
@@ -102,21 +98,17 @@
 <p>We can also attach DOM level events to the fragments that we&#8217;ve generated.  Since jQuery is turning our strings in to proper document fragments for us, the DOM events are available. That means we can call methods like &#8220;.click&#8221; and &#8220;.blur&#8221; on the view&#8217;s &#8220;el&#8221; if we want to. But I generally consider this to be an anti-pattern. There are some cases where you&#8217;ll need to manually attach events, and it can be done here in the render method.  For the most part, though, we should be using Backbone&#8217;s declarative &#8220;events&#8221; on our views.</p>
 <h2>DOM Events And Simple Animations</h2>
 <p>Backbone&#8217;s &#8220;View&#8221; object abstracts a little bit of jQuery&#8217;s event system for us, through the use of the declarative &#8220;events&#8221;.</p>
-<div id="gist-1865366" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click&quot;</span><span class="o">:</span> <span class="s2">&quot;showHide&quot;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">showHide</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">).</span><span class="nx">slideToggle</span><span class="p">();</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="c1">// render: function ...</span></div><div class='line' id='LC11'><span class="p">});</span></div></pre></div>
-          </div>
+<script src="https://gist.github.com/1865366.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.View.extend({
+  events: {
+    &quot;click&quot;: &quot;showHide&quot;
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1865366/27fb6a64c6f5b7bba20f0809a2c2dd3836ae0001/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1865366#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/1865366">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  showHide: function(){
+    this.$(&quot;ul&quot;).slideToggle();
+  },
 
+  // render: function ...
+});</code></pre></noscript>
 <p>Surprisingly, DOM events are partially DOM-independent. As I said above, we can add the events to the document fragments before they become part of the DOM. We can even trigger them manually without them being part of the DOM. In general, though, we let the DOM fire it&#8217;s events for us.</p>
 <p>Allowing the user to fire DOM events through DOM interactions (clicks, blurs, changes, etc) is DOM-dependent, of course. The view must attach any HTML structure that it needs to the DOM before the user can interact with them, to fire these events.</p>
 <p>Often when we &#8220;click&#8221; or &#8220;change&#8221; or fire off some other DOM level event in our code, we want to respond to this by manipulating the DOM in a visual manner. For example, we might want to call &#8220;.hide(&#8216;slow&#8217;)&#8221; on a portion of the view&#8217;s &#8220;el&#8221; in order to hide some items on the screen with a simple animation. The above example shows this. When you click on the top level &#8220;div&#8221;, the child &#8220;ul&#8221; is shown or hidden using the &#8220;<a href="http://api.jquery.com/slideToggle/">slideToggle</a>&#8221; animation method from jQuery.</p>
@@ -124,59 +116,36 @@
 <p>There are a large number of jQuery UI controls available, including the jQueryUI suite itself. I&#8217;ve used this suite and many other plugins for UI controls with Backbone a lot.</p>
 <p>Generally speaking, most jQuery UI controls are partially DOM-independent in that you can call the jQuery plugin method to get them started before the document fragment you&#8217;re working with is attached to the DOM. Once the document fragment has been configured with the plugin&#8217;s code and additional structure, though, the plugins generally become DOM-dependent (as illustrated in the previous section).</p>
 <p>For example, if you want to convert a &#8220;ul&#8221; list in to a menu structure using <a href="http://www.kendoui.com/">KendoUI</a>, you can call &#8220;<a href="http://demos.kendoui.com/web/menu/index.html">.kendoMenu</a>&#8221; during the render method of the view:</p>
-<div id="gist-1865366" class="gist">
-    
+<script src="https://gist.github.com/1865366.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">var MyView = Backbone.View.extend({
+  tagName: &quot;ul&quot;,
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">MyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;ul&quot;</span><span class="p">,</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&lt;li&gt;foo&lt;/li&gt;&lt;li&gt;bar&lt;ul&gt;&lt;li&gt;baz&lt;/li&gt;&lt;li&gt;quux&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&quot;</span><span class="p">);</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">kendoMenu</span><span class="p">();</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC8'><span class="p">});</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'><span class="c1">// ... somewhere else in the app</span></div><div class='line' id='LC11'><span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyView</span><span class="p">();</span></div><div class='line' id='LC12'><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC13'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#someDiv&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div></pre></div>
-          </div>
+  render: function(){
+    this.$el.html(&quot;&lt;li&gt;foo&lt;/li&gt;&lt;li&gt;bar&lt;ul&gt;&lt;li&gt;baz&lt;/li&gt;&lt;li&gt;quux&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&quot;);
+    this.$el.kendoMenu();
+  }
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1865366/3166dd0392d3dd1d67532fb197c561f88e071c22/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1865366#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/1865366">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+// ... somewhere else in the app
+var view = new MyView();
+view.render();
+$(&quot;#someDiv&quot;).html(view.el);</code></pre></noscript>
 <p>Once the Kendo menu in configured, though, the view&#8217;s &#8220;el&#8221; has to be attached to the DOM (if it isn&#8217;t already). When that happens, you&#8217;ll see the menu structure in place.</p>
 <h2>DOM-Dependent UI Controls</h2>
 <p>I have run in to a few scenarios where a jQuery plugin was entirely DOM-dependent &#8211; or at least, my usage of it was. This meant that I could not call the plugin&#8217;s method prior to the Backbone view&#8217;s &#8220;el&#8221; being added to the DOM.</p>
 <p>The &#8220;easy&#8221; solution to this is to have the view attach it&#8217;s &#8220;el&#8221; directly to the DOM in some fashion. But <a href="http://lostechies.com/derickbailey/2011/11/09/backbone-js-object-literals-views-events-jquery-and-el/">as I&#8217;ve talked about before</a>, this is a bad idea. Instead, it only takes a few extra lines of code &#8211; which can be easily extracted in to something reusable &#8211; to make this work.</p>
-<div id="gist-1865366" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">AnotherView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">onShow</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">layout</span><span class="p">({</span> <span class="nx">appDefaultStyles</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC5'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1865366/03d1a577224a1ce5e7586883814053dfd96611de/4.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1865366#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
-            <a href="https://gist.github.com/1865366">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1865366.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">var AnotherView = Backbone.View.extend({
+  onShow: function(){
+    this.$el.layout({ appDefaultStyles: true});
+  }
+});</code></pre></noscript>
 <p>In this example, I&#8217;ve added a method to the view called &#8220;onShow&#8221;. This method contains the call to the jQuery &#8220;<a href="http://layout.jquery-dev.net/documentation.cfm">Layout Manager</a>&#8221; plugin, which in my experience has been entirely DOM-dependent. Note that the &#8220;onShow&#8221; method doesn&#8217;t get called from within the view, though. This is because it&#8217;s not the view&#8217;s responsibility for adding itself to the DOM. It&#8217;s the responsibility of the code that needs the view, to do this.</p>
-<div id="gist-1865366" class="gist">
-    
+<script src="https://gist.github.com/1865366.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">var view = new AnotherView();
+view.render();
+$(&quot;#someDiv&quot;).html(view.el);
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AnotherView</span><span class="p">();</span></div><div class='line' id='LC2'><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC3'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#someDiv&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="k">if</span> <span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">onShow</span><span class="p">){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">view</span><span class="p">.</span><span class="nx">onShow</span><span class="p">();</span></div><div class='line' id='LC7'><span class="p">}</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1865366/909a187797e1b47c174d5bcb6e4ed37c71695f15/5.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1865366#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
-            <a href="https://gist.github.com/1865366">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+if (view.onShow){
+  view.onShow();
+}</code></pre></noscript>
 <p>The code that needs the view will instantiate it, call render and attach the resulting &#8220;view.el&#8221; to the DOM somehow. This is pretty straight-forward so far. What is does next, though, is check for the existence of an &#8220;onShow&#8221; method in the view. If that method does exist, it gets called. Since the code that is using the view knows that it has already added the view to the DOM, it knows when to call the &#8220;onShow&#8221; method. This allows us to write code that relies on DOM-dependent functionality without the view having to know if it&#8217;s been added to the DOM or not.</p>
 <p>(FWIW: in retrospect, I regret using the Layout Manager plugin that I linked to and showed. It&#8217;s caused me a lot of frustration. I find it far easier to use KendoUI&#8217;s &#8220;<a href="http://demos.kendoui.com/web/splitter/index.html">Splitter</a>&#8221; control, instead.)</p>
 <h2>Extracting The onShow Method Call</h2>
@@ -393,14 +362,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2272">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -636,11 +606,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2272">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -899,4 +865,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:57:25 -->
+Served from: lostechies.com @ 2012-12-19 06:17:59 -->

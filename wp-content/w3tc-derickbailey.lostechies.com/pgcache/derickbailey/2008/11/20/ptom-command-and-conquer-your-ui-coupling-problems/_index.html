@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>PTOM: Command and Conquer Your UI Coupling Problems | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Organizing BDD Context/Specs For Findability' href='http://lostechies.com/derickbailey/2008/11/19/organizing-bdd-context-specs-for-findability/' />
+<link rel='next' title='Kanban &#8211; Pulling Value From The Supplier' href='http://lostechies.com/derickbailey/2008/11/20/kanban-pulling-value-from-the-supplier/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2008/11/20/ptom-command-and-conquer-your-ui-coupling-problems/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=17' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-17" class="post-17 post type-post status-publish format-standard hentry category-net category-analysis-and-design category-design-patterns category-principles-and-patterns">
+					<h1 class="entry-title">PTOM: Command and Conquer Your UI Coupling Problems</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2008/11/20/ptom-command-and-conquer-your-ui-coupling-problems/" title="2:23 am" rel="bookmark"><span class="entry-date">November 20, 2008</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>This post is part of the <a href="/blogs/rhouston/archive/2008/11/05/pablo-s-topic-of-the-month-november-design-patterns.aspx" target="_blank">November 2008 Pablo&#8217;s Topic Of The Month (PTOM) &#8211; Design Patterns</a> and will outline a simple Command pattern, its implementation and use.</p>
+<p>One of the core principles of object oriented software development is the idea of <a href="http://en.wikipedia.org/wiki/Coupling_(computer_science)" target="_blank">Coupling</a>, &#8220;the degree to which each program module relies on each one of the other modules&#8221; (Wikipedia). When we build software, we should strive to attain low coupling &#8211; keep the individual modules of the system as separated as possible. Of course, if there is zero coupling in a system, then the system won&#8217;t really do much for us. After all, you can&#8217;t write software that is very useful if you are not allowed to have any dependencies. </p>
+<h3>Setting Up Shop</h3>
+<p>Before we break down into the pattern, let&#8217;s consider the context of a Point Of Sale system at a coffee shop. In this system, we have a menu where your server can punch in your order with all of the options you want and produce an order that is fulfilled somewhere else. When the server starts pressing the menu items and the system begins to compile the order, there is a connection between the menu system that they are using, the various products that have been configured in the system, and the back-end ordering system. This is a rather obvious location where coupling can quickly become high &#8211; the UI, the products, and the back-end ordering system could very quickly become a spaghetti mess of tangled dependencies and tight coupling &#8211; but we don&#8217;t want that, do we?</p>
+<p>To combat the coupling problems of this situation while still allowing dependencies, we need to introduce various forms of abstraction &#8211; simple dependencies that are not specific to any implementation, allowing us to change the implementation when we need to. In the case of a menu &#8211; be it a WinForms application, a touch screen point of sale system, or whatever else &#8211; a Command pattern is often employed to enable the system&#8217;s functionality without being directly coupled to the actual menu.</p>
+<h3>The Command Pattern</h3>
+<p>Originally outlined by the infamous &#8220;Gang of Four&#8221;, the <a href="http://en.wikipedia.org/wiki/Command_pattern" target="_blank">Command</a> <a href="http://www.dofactory.com/Patterns/PatternCommand.aspx" target="_blank">Pattern</a> is described as an object that represents an action &#8211; a command that will be executed. Within the context of a command, we have several parts that need to be accounted for. </p>
+<p><a target="_blank" href="http://en.wikipedia.org/wiki/Command_pattern#Structure"><img style="border-width: 0px;border: 0" alt="image" src="http://upload.wikimedia.org/wikipedia/en/8/8e/Command_Design_Pattern_Class_Diagram.png" border="0" /></a></p>
+<ul>
+<li>First and foremost, there is the actual command object &#8211; the action that is executed.  </li>
+<li>Second, we have the command invoker &#8211; the object that depends on the commands existence, and knows how to execute the command.  </li>
+<li>And lastly, we have the target of the invocation &#8211; the part of the system that needs to take action when the command is executed.</li>
+</ul>
+<h3>A Simple Implementation</h3>
+<p>To facilitate the decoupling of specific modules in our system, our command pattern implementations will be created with a naming convention that represents the objects as commands. For example, a very basic command implementation in C# can be represented as an interface such as this:</p>
+<div style="border: 1px solid gray;margin: 20px 0px 10px;padding: 4px;overflow: auto;font-size: 8pt;width: 97.5%;cursor: text;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">
+<div style="border-style: none;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white"><span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span> ICommand</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">{</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">  <span style="color: #0000ff">void</span> Execute();</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">}</pre>
+</div>
+</div>
+<p>By abstracting our command into an interface, we can provide any implementation we need at runtime. This lets us select a coffee from our point of sale system and have another part of the system actually create and handle the order. A pseudo-complete implementation of a command pattern to order a cup of coffee may look something like this:</p>
+<div style="border: 1px solid gray;margin: 20px 0px 10px;padding: 4px;overflow: auto;font-size: 8pt;width: 97.5%;cursor: text;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">
+<div style="border-style: none;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white"><span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span> ICommand</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">{</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   <span style="color: #0000ff">void</span> Execute();</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">}</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4"><span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> MenuItem</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">{</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   <span style="color: #0000ff">private</span> ICommand _menuCommand;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   <span style="color: #0000ff">public</span> Text { get; set; }</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   <span style="color: #0000ff">public</span> MenuItem(<span style="color: #0000ff">string</span> menuText, ICommand menuCommand)</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   {</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">       Text = menuText;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">       _menuCommand = menuCommand;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   }</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Click()</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   {</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">       _menuCommand.Execute();</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   }</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">}</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white"><span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> RegularCoffeeCommand: ICommand</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">{</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   <span style="color: #0000ff">private</span> SomeOrderingSystem _orderingSystem;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   <span style="color: #0000ff">public</span> RegularCoffeeCommand(SomeOrderingSystem orderingSystem)</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   {</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">       _orderingSystem = orderingSystem;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   }</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Execute()</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   {</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">       Product regularCoffee = <span style="color: #0000ff">new</span> Product(<span style="color: #006080">"RegularCoffee"</span>, 2.99);</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">       _orderingSystem.PlaceOrder(regularCoffee);</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   }</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">}</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4"><span style="color: #008000">//... somewhere in the application UI</span></pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">MenuItem regularCoffeeMenuItem = <span style="color: #0000ff">new</span> MenuItem(<span style="color: #006080">"Regular Coffee"</span>, <span style="color: #0000ff">new</span> RegularCoffeeCommand());</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white"><span style="color: #008000">//... and when the menu item is clicked</span></pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">regularCoffeeMenuItem.Click();</pre>
+</div>
+</div>
+<p>The real power of this implementation is that we have completely decoupled our menu system from any specific knowledge of the product ordering system in our coffee shop. All our menu item needs to know about is the ICommand interface. At the same time, our back-end implementation also knows about the ICommand interface &#8211; but the back-end also knows about the actual product ordering system. This allows us to create an implementation of the ICommand interface that knows how to invoke our target system. The end result is that we can independently vary the menu system for ordering coffee and our back-end product ordering system.</p>
+<h3>More Complexity And More Flexibility</h3>
+<p>Great News! Our command pattern implementations don&#8217;t have to be limited to such a rigid interface. In fact, my current project has no less than 4 different ICommand interface variations. By introducing the use of generics in C#, we can create some very flexible commands. As an example, consider the following additional interface definitions:</p>
+<div style="border: 1px solid gray;margin: 20px 0px 10px;padding: 4px;overflow: auto;font-size: 8pt;width: 97.5%;cursor: text;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">
+<div style="border-style: none;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white"><span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span> ICommand&lt;T&gt;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">{</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   T Execute();</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">}</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4"><span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span> IParameterizedCommand&lt;V&gt;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">{</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   <span style="color: #0000ff">void</span> Execute(V <span style="color: #0000ff">value</span>);</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">}</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white"><span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span> IParameterizedCommand&lt;T, V&gt;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">{</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   T Execute(V <span style="color: #0000ff">value</span>);</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">}</pre>
+</div>
+</div>
+<p>These new interface definitions, in combination with the original definition above, can create a very flexible and very useful set of commands in a system. By creating a &#8220;parameterized command&#8221; interface, we can provide detail in the command execution that is not available at the time the command is instantiated. And by adding another non-parameterized command with a return value, we can create a system that is able to interact in more complex ways.</p>
+<p>With these new command interfaces in mind, let&#8217;s take another look at our RegularCoffeeCommand. Instead of hard coding the price of the coffee into the command, let&#8217;s push that knowledge off to another part of the system.</p>
+<div style="border: 1px solid gray;margin: 20px 0px 10px;padding: 4px;overflow: auto;font-size: 8pt;width: 97.5%;cursor: text;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">
+<div style="border-style: none;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white"><span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> RegularCoffeeCommand: IParameterizedCommand&lt;Price&gt;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">{</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   <span style="color: #0000ff">private</span> SomeOrderingSystem _orderingSystem;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   <span style="color: #0000ff">public</span> RegularCoffeeCommand(SomeOrderingSystem orderingSystem)</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   {</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">       _orderingSystem = orderingSystem;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   }</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span> Execute(Price coffeePrice)</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">   {</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">       Product regularCoffee = <span style="color: #0000ff">new</span> Product(<span style="color: #006080">"RegularCoffee"</span>, coffeePrice);</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">       _orderingSystem.PlaceOrder(regularCoffee);</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">   }</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: #f4f4f4">&nbsp;</pre>
+<pre style="border-style: none;margin: 0em;padding: 0px;overflow: visible;font-size: 8pt;width: 100%;color: black;line-height: 12pt;font-family: consolas,'Courier New',courier,monospace;background-color: white">}</pre>
+</div>
+</div>
+<p>By providing an interface that accepts a parameter, we can move the knowledge of the coffee&#8217;s price out to another part of the system and provide it at runtime &#8211; a database call, a web services call, or anything else we want.</p>
+<h3>But Wait! There&#8217;s More!</h3>
+<p>As you can see, the command pattern can be very useful in helping us decouple our coffee shop&#8217;s point of sale system from the back-end product ordering system. Some very simple interface definitions can provide a lot of flexibility in how we compose our systems, as well. </p>
+<p>What&#8217;s more &#8211; we aren&#8217;t actually limited to interfaces or base classes for abstracting our commands in .NET. The built in delegate system in .NET provides a great way to encapsulate commands with method pointers. I&#8217;ve previously talked about <a href="/blogs/derickbailey/archive/2008/10/09/what-s-the-point-of-delegates-in-net.aspx" target="_blank">The Point of Delegates in .NET</a> where I mentioned that delegates provide us with a way of delaying the execution of code. Though it&#8217;s not strictly an &#8220;object&#8221; as the command pattern describes, a delegate certainly sounds like a command pattern implementation just waiting to break out of it&#8217;s skin. In fact, I have created a few command pattern implementations using nothing more than the built in delegates in .NET, several times. </p>
+<p>Whether you decide to use interfaces, delegates, abstract classes, or any other implementation method that you can come up with, I hope that you will think about including a command pattern implementation in your systems. It is an easy way of conquering the problems of high coupling between user interfaces and back-ends of the system.</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/net/" title="View all posts in .NET" rel="category tag">.NET</a>, <a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts in Analysis and Design" rel="category tag">Analysis and Design</a>, <a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts in Design Patterns" rel="category tag">Design Patterns</a>, <a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts in Principles and Patterns" rel="category tag">Principles and Patterns</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2008/11/20/ptom-command-and-conquer-your-ui-coupling-problems/" title="Permalink to PTOM: Command and Conquer Your UI Coupling Problems" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2008/11/20/ptom-command-and-conquer-your-ui-coupling-problems/feed/" title="Comments RSS to PTOM: Command and Conquer Your UI Coupling Problems" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-17 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2008/11/19/organizing-bdd-context-specs-for-findability/" rel="prev"><span class="meta-nav">&larr;</span> Organizing BDD Context/Specs For Findability</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2008/11/20/kanban-pulling-value-from-the-supplier/" rel="next">Kanban &#8211; Pulling Value From The Supplier <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-61">
+        <div id="dsq-comment-header-61" class="dsq-comment-header">
+            <cite id="dsq-cite-61">
+                <span id="dsq-author-user-61">Ike</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-61" class="dsq-comment-body">
+            <div id="dsq-comment-message-61" class="dsq-comment-message"><p>Hi,</p>
+<p>Can you show an example of the menuitem with a parameterized ICommand.<br />
+Right now, I don&#8217;t see how you can provide the data to the execute method (cleanly), since you need to have some info on the type. Or do you then also use generic MenuItems</p>
+<p>Thanks,<br />
+Best regards,<br />
+Ike</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-62">
+        <div id="dsq-comment-header-62" class="dsq-comment-header">
+            <cite id="dsq-cite-62">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-62">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-62" class="dsq-comment-body">
+            <div id="dsq-comment-message-62" class="dsq-comment-message"><p>@Ike</p>
+<p>DOH! You&#8217;ve found the glaring hole in my example. :)</p>
+<p>Given the structure that I outlined, I would probably create a specialized MenuItem for products with a price &#8211; something like this:</p>
+<p>//&#8230; somewhere in the application UI<br />
+Price coffeePrice = myPriceInfo.GetPriceFor(&#8220;Regular Coffee&#8221;);<br />
+MenuItem regularCoffeeMenuItem = new MenuItem(&#8220;Regular Coffee&#8221;, new RegularCoffeeCommand(), coffeePrice);</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-63">
+        <div id="dsq-comment-header-63" class="dsq-comment-header">
+            <cite id="dsq-cite-63">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-63">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-63" class="dsq-comment-body">
+            <div id="dsq-comment-message-63" class="dsq-comment-message"><p>ack &#8211; forgot to post the specialized menu item:</p>
+<p>public class PricedMenuItem<br />
+{</p>
+<p>	private ICommand _menuCommand;<br />
+	private Price _productPrice;</p>
+<p>	public Text { get; set; }</p>
+<p>	public PricedMenuItem(string menuText, IParameterizedCommand
+<price> menuCommand, Price productPrice)<br />
+	{<br />
+		_menuCommand = menuCommand;<br />
+		_productPrice = productPrice;<br />
+	}</p>
+<p>	public void Click()<br />
+	{<br />
+		_menuCommand.Execute(_productPrice);<br />
+	}</p>
+<p>}
+</price>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-64">
+        <div id="dsq-comment-header-64" class="dsq-comment-header">
+            <cite id="dsq-cite-64">
+http://www.jphamilton.net                <span id="dsq-author-user-64">J.P. Hamilton</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-64" class="dsq-comment-body">
+            <div id="dsq-comment-message-64" class="dsq-comment-message"><p>@Derrik</p>
+<p>In the real world would you use something like a MenuBuilder (Builder pattern) to construct your app menu? I am thinking that you could provide the MenuBuilder class references to stuff via DI (like the pricing service you were eluding to).</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-65">
+        <div id="dsq-comment-header-65" class="dsq-comment-header">
+            <cite id="dsq-cite-65">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-65">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-65" class="dsq-comment-body">
+            <div id="dsq-comment-message-65" class="dsq-comment-message"><p>@J.P.</p>
+<p>Definitely! The menu structure that this is leading to is begging for a good IoC container and a builder or factory. I didn&#8217;t want to go into those details for the meat of this post, though. I think Chad Myers is going to talk about exactly that &#8211; IoC and builder / factory &#8211; for the PTOM Design Patterns.</p>
+<p>*nudge nudge, chad* :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2008/11/20/ptom-command-and-conquer-your-ui-coupling-problems/';
+    var disqus_identifier = '17 /blogs/derickbailey/archive/2008/11/19/ptom-command-and-conquer-your-ui-coupling-problems.aspx';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "PTOM: Command and Conquer Your UI Coupling Problems";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=17';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2008\/11\/20\/ptom-command-and-conquer-your-ui-coupling-problems\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2012<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 06:33:11 -->

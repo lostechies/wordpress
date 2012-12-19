@@ -9,10 +9,30 @@
 	<atom:link href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/feed/" rel="self" type="application/rss+xml" />
 	<link>http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/</link>
 	<description>Better Than Yesterday</description>
-	<lastBuildDate>Mon, 05 Nov 2012 04:46:00 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 16 Dec 2012 23:48:00 +0000</lastBuildDate>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
 	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: UKB</title>
+		<link>http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943</link>
+		<dc:creator>UKB</dc:creator>
+		<pubDate>Sun, 16 Dec 2012 23:48:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1021#comment-2943</guid>
+		<description>1, 2, 3 could be add the previous two numbers together so that isn&#039;t completely accurate either</description>
+		<content:encoded><![CDATA[<p>1, 2, 3 could be add the previous two numbers together so that isn&#8217;t completely accurate either</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Andrew Young</title>
+		<link>http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2829</link>
+		<dc:creator>Andrew Young</dc:creator>
+		<pubDate>Mon, 05 Nov 2012 21:36:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1021#comment-2829</guid>
+		<description>Two points make a line. Third point validates it.</description>
+		<content:encoded><![CDATA[<p>Two points make a line. Third point validates it.</p>
+]]></content:encoded>
+	</item>
 	<item>
 		<title>By: Dan Sutton</title>
 		<link>http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826</link>
@@ -108,50 +128,6 @@ One can show that there are unlimited number of patterns to continue any limiter
 		<content:encoded><![CDATA[<p>For that matter: 1,2,3,5,8,13.</p>
 ]]></content:encoded>
 	</item>
-	<item>
-		<title>By: joshuaflanagan</title>
-		<link>http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2817</link>
-		<dc:creator>joshuaflanagan</dc:creator>
-		<pubDate>Thu, 01 Nov 2012 03:29:00 +0000</pubDate>
-		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1021#comment-2817</guid>
-		<description>I think you are making the (common) mistake of misrepresenting the DRY principle, when suggesting it needs to be tempered with YAGNI. DRY doesn&#039;t mean &#039;do not have lines of code that look similar&#039;. From http://c2.com/cgi/wiki?DontRepeatYourself :
-
-&quot;Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.&quot;
-
-
-
-Its about making sure the facts in your system are not declared in multiple places. Consider a fact like &quot;Last name is always required&quot;. Ideally that would be declared in one place in your system, and anything else that needs to support it (client validation, server validation, database constraint, etc) would flow from that single declaration.
-
-
-The example you provide isn&#039;t a DRY violation - its just code that looks similar.</description>
-		<content:encoded><![CDATA[<p>I think you are making the (common) mistake of misrepresenting the DRY principle, when suggesting it needs to be tempered with YAGNI. DRY doesn&#8217;t mean &#8216;do not have lines of code that look similar&#8217;. From <a href="http://c2.com/cgi/wiki?DontRepeatYourself" rel="nofollow">http://c2.com/cgi/wiki?DontRepeatYourself</a> :</p>
-<p>&#8220;Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.&#8221;</p>
-<p>Its about making sure the facts in your system are not declared in multiple places. Consider a fact like &#8220;Last name is always required&#8221;. Ideally that would be declared in one place in your system, and anything else that needs to support it (client validation, server validation, database constraint, etc) would flow from that single declaration.</p>
-<p>The example you provide isn&#8217;t a DRY violation &#8211; its just code that looks similar.</p>
-]]></content:encoded>
-	</item>
-	<item>
-		<title>By: Javier Gonel</title>
-		<link>http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2816</link>
-		<dc:creator>Javier Gonel</dc:creator>
-		<pubDate>Wed, 31 Oct 2012 21:18:00 +0000</pubDate>
-		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=1021#comment-2816</guid>
-		<description>In software development when presented with 1,2 you abstract doing +1. Next day if presented with &quot;1,2,3&quot; you can say you were lucky because your abstraction still works. But 50% of the times will be &quot;1,2,4&quot; and you will have to change it.
-
-You don&#039;t know &quot;when&quot; you will be presented with &quot;1,2,4&quot; (or &quot;1,2,3&quot;). But right know you have 1,2 and you know that copy pasting code is a debt you want to pay as soon as possible.
-
-Of course YAGNI and KISS. Don&#039;t overengineer it. Common sense, etc. But let the changes flow as they come. Don&#039;t be scared of change, embrace it. 
-
-When you&#039;re scared of changing something because what could come next. Is just the opposite of over-engineering: under-engineering. It&#039;s like not committing your code now because you want to change another file... you can always wait and it will make more sense. But focus on the things you know know, and if it makes sense now. You got it.
-
-Just don&#039;t wait.</description>
-		<content:encoded><![CDATA[<p>In software development when presented with 1,2 you abstract doing +1. Next day if presented with &#8220;1,2,3&#8243; you can say you were lucky because your abstraction still works. But 50% of the times will be &#8220;1,2,4&#8243; and you will have to change it.</p>
-<p>You don&#8217;t know &#8220;when&#8221; you will be presented with &#8220;1,2,4&#8243; (or &#8220;1,2,3&#8243;). But right know you have 1,2 and you know that copy pasting code is a debt you want to pay as soon as possible.</p>
-<p>Of course YAGNI and KISS. Don&#8217;t overengineer it. Common sense, etc. But let the changes flow as they come. Don&#8217;t be scared of change, embrace it. </p>
-<p>When you&#8217;re scared of changing something because what could come next. Is just the opposite of over-engineering: under-engineering. It&#8217;s like not committing your code now because you want to change another file&#8230; you can always wait and it will make more sense. But focus on the things you know know, and if it makes sense now. You got it.</p>
-<p>Just don&#8217;t wait.</p>
-]]></content:encoded>
-	</item>
 </channel>
 </rss>
 
@@ -159,4 +135,4 @@ Just don&#039;t wait.</description>
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:43:26 -->
+Served from: lostechies.com @ 2012-12-19 05:27:14 -->

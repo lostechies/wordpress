@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -69,7 +68,11 @@
 											</div><!-- .entry-meta -->
 
 					<div class="entry-content">
-						<p>As JavaScript applications become larger and larger, we have to think about the download size, memory usage and other performance constraints for our end users. There are a number of aspects to consider, one of which is how to deliver the HTML templates that your application is using, to the user&#8217;s browser, so that your application can render the templates.</p>
+						<p><strong>UPDATE: It turns out this is a really bad idea. Don&#8217;t async fetch individual templates.</strong></p>
+<p>In the end, having done asynchronous fetching of individual templates on a few productions apps, it&#8217;s a really bad idea. The network latency and multiple requests that are made back to the server destroy any sense of speed or responsiveness that an app may have had, and the additional code that was necessary to do this added more layers of complexity and performance problems.</p>
+<p> </p>
+<p>&#8212;</p>
+<p>As JavaScript applications become larger and larger, we have to think about the download size, memory usage and other performance constraints for our end users. There are a number of aspects to consider, one of which is how to deliver the HTML templates that your application is using, to the user&#8217;s browser, so that your application can render the templates.</p>
 <p>For my smaller applications, I tend to stuff a number of &lt;script&gt; blocks in to the HTML that the user downloads. This makes it easy for me to work with and I don&#8217;t have to worry about whether or not the template exists. But when the number of templates gets to be more than 5 or 6 small ones, this gets out of hand quickly. It makes it hard for me to manage them as I have to scroll through a lot of template code. Putting them in external files and then including them in the page with some server side technology helps the developer problem but it doesn&#8217;t solve the client problem of having to download all of these templates even if they are never used.</p>
 <p>To deal with the issues surrounding templates in HTML files, we can split our templates in to separate files and then use asynchronous calls to our server to load them as needed.</p>
 <h2>Backbone.View Render Semantics</h2>
@@ -85,22 +88,19 @@
 <p>The benefit of keeping these semantics, though, is that you can swap out a synchronous, pre-loaded template rendering view with a view that uses an asynchronous template loading mechanism. Or, better yet, you can have an intelligent system that uses asynchronous calls to get the template the first time it needs it, and then uses caching to keep the template around and do synchronous rendering on subsequent requests for this view / template. If the semantics for the view are kept in place, it doesn&#8217;t matter how the view implements the rendering. The view can be dropped in or removed as needed, without having to change the surrounding code that uses it.</p>
 <h2>Simple Async Template Retrieval</h2>
 <p>We can keep this very simple, to begin with, using jQuery&#8217;s AJAX calls to load the template with a callback to do the actual rendering after the template is loaded.</p>
-<div id="gist-1752642" class="gist">
-    
+<script src="https://gist.github.com/1752642.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.View.extend({
+  template: 'my-view-template',
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;my-view-template&#39;</span><span class="p">,</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/templates/&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">template</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">template</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">template</span><span class="p">).</span><span class="nx">tmpl</span><span class="p">();</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">that</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="k">this</span><span class="p">;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="p">});</span></div></pre></div>
-          </div>
+  render: function(){
+    var that = this;
+    $.get(&quot;/templates/&quot; + this.template + &quot;.html&quot;, function(template){
+      var html = $(template).tmpl();
+      that.$el.html(html);
+    });
+    return this;
+  }
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1752642/5c0cd33f99709a06d1ab876885942e3aa2c755fc/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1752642#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/1752642">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+});</code></pre></noscript>
 <p>In this example, we&#8217;re assuming that the view has a `template` attribute. This attribute represents the file that will be loaded from the server, and that file contain the actual template to be used.</p>
 <p>We&#8217;re also using a convention of `/templates/{name}.html` for the template location on the server. This can be implemented easily in many different web server technologies. In Sinatra, for example, you can create a &#8220;public/templates&#8221; folder and put your HTML template files directly in that folder. They will be available without having to do anything more than start the Sinatra server.</p>
 <p>When the call to `render` is made, the code makes an AJAX call back to the server to retrieve the specified template. A callback method is provided &#8211; and at this point, it assumes a successful call to get the template. When the template is returned from the server, the callback is fired, and the standard render code (using jQuery templates in this example) is executed.</p>
@@ -112,61 +112,74 @@
 <h2>Caching Templates</h2>
 <p>Now that we have a template loading asynchronously, it would be nice to only load it once instead of every time it needs to be used. This will improve the overall performance of the application, from the user&#8217;s perspective.</p>
 <p>To do this, we&#8217;ll need a little more than just some code in the render method. We want to re-use templates that we&#8217;ve already loaded, which means we can&#8217;t just store the template on the view instance. We need to store it in a place where any view instance can grab a copy of the template if it exists, or have an asynchronous call back to the server done to get the template when needed.</p>
-<div id="gist-1752642" class="gist">
-    
+<script src="https://gist.github.com/1752642.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">TemplateManager = {
+  templates: {},
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">TemplateManager</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">templates</span><span class="o">:</span> <span class="p">{},</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">get</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">templates</span><span class="p">[</span><span class="nx">id</span><span class="p">];</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="nx">template</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">callback</span><span class="p">(</span><span class="nx">template</span><span class="p">);</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span> <span class="k">else</span> <span class="p">{</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/templates/&quot;</span> <span class="o">+</span> <span class="nx">id</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">template</span><span class="p">)){</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">$tmpl</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">template</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">that</span><span class="p">.</span><span class="nx">templates</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">$tmpl</span><span class="p">;</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">callback</span><span class="p">(</span><span class="nx">$tmpl</span><span class="p">);</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC20'><br/></div><div class='line' id='LC21'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC22'><br/></div><div class='line' id='LC23'><span class="p">}</span></div></pre></div>
-          </div>
+  get: function(id, callback){
+    var template = this.templates[id];
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1752642/fa83841cfc2901dc092f45ab8c95dcbc701c0734/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1752642#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/1752642">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    if (template) {
+      callback(template);
 
+    } else {
+
+      var that = this;
+      $.get(&quot;/templates/&quot; + id + &quot;.html&quot;, function(template)){
+        var $tmpl = $(template);
+        that.templates[id] = $tmpl;
+        callback($tmpl);
+      }
+
+    }
+
+  }
+
+}</code></pre></noscript>
 <p>The template manager object has one primary method that we call: `get`. This method takes in a template name to be loaded and a callback method that is executed when the template is found. By using a callback method instead of returning a value directly, we can ensure both synchronous and asynchronous calls will work correctly.</p>
 <p>When you call `get`, it will check a hash / object literal to see if the template you want is already loaded using the template name that you provide to make this check. If it exists, it executes the callback immediately and passes the template along. If it does not exist yet, an AJAX call is made with jQuery to get the template from the server. Once the template is loaded, the callback that you passed in will be executed and the template is passed to it.</p>
 <p>We can now update our view to use the template manager:</p>
-<div id="gist-1752642" class="gist">
-    
+<script src="https://gist.github.com/1752642.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.View.extend({
+  template: 'my-view-template',
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">template</span><span class="o">:</span> <span class="s1">&#39;my-view-template&#39;</span><span class="p">,</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">TemplateManager</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">template</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">template</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">template</span><span class="p">).</span><span class="nx">tmpl</span><span class="p">();</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">that</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="k">this</span><span class="p">;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="p">});</span></div></pre></div>
-          </div>
+  render: function(){
+    var that = this;
+    TemplateManager.get(this.template, function(template){
+      var html = $(template).tmpl();
+      that.$el.html(html);
+    });
+    return this;
+  }
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1752642/e7c6dd25bacf6d8ea48046aa83a1ad13f1ecbfc4/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1752642#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/1752642">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+});</code></pre></noscript>
 <p>This isn&#8217;t much of a change from the view&#8217;s perspective. It&#8217;s better encapsulated, though, and a little easier to read. The real work is now being done in the TemplateManager object and we can change how it behaves as needed without having to update our views.</p>
 <h2>Beyond Simple Caching</h2>
 <p>There&#8217;s one remaining problem that this code has. If you have multiple instances of a view requesting the same template at roughly the same time, multiple AJAX calls will be made &#8211; one for each instance of the view. The net result is a slowdown in the application&#8217;s performance from too many network calls, and also a visual oddity where the views will appear one at a time as the AJAX calls finish. This can be a pretty big drag on performance and UI responsiveness.</p>
 <p>Thanks to some previous digging in to jQuery&#8217;s deferred and some help from Steve Flitcroft (<a href="https://twitter.com/#!/red_square">@red_square</a>), I was able to solve this problem fairly easily. I put <a href="https://github.com/derickbailey/bbclonemail/blob/master/public/javascripts/bbclonemail.views.js#L28-52">the following code</a> in to my BBCloneMail app, which uses my <a href="https://github.com/derickbailey/backbone.marionette">Backbone.Marionette</a> plugin. It&#8217;s not directly implemented in Marionette&#8217;s `TemplateManager` but most of what you need is already there. There&#8217;s only a few additional lines of code that you need to make this work.</p>
-<div id="gist-1752642" class="gist">
-    
+<script src="https://gist.github.com/1752642.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">(function(){
+  var promises = {};
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">promises</span> <span class="o">=</span> <span class="p">{};</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="c1">// Cache the returned deferred/promise by the id of the template</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="c1">// so that we can prevent multiple requests for the same template</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="c1">// from making the ajax call.</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="c1">//</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="c1">// This code is only safe to run synchronously. There exists a</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="c1">// race condition in this function, when run asynchronously,</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="c1">// which would nullify the benefit under certain circumstances.</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">loadTemplateAsync</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">tmpId</span><span class="p">){</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">promise</span> <span class="o">=</span> <span class="nx">promises</span><span class="p">[</span><span class="nx">tmpId</span><span class="p">]</span> <span class="o">||</span> <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;/templates/&quot;</span> <span class="o">+</span> <span class="nx">tmpId</span> <span class="o">+</span> <span class="s2">&quot;.html&quot;</span><span class="p">);</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promises</span><span class="p">[</span><span class="nx">tmpId</span><span class="p">]</span> <span class="o">=</span> <span class="nx">promise</span><span class="p">;</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">promise</span><span class="p">;</span></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'>&nbsp;&nbsp;<span class="c1">// Use jQuery to asynchronously load the template. </span></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">TemplateManager</span><span class="p">.</span><span class="nx">loadTemplate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">templateId</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">tmpId</span> <span class="o">=</span> <span class="nx">templateId</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">promise</span> <span class="o">=</span> <span class="nx">loadTemplateAsync</span><span class="p">(</span><span class="nx">tmpId</span><span class="p">);</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span><span class="p">.</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">template</span><span class="p">){</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="nx">template</span><span class="p">));</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC25'><span class="p">})();</span></div></pre></div>
-          </div>
+  // Cache the returned deferred/promise by the id of the template
+  // so that we can prevent multiple requests for the same template
+  // from making the ajax call.
+  //
+  // This code is only safe to run synchronously. There exists a
+  // race condition in this function, when run asynchronously,
+  // which would nullify the benefit under certain circumstances.
+  var loadTemplateAsync = function(tmpId){
+    var promise = promises[tmpId] || $.get(&quot;/templates/&quot; + tmpId + &quot;.html&quot;);
+    promises[tmpId] = promise;
+    return promise;
+  }
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1752642/5d5796e3335c80182324ce00ca9263f371f6c265/5.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1752642#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
-            <a href="https://gist.github.com/1752642">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  // Use jQuery to asynchronously load the template. 
+  Backbone.Marionette.TemplateManager.loadTemplate = function(templateId, callback){
+    var tmpId = templateId.replace(&quot;#&quot;, &quot;&quot;);
+    var promise = loadTemplateAsync(tmpId);
+    promise.done(function(template){
+      callback.call(this, $(template));
+    });
+  }
+})();</code></pre></noscript>
 <p>The basic idea is that I&#8217;m using a jQuery deferred / promise to fire the callback method from the loadTemplate parameters. To prevent multiple requests for the same template heading back to the server, I&#8217;m caching the promises by the template id. When a call to loadTemplate is made through the template manager, I check to see if I have a promise for that template already. If I do, I register the loadTemplate&#8217;s callback parameter with the promise. If I don&#8217;t, I create the promise and then store it by the template&#8217;s Id. Either way, I register the callback with the promise which <a href="http://lostechies.com/derickbailey/2012/02/07/rewriting-my-guaranteed-callbacks-code-with-jquery-deferred/">guarantees it will be executed</a>. Once the template is returned from the server and the promise is fulfilled (resolved), all of the callbacks are fired off with the template data and everything renders correctly.</p>
 <p>Note, though, that this code is not 100% safe. If you call the template manager from code that is already asynchronous, you can end up with a race condition where multiple promises are created and multiple calls to get the template are done. You&#8217;ll still get all of your views rendered just fine, but this will eliminate the benefit of using a promise to reduce network calls. Calling this code synchronously, though, won&#8217;t cause this race condition and the templates will only load once before they are cached and re-used.</p>
 <p><span style="font-size: 18px; font-weight: bold;">See It In Action</span></p>
@@ -627,6 +640,79 @@ http://twitter.com/svlada                <span id="dsq-author-user-2592">Stankov
     </li>
 
     </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2869">
+        <div id="dsq-comment-header-2869" class="dsq-comment-header">
+            <cite id="dsq-cite-2869">
+                <span id="dsq-author-user-2869">johndurbinn</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2869" class="dsq-comment-body">
+            <div id="dsq-comment-message-2869" class="dsq-comment-message"><p>Derick, you seem like a good guy; but I can&#8217;t help but get the feeling that people like you are obsessed with the infrastructure around development, rather than actual development as a way to solve real world problems.  Setting up all this infrastructure is only appropriate for a VERY SMALL PERCENTAGE OF DEV PROJECTS.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2870">
+        <div id="dsq-comment-header-2870" class="dsq-comment-header">
+            <cite id="dsq-cite-2870">
+http://www.facebook.com/scottsilvi                <span id="dsq-author-user-2870">Scott Silvi</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2870" class="dsq-comment-body">
+            <div id="dsq-comment-message-2870" class="dsq-comment-message"><p>You could make the argument that people like him are building many of those &#8220;small percentage of dev projects&#8221; &#8211; furthermore, he states right in the article that he will inline the templates if there&#8217;s only a handful, but beyond that it gets difficult. Furthermore of the furthermore, if you right modulized code, you only have to set it up for the first project, and can then reuse it any future projects. Not setting up this infrastructure for the first time MEANS YOU HAVE TO REWRITE IDENTICAL/NEARLY IDENTICAL CODE IN THE VAST MAJORITY OF small DEV PROJECTS.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2872">
+        <div id="dsq-comment-header-2872" class="dsq-comment-header">
+            <cite id="dsq-cite-2872">
+                <span id="dsq-author-user-2872">johndurbinn</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2872" class="dsq-comment-body">
+            <div id="dsq-comment-message-2872" class="dsq-comment-message"><p>Another architecture astronaut i see.  Have fun building castles in the sky while I actually ship products and make money.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-4" id="dsq-comment-2873">
+        <div id="dsq-comment-header-2873" class="dsq-comment-header">
+            <cite id="dsq-cite-2873">
+                <span id="dsq-author-user-2873">justin</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2873" class="dsq-comment-body">
+            <div id="dsq-comment-message-2873" class="dsq-comment-message"><p>Then go build and ship them rather than attack random people in an old article on reasonable/easy to implement techniques for building scalable backbone applications. You don&#8217;t agree with async loading templates, great. This article isn&#8217;t for you. No need to get mean about it.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-5" id="dsq-comment-2874">
+        <div id="dsq-comment-header-2874" class="dsq-comment-header">
+            <cite id="dsq-cite-2874">
+                <span id="dsq-author-user-2874">johndurbinn</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2874" class="dsq-comment-body">
+            <div id="dsq-comment-message-2874" class="dsq-comment-message"><p>Yeah, well fuck you</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
             </ul>
 
 
@@ -703,14 +789,15 @@ http://twitter.com/svlada                <span id="dsq-author-user-2592">Stankov
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -946,11 +1033,7 @@ http://twitter.com/svlada                <span id="dsq-author-user-2592">Stankov
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1209,4 +1292,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:09:05 -->
+Served from: lostechies.com @ 2012-12-19 05:41:50 -->

@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -73,22 +72,36 @@
 <p>Then a few of my friends started talking about <a href="http://api.jquery.com/category/deferred-object/">jQuery&#8217;s &#8220;deferred&#8221; objects and &#8220;promises&#8221;</a>. I had heard of this previously but had not bothered to learn it. When I finally decided to dig in to it, this morning, I found that it was a much more robust implementation of what I had just written. I found <a href="http://www.erichynds.com/jquery/using-deferreds-in-jquery/">a good article that helped me understand it better</a>, and began working on an update for Marionette to use deferred objects instead of my own code. Addy Osmani also wrote <a href="http://msdn.microsoft.com/en-us/scriptjunkie/gg723713">a really good article on MSDN</a>, which sheds even more light on how these work and how to work with them.</p>
 <h2>My New &#8220;Callbacks&#8221; Object</h2>
 <p>Here&#8217;s the end result of my digging in to this and replacing my Callbacks object with a jQuery deferred / promise implementation:</p>
-<div id="gist-1760312" class="gist">
-    
+<script src="https://gist.github.com/1760312.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">// Callbacks
+// ---------
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// Callbacks</span></div><div class='line' id='LC2'><span class="c1">// ---------</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><span class="c1">// A simple way of managing a collection of callbacks</span></div><div class='line' id='LC5'><span class="c1">// and executing them at a later point in time, using jQuery&#39;s</span></div><div class='line' id='LC6'><span class="c1">// `Deferred` object.</span></div><div class='line' id='LC7'><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Callbacks</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">deferred</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">promise</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span></div><div class='line' id='LC10'><span class="p">};</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Callbacks</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{</span></div><div class='line' id='LC13'>&nbsp;&nbsp;</div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="c1">// Add a callback to be executed. Callbacks added here are</span></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="c1">// guaranteed to execute, even if they are added after the </span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="c1">// `run` method is called.</span></div><div class='line' id='LC17'>&nbsp;&nbsp;<span class="nx">add</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">promise</span><span class="p">.</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC21'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC22'><br/></div><div class='line' id='LC23'>&nbsp;&nbsp;<span class="c1">// Run all registered callbacks with the context specified. </span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="c1">// Additional callbacks can be added after this has been run </span></div><div class='line' id='LC25'>&nbsp;&nbsp;<span class="c1">// and they will still be executed.</span></div><div class='line' id='LC26'>&nbsp;&nbsp;<span class="nx">run</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span></div><div class='line' id='LC28'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC29'><span class="p">});</span></div><div class='line' id='LC30'><br/></div></pre></div>
-          </div>
+// A simple way of managing a collection of callbacks
+// and executing them at a later point in time, using jQuery's
+// `Deferred` object.
+Marionette.Callbacks = function(){
+  this.deferred = $.Deferred();
+  this.promise = this.deferred.promise();
+};
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1760312/d3a94a8d1f93f70a76dd8f05fc9768c9618ec8a7/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1760312#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/1760312">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+_.extend(Marionette.Callbacks.prototype, {
+  
+  // Add a callback to be executed. Callbacks added here are
+  // guaranteed to execute, even if they are added after the 
+  // `run` method is called.
+  add: function(callback){
+    this.promise.done(function(context, options){
+      callback.call(context, options);
+    });
+  },
 
+  // Run all registered callbacks with the context specified. 
+  // Additional callbacks can be added after this has been run 
+  // and they will still be executed.
+  run: function(context, options){
+    this.deferred.resolve(context, options);
+  }
+});
+</code></pre></noscript>
 <p>This is a reduction in code and complexity, by about 75% on both counts.</p>
 <h2>Things To Note</h2>
 <p>Backbone.Marionette.Callbacks is a constructor function and you are expected to instantiate it before using it:</p>
@@ -277,14 +290,15 @@ http://amccloud.com/                <span id="dsq-author-user-2718">Andrew McClo
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">TechNet on <a href="http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-2769">Resources For, And How I Learned Backbone.js</a></li><li class="recentcomments">AK on <a href="http://lostechies.com/derickbailey/2010/05/11/vim-grep-find-all-occurrences-of-text-in-your-project/#comment-2768">Vim+Grep: Find All Occurrences Of Text In Your Project</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2010/05/11/vim-grep-find-all-occurrences-of-text-in-your-project/#comment-2767">Vim+Grep: Find All Occurrences Of Text In Your Project</a></li><li class="recentcomments">AK on <a href="http://lostechies.com/derickbailey/2010/05/11/vim-grep-find-all-occurrences-of-text-in-your-project/#comment-2766">Vim+Grep: Find All Occurrences Of Text In Your Project</a></li><li class="recentcomments">Guy on <a href="http://lostechies.com/derickbailey/2012/04/17/managing-a-modal-dialog-with-backbone-and-marionette/#comment-2765">Managing A Modal Dialog With Backbone And Marionette</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -520,11 +534,7 @@ http://amccloud.com/                <span id="dsq-author-user-2718">Andrew McClo
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -783,4 +793,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 08:43:58 -->
+Served from: lostechies.com @ 2012-12-19 06:23:21 -->

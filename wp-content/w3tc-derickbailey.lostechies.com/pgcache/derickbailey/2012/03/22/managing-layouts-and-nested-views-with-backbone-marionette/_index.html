@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -74,38 +73,21 @@
 <p><span style="font-size: 18px; font-weight: bold;">Marionette.Layout</span></p>
 <p>The answer that I found is something that several Marionette users had suggested and tried on their own: render the layout as a view, directly, and then create some regions from the generated HTML of that view. After trying this out on one of my projects, I quickly realized that this was the answer I needed so I put it together formally, in the Marionette.Layout object.</p>
 <p>The core of Layout is an ItemView + Regions. In fact, that&#8217;s exactly what the Layout is… it extends from Marionette&#8217;s ItemView and it adds the ability to specify a set of regions that will be instantiated with the Layout.</p>
-<div id="gist-2131050" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyLayout</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Layout</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">template</span><span class="o">:</span> <span class="s2">&quot;#layout-template&quot;</span><span class="p">,</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">regions</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">myRegion</span><span class="o">:</span> <span class="s2">&quot;#some-div&quot;</span><span class="p">,</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">anotherRegion</span><span class="o">:</span> <span class="s2">&quot;.another-element&quot;</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC8'><span class="p">});</span></div></pre></div>
-          </div>
+<script src="https://gist.github.com/2131050.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">MyLayout = Backbone.Marionette.Layout.extend({
+  template: &quot;#layout-template&quot;,
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2131050/1daad4af8f7b2a5fbb48984f45d395aad45b3b13/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2131050#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/2131050">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  regions: {
+    myRegion: &quot;#some-div&quot;,
+    anotherRegion: &quot;.another-element&quot;
+  }
+});</code></pre></noscript>
 <p>When you create a new instance of MyLayout, you&#8217;ll get access to &#8220;myRegion&#8221; and &#8220;anotherRegion&#8221; immediately. They won&#8217;t really be able to do anything until you call the layout&#8217;s &#8220;render&#8221; method, though. Once the layout has been rendered, you can call the &#8220;show&#8221; method on the regions to show whatever content you want in the region.</p>
-<div id="gist-2131050" class="gist">
-    
+<script src="https://gist.github.com/2131050.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">var myLayout = new MyLayout();
+MyApp.someRegion.show(myLayout);
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">myLayout</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyLayout</span><span class="p">();</span></div><div class='line' id='LC2'><span class="nx">MyApp</span><span class="p">.</span><span class="nx">someRegion</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="nx">myLayout</span><span class="p">);</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><span class="c1">// somewhere else in the code</span></div><div class='line' id='LC5'><span class="nx">myLayout</span><span class="p">.</span><span class="nx">myRegion</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="nx">anotherView</span><span class="p">);</span></div><div class='line' id='LC6'><span class="nx">myLayout</span><span class="p">.</span><span class="nx">anotherRegion</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="nx">moreView</span><span class="p">);</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2131050/e4cd09c76b27669a22717b8567de31cfa29f82f6/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2131050#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/2131050">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+// somewhere else in the code
+myLayout.myRegion.show(anotherView);
+myLayout.anotherRegion.show(moreView);</code></pre></noscript>
 <h2>Nested Views And Layouts</h2>
 <p>One of the benefits of using an ItemView as the base object for my Layout is that I can send the Layout to an existing Region&#8217;s &#8220;show&#8221; method. This means I can nest a layout within an existing part of the application &#8211; whether it&#8217;s hard coded HTML, another ItemView, or even another Layout. Anywhere that a Backbone.View can be used, a Layout can be put in it&#8217;s place, allowing a nearly unlimited nesting structure (limited by a JavaScript runtime engine and it&#8217;s stack size, memory usage, etc).</p>
 <p>In addition, if you&#8217;re using Marionette&#8217;s various view types (ItemView, CollectionView, CompositeView and Layout) in combination with Regions, all of the cleanup that is needed, is built right in to the views. When you close a view by either calling `.close()` on it, or by replacing it within a region using the region&#8217;s `.show()` method, the view and it&#8217;s children will be closed and cleaned up. This means you don&#8217;t have to worry quite as much about memory leaks and other issues, though you still have to <a href="http://lostechies.com/derickbailey/2012/03/19/backbone-js-and-javascript-garbage-collection/">make sure you de-reference the view entirely</a>.</p>
@@ -114,38 +96,36 @@
 <p>A Layout has a visual representation. It renders a template and it can handle DOM events and update the DOM when needed. An Application on the other hand has no visual representation. It&#8217;s a light-weight object that provides some key functionality for an application to get up and running in JavaScript, including the standard use as a namespace object. Both Layout and Application provide a `.vent` attribute as an event aggregator, though. In that, they are similar. The last of the major difference, though, is that an Application object has initializers. You can register initializer callbacks that are fired when the application&#8217;s `start()` method is called. There are no initializers with a Layout, though you could get some of the same effect using events that the Layout triggers.</p>
 <h2>An Example: BBCloneMail</h2>
 <p>I&#8217;ve updated my <a href="https://github.com/derickbailey/bbclonemail">BBCloneMail</a> application to use a Layout, specifically to show what it can do. The new version of this example app renders the entire page as one Layout object, and includes the app switching drop down list as part of the layout. Now when you switch between Mail and Contacts in the app, it&#8217;s the Layout for the over-all app that handles this.</p>
-<div id="gist-2131050" class="gist">
-    
+<script src="https://gist.github.com/2131050.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">  // from BBCloneMail.Layout.js
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>&nbsp;&nbsp;<span class="c1">// from BBCloneMail.Layout.js</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">Layout</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Layout</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">template</span><span class="o">:</span> <span class="s2">&quot;#layout-template&quot;</span><span class="p">,</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// These are my visual regions: the &quot;navigation&quot; or</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// left hand list of categories, and the &quot;main&quot;</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// content area where the email list or contact list</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// is displayed.</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">regions</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">navigation</span><span class="o">:</span> <span class="s2">&quot;#navigation&quot;</span><span class="p">,</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">main</span><span class="o">:</span> <span class="s2">&quot;#main&quot;</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// more stuff here, including DOM event handlers</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="p">});</span></div></pre></div>
-          </div>
+  var Layout = Backbone.Marionette.Layout.extend({
+    template: &quot;#layout-template&quot;,
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2131050/71a6a9a78a1addb7661ac5031731477949b1045c/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2131050#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/2131050">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    // These are my visual regions: the &quot;navigation&quot; or
+    // left hand list of categories, and the &quot;main&quot;
+    // content area where the email list or contact list
+    // is displayed.
+    regions: {
+      navigation: &quot;#navigation&quot;,
+      main: &quot;#main&quot;
+    },
 
+    // more stuff here, including DOM event handlers
+  });</code></pre></noscript>
 <p>There is one small oddity in this, though. Since I&#8217;m lazy-loading templates from the server &#8211; including the layout template &#8211; the call to start Backbone.history has to be delayed until after the layout is rendered. If I don&#8217;t put this delay in place, then the mail and categories won&#8217;t show up after they are rendered. To fix this issue, I moved the `Backbone.history.start()` in to the BBCloneMail.Layout file and took advantage of the view &#8220;render&#8221; method returning a jQuery deferred object.</p>
-<div id="gist-2131050" class="gist">
+<script src="https://gist.github.com/2131050.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">  BBCloneMail.addInitializer(function(){
     
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>&nbsp;&nbsp;<span class="nx">BBCloneMail</span><span class="p">.</span><span class="nx">addInitializer</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// Render the layout and get it on the screen, first</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">BBCloneMail</span><span class="p">.</span><span class="nx">layout</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Layout</span><span class="p">();</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">layoutRender</span> <span class="o">=</span> <span class="nx">BBCloneMail</span><span class="p">.</span><span class="nx">layout</span><span class="p">.</span><span class="nx">render</span><span class="p">()</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">BBCloneMail</span><span class="p">.</span><span class="nx">layout</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// This kicks off the rest of the app, through the router</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">layoutRender</span><span class="p">.</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="p">});</span></div></pre></div>
-          </div>
+    // Render the layout and get it on the screen, first
+    BBCloneMail.layout = new Layout();
+    var layoutRender = BBCloneMail.layout.render()
+    $(&quot;body&quot;).prepend(BBCloneMail.layout.el);
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2131050/b2d4786880c1d4ed2853ff18c58ddabd634c1d45/4.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2131050#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
-            <a href="https://gist.github.com/2131050">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    // This kicks off the rest of the app, through the router
+    layoutRender.done(function(){
+      Backbone.history.start();
+    });
 
+  });</code></pre></noscript>
 <p>When this deferred object is &#8220;done&#8221;, I know it&#8217;s been rendered. That means I can start the history object and kick off my routers, which in term render the mail and categories on to the screen.</p>
 <h2>Some Better Examples?</h2>
 <p>I know there are some better use cases for a Layout than what I&#8217;ve shown, here. In fact, I&#8217;ve used it for better purposes already &#8211; but on a few projects that I can&#8217;t talk about (NDA and all that). One of the ways that I have thought about using a Layout, though, is to represent a sub-application. For example, in a tab-oriented application, each open tab may represent a separate sub-application and have it&#8217;s own layout needs. A Layout object would be a great way to render the tab&#8217;s contents and allow different parts of the tab&#8217;s contents to be swapped out as needed.</p>
@@ -384,6 +364,53 @@ http://mutedsolutions.com                <span id="dsq-author-user-2475">Derick 
 </li>
 </ul>
 </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2840">
+        <div id="dsq-comment-header-2840" class="dsq-comment-header">
+            <cite id="dsq-cite-2840">
+                <span id="dsq-author-user-2840">Bjarni Thorisson</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2840" class="dsq-comment-body">
+            <div id="dsq-comment-message-2840" class="dsq-comment-message"><p>Hi, thanks for super useful posts. Whenever your site comes up when googling for backbone answers I know it&#8217;s a hit.</p>
+<p>One question regarding this post: It seems the layout in bbclonemail has changed since you wrote this post. What are the reasons?</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2841">
+        <div id="dsq-comment-header-2841" class="dsq-comment-header">
+            <cite id="dsq-cite-2841">
+http://mutedsolutions.com                <span id="dsq-author-user-2841">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2841" class="dsq-comment-body">
+            <div id="dsq-comment-message-2841" class="dsq-comment-message"><p>BBCloneMail changes on a regular basis &#8211; as new ideas, new features and new implementation details make their way in to Marionette. I also tend to use it as a playground for what the future of Marionette will bring. At this time, BBCloneMail is rather outdated, though.  I haven&#8217;t had a chance to go back and clean up some of the things that I know are odd / not the way I want them.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2843">
+        <div id="dsq-comment-header-2843" class="dsq-comment-header">
+            <cite id="dsq-cite-2843">
+                <span id="dsq-author-user-2843">Bjarni Thorisson</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2843" class="dsq-comment-body">
+            <div id="dsq-comment-message-2843" class="dsq-comment-message"><p>Could you expand a bit on what part of BBCloneMail is outdated?<br />
+Are there any techniques you are using there that should be replaced by other methods?<br />
+Things seem to be changing very fast in Marionette..<br />
+Thanks</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
             </ul>
 
 
@@ -460,14 +487,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2475">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -703,11 +731,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2475">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -966,4 +990,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:55:20 -->
+Served from: lostechies.com @ 2012-12-19 07:05:51 -->

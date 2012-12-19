@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -78,81 +77,74 @@
 <p>No, really. That&#8217;s the solution.</p>
 <p>I&#8217;m not saying you can&#8217;t use a Backbone view in a modal. I&#8217;m saying you shouldn&#8217;t try to modal the view itself. Instead, you should create a simple wrapper div for the modal plugin to use and then populate the contents of that div with the view&#8217;s `el`.</p>
 <p>Let&#8217;s see an example of a Twitter Bootstrap modal dialog, displaying a Backbone view. First, the HTML and Underscore template:</p>
-<div id="gist-2359717" class="gist">
-    
+<script src="https://gist.github.com/2359717.js?file=1.html"></script><noscript><pre><code class="language-html html">&lt;script id=&quot;modal-view-template&quot; type=&quot;text/html&quot;&gt;
+  &lt;div class=&quot;modal-header&quot;&gt;
+    &lt;h2&gt;This is a modal!&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;modal-body&quot;&gt;
+    &lt;p&gt;With some content in it!&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;modal-footer&quot;&gt;
+    &lt;button class=&quot;btn&quot;&gt;cancel&lt;/button&gt;
+    &lt;button class=&quot;btn-default&quot;&gt;Ok&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/script&gt;
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;modal-view-template&quot;</span> <span class="na">type=</span><span class="s">&quot;text/html&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-header&quot;</span><span class="o">&gt;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">modal</span><span class="o">!&lt;</span><span class="err">/h2&gt;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="err">/div&gt;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-body&quot;</span><span class="o">&gt;</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">With</span> <span class="nx">some</span> <span class="nx">content</span> <span class="k">in</span> <span class="nx">it</span><span class="o">!&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="err">/div&gt;</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-footer&quot;</span><span class="o">&gt;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">button</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn&quot;</span><span class="o">&gt;</span><span class="nx">cancel</span><span class="o">&lt;</span><span class="err">/button&gt;</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">button</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn-default&quot;</span><span class="o">&gt;</span><span class="nx">Ok</span><span class="o">&lt;</span><span class="err">/button&gt;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="err">/div&gt;</span></div><div class='line' id='LC12'><span class="nt">&lt;/script&gt;</span></div><div class='line' id='LC13'><br/></div><div class='line' id='LC14'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;modal&quot;</span><span class="nt">&gt;&lt;/div&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2359717/883aa5b4e1365f0ea7d7020ad06bb95eea322818/1.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2359717#file_1.html" style="float:right;margin-right:10px;color:#666">1.html</a>
-            <a href="https://gist.github.com/2359717">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+&lt;div id=&quot;modal&quot;&gt;&lt;/div&gt;</code></pre></noscript>
 <p>Note that I have a &#8220;&lt;div id=&#8217;modal&#8217;&gt;&lt;/div&gt;&#8221; in there. This is explicitly for the Twitter Bootstrap modal dialog to use. This div is the modal. There&#8217;s no content in it, though. I will supply the content for the modal through a Backbone view, which looks like this:</p>
-<div id="gist-2359717" class="gist">
-    
+<script src="https://gist.github.com/2359717.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">var view = new MyView();
+view.render();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyView</span><span class="p">();</span></div><div class='line' id='LC2'><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><span class="kd">var</span> <span class="nx">$modalEl</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#modal&quot;</span><span class="p">);</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'><span class="nx">$modalEl</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC7'><span class="nx">$modalEl</span><span class="p">.</span><span class="nx">modal</span><span class="p">();</span></div></pre></div>
-          </div>
+var $modalEl = $(&quot;#modal&quot;);
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2359717/68181d9d255ac4c274156d662dd068f0367391a7/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2359717#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/2359717">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+$modalEl.html(view.el);
+$modalEl.modal();</code></pre></noscript>
 <p>How easy is that? I&#8217;m just rendering a view like I always do, stuffing the view&#8217;s `el` in to the &#8220;#modal&#8221; div, and then calling `.modal` on the jQuery selector object. And that&#8217;s it. My modal is done and my view&#8217;s `events` will still work.</p>
 <h2>Managing A Modal With Backbone.Marionette</h2>
 <p>Yes, it always comes back to my <a href="https://github.com/derickbailey/backbone.marionette">Marionette plugin</a>, right? :)</p>
 <p>In this case, I want to manage my modal dialogs as I do any other area of my screen. I want a single object that keeps track of what view is currently displayed within the modal, handles rendering it that view for me, calls the `.modal` dialog method for me, and correctly closes the modal when the &#8220;cancel&#8221; or &#8220;close&#8221; button on my view is clicked.</p>
 <p>This largely sounds like a Region object in Backbone.Marionette: a way to manage the contents of a particular DOM element, by rendering and displaying a Backbone View in to that DOM element. Only in this case, it&#8217;s a very specialized Region that needs to manipulate the DOM element as a Twitter Bootstrap modal.</p>
 <p>To do this, I&#8217;m going to take advantage of Marionette&#8217;s &#8220;Region&#8221; and extend it with the behavior that I need for managing the modal:</p>
-<div id="gist-2359717" class="gist">
-    
+<script src="https://gist.github.com/2359717.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">  var ModalRegion = Backbone.Marionette.Region.extend({
+    el: &quot;#modal&quot;,
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">ModalRegion</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Region</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">el</span><span class="o">:</span> <span class="s2">&quot;#modal&quot;</span><span class="p">,</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">);</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Region</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;view:show&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showModal</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">getEl</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">selector</span><span class="p">){</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">$el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">selector</span><span class="p">);</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$el</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;hidden&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">close</span><span class="p">);</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">$el</span><span class="p">;</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">showModal</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">view</span><span class="p">){</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">view</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">hideModal</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">modal</span><span class="p">(</span><span class="s1">&#39;show&#39;</span><span class="p">);</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC20'><br/></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">hideModal</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">modal</span><span class="p">(</span><span class="s1">&#39;hide&#39;</span><span class="p">);</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC25'><br/></div></pre></div>
-          </div>
+    constructor: function(){
+      _.bindAll(this);
+      Backbone.Marionette.Region.prototype.constructor.apply(this, arguments);
+      this.on(&quot;view:show&quot;, this.showModal, this);
+    },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2359717/96d04808808a3634af878e4efaf26c4198701fc2/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2359717#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/2359717">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    getEl: function(selector){
+      var $el = $(selector);
+      $el.on(&quot;hidden&quot;, this.close);
+      return $el;
+    },
 
+    showModal: function(view){
+      view.on(&quot;close&quot;, this.hideModal, this);
+      this.$el.modal('show');
+    },
+
+    hideModal: function(){
+      this.$el.modal('hide');
+    }
+  });
+</code></pre></noscript>
 <p>This is honestly more code than I wanted to write. There&#8217;s a few things that I need to clean up and add in my Region object to make this a little more elegant. But, it works! And that&#8217;s the important part.</p>
 <p>The `constructor` function listens to the region&#8217;s &#8220;view&#8221;show&#8221; event, which is fired when a view&#8217;s contents are populated in to the `el` of the Region. In the event handler for this, I&#8217;m calling the `modal` plugin method on the `el` of the region.</p>
 <p>I&#8217;m also setting up a &#8220;close&#8221; event handler on the view itself at this point. That way when I close the view from within my view&#8217;s code (a cancel button, or otherwise), the modal will shutdown. The handler for this simply hides the modal using the modal&#8217;s &#8216;hide&#8217; option.</p>
 <p>As I said before, I want to reduce the amount of code that is required to make this happen. But for now, this is a functional modal dialog region. I&#8217;m using it in my application, like this:</p>
-<div id="gist-2359717" class="gist">
-    
+<script src="https://gist.github.com/2359717.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">var App = new Backbone.Marionette.Application();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">App</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">Application</span><span class="p">();</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">App</span><span class="p">.</span><span class="nx">addRegions</span><span class="p">({</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">main</span><span class="o">:</span> <span class="s2">&quot;#main-content&quot;</span><span class="p">,</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">modal</span><span class="o">:</span> <span class="nx">ModalRegion</span></div><div class='line' id='LC6'><span class="p">});</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'><span class="c1">// somewhere else in the app</span></div><div class='line' id='LC9'><span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyView</span><span class="p">();</span></div><div class='line' id='LC10'><span class="nx">App</span><span class="p">.</span><span class="nx">modal</span><span class="p">.</span><span class="nx">show</span><span class="p">(</span><span class="nx">view</span><span class="p">);</span></div><div class='line' id='LC11'><br/></div></pre></div>
-          </div>
+App.addRegions({
+  main: &quot;#main-content&quot;,
+  modal: ModalRegion
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2359717/9114f41096bfb618a10fff96a3825cc5f298569c/4.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2359717#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
-            <a href="https://gist.github.com/2359717">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+// somewhere else in the app
+var view = new MyView();
+App.modal.show(view);
+</code></pre></noscript>
 <p>Note that I&#8217;m registering my ModalRegion object in my Marionette.Application with my other regions. Instead of passing in a DOM selector, though, I passing in the ModalRegion type.</p>
 <h2>More Than Just Twitter Bootstrap</h2>
 <p>The examples I&#8217;ve shown here cover the use of Twitter Bootstrap, but are applicable to more than that. You should be able to easily modify the ModalRegion object to work with any JavaScript modal dialog. I&#8217;ve used the same basic solution for<a href="http://jqueryui.com/demos/dialog/"> jQuery UI modals</a>, and I expect that <a href="http://demos.kendoui.com/web/window/index.html">KendoUI</a> and other modals would work in a similar manner as well (though I may be wrong about that).</p>
@@ -477,6 +469,39 @@ i&#8217;m having a bit of trouble with my app, but i&#8217;m using an iframe and
     </li>
 
     </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2828">
+        <div id="dsq-comment-header-2828" class="dsq-comment-header">
+            <cite id="dsq-cite-2828">
+                <span id="dsq-author-user-2828">Luca Canducci</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2828" class="dsq-comment-body">
+            <div id="dsq-comment-message-2828" class="dsq-comment-message"><p>Great article, thanks!</p>
+<p>For me it worked changing this line:<br />
+this.on(&#8220;view:show&#8221;, this.showModal, this);<br />
+into this:<br />
+this.on(&#8220;show&#8221;, this.showModal, this);</p>
+<p>Does it make any sense to you?</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment even depth-2" id="dsq-comment-2846">
+        <div id="dsq-comment-header-2846" class="dsq-comment-header">
+            <cite id="dsq-cite-2846">
+                <span id="dsq-author-user-2846">Ahmad Khatib</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2846" class="dsq-comment-body">
+            <div id="dsq-comment-message-2846" class="dsq-comment-message"><p>Just upgraded from 0.1 to 1.0-beta5 and had to make this change as well.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
             </ul>
 
 
@@ -553,14 +578,15 @@ i&#8217;m having a bit of trouble with my app, but i&#8217;m using an iframe and
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -796,11 +822,7 @@ i&#8217;m having a bit of trouble with my app, but i&#8217;m using an iframe and
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1059,4 +1081,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:12:07 -->
+Served from: lostechies.com @ 2012-12-19 07:07:22 -->

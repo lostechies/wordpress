@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -73,116 +72,82 @@
 <p>Fortunately, it&#8217;s easy to build helper methods for <a href="http://underscorejs.org/">Underscore</a> <a href="http://underscorejs.org/#template">templates</a> (and they end up looking a lot like Rails view helpers).</p>
 <h2>Logic In Templates: A Bad Idea</h2>
 <p>On a client project recently, I had a JavaScript object that needed to be bound to my template. The object looked somewhat like this:</p>
-<div id="gist-2489539" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;something&quot;</span><span class="p">,</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;whatever&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">addresses</span><span class="o">:</span> <span class="p">[</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;read_address&quot;</span><span class="p">,</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">address</span><span class="o">:</span> <span class="s2">&quot;1/2/3&quot;</span><span class="p">,</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;10&quot;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;write_address&quot;</span><span class="p">,</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">address</span><span class="o">:</span> <span class="s2">&quot;1/2/4&quot;</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="p">]</span></div><div class='line' id='LC15'><span class="p">}</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2489539/823372e2c9d41e266e7ebad70d6702a76b32105c/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2489539#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/2489539">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/2489539.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">var data = {
+  type: &quot;something&quot;,
+  name: &quot;whatever&quot;,
+  addresses: [
+    {
+      type: &quot;read_address&quot;,
+      address: &quot;1/2/3&quot;,
+      value: &quot;10&quot;
+    },
+    {
+      type: &quot;write_address&quot;,
+      address: &quot;1/2/4&quot;
+    }
+  ]
+}</code></pre></noscript>
 <p>I needed to take all of the &#8220;addresses&#8221; and find each specific address within the array, by name, so that I could get the right information in place at the right time in my template.</p>
 <p>The first pass of code that I wrote to do this, looked like this:</p>
-<div id="gist-2489539" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;my-template&quot;</span> <span class="na">type=</span><span class="s">&quot;text/template&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">type</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">type</span> <span class="o">%&gt;&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">name</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">name</span> <span class="o">%&gt;&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">read</span> <span class="nx">address</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">addresses</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">addr</span><span class="p">){</span> <span class="k">return</span> <span class="nx">addr</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;read_address&quot;</span> <span class="p">}).</span><span class="nx">address</span> <span class="o">%&gt;</span> <span class="o">&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">read</span> <span class="nx">address</span> <span class="nx">value</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">addresses</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">addr</span><span class="p">){</span> <span class="k">return</span> <span class="nx">addr</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;read_address&quot;</span> <span class="p">}).</span><span class="nx">value</span> <span class="o">%&gt;</span> <span class="o">&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">write</span> <span class="nx">address</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">addresses</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">addr</span><span class="p">){</span> <span class="k">return</span> <span class="nx">addr</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;write_address&quot;</span> <span class="p">}).</span><span class="nx">address</span> <span class="o">%&gt;</span> <span class="o">&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC7'><span class="nt">&lt;/script&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2489539/104d2318482c3e97c54a65d54bb246dbad26c244/2.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2489539#file_2.html" style="float:right;margin-right:10px;color:#666">2.html</a>
-            <a href="https://gist.github.com/2489539">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/2489539.js?file=2.html"></script><noscript><pre><code class="language-html html">&lt;script id=&quot;my-template&quot; type=&quot;text/template&quot;&gt;
+  &lt;p&gt;type: &lt;%= type %&gt;&lt;/p&gt;
+  &lt;p&gt;name: &lt;%= name %&gt;&lt;/p&gt;
+  &lt;p&gt;read address: &lt;%= _.find(this.addresses, function(addr){ return addr.type == &quot;read_address&quot; }).address %&gt; &lt;/p&gt;
+  &lt;p&gt;read address value: &lt;%= _.find(this.addresses, function(addr){ return addr.type == &quot;read_address&quot; }).value %&gt; &lt;/p&gt;
+  &lt;p&gt;write address: &lt;%= _.find(this.addresses, function(addr){ return addr.type == &quot;write_address&quot; }).address %&gt; &lt;/p&gt;
+&lt;/script&gt;</code></pre></noscript>
 <p>And this worked, but it&#8217;s a bad idea. I have a lot of duplication in this template and I have a lot of logic and processing of data in the template, too. This is going to make for a very painful setup when it comes to maintenance &#8211; especially if / when I have to change how the address is looked up.</p>
 <h2>View Helper Methods: A Better Idea</h2>
 <p>In asking around on twitter for some suggestions on how to clean this up, I received several responses. Out of everything that everyone said, though, I liked the response I got from <a href="https://twitter.com/#!/davetheninja">DaveTheNinja</a> because of it&#8217;s simplicity.</p>
 <p>The basic idea is to recognize that the data I send to my template is a JavaScript object. Since this is an object, it can have methods. If I can have methods on my object, why not put methods on it as view helper methods?</p>
-<div id="gist-2489539" class="gist">
-    
+<script src="https://gist.github.com/2489539.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">var viewHelpers = {
+  getAddress: function(type){
+    var address = _.find(this.addresses, function(addr) { 
+      return addr.type == type 
+    });
+    return address;
+  }
+}
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">viewHelpers</span> <span class="o">=</span> <span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">getAddress</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">type</span><span class="p">){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">address</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">addresses</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">addr</span><span class="p">)</span> <span class="p">{</span> </div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">addr</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="nx">type</span> </div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">address</span><span class="p">;</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC8'><span class="p">}</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">viewHelpers</span><span class="p">);</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="nx">myTemplate</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span></div></pre></div>
-          </div>
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2489539/97faf89850a31e2121be7c599300f48b6de4769c/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2489539#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/2489539">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+_.extend(data, viewHelpers);
 
+_.template(myTemplate, data);</code></pre></noscript>
 <p>The helper method &#8211; &#8220;getAddress&#8221; &#8211; is pretty much the same code. But now it&#8217;s consolidated in to a single location and I&#8217;m able to give better formatting for it which makes it easier to read and understand.</p>
 <p>You can also see that I&#8217;ve kept the data separate from the objects until just before rendering the template. I&#8217;m using Underscore&#8217;s &#8220;extend&#8221; method to copy all of the methods from my &#8220;viewHelpers&#8221; object on to my data object.</p>
 <p>Then when I pass the data object to my template, I can call my &#8220;getAddress&#8221; method like this:</p>
-<div id="gist-2489539" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;my-template&quot;</span> <span class="na">type=</span><span class="s">&quot;text/template&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">type</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">type</span> <span class="o">%&gt;&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">name</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">name</span> <span class="o">%&gt;&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">read</span> <span class="nx">address</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">getAddress</span><span class="p">(</span><span class="s2">&quot;read_address&quot;</span><span class="p">).</span><span class="nx">address</span> <span class="o">%&gt;</span> <span class="o">&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">read</span> <span class="nx">address</span> <span class="nx">value</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">getAddress</span><span class="p">(</span><span class="s2">&quot;read_address&quot;</span><span class="p">).</span><span class="nx">value</span> <span class="o">%&gt;</span> <span class="o">&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">write</span> <span class="nx">address</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="nx">getAddress</span><span class="p">(</span><span class="s2">&quot;write_address&quot;</span><span class="p">).</span><span class="nx">address</span> <span class="o">%&gt;</span> <span class="o">&lt;</span><span class="err">/p&gt;</span></div><div class='line' id='LC7'><span class="nt">&lt;/script&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2489539/914c36323f283fb035a8f4b02a393c84c7610a07/4.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2489539#file_4.html" style="float:right;margin-right:10px;color:#666">4.html</a>
-            <a href="https://gist.github.com/2489539">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/2489539.js?file=4.html"></script><noscript><pre><code class="language-html html">&lt;script id=&quot;my-template&quot; type=&quot;text/template&quot;&gt;
+  &lt;p&gt;type: &lt;%= type %&gt;&lt;/p&gt;
+  &lt;p&gt;name: &lt;%= name %&gt;&lt;/p&gt;
+  &lt;p&gt;read address: &lt;%= getAddress(&quot;read_address&quot;).address %&gt; &lt;/p&gt;
+  &lt;p&gt;read address value: &lt;%= getAddress(&quot;read_address&quot;).value %&gt; &lt;/p&gt;
+  &lt;p&gt;write address: &lt;%= getAddress(&quot;write_address&quot;).address %&gt; &lt;/p&gt;
+&lt;/script&gt;</code></pre></noscript>
 <p>And we&#8217;re done! I now have view helper methods that I can call from within my templates.</p>
 <h2>Using This With Backbone</h2>
 <p>I use this technique with Backbone a lot. The code that I showed above is really no different than what I do with my Backbone views, either. When you get to the point where you need to render your template, just extend the view helper methods on to your data before doing the actual rendering:</p>
-<div id="gist-2489539" class="gist">
-    
+<script src="https://gist.github.com/2489539.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.View.extend({
+  template: &quot;#my-template&quot;,
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">template</span><span class="o">:</span> <span class="s2">&quot;#my-template&quot;</span><span class="p">,</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">();</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">viewHelpers</span><span class="p">);</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">template</span><span class="p">),</span> <span class="nx">data</span><span class="p">);</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC13'><span class="p">});</span></div></pre></div>
-          </div>
+  render: function(){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2489539/977a299ae934ccceee2c294fb1dbdab7cbb59d07/5.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2489539#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
-            <a href="https://gist.github.com/2489539">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    var data = this.model.toJSON();
+    _.extend(data, viewHelpers);
 
+    var html = _.template($(this.template), data);
+    this.$el.html(html);
+
+  }
+});</code></pre></noscript>
 <h2>Using This With Backbone.Marionette</h2>
 <p>I&#8217;ve added this functionality in to <a href="https://github.com/derickbailey/backbone.marionette">Backbone.Marionette</a> as well. ItemView, CompositeView and Layout will all look for a `templateHelpers` attribute on a view definition. If it finds it, it will mix that object in to the data that is used to render the template: </p>
-<div id="gist-2489539" class="gist">
-    
+<script src="https://gist.github.com/2489539.js?file=6.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.Marionette.ItemView.extend({
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">Marionette</span><span class="p">.</span><span class="nx">ItemView</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">template</span><span class="o">:</span> <span class="s2">&quot;#my-template&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">templateHelpers</span><span class="o">:</span> <span class="nx">viewHelpers</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'><span class="p">});</span></div><div class='line' id='LC7'><br/></div></pre></div>
-          </div>
+  template: &quot;#my-template&quot;,
+  templateHelpers: viewHelpers
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2489539/063472cc4e2c389eaa52a929aed8302fbf0b14f8/6.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2489539#file_6.js" style="float:right;margin-right:10px;color:#666">6.js</a>
-            <a href="https://gist.github.com/2489539">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+});
+</code></pre></noscript>
 <p>You can specify a reference to the viewHelpers object as shown in this example, provide an object literal as the templateHelpers directly, or specify a function that returns an object with the helper methods that you want. For more information see <a href="http://derickbailey.github.com/backbone.marionette/#marionette-view/view-templatehelpers">the documentation for Marionette</a>.</p>
 <h2>Other Template Engines</h2>
 <p>This basic technique will probably work with other template engines, too. Some engines like Handlebars, though, have this idea baked in to them directly. But if you&#8217;re using Underscore&#8217;s templates, then this is a good way to keep your templates clean while still providing the logic you need.</p>
@@ -442,6 +407,22 @@ So I&#8217;ve implemented a templateHelpers method, which is supposed to make th
     </li>
 </ul>
 </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2835">
+        <div id="dsq-comment-header-2835" class="dsq-comment-header">
+            <cite id="dsq-cite-2835">
+http://twitter.com/davegbeck                <span id="dsq-author-user-2835">David Beck</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2835" class="dsq-comment-body">
+            <div id="dsq-comment-message-2835" class="dsq-comment-message"><p>Hi Derick, </p>
+<p>Awesome work on Marionette. Thanks.</p>
+<p>Wanted to share this underscore mixin that allows you to add global helper functions to underscore templates. (That is, helpers that are always available.)</p>
+<p><a href="https://github.com/dgbeck/underscore-template-helpers" rel="nofollow">https://github.com/dgbeck/underscore-template-helpers</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
             </ul>
 
 
@@ -518,14 +499,15 @@ So I&#8217;ve implemented a templateHelpers method, which is supposed to make th
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -761,11 +743,7 @@ So I&#8217;ve implemented a templateHelpers method, which is supposed to make th
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1024,4 +1002,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:06:58 -->
+Served from: lostechies.com @ 2012-12-19 06:33:10 -->

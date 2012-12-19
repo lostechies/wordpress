@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>When Do You Specify Expected Parameters In Stub Methods? | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Field Vs. Property: Does It Really Matter?' href='http://lostechies.com/derickbailey/2010/03/04/field-vs-property-does-it-really-matter/' />
+<link rel='next' title='How Ruby Taught Me To DRY Up My Code With Lambda Blocks' href='http://lostechies.com/derickbailey/2010/03/05/how-ruby-taught-me-to-dry-up-my-code-with-lambda-blocks/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2010/03/04/when-do-you-specify-expected-parameters-in-stub-methods/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=108' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-108" class="post-108 post type-post status-publish format-standard hentry category-net category-behavior-driven-development category-c category-pragmatism category-principles-and-patterns category-unit-testing">
+					<h1 class="entry-title">When Do You Specify Expected Parameters In Stub Methods?</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2010/03/04/when-do-you-specify-expected-parameters-in-stub-methods/" title="10:20 pm" rel="bookmark"><span class="entry-date">March 4, 2010</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>I’m writing a spec with a mock object that mock object returns data to the class under test. In these situations, I don’t bother asserting that my mock object’s method was called because I know that if it’s not called the data I need in the class under test won’t be there and I’ll end up having other unexpected behavior. This falls under the general guideline of ‘test output and interactions, not input’. </p>
+<p>In this specific situation, I am taking a value from user input and using that value to load up some data from a mock repository. I find myself wondering if I should specify the value that is being passed into the mock object’s method so that the mock will only return the data I need if the method is called with the right value. To illustrate in code, here are the two different ways I could do this.</p>
+<p>1. Always return the data from the stubbed method call:</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">private</span> IAssetGroupRepository GetAssetGroupRepository()</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span>     var repo = Mock&lt;IAssetGroupRepository&gt;();</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span>     AssetGroups = <span style="color: #0000ff">new</span> List&lt;Lookup&gt;();</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span>     repo.Stub(r =&gt; r.GetGroupLookups(Arg&lt;<span style="color: #0000ff">int</span>&gt;.Is.Anything)).Return(AssetGroups);</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   6:</span>     <span style="color: #0000ff">return</span> repo;</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   7:</span> }</pre>
+<p><!--CRLF--></div>
+</div>
+<p>2. Only return the data from the stubbed method when the right argument is found:</p>
+<div>
+<div>
+<pre><span style="color: #606060">   1:</span> <span style="color: #0000ff">protected</span> <span style="color: #0000ff">override</span> IAssetGroupRepository GetAssetGroupRepository()</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   2:</span> {</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   3:</span>     var repo = Mock&lt;IAssetGroupRepository&gt;();</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   4:</span>     AssetGroups = <span style="color: #0000ff">new</span> List&lt;Lookup&gt;();</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   5:</span>     repo.Stub(r =&gt; r.GetGroupLookups(1)).Return(AssetGroups);</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   6:</span>     <span style="color: #0000ff">return</span> repo;</pre>
+<p><!--CRLF--></p>
+<pre><span style="color: #606060">   7:</span> }</pre>
+<p><!--CRLF--></div>
+</div>
+<p>The difference is on line 5 – the use of Is.Anything vs. a literal value of 1. It seems that the arguments should be specified when it matters what the arguments are… when the arguments are going to determine whether or not the right thing is being done. In this situation, it seems to me that the argument is important. If I’m not specifying the value that was selected when calling the GetGroupLookups, then my code has failed to account for the user’s input and it will likely produce the wrong behavior. The counterpoint to this is that the test where this stub definition lives becomes a little more brittle.</p>
+<p>So the question is when should I return the data no matter what arguments are used vs. when should I only return the data when the right arguments are used? I know the answer is “it depends”, as that’s the only valid answer to any code question. :) But I’m looking for some input from the rest of the world on when they do / don’t require the right arguments and why.</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/net/" title="View all posts in .NET" rel="category tag">.NET</a>, <a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts in Behavior Driven Development" rel="category tag">Behavior Driven Development</a>, <a href="http://lostechies.com/derickbailey/category/c/" title="View all posts in C#" rel="category tag">C#</a>, <a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts in Pragmatism" rel="category tag">Pragmatism</a>, <a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts in Principles and Patterns" rel="category tag">Principles and Patterns</a>, <a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts in Unit Testing" rel="category tag">Unit Testing</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2010/03/04/when-do-you-specify-expected-parameters-in-stub-methods/" title="Permalink to When Do You Specify Expected Parameters In Stub Methods?" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2010/03/04/when-do-you-specify-expected-parameters-in-stub-methods/feed/" title="Comments RSS to When Do You Specify Expected Parameters In Stub Methods?" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-108 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2010/03/04/field-vs-property-does-it-really-matter/" rel="prev"><span class="meta-nav">&larr;</span> Field Vs. Property: Does It Really Matter?</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2010/03/05/how-ruby-taught-me-to-dry-up-my-code-with-lambda-blocks/" rel="next">How Ruby Taught Me To DRY Up My Code With Lambda Blocks <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-597">
+        <div id="dsq-comment-header-597" class="dsq-comment-header">
+            <cite id="dsq-cite-597">
+http://www.jamesthigpen.com                <span id="dsq-author-user-597">James Thigpen</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-597" class="dsq-comment-body">
+            <div id="dsq-comment-message-597" class="dsq-comment-message"><p>I am having a giant moral problem with interaction tests such as these right now. I feel like they&#8217;re really testing implementation, but there&#8217;s no state a lot of times in these services to test.</p>
+<p>And I&#8217;m having similar questions such as this as to whether or not argument expectations are valuable.</p>
+<p>I guess I&#8217;m not any help, but I&#8217;m in the same boat as you I think.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-598">
+        <div id="dsq-comment-header-598" class="dsq-comment-header">
+            <cite id="dsq-cite-598">
+                <span id="dsq-author-user-598">mendicant</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-598" class="dsq-comment-body">
+            <div id="dsq-comment-message-598" class="dsq-comment-message"><p>If I don&#8217;t really care, for example if it&#8217;s coming from user input, I&#8217;d probably go with method 1.</p>
+<p>However, if I was using the AssetGroups that was returned in another stubbed call, then I would use method 2.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-599">
+        <div id="dsq-comment-header-599" class="dsq-comment-header">
+            <cite id="dsq-cite-599">
+                <span id="dsq-author-user-599">mendicant</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-599" class="dsq-comment-body">
+            <div id="dsq-comment-message-599" class="dsq-comment-message"><p>@James:</p>
+<p>I do the same thing. Mostly, I find myself hating it once its written, but when I&#8217;m writing it the first time I find myself enjoying such tests because it forces me to think out what I&#8217;m doing before actually writing the code.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-600">
+        <div id="dsq-comment-header-600" class="dsq-comment-header">
+            <cite id="dsq-cite-600">
+http://shane.jscconsulting.ca                <span id="dsq-author-user-600">Shane Courtrille</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-600" class="dsq-comment-body">
+            <div id="dsq-comment-message-600" class="dsq-comment-message"><p>I think that specifying parameters with stubs should be considered a test smell.  If your intention is to test that an interaction is occurring correctly then you should write a test accordingly.  The point of tests after all are to tell us when something is wrong.  If a stub doesn&#8217;t get matched all we end up with is a bunch of failing tests and we have to pull out the debugger to figure out why.  A mock expectation on the other hand will tell us exactly whats wrong.</p>
+<p>Of course that leads to the question.. how much mock testing should we really be doing?  I&#8217;m still trying to figure that one out&#8230;</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-601">
+        <div id="dsq-comment-header-601" class="dsq-comment-header">
+            <cite id="dsq-cite-601">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-601">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-601" class="dsq-comment-body">
+            <div id="dsq-comment-message-601" class="dsq-comment-message"><p>@Shane,</p>
+<p>would you suggest #1 from the above code with an additional assetion in my tests, then, like this:</p>
+<p>repo.AssertWasCalled(r => r.GetGroupLookups(1));</p>
+<p>?</p>
+<p>i&#8217;ve generally shy&#8217;d a way from that type of test for the reason stated at the very top of this post&#8230; though i do get your point about having to pull out the debugger to find where a problem is sometimes&#8230; i&#8217;ve had to do that on occasion &#8211; probably more often than I am remembering at the moment.</p>
+<p>hmm&#8230;. ponderings&#8230; </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-602">
+        <div id="dsq-comment-header-602" class="dsq-comment-header">
+            <cite id="dsq-cite-602">
+                <span id="dsq-author-user-602">Mark Bourland</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-602" class="dsq-comment-body">
+            <div id="dsq-comment-message-602" class="dsq-comment-message"><p>Maybe I&#8217;m bogged down on the fact that you&#8217;re giving a sample of a repository call, but the only time I would care what parameter values are passed to a stubbed repository call is when I have one repository method that could return data that will be acted on differently based on what it is.</p>
+<p>For a stupid example:  if my repository call returns a null value, I do X but if it returns a &#8220;good&#8221; value I do Y.  In that case, I have to test when the same repository call might return null vs. any other value, so I would stub out  something like:</p>
+<p>repo.Stub(r => r.GetGroupLookups(1)).Return(null);<br />
+repo.Stub(r => r.GetGroupLookups(2)).Return(AssetGroups);</p>
+<p>Hopefully that makes sense.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-603">
+        <div id="dsq-comment-header-603" class="dsq-comment-header">
+            <cite id="dsq-cite-603">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-603">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-603" class="dsq-comment-body">
+            <div id="dsq-comment-message-603" class="dsq-comment-message"><p>@Mark,</p>
+<p>your example is only half there &#8211; and i think my example may only be half there, now that I think about it&#8230;</p>
+<p>i think your example is dealing more directly with the repository as an input mechanism. in that case _how_ you are doing something based on the return value may be important in that situation. for example, if you are changing your interactions with a view interface, then you would write your assertions against the view interface interactions. in that case, i don&#8217;t think it&#8217;s important to specify the input to the repository call. the specific test should setup the repository stub to return the value that will cause the presenter to make the correct call to the view.</p>
+<p>i think my scenario is slight different because the repository call is both interaction based on input (from the user in this case) and its also input into the presenter. &#8230; it&#8217;s both input and interaction if that makes sense. so my stub in option #2 was kinda-sorta testing the interaction by requiring the right parameter&#8230; which makes me think @shane has the right idea and my response to him is something to look into.</p>
+<p>&#8230; still more ponderings &#8230;</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-604">
+        <div id="dsq-comment-header-604" class="dsq-comment-header">
+            <cite id="dsq-cite-604">
+http://nolanegly.edgewolf.com                <span id="dsq-author-user-604">Nolan Egly</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-604" class="dsq-comment-body">
+            <div id="dsq-comment-message-604" class="dsq-comment-message"><p>Could be a bit more concrete with your example?  What are you testing, the repository or the presenter?</p>
+<p>If you&#8217;re testing the presenter, you probably have a method invoked from the view, something like:<br />
+public GroupData GetGroup(int groupId)<br />
+{<br />
+   return Repository.GetGroupLookups(groupId);<br />
+}</p>
+<p>In which case, I would verify GetGroup calls the repository with the proper group id.  If you don&#8217;t, the test can pass for the wrong reason, and that&#8217;s a Bad Thing.</p>
+<p>For me the big discouragement in the past was a painful constraint syntax.  Assert.WasCalled() makes life much easier, and I don&#8217;t think it makes the tests brittle.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-605">
+        <div id="dsq-comment-header-605" class="dsq-comment-header">
+            <cite id="dsq-cite-605">
+http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-605">MM</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-605" class="dsq-comment-body">
+            <div id="dsq-comment-message-605" class="dsq-comment-message"><p>i would have one test that uses a mock like your response to shane indicates but i would make that the only thing that that test does.</p>
+<p>for actually using the fake repo, i would suggest not using the same helper method to get the repo for testing all conditions. i would always ignore the parameters and just configure the repo differently based on what i&#8217;m trying to test. so maybe you&#8217;d end up with a GetValidAssetGroupRepository method and a GetInvalidAssetGroupRepository method, or something like that. </p>
+<p>finally, when you&#8217;re actually testing the repository implementation(s), you can make sure that the parameters work correctly.</p>
+<p><shamelessselfpromotion>on a semi-related note, my first ever blog post deals with state vs interaction testing</shamelessselfpromotion></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-606">
+        <div id="dsq-comment-header-606" class="dsq-comment-header">
+            <cite id="dsq-cite-606">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-606">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-606" class="dsq-comment-body">
+            <div id="dsq-comment-message-606" class="dsq-comment-message"><p>@Nolan &#8211; correct on usage, and i went with the test having the id specified for the same reason.</p>
+<p>the possible brittleness of the test had less to do with the record/replay vs. AAA syntax and more to do with how easily the test will break if i need to make changes to the code. in this case, i think the confidence of calling the method with the right parameter is worth the price of a very small potential in breaking the test if i change the API of the repository call.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-607">
+        <div id="dsq-comment-header-607" class="dsq-comment-header">
+            <cite id="dsq-cite-607">
+http://darrell.mozingo.net                <span id="dsq-author-user-607">Darrell Mozingo</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-607" class="dsq-comment-body">
+            <div id="dsq-comment-message-607" class="dsq-comment-message"><p>@derick &#8211; I can see your point about specifying the parameter when you&#8217;re talking about simple argument types, but what about when you run into the same situation for a method that takes something a bit more complex (or two or three such complex arguments)? It gets hairy making sure the right parameters are passed in, i.e. having to check for matching id&#8217;s, equal instances, certain parameters, etc.</p>
+<p>I run into this mostly in my services, especially when it&#8217;s one fake talking to another fake &#8211; like getting something from a repository and passing it to an email service.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-608">
+        <div id="dsq-comment-header-608" class="dsq-comment-header">
+            <cite id="dsq-cite-608">
+http://fernandozamorajimenez.blogspot.com/                <span id="dsq-author-user-608">Fernando Zamora</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-608" class="dsq-comment-body">
+            <div id="dsq-comment-message-608" class="dsq-comment-message"><p>@derick &#8211; I do not normally specify parameters unless the service call, in this case the repo, is called more than once (in the single method undert test) and I expect different results for each call.<br />
+There has been cases in which I needed the repository to behave like the real thing. In those cases I hand roll a Fake/Double that mimics the real thing.  That can arguably be just as brittle if the functionality of the real dependency changes&#8230; but in my case it got the job done and it proved some complex things that could otherwise only be tested in a multi-client host environment.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-609">
+        <div id="dsq-comment-header-609" class="dsq-comment-header">
+            <cite id="dsq-cite-609">
+http://nolanegly.edgewolf.com                <span id="dsq-author-user-609">Nolan Egly</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-609" class="dsq-comment-body">
+            <div id="dsq-comment-message-609" class="dsq-comment-message"><p>@Darrell,</p>
+<p>You might possibly use one &#8220;parameter object&#8221; rather than several parameters in the context your describing.  The parameter object shouldn&#8217;t have behavior since it&#8217;s just shuttling data from service to another, ideally is immutable (all data set in ctor, no public setters), and implements an equivalence override of Equals().</p>
+<p>Then, you can create an instance of the parameter object in your test, and than verify that your fake email service received the equivalent (not necessarily the reference, because the intermediate object is constructing a new parameter object based on the repository results) parameter object.</p>
+<p>This makes parameter checking easier and less brittle, because there&#8217;s only parameter to verify.  I&#8217;ve found this useful when testing presenters that are getting data from the repository and updating a view.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-610">
+        <div id="dsq-comment-header-610" class="dsq-comment-header">
+            <cite id="dsq-cite-610">
+http://neilmosafi.blogspot.com                <span id="dsq-author-user-610">Neil Mosafi</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-610" class="dsq-comment-body">
+            <div id="dsq-comment-message-610" class="dsq-comment-message"><p>Usually the first.  When testing a particular method or behaviour I always first stub out the methods out to return some known response no matter what arguments are specified.  This allows the method being tested to complete (e.g. without throwing a null reference exception because something was not returned from a stub) and once it has completed, I can perform the state based asserts that I need to.</p>
+<p>I will then look at the other methods being called and think &#8220;do I care about the arguments?&#8221;.  If I do, I will write a separate observation for each argument I want to verify (e.g. x.AssertWasCalled). This makes the tests less brittle and It&#8217;s much easier to understand when something goes wrong.</p>
+<p>The only time I would specify arguments up front in the stub, is when I need to return a different response from the stubbed method depending on the argument.</p>
+<p>Hope that makes sense.<br />
+Neil</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-611">
+        <div id="dsq-comment-header-611" class="dsq-comment-header">
+            <cite id="dsq-cite-611">
+http://shane.jscconsulting.ca                <span id="dsq-author-user-611">Shane Courtrille</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-611" class="dsq-comment-body">
+            <div id="dsq-comment-message-611" class="dsq-comment-message"><p>Not exactly.  While I would suggest going with option #1 as to if I would recommend adding the additional assertion test the answer is of course it depends&#8230; </p>
+<p>Testing interactions is one of those things that is very necessary but can also quickly lead to over specification which is a very stinky test smell.  Personally this is one of those issues I have been struggling with for a very long time.  I have definitely decided against asserting every single interaction.  Now the question I keep having to ask is.. How important is this interaction? Is it worthy of a test?<br />
+Well I guess that&#8217;s two questions :)</p>
+<p>Regards,</p>
+<p>Shane</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-612">
+        <div id="dsq-comment-header-612" class="dsq-comment-header">
+            <cite id="dsq-cite-612">
+http://www.truewill.net/myblog/index.php                <span id="dsq-author-user-612">Bill Sorensen</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-612" class="dsq-comment-body">
+            <div id="dsq-comment-message-612" class="dsq-comment-message"><p>I&#8217;d specify the argument but use a constant in this case.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2010/03/04/when-do-you-specify-expected-parameters-in-stub-methods/';
+    var disqus_identifier = '108 /blogs/derickbailey/archive/2010/03/04/when-do-you-specify-expected-parameters-in-stub-methods.aspx';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "When Do You Specify Expected Parameters In Stub Methods?";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=108';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2010\/03\/04\/when-do-you-specify-expected-parameters-in-stub-methods\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2012<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 06:41:31 -->

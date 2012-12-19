@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Tips For Using Backbone.js Routers With HTML5 PushState</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/10/17/tips-for-using-backbone-js-routers-with-html5-pushstate/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/10/17/tips-for-using-backbone-js-routers-with-html5-pushstate/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Sun, 16 Dec 2012 23:48:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/10/17/tips-for-using-backbone-js-routers-with-html5-pushstate/#comment-1912</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Thu, 27 Oct 2011 21:19:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=614#comment-1912</guid>
+		<description>FYI - ignore everything i&#039;ve struck through in this post. turns out it&#039;s garbage and as Nieve points out in the comments, doesn&#039;t work the way I though it did.</description>
+		<content:encoded><![CDATA[<p>FYI &#8211; ignore everything i&#8217;ve struck through in this post. turns out it&#8217;s garbage and as Nieve points out in the comments, doesn&#8217;t work the way I though it did.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/10/17/tips-for-using-backbone-js-routers-with-html5-pushstate/#comment-1911</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Wed, 26 Oct 2011 20:46:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=614#comment-1911</guid>
+		<description>sadly, no... i didn&#039;t intend that behavior, and now i see how mistaken i was when i wrote that code and this article. :-/
+
+I&#039;ve posted a note at the top of this article saying I was wrong... but i need to do something more than that, i think.</description>
+		<content:encoded><![CDATA[<p>sadly, no&#8230; i didn&#8217;t intend that behavior, and now i see how mistaken i was when i wrote that code and this article. :-/</p>
+<p>I&#8217;ve posted a note at the top of this article saying I was wrong&#8230; but i need to do something more than that, i think.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Nieve</title>
+		<link>http://lostechies.com/derickbailey/2011/10/17/tips-for-using-backbone-js-routers-with-html5-pushstate/#comment-1910</link>
+		<dc:creator>Nieve</dc:creator>
+		<pubDate>Wed, 26 Oct 2011 20:08:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=614#comment-1910</guid>
+		<description>I probably got it all wrong, but when I go to your BackboneTraining.net site and I navigate through it, hitting back/forward doesn&#039;t do anything- the view stays the same. I tried Firefox 7, Opera, the lastest chrome and nada. Is this the expected behaviour?</description>
+		<content:encoded><![CDATA[<p>I probably got it all wrong, but when I go to your BackboneTraining.net site and I navigate through it, hitting back/forward doesn&#8217;t do anything- the view stays the same. I tried Firefox 7, Opera, the lastest chrome and nada. Is this the expected behaviour?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2011/10/17/tips-for-using-backbone-js-routers-with-html5-pushstate/#comment-1896</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Wed, 19 Oct 2011 11:09:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=614#comment-1896</guid>
+		<description>I just thought about dropping my router after this post, however I&#039;m actually making use of their only benefit: extracting parameters from URLs, which is quite a nice but probably its only feature :D</description>
+		<content:encoded><![CDATA[<p>I just thought about dropping my router after this post, however I&#8217;m actually making use of their only benefit: extracting parameters from URLs, which is quite a nice but probably its only feature :D</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 07:14:31 -->

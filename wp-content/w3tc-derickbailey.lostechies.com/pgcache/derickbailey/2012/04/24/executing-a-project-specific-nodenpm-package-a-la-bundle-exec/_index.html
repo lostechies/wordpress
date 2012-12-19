@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -84,22 +83,7 @@
 <h2>Run Bin From Generic Shell Script</h2>
 <p>Since all of the bin files for all of the node packages are installed in to ./node_modules/.bin/ for a given project, why not build a generic &#8220;npm_exec&#8221; shell script and just forward all the parameters?</p>
 <p>Easy enough:</p>
-<div id="gist-2409904" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>./node_modules/.bin/<span class="nv">$@</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2409904/10d0fa0fece1b941cc24bb4e98a2cc014c9dbd8d/npm_exec.sh" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2409904#file_npm_exec.sh" style="float:right;margin-right:10px;color:#666">npm_exec.sh</a>
-            <a href="https://gist.github.com/2409904">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/2409904.js?file=npm_exec.sh"></script><noscript><pre><code class="language-shell shell">./node_modules/.bin/$@</code></pre></noscript>
 <p>Just &#8220;chmod +x npm_exec&#8221; to make this file executable, and away we go.</p>
 <p>Now I can run any arbitrary package binary I want. I could even put this little shell script in my /usr/local/bin folder and it would be available for all of my node projects, anywhere on my box.</p>
 <p><img title="Screen Shot 2012-04-17 at 6.35.03 PM.png" src="http://lostechies.com/derickbailey/files/2012/04/Screen-Shot-2012-04-17-at-6.35.03-PM.png" alt="Screen Shot 2012 04 17 at 6 35 03 PM" width="332" height="124" border="0" /></p>
@@ -107,60 +91,51 @@
 <h2>NPM Scripts In package.json</h2>
 <p>This last option is one that I&#8217;m using more and more often for project specific, recurring needs.</p>
 <p>When you create an express app, it builds a package.json file for you. One of the pieces that it sticks in there is the &#8220;scripts&#8221; setting which contains a &#8220;start&#8221; setting, by default.</p>
-<div id="gist-2409904" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;application-name&quot;</span><span class="p">,</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nt">&quot;private&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nt">&quot;scripts&quot;</span><span class="p">:</span> <span class="p">{</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="s2">&quot;start app&quot;</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&quot;express&quot;</span><span class="p">:</span> <span class="s2">&quot;3.0.0alpha1&quot;</span><span class="p">,</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&quot;jade&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC12'><span class="p">}</span></div><div class='line' id='LC13'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2409904/0b91aca167f7265fa87142819a3a8c133b216be1/package.json" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2409904#file_package.json" style="float:right;margin-right:10px;color:#666">package.json</a>
-            <a href="https://gist.github.com/2409904">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/2409904.js?file=package.json"></script><noscript><pre><code class="language-json json">{
+  &quot;name&quot;: &quot;application-name&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;private&quot;: true,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;start app&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;3.0.0alpha1&quot;,
+    &quot;jade&quot;: &quot;*&quot;
+  }
+}
+</code></pre></noscript>
 <p>It turns out you can use these &#8220;scripts&#8221; from the npm command line. When you call &#8220;npm start&#8221;, npm will execute the &#8220;scripts&#8221;/&#8221;start&#8221; configuration for you. By default, this is just a call to &#8220;node app&#8221; which runs the app.js file in node and gets your express.js app up and running.</p>
 <p>You can do more with &#8220;scripts&#8221;, too. You can add your own named script, in fact.</p>
-<div id="gist-2409904" class="gist">
-    
+<script src="https://gist.github.com/2409904.js?file=scripts.json"></script><noscript><pre><code class="language-json json">{
+  ...
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="err">...</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nt">&quot;scripts&quot;</span><span class="p">:</span> <span class="p">{</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="s2">&quot;node app&quot;</span><span class="p">,</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&quot;foo&quot;</span><span class="p">:</span> <span class="s2">&quot;node -e &#39;console.log(1+2)&#39;&quot;</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="err">...</span></div><div class='line' id='LC10'><span class="p">}</span></div></pre></div>
-          </div>
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node app&quot;,
+    &quot;foo&quot;: &quot;node -e 'console.log(1+2)'&quot;
+  }
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2409904/466d0c3f0f63050a961e39f2077fd1322249b45f/scripts.json" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2409904#file_scripts.json" style="float:right;margin-right:10px;color:#666">scripts.json</a>
-            <a href="https://gist.github.com/2409904">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  ...
+}</code></pre></noscript>
 <p>But you can&#8217;t just &#8220;npm foo&#8221;. The &#8220;start&#8221; script is recognized by npm explicitly. For other non-standard script names, you have to use the &#8220;run-script&#8221; command from node: npm run-script foo</p>
 <p><img title="Screen Shot 2012-04-17 at 6.38.18 PM.png" src="http://lostechies.com/derickbailey/files/2012/04/Screen-Shot-2012-04-17-at-6.38.18-PM.png" alt="Screen Shot 2012 04 17 at 6 38 18 PM" width="505" height="195" border="0" /></p>
 <p>The other thing that this does for us, is give us direct access to all of the bin files that our node packages have installed. So within a &#8220;script&#8221; configuration, we can call any arbitrary package&#8217;s bin file.</p>
 <p>For example, if I want to use the node-supervisor package to restart my app whenever any files change, I can set up my package.json file to look like this:</p>
-<div id="gist-2409904" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="p">{</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;application-name&quot;</span><span class="p">,</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nt">&quot;private&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nt">&quot;scripts&quot;</span><span class="p">:</span> <span class="p">{</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="s2">&quot;supervisor app&quot;</span></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&quot;express&quot;</span><span class="p">:</span> <span class="s2">&quot;3.0.0alpha1&quot;</span><span class="p">,</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&quot;jade&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="nt">&quot;devDependencies&quot;</span><span class="p">:</span> <span class="p">{</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nt">&quot;supervisor&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC15'><span class="p">}</span></div><div class='line' id='LC16'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/2409904/714c9092686c825f7b0a83f55f3df94d43eb59f1/supervisor.json" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/2409904#file_supervisor.json" style="float:right;margin-right:10px;color:#666">supervisor.json</a>
-            <a href="https://gist.github.com/2409904">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/2409904.js?file=supervisor.json"></script><noscript><pre><code class="language-json json">{
+  &quot;name&quot;: &quot;application-name&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;private&quot;: true,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;supervisor app&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;3.0.0alpha1&quot;,
+    &quot;jade&quot;: &quot;*&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;supervisor&quot;: &quot;*&quot;
+  }
+}
+</code></pre></noscript>
 <p>This will install the &#8220;supervisor&#8221; package for development only, and set up the &#8220;start&#8221; script to run &#8220;supervisor app&#8221;. Now from the command line, I can&#8217;t run &#8220;supervisor app&#8221; directly:</p>
 <p><img title="Screen Shot 2012-04-17 at 6.40.56 PM.png" src="http://lostechies.com/derickbailey/files/2012/04/Screen-Shot-2012-04-17-at-6.40.56-PM.png" alt="Screen Shot 2012 04 17 at 6 40 56 PM" width="448" height="60" border="0" /></p>
 <p>But I can run &#8220;node start&#8221; and node will pick up the ./node_modules/.bin/ folder for me, allowing supervisor to be executed:</p>
@@ -346,14 +321,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2390">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -589,11 +565,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2390">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -852,4 +824,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:00:54 -->
+Served from: lostechies.com @ 2012-12-19 06:28:58 -->

@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -100,109 +99,79 @@
 <p>If you don&#8217;t have a router, you won&#8217;t be able to call `router.navigate(&#8220;…&#8221;, true)` with that pesky &#8216;true&#8217; parameter. But, this shouldn&#8217;t be an issue, anyways, You should be <a href="http://lostechies.com/derickbailey/2011/08/28/dont-execute-a-backbone-js-route-handler-from-your-code/">building your apps in a stateful manner with state-based workflow</a> instead of <a href="http://lostechies.com/derickbailey/2011/08/03/stop-using-backbone-as-if-it-were-a-stateless-web-server/">using Backbone as if it were a stateless web server</a>. You&#8217;ll still want to call `history.navigate(&#8220;…&#8221;)` to update your browser&#8217;s URL. This is done in response to the application being put into a specific state, and not done to put the application into a specific state. Don&#8217;t pass the `true` parameter as the second argument to navigate, and you&#8217;ll be fine.</p>
 <h2>Sample Code</h2>
 <p>Here&#8217;s a standard router implementation, not using PushState, with two routes that can be fired from two separate links on the page.</p>
-<div id="gist-1290199" class="gist">
+<script src="https://gist.github.com/1290199.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">MyRouter = Backbone.Router.extend({
+    routes: {
+        &quot;foo&quot;: &quot;foo&quot;,
+        &quot;bar&quot;: &quot;bar&quot;
+    },
     
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">routes</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;foo&quot;</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;bar&quot;</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">foo</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#output&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;foo!&lt;br/&gt;&quot;</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">bar</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#output&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;bar!&lt;br/&gt;&quot;</span><span class="p">);</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC14'><span class="p">});</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'><span class="k">new</span> <span class="nx">MyRouter</span><span class="p">();</span></div><div class='line' id='LC17'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1290199/0c8285026e9fdf3b97987ec64f92ef660d184c9b/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1290199#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/1290199">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
-<div id="gist-1290199" class="gist">
+    foo: function(){
+        $(&quot;#output&quot;).append(&quot;foo!&lt;br/&gt;&quot;);
+    },
     
+    bar: function(){
+        $(&quot;#output&quot;).append(&quot;bar!&lt;br/&gt;&quot;);
+    }
+});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;#foo&quot;</span><span class="nt">&gt;</span>Say &quot;foo&quot;<span class="nt">&lt;/a&gt;&lt;br/&gt;</span></div><div class='line' id='LC2'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;#bar&quot;</span><span class="nt">&gt;</span>Say &quot;bar&quot;<span class="nt">&lt;/a&gt;&lt;br/&gt;</span></div><div class='line' id='LC3'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;output&quot;</span><span class="nt">&gt;&lt;/div&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1290199/96a6af02b6811e96df408cbe0dec3920f61cbce4/1.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1290199#file_1.html" style="float:right;margin-right:10px;color:#666">1.html</a>
-            <a href="https://gist.github.com/1290199">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+new MyRouter();
+Backbone.history.start();</code></pre></noscript>
+<script src="https://gist.github.com/1290199.js?file=1.html"></script><noscript><pre><code class="language-html html">&lt;a href=&quot;#foo&quot;&gt;Say &quot;foo&quot;&lt;/a&gt;&lt;br/&gt;
+&lt;a href=&quot;#bar&quot;&gt;Say &quot;bar&quot;&lt;/a&gt;&lt;br/&gt;
+&lt;div id=&quot;output&quot;&gt;&lt;/div&gt;</code></pre></noscript>
 <p>When you click on a link, the route is fired and a message is printed out on the screen. Simple stuff.</p>
 <h3>Enabling PushState</h3>
 <p>Now look at the code with PushState enabled.</p>
-<div id="gist-1290199" class="gist">
+<script src="https://gist.github.com/1290199.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">MyRouter = Backbone.Router.extend({
+    routes: {
+        &quot;foo&quot;: &quot;foo&quot;,
+        &quot;bar&quot;: &quot;bar&quot;
+    },
     
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">routes</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;foo&quot;</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;bar&quot;</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">foo</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#output&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;foo!&lt;br/&gt;&quot;</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">bar</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#output&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;bar!&lt;br/&gt;&quot;</span><span class="p">);</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC14'><span class="p">});</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'><span class="k">new</span> <span class="nx">MyRouter</span><span class="p">();</span></div><div class='line' id='LC17'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span><span class="nx">pushState</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1290199/f2c51d1148c64bfdc8110ddc6c2fe3a2f8f640f7/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1290199#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/1290199">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
-<div id="gist-1290199" class="gist">
+    foo: function(){
+        $(&quot;#output&quot;).append(&quot;foo!&lt;br/&gt;&quot;);
+    },
     
+    bar: function(){
+        $(&quot;#output&quot;).append(&quot;bar!&lt;br/&gt;&quot;);
+    }
+});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/foo&quot;</span><span class="nt">&gt;</span>Say &quot;foo&quot;<span class="nt">&lt;/a&gt;&lt;br/&gt;</span></div><div class='line' id='LC2'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/bar&quot;</span><span class="nt">&gt;</span>Say &quot;bar&quot;<span class="nt">&lt;/a&gt;&lt;br/&gt;</span></div><div class='line' id='LC3'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;output&quot;</span><span class="nt">&gt;&lt;/div&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1290199/220aa17955158bff725e01d893c18740908a5b49/2.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1290199#file_2.html" style="float:right;margin-right:10px;color:#666">2.html</a>
-            <a href="https://gist.github.com/1290199">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+new MyRouter();
+Backbone.history.start({pushState: true});</code></pre></noscript>
+<script src="https://gist.github.com/1290199.js?file=2.html"></script><noscript><pre><code class="language-html html">&lt;a href=&quot;/foo&quot;&gt;Say &quot;foo&quot;&lt;/a&gt;&lt;br/&gt;
+&lt;a href=&quot;/bar&quot;&gt;Say &quot;bar&quot;&lt;/a&gt;&lt;br/&gt;
+&lt;div id=&quot;output&quot;&gt;&lt;/div&gt;</code></pre></noscript>
 <p>The only differences in this version of the code are the two links and the use of `{pushState: true}` when starting the router. The two links are standard links without hash fragments. This means that they would make a request back to the server when you click on them. If you run this code and click on a link, it makes a full request back to the server to render the page because the links are full URLs.</p>
 <p>When the page loads from the server, you would expect the Backbone.Router to fire it&#8217;s route method, but it doesn&#8217;t. Backbone routers only fire route methods in two scenarios: 1) when a hash fragment is used as a route, and 2) when you call `navigate` with the second parameter of `true`. Since neither of these criteria are met, the router does not fire it&#8217;s route. If a router&#8217;s methods never fire, why do you have a router in your app? Delete it.</p>
 <h3>Hijacking The Links And Using History.navigate</h3>
 <p>To make use of Backbone&#8217;s capabilities with PushState turned on, and to update the URL without making a full request back to the server, we need to hijack the link clicks with a bit of JavaScript code and then use Backbone&#8217;s History object to update the URL.</p>
-<div id="gist-1290199" class="gist">
-    
+<script src="https://gist.github.com/1290199.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">MyView = Backbone.View.extend({
+  events: {
+    &quot;click a.foo&quot;: &quot;foo&quot;,
+    &quot;click a.bar&quot;: &quot;bar&quot;
+  },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click a.foo&quot;</span><span class="o">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click a.bar&quot;</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">foo</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">history</span><span class="p">.</span><span class="nx">navigate</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">);</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#output&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">);</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="nx">bar</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">history</span><span class="p">.</span><span class="nx">navigate</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">);</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#output&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">);</span></div><div class='line' id='LC17'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC18'><span class="p">});</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'><span class="k">new</span> <span class="nx">MyView</span><span class="p">({</span><span class="nx">el</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">)});</span></div><div class='line' id='LC21'><br/></div><div class='line' id='LC22'><span class="nx">history</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">History</span><span class="p">();</span></div><div class='line' id='LC23'><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">({</span><span class="nx">pushState</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span></div></pre></div>
-          </div>
+  foo: function(e){
+    e.preventDefault();
+    history.navigate(&quot;foo&quot;);
+    $(&quot;#output&quot;).append(&quot;foo&quot;);
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1290199/1824a88b233ad956c4ab69d7ffd99c1881529837/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1290199#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/1290199">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  bar: function(e){
+    e.preventDefault();
+    history.navigate(&quot;bar&quot;);
+    $(&quot;#output&quot;).append(&quot;bar&quot;);
+  }
+});
 
-<div id="gist-1290199" class="gist">
-    
+new MyView({el: $(&quot;body&quot;)});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/foo&quot;</span> <span class="na">class=</span><span class="s">&quot;foo&quot;</span><span class="nt">&gt;</span>Say &quot;foo&quot;<span class="nt">&lt;/a&gt;&lt;br/&gt;</span></div><div class='line' id='LC2'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/bar&quot;</span> <span class="na">class=</span><span class="s">&quot;bar&quot;</span><span class="nt">&gt;</span>Say &quot;bar&quot;<span class="nt">&lt;/a&gt;&lt;br/&gt;</span></div><div class='line' id='LC3'><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;output&quot;</span><span class="nt">&gt;&lt;/div&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1290199/ff37362a531e5bd3479bdbacb4dfc63c88d02325/3.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1290199#file_3.html" style="float:right;margin-right:10px;color:#666">3.html</a>
-            <a href="https://gist.github.com/1290199">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+history = new Backbone.History();
+history.start({pushState: true});</code></pre></noscript>
+<script src="https://gist.github.com/1290199.js?file=3.html"></script><noscript><pre><code class="language-html html">&lt;a href=&quot;/foo&quot; class=&quot;foo&quot;&gt;Say &quot;foo&quot;&lt;/a&gt;&lt;br/&gt;
+&lt;a href=&quot;/bar&quot; class=&quot;bar&quot;&gt;Say &quot;bar&quot;&lt;/a&gt;&lt;br/&gt;
+&lt;div id=&quot;output&quot;&gt;&lt;/div&gt;</code></pre></noscript>
 <p>The browser URL updates when you click on a link, but the page does not have to do a full refresh from the server. Of course, if you decide to hit the refresh button on your browser, you&#8217;ll hit the full URL and <a href="http://lostechies.com/derickbailey/2011/09/26/seo-and-accessibility-with-html5-pushstate-part-1-introducing-pushstate/">the server will give you the page you expect</a>.</p>
 <p><span style="font-size: 18px; font-weight: bold;">Conclusion: If You&#8217;re Using PushState, You Don&#8217;t Need A Router</span></p>
 <p>Check out <a href="http://backbonetraining.net/javascripts/backbonetraining.js">the JavaScript for my BackboneTraining.net</a> site. There are no routers in site. There is only an instance of Backbone.History and a call being made to the history.navigate method to update the URL when a link is clicked. This works because I have PushState enabled and because I am not passing the `true` argument to the `navigate` method.</p>
@@ -380,14 +349,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-1912">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -623,11 +593,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-1912">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -886,4 +852,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:54:17 -->
+Served from: lostechies.com @ 2012-12-19 06:44:57 -->

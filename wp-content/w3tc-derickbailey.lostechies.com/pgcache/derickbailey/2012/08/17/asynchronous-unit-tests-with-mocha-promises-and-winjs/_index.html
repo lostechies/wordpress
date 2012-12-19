@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -73,172 +72,206 @@
 <p>I&#8217;ve already talked about how <a href="http://lostechies.com/derickbailey/2012/07/19/want-to-build-win8winjs-apps-you-need-to-understand-promises/">you need to understand promises in order to build Win8 / WinJS applications</a>. It&#8217;s an absolute must because there is almost no way you can build an app without using them. Anything you might build that doesn&#8217;t use them would likely be very trivial and not very useful, honestly. They are baked in to the WinJS framework very deeply and I see this as a good thing. But understanding how to use a promise is very different than understanding how to write tests for code that uses promises. </p>
 <h2>Asynchronous Mocha Tests</h2>
 <p>Testing a promise means that you&#8217;re testing asynchronous code. You have no knowledge of when the asynchronous code will finish. Because of this you can&#8217;t just assign some value to a variable in the async callback and hope your test will catch it. This can be demonstrated easily by using a call to &#8220;setTimeout&#8221; within a <a href="http://visionmedia.github.com/mocha/">Mocha</a> test, using <a href="http://chaijs.com/">Chai</a> as the expect framework:</p>
-<div id="gist-3379456" class="gist">
-    
+<script src="https://gist.github.com/3379456.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;a test&quot;, function(){
+  var foo = false;
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;a test&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// simulate async call w/ setTimeout</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">foo</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span> <span class="mi">50</span><span class="p">);</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should pass&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'><span class="p">});</span></div></pre></div>
-          </div>
+  beforeEach(function(){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3379456/8bb8004ae3ddf3b97c6f06e6e32941a660abe032/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3379456#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/3379456">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    // simulate async call w/ setTimeout
+    setTimeout(function(){
+      foo = true;
+    }, 50);
 
+  });
+
+  it(&quot;should pass&quot;, function(){
+    expect(foo).equals(true);
+  });
+
+});</code></pre></noscript>
 <p>Now you might think that this test should pass. When the &#8220;expect&#8221; is run inside of the specification, it should verify that the &#8220;foo&#8221; variable is set to true because the code in the setTimeout call sets it to true. But the test fails because the expectation is run before the callback in the setTimeout is called. </p>
 <p>To correct this, Mocha can provide a &#8220;done&#8221; callback method that you can call from the beforeEach call, afterEach call, it calls, and more. This &#8220;done&#8221; parameter, when present in your callback function, tells Mocha that you are writing an asynchronous test. This causes mocha to enter a timer when the function with the &#8220;done&#8221; parameter runs, waiting for the async function to finish &#8211; which is facilitated by either calling the `done()` function, or by exceeding a 2 second timeout. </p>
 <p>The basic idea behind the `done()` call is that you call this after your async code has completed, and your test has modified everything it needs to modify, so you can check the results correctly.</p>
 <p>With that in mind, we can update our test to use the done call:</p>
-<div id="gist-3379456" class="gist">
-    
+<script src="https://gist.github.com/3379456.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;a test&quot;, function(){
+  var foo = false;
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;a test&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">){</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">foo</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// complete the async beforeEach</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span><span class="p">();</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span> <span class="mi">50</span><span class="p">);</span></div><div class='line' id='LC13'><br/></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should pass&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'><span class="p">});</span></div></pre></div>
-          </div>
+  beforeEach(function(done){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3379456/fed0375d22a13dee00a2d919652e0629b730079a/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3379456#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/3379456">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    setTimeout(function(){
+      foo = true;
 
+      // complete the async beforeEach
+      done();
+
+    }, 50);
+
+  });
+
+  it(&quot;should pass&quot;, function(){
+    expect(foo).equals(true);
+  });
+
+});</code></pre></noscript>
 <p>And now the test passes. We&#8217;re telling Mocha to wait for the async code to complete before it runs the expectations. When the timeout finally fires, we set our &#8220;foo&#8221; variable to true and then call `done()`. This tells Mocha that the async test is finished and it moves on to the expectations. </p>
 <h2>Testing The Value In A Promise&#8217; Callback</h2>
 <p>When a promise resolves, it often provides a value as a parameter to the callback function. This allows you to get the information that you requested in an asynchronous manner. And it&#8217;s often the case that the value of this async callback needs to have assertions or expectations set against it. There are a couple of ways that this can be done, depending on your specific scenario and the code you&#8217;re trying to test.</p>
 <p>The first way is to add your &#8220;then&#8221; callback in the beforeEach of the test. You would assign the value from this function to a variable that is set up in the &#8220;describe&#8221; function. Then your expectations can check the value.</p>
-<div id="gist-3379456" class="gist">
-    
+<script src="https://gist.github.com/3379456.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;a test&quot;, function(){
+  var foo = false;
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;a test&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">){</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">promise</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WinJS</span><span class="p">.</span><span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">complete</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">complete</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// get the value from the completed promise</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">foo</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// complete the async beforeEach</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span><span class="p">();</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC20'><br/></div><div class='line' id='LC21'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should pass&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC23'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC24'><br/></div><div class='line' id='LC25'><span class="p">});</span></div></pre></div>
-          </div>
+  beforeEach(function(done){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3379456/d7c36f4333a2379163baba327c7edcb5ca4340cc/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3379456#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/3379456">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    var promise = new WinJS.Promise(function(complete){
+      complete(true);
+    });
 
+    promise.then(function(value){
+
+      // get the value from the completed promise
+      foo = value;
+
+      // complete the async beforeEach
+      done();
+    });
+
+  });
+
+  it(&quot;should pass&quot;, function(){
+    expect(foo).equals(true);
+  });
+
+});</code></pre></noscript>
 <p>This works well for very simple scenarios and I generally recommend doing this when you can. It&#8217;s the easiest way to test the result of the promise. However, that&#8217;s not always an option. Sometimes a test is more complicated, has more expectations that it needs to verify, etc. In more complex situations you might find that the number of variables you have to create in the describe block is getting out of hand, or that the beforeEach function is doing too much work &#8211; work that should legitimately be in the expectations. In this scenario, you can move the async test and the &#8220;done&#8221; call in to the expecation&#8217;s &#8220;it&#8221; function. But it comes with a small trick that you need to do.</p>
 <h2>Expectations In Promises Are Problematic</h2>
 <p>Moving the async &#8220;done&#8221; call to an expectation is easy. You just add the &#8220;done&#8221; parameter to the &#8220;it&#8221; function and call it &#8211; the same as you would do in the beforeEach function.</p>
-<div id="gist-3379456" class="gist">
-    
+<script src="https://gist.github.com/3379456.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;a test&quot;, function(){
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;a test&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should pass&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">){</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// simulate async expecation</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// complete the async expectation</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span><span class="p">();</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span> <span class="mi">50</span><span class="p">);</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'><span class="p">});</span></div></pre></div>
-          </div>
+  // ...
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3379456/b4ed47ef02fd2cb3d74e3cd37275d1f995268ebd/4.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3379456#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
-            <a href="https://gist.github.com/3379456">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  it(&quot;should pass&quot;, function(done){
 
+    // simulate async expecation
+    setTimeout(function(){
+
+      // complete the async expectation
+      done();
+
+    }, 50);
+
+  });
+
+});</code></pre></noscript>
 <p>But testing a WinJS promise with Mocha introduces a small complexity. When you call the &#8220;expect&#8221; function and the expectation fails, an exception is thrown. Normally, Mocha intercepts this exception from the expectation and reports it as a test failure. This is how Mocha works and it works well… until we introduce WinJS promises.</p>
 <p>The problem with promises is that they intercept the expectation&#8217;s error throwing for us, preventing Mocha from seeing the error. For example, in this test, we should see a message saying it expected &#8220;false&#8221; to be &#8220;true&#8221;. What we get instead is a timeout error saying the test exceeded 2 seconds (2000ms). </p>
-<div id="gist-3379456" class="gist">
-    
+<script src="https://gist.github.com/3379456.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;a test&quot;, function(){
+  var foo = false;
+  var promise;
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;a test&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">promise</span><span class="p">;</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WinJS</span><span class="p">.</span><span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">complete</span><span class="p">){</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// complete the promise with a value of false</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// so that the expectation fails</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">complete</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should pass&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">){</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// expect the value to be true</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// which should fail with a message</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// saying it expected false to be true</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">expect</span><span class="p">(</span><span class="nx">value</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC23'><br/></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span><span class="p">();</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC26'><br/></div><div class='line' id='LC27'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC28'><br/></div><div class='line' id='LC29'><span class="p">});</span></div></pre></div>
-          </div>
+  beforeEach(function(){
+    promise = new WinJS.Promise(function(complete){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3379456/7db47fe9f4bf37a049f97085c8bb8528edb0d3e0/5.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3379456#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
-            <a href="https://gist.github.com/3379456">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+      // complete the promise with a value of false
+      // so that the expectation fails
+      complete(false);
 
+    });
+  });
+
+  it(&quot;should pass&quot;, function(done){
+
+    promise.then(function(value){
+
+      // expect the value to be true
+      // which should fail with a message
+      // saying it expected false to be true
+      expect(value).equals(true);
+
+      done();
+    });
+
+  });
+
+});</code></pre></noscript>
 <p>When the promise completes, a value of false is passed in as the parameter of the &#8220;then&#8221; function. The expectation throws an error because it expects false to be true. This is all good so far. We expect this to fail. The problem comes in when the exception is thrown, though. Normally, the exception would be caught by the Mocha test runner which would cause the test to fail and Mocha would report the failure. But in this case, the promise is catching the error for us. That means the error never makes it out to Mocha. Throwing an error also means the &#8220;done()&#8221; function is never called, so the test goes in to a wait state and Mocha times out at 2 seconds, giving us a report of the testing timing out instead of the message from the failed expectation.</p>
 <h2>Done, Done, Done, Done: Async Expectations With WinJS Promises</h2>
 <p>To fix this problem, we need to take advantage of how WinJS promises work. According to the <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh700337.aspx">WinJS promises documentation</a> and the <a href="http://wiki.commonjs.org/wiki/Promises/A">Promises/A Spec</a> that WinJS promises implements, throwing an exception in a &#8220;then&#8221; function causes the error to be forwarded to the error handling function of the promises &#8220;done&#8221; function. In other words, we can get access to the error that the expectation threw by chaining a &#8220;done&#8221; call on to the end of the &#8220;then&#8221; call:</p>
-<div id="gist-3379456" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">promise</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">thenCallback</span><span class="p">)</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="p">.</span><span class="nx">done</span><span class="p">(</span><span class="nx">thenCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">,</span> <span class="nx">completeCallback</span><span class="p">);</span></div><div class='line' id='LC4'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3379456/fd287dbbf33f84664e4be03cd3ea6cc0acf8e5ff/6.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3379456#file_6.js" style="float:right;margin-right:10px;color:#666">6.js</a>
-            <a href="https://gist.github.com/3379456">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/3379456.js?file=6.js"></script><noscript><pre><code class="language-javascript javascript">promise
+  .then(thenCallback)
+  .done(thenCallback, errorCallback, completeCallback);
+</code></pre></noscript>
 <p>Ok, this is going to be a bit confusing. The &#8220;promise.then().done()&#8221; call is <a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh701079.aspx">the promise&#8217;s &#8220;done&#8221; function</a>. But Mocha also provides a &#8220;done&#8221; callback to the beforeEach and it functions… So there&#8217;s a lot of &#8220;done&#8221; in the upcoming discussion. I&#8217;ll try to keep things clear as much as I can.</p>
 <p>At this point, we need to complete the async expectation. But we don&#8217;t want to call Mocha&#8217;s &#8220;done()&#8221; callback as-is because that would tell Mocha that the test passed. Instead, we need to call Mocha&#8217;s &#8220;done&#8221; callback with a parameter &#8211; the error that we caught. Passing a parameter to the Mocha&#8217;s &#8220;done&#8221; function &#8211; any parameter &#8211; tells Mocha that the test failed. It assumes that the parameter you pass in is the error from the expectation or the reason that the test failed. That means we can call Mocha&#8217;s &#8220;done&#8221; function with the &#8220;error&#8221; parameter of our error handling callback:</p>
-<div id="gist-3379456" class="gist">
-    
+<script src="https://gist.github.com/3379456.js?file=7.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;a test&quot;, function(){
+  var foo = false;
+  var promise;
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;a test&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">promise</span><span class="p">;</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WinJS</span><span class="p">.</span><span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">complete</span><span class="p">){</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// complete the promise with a value of false</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// so that the expectation fails</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">complete</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should pass&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">){</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">expect</span><span class="p">(</span><span class="nx">value</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span><span class="p">();</span></div><div class='line' id='LC20'><br/></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span></div><div class='line' id='LC22'><br/></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// the expectation threw an error</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// so forward that error to Mocha</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span></div><div class='line' id='LC26'><br/></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC28'><br/></div><div class='line' id='LC29'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC30'><br/></div><div class='line' id='LC31'><span class="p">});</span></div></pre></div>
-          </div>
+  beforeEach(function(){
+    promise = new WinJS.Promise(function(complete){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3379456/a622a6c789a65c1071074db064db6108a5c1dc19/7.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3379456#file_7.js" style="float:right;margin-right:10px;color:#666">7.js</a>
-            <a href="https://gist.github.com/3379456">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+      // complete the promise with a value of false
+      // so that the expectation fails
+      complete(false);
 
+    });
+  });
+
+  it(&quot;should pass&quot;, function(done){
+
+    promise.then(function(value){
+      expect(value).equals(true);
+      done();
+
+    }).done(null, function(error){
+
+      // the expectation threw an error
+      // so forward that error to Mocha
+      done(error);
+
+    });
+
+  });
+
+});</code></pre></noscript>
 <p>Note the &#8220;null&#8221; first parameter of the promise&#8217;s &#8220;done&#8221; call. This is there because the &#8220;done&#8221; method takes 3 parameters as noted in the previous code snippet.</p>
 <p>And we can make the code even more simple than this. Since the error handling callback of the promise has the same method signature of Mocha&#8217;s &#8220;done&#8221; callback, we can get rid of the inline function and pass &#8220;done&#8221; as the callback directly:</p>
-<div id="gist-3379456" class="gist">
-    
+<script src="https://gist.github.com/3379456.js?file=8.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;a test&quot;, function(){
+  var foo = false;
+  var promise;
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;a test&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">promise</span><span class="p">;</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WinJS</span><span class="p">.</span><span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">complete</span><span class="p">){</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// complete the promise with a value of false</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// so that the expectation fails</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">complete</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC13'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should pass&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">){</span></div><div class='line' id='LC16'><br/></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span></div><div class='line' id='LC18'><br/></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">expect</span><span class="p">(</span><span class="nx">value</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span><span class="p">();</span></div><div class='line' id='LC21'><br/></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">done</span><span class="p">);</span> <span class="c1">// &lt;&lt;-------</span></div><div class='line' id='LC23'><br/></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC25'><br/></div><div class='line' id='LC26'><span class="p">});</span></div></pre></div>
-          </div>
+  beforeEach(function(){
+    promise = new WinJS.Promise(function(complete){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3379456/7c0fc3ab3744aa94d04951b66fe88b2db81c8c7e/8.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3379456#file_8.js" style="float:right;margin-right:10px;color:#666">8.js</a>
-            <a href="https://gist.github.com/3379456">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+      // complete the promise with a value of false
+      // so that the expectation fails
+      complete(false);
 
+    });
+  });
+
+  it(&quot;should pass&quot;, function(done){
+
+    promise.then(function(value){
+
+      expect(value).equals(true);
+      done();
+
+    }).done(null, done); // &lt;&lt;-------
+
+  });
+
+});</code></pre></noscript>
 <p>Lastly, we still need to call Mocha&#8217;s &#8220;done()&#8221; from within our promise&#8217;s &#8220;then&#8221; function. This tells Mocha that the test is complete in cases where the expectation is met (the test passes).</p>
 <p>Now you might be tempted to pass Mocha&#8217;s &#8220;done&#8221; as a parameter to the promise&#8217;s &#8220;then&#8221; and &#8220;error&#8221; callbacks of the promise&#8217;s &#8220;done&#8221;, like this:</p>
-<div id="gist-3379456" class="gist">
-    
+<script src="https://gist.github.com/3379456.js?file=9.js"></script><noscript><pre><code class="language-javascript javascript">  it(&quot;should pass&quot;, function(done){
+    promise.then(function(value){
+      expect(value).equals(true);
+      done();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;should pass&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">expect</span><span class="p">(</span><span class="nx">value</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span><span class="p">();</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="nx">done</span><span class="p">,</span> <span class="nx">done</span><span class="p">);</span> <span class="c1">// &lt;&lt;---- FAIL</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC9'><br/></div></pre></div>
-          </div>
+    }).done(done, done); // &lt;&lt;---- FAIL
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3379456/6279312851a7e30695b824c447942330c9fc0179/9.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3379456#file_9.js" style="float:right;margin-right:10px;color:#666">9.js</a>
-            <a href="https://gist.github.com/3379456">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  });
+</code></pre></noscript>
 <p>That won&#8217;t work, though, because the &#8220;then&#8221; callback receives a parameter from the promise and this would forward the parameter to Mocha&#8217;s &#8220;done&#8221; function, which would be interpreted as a test failure. So we have to keep Mocha&#8217;s &#8220;done()&#8221; call for a successful test in an inline callback of the promise&#8217;s &#8220;then&#8221; function, with our expectation.</p>
 <p>With this in place our test passes and fails correctly. We get the error message that says it expected false to be true when we complete the promise with a value of &#8220;false&#8221;, and we get a passing test when we complete the promise with a value of &#8220;true&#8221;.</p>
 <p>(… yeah, that&#8217;s a lot of &#8220;done&#8221; calls in our expectation, but it works. Hopefully that made sense.)</p>
@@ -515,14 +548,15 @@ http://twitter.com/kimptoc                <span id="dsq-author-user-2760">Chris 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -758,11 +792,7 @@ http://twitter.com/kimptoc                <span id="dsq-author-user-2760">Chris 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1021,4 +1051,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:08:44 -->
+Served from: lostechies.com @ 2012-12-19 05:49:45 -->

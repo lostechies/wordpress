@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -91,167 +90,130 @@
 <h2>The Plague: Event Binding</h2>
 <p>The majority of the problems that people are referring to in these questions and issues are caused by the events that we bind to in our apps. Given that Backbone is an event-driven framework, it stands to reason that we&#8217;re going to be using a lot of events; and events are everywhere in Backbone apps.</p>
 <p>We bind events to our DOM elements using the declarative `events` configuration in our views:</p>
-<div id="gist-1219582" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click #someButton&quot;</span><span class="o">:</span> <span class="s2">&quot;doThat&quot;</span><span class="p">,</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;change #someInput&quot;</span><span class="o">:</span> <span class="s2">&quot;changeIt&quot;</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="nx">doThat</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> <span class="p">...</span> <span class="p">},</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="nx">changeIt</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> <span class="p">...</span> <span class="p">}</span></div><div class='line' id='LC10'><span class="p">});</span></div></pre></div>
-          </div>
+<script src="https://gist.github.com/1219582.js?file=1-view-events.js"></script><noscript><pre><code class="language-javascript javascript">MyView = Backbone.View.extend({
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1219582/a5199d4b78db56813c99dd5953957941030e5c0e/1-view-events.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1219582#file_1_view_events.js" style="float:right;margin-right:10px;color:#666">1-view-events.js</a>
-            <a href="https://gist.github.com/1219582">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  events: {
+    &quot;click #someButton&quot;: &quot;doThat&quot;,
+    &quot;change #someInput&quot;: &quot;changeIt&quot;
+  },
 
+  doThat: function(){ ... },
+  changeIt: function(){ ... }
+});</code></pre></noscript>
 <p>We bind events from our models and collections so that our views can respond to changes and re-render themselves:</p>
-<div id="gist-1219582" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> <span class="p">...</span> <span class="p">}</span></div><div class='line' id='LC8'><span class="p">});</span></div></pre></div>
-          </div>
+<script src="https://gist.github.com/1219582.js?file=2-view-model-events.js"></script><noscript><pre><code class="language-javascript javascript">MyView = Backbone.View.extend({
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1219582/5abdf06cf5f1d25412a3fbda55ffdc2daa6559e2/2-view-model-events.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1219582#file_2_view_model_events.js" style="float:right;margin-right:10px;color:#666">2-view-model-events.js</a>
-            <a href="https://gist.github.com/1219582">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  initialize: function(){
+    this.model.bind(&quot;change&quot;, this.render, this);
+  },
 
+  render: function(){ ... }
+});</code></pre></noscript>
 <p>We even use Backbone.Events in our own objects so that we can create application-level events and event-driven architectures for our apps.</p>
-<div id="gist-1219582" class="gist">
-    
+<script src="https://gist.github.com/1219582.js?file=3-event-aggregator.js"></script><noscript><pre><code class="language-javascript javascript">MyView = Backbone.View.extend({
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;app:event&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span></div><div class='line' id='LC8'><span class="p">});</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'><span class="kd">var</span> <span class="nx">vent</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC11'><span class="k">new</span> <span class="nx">MyView</span><span class="p">({</span><span class="nx">vent</span><span class="o">:</span> <span class="nx">vent</span><span class="p">});</span></div><div class='line' id='LC12'><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;app:event&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
+  initialize: function(){
+    this.options.vent.bind(&quot;app:event&quot;, this.render, this);
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1219582/465ab5c71c4dccb3c02abcbadccaa1bc3149582b/3-event-aggregator.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1219582#file_3_event_aggregator.js" style="float:right;margin-right:10px;color:#666">3-event-aggregator.js</a>
-            <a href="https://gist.github.com/1219582">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  render: function() { ... }
+});
 
+var vent = new _.extend({}, Backbone.Events);
+new MyView({vent: vent});
+vent.trigger(&quot;app:event&quot;);</code></pre></noscript>
 <p>Events are everywhere, and with good reason. They allow us to write modular, reactive code. We don&#8217;t have to stick to procedural loops and long methods that check state in order to figure out what to do next. Events allow us to know when state has changed and respond to that change appropriately.</p>
 <p>Problems arise, though, when we bind objects together through these events but we don&#8217;t bother unbinding them. As long as these objects are bound together, and there is a reference in our app code to at least one of them, they won&#8217;t be cleaned up or garbage collected. The resulting memory leaks are like the zombies of the movies &#8211; hiding in dark corners, waiting to jump out and eat us for lunch.</p>
 <p>For example &#8211; Backbone apps tend to have one or more areas of the screen that are updated with different views based on what the user is doing. It&#8217;s common to see a main area where the focused content is displayed, as well. When we the user interacts with our app, we update this area of the screen by having a new view instance render some new content for us. The result is new information being displayed for the user, as we expect.</p>
 <p>The problem, though, is that it&#8217;s easy to write our code in a manner that doesn&#8217;t let us properly clean up our views when switching them out. For example, we could have a router with route methods that instantiate new views and simply replace the html of our main content area:</p>
-<div id="gist-1219582" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">routes</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;&quot;</span><span class="o">:</span> <span class="s2">&quot;home&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;post/:id&quot;</span><span class="o">:</span> <span class="s2">&quot;showPost&quot;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">home</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">homeView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HomeView</span><span class="p">();</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#mainContent&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">homeView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="nx">showPost</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">post</span> <span class="o">=</span> <span class="nx">posts</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">postView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PostView</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="nx">post</span><span class="p">});</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#mainContent&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">postView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC17'><span class="p">});</span></div></pre></div>
-          </div>
+<script src="https://gist.github.com/1219582.js?file=4-router-zombies.js"></script><noscript><pre><code class="language-javascript javascript">MyRouter = Backbone.Router.extend({
+  routes: {
+    &quot;&quot;: &quot;home&quot;,
+    &quot;post/:id&quot;: &quot;showPost&quot;
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1219582/50ee5b819ca85328cd17eeb77728053a8cc43049/4-router-zombies.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1219582#file_4_router_zombies.js" style="float:right;margin-right:10px;color:#666">4-router-zombies.js</a>
-            <a href="https://gist.github.com/1219582">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  home: function(){
+    var homeView = new HomeView();
+    $(&quot;#mainContent&quot;).html(homeView.render().el);
+  },
 
+  showPost: function(id){
+    var post = posts.get(id);
+    var postView = new PostView({model: post});
+    $(&quot;#mainContent&quot;).html(postView.render().el);
+  }
+});</code></pre></noscript>
 <p>This has the desired effect, visually. A user hitting either of these routes will see the content they expect to see. Unfortunately, though, any events that we&#8217;ve bound in our view may still be hanging around.</p>
 <h2>Rule #2: Double Tap</h2>
 <p>To correct this, I like to introduce an application object that manages the transitions between my views. This object is solely responsible for managing the content of a specific DOM element, displaying what needs to be displayed and cleaning up anything that no longer needs to be there.</p>
-<div id="gist-1219582" class="gist">
-    
+<script src="https://gist.github.com/1219582.js?file=5-appview.js"></script><noscript><pre><code class="language-javascript javascript">function AppView(){
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">function</span> <span class="nx">AppView</span><span class="p">(){</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">showView</span><span class="p">(</span><span class="nx">view</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">currentView</span><span class="p">){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">currentView</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">currentView</span> <span class="o">=</span> <span class="nx">view</span><span class="p">;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">currentView</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#mainContent&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">currentView</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC13'><br/></div><div class='line' id='LC14'><span class="p">}</span></div></pre></div>
-          </div>
+   this.showView(view) {
+    if (this.currentView){
+      this.currentView.close();
+    }
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1219582/c6e398a99925b266c76b5e865c2abfc99756eb3e/5-appview.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1219582#file_5_appview.js" style="float:right;margin-right:10px;color:#666">5-appview.js</a>
-            <a href="https://gist.github.com/1219582">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    this.currentView = view;
+    this.currentView.render();
 
+    $(&quot;#mainContent&quot;).html(this.currentView.el);
+  }
+
+}</code></pre></noscript>
 <p>With this in place, we can re-write our router to have a reference to an AppView object. Then, when a route method is fired, the router will tell the AppView instance to display the new view for us. Since the AppView knows about the previously displayed view still, it can call any clean up code that we need for that view.</p>
-<div id="gist-1219582" class="gist">
-    
+<script src="https://gist.github.com/1219582.js?file=6-router.js"></script><noscript><pre><code class="language-javascript javascript">MyRouter = Backbone.Router.extend({
+  routes: {
+    &quot;&quot;: &quot;home&quot;,
+    &quot;post/:id&quot;: &quot;showPost&quot;
+  },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyRouter</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">routes</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;&quot;</span><span class="o">:</span> <span class="s2">&quot;home&quot;</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;post/:id&quot;</span><span class="o">:</span> <span class="s2">&quot;showPost&quot;</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">appView</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">appView</span><span class="p">;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="nx">home</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">homeView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HomeView</span><span class="p">();</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">appView</span><span class="p">.</span><span class="nx">showView</span><span class="p">(</span><span class="nx">homeView</span><span class="p">);</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="nx">showPost</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">){</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">post</span> <span class="o">=</span> <span class="nx">posts</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">postView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PostView</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="nx">post</span><span class="p">});</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">appView</span><span class="p">.</span><span class="nx">showView</span><span class="p">(</span><span class="nx">postView</span><span class="p">);</span></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC21'><span class="p">});</span></div></pre></div>
-          </div>
+  initialize: function(options){
+    this.appView = options.appView;
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1219582/4514948190dc7f3d0e9badf30030c8130b24a4c0/6-router.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1219582#file_6_router.js" style="float:right;margin-right:10px;color:#666">6-router.js</a>
-            <a href="https://gist.github.com/1219582">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  home: function(){
+    var homeView = new HomeView();
+    this.appView.showView(homeView);
+  },
 
+  showPost: function(id){
+    var post = posts.get(id);
+    var postView = new PostView({model: post});
+    this.appView.showView(postView);
+  }
+});</code></pre></noscript>
 <p>Now our router doesn&#8217;t have to worry about creating zombies. We&#8217;ve effectively managed our application&#8217;s view transitions by introducing an object who&#8217;s sole purpose is that transition management.</p>
 <h2>Closing A View</h2>
 <p>In this AppView example, I&#8217;ve chosen to have the it call a `.close()` method on every view that it is removing from the screen. There isn&#8217;t a method called &#8216;close&#8217; on a Backbone.View, by default. We need to add this method ourselves, as a convention for our application to follow.</p>
 <p>We can add our close method to our views a few different ways: add the method to every view in our app, create our own base view with this method, or add it directly to the `Backbone.View.prototype`. There&#8217;s not necessarily anything wrong any of these choices, though my preference is to build a basic close method into the Backbone.View.prototype.</p>
 <p>There&#8217;s a common bit of functionality that each of our views will need when closing, in most cases. We need to unbind the DOM element events, we need to unbind any custom events that our view raises, and we need to remove the HTML that represents this view from the DOM. These three things can be done in two lines of code inside of our `close` method:</p>
-<div id="gist-1219582" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">close</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">unbind</span><span class="p">();</span></div><div class='line' id='LC4'><span class="p">}</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1219582/b237ba57af447f7dd17e85c7486120bd62fc69d9/7-close.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1219582#file_7_close.js" style="float:right;margin-right:10px;color:#666">7-close.js</a>
-            <a href="https://gist.github.com/1219582">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1219582.js?file=7-close.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.View.prototype.close = function(){
+  this.remove();
+  this.unbind();
+}</code></pre></noscript>
 <p>The call to `this.remove()` delegates to jQuery behind the scenes, by calling `$(this.el).remove()`. The effect of this is 2-fold. We get the HTML that is currently populated inside of `this.el` removed from the DOM (and therefore, removed from the visual portion of the application), and we also get all of the DOM element events cleaned up for us. This means that all of the events we have in the `events: { … }` declaration of our view are cleaned up automatically!</p>
 <p>Secondly, the call to `this.unbind()` will unbind any events that our view triggers directly &#8211; that is, anytime we may have called `this.trigger(…)` from within our view, in order to have our view raise an event.</p>
 <p>The last thing we need to do, then, is unbind any model and collection events that our view is bound to. To do this, though, we can&#8217;t use a generic close method on our base view. If we tried to, we would likely end up writing a lot of extraneous code and potentially slowing our app down or causing issues by accidentally unbinding all events for the model or collection, everywhere. If we have multiple views listening to events on the same object, this would remove the ability for our app to respond to the model and collection changes correctly.</p>
 <p>The solution, then, is to take a page from the WinForms / .NET world and have an &#8220;onClose&#8221; method that any view can implement when it needs to have custom code run, when the view is closed:</p>
-<div id="gist-1219582" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">close</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">unbind</span><span class="p">();</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">onClose</span><span class="p">){</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">onClose</span><span class="p">();</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC7'><span class="p">}</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1219582/0df523ff6d0fbf9437594ee7a936bf25e7b0df66/8-close.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1219582#file_8_close.js" style="float:right;margin-right:10px;color:#666">8-close.js</a>
-            <a href="https://gist.github.com/1219582">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1219582.js?file=8-close.js"></script><noscript><pre><code class="language-javascript javascript">Backbone.View.prototype.close = function(){
+  this.remove();
+  this.unbind();
+  if (this.onClose){
+    this.onClose();
+  }
+}</code></pre></noscript>
 <p>Then in a view that has bound itself to a model or collection event, we can provide an implementation of onClose:</p>
-<div id="gist-1219582" class="gist">
-    
+<script src="https://gist.github.com/1219582.js?file=9-onclose-view.js"></script><noscript><pre><code class="language-javascript javascript">MyView = Backbone.View.extend({
+  initialize: function(){
+    this.model.bind(&quot;change&quot;, this.render, this);
+  },
+  render: function(){ ... },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">MyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> <span class="p">...</span> <span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">onClose</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">unbind</span><span class="p">(</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'><span class="p">});</span></div></pre></div>
-          </div>
+  onClose: function(){
+    this.model.unbind(&quot;change&quot;, this.render);
+  }
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1219582/340f8eab8ebf4f9557dbcb37fc7f57b2dc804b5b/9-onclose-view.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1219582#file_9_onclose_view.js" style="float:right;margin-right:10px;color:#666">9-onclose-view.js</a>
-            <a href="https://gist.github.com/1219582">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+});</code></pre></noscript>
 <p>Our view will now be correctly cleaned up when the AppView calls the close method.</p>
 <h2>More Than Just Views For Zombies</h2>
 <p>Of course there are far more potential zombies in our Backbone apps than just views. Any time we make a call to the `.bind(…)` method on any object, we need to be aware of the lifespan of the objects involved. If the objects are going to live for the span of the application&#8217;s life, then we may not need to do any clean up. If the objects are temporal, though, it&#8217;s likely that we will need some sort of cleanup in place.</p>
@@ -1221,6 +1183,32 @@ can I just define a new model for detail view and render it ?</p>
     </li>
 
     </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2838">
+        <div id="dsq-comment-header-2838" class="dsq-comment-header">
+            <cite id="dsq-cite-2838">
+http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Christian Behrens</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2838" class="dsq-comment-body">
+            <div id="dsq-comment-message-2838" class="dsq-comment-message"><p>Very comprehensive and informative post. Keep up the great work!</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2847">
+        <div id="dsq-comment-header-2847" class="dsq-comment-header">
+            <cite id="dsq-cite-2847">
+                <span id="dsq-author-user-2847">Weft</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2847" class="dsq-comment-body">
+            <div id="dsq-comment-message-2847" class="dsq-comment-message"><p>Great article!. thanks you for help me to kill the zombies</p>
+</div>
+        </div>
+    </li>
+
+    </li>
             </ul>
 
 
@@ -1297,14 +1285,15 @@ can I just define a new model for detail view and render it ?</p>
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -1540,11 +1529,7 @@ can I just define a new model for detail view and render it ?</p>
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1803,4 +1788,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:59:20 -->
+Served from: lostechies.com @ 2012-12-19 07:16:40 -->

@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -80,77 +79,94 @@
 <p>The usual source of this question is that the developer has decided to use a single View object and template to render the entire list of Backbone Models. There&#8217;s nothing necessarily wrong with this approach. It has it&#8217;s advantages but it also presents a set of challenges and limitations. There is another way of approaching this which eliminates some of those limitations, but also has it&#8217;s own challenges: rendering one View object per Model. Instead of trying to choose one or the other all the time, it&#8217;s best to understand each of these approaches and be able to recognize the scenarios where each fits best.</p>
 <h2>One View To Rule Them All</h2>
 <p>Consider the following code:</p>
-<div id="gist-1279523" class="gist">
+<script src="https://gist.github.com/1279523.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">Item = Backbone.Model.extend({});
+ItemCollection = Backbone.Collection.extend({
+    model: Item
+});
+
+ItemListView = Backbone.View.extend({
+    tagName: &quot;ul&quot;,
+    events: {
+        &quot;click a&quot;: &quot;clicked&quot;
+    },
     
+    clicked: function(e){
+        e.preventDefault();
+        var item = // ??? how do we get the item?!
+        var name = item.get(&quot;name&quot;);
+        alert(name);
+    },
+    
+    render: function(){
+        var template = $(&quot;#item-template&quot;);
+        var el = $(this.el);
+        this.collection.each(function(model){
+            var html = template.tmpl(model.toJSON());
+            el.append(html);
+        });
+    }
+});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Item</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({});</span></div><div class='line' id='LC2'><span class="nx">ItemCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">Item</span></div><div class='line' id='LC4'><span class="p">});</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'><span class="nx">ItemListView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;ul&quot;</span><span class="p">,</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click a&quot;</span><span class="o">:</span> <span class="s2">&quot;clicked&quot;</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">clicked</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="c1">// ??? how do we get the item?!</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">);</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#item-template&quot;</span><span class="p">);</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">){</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">template</span><span class="p">.</span><span class="nx">tmpl</span><span class="p">(</span><span class="nx">model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">());</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">el</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC27'><span class="p">});</span></div><div class='line' id='LC28'><br/></div><div class='line' id='LC29'><span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ItemCollection</span><span class="p">([</span></div><div class='line' id='LC30'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;item 1&quot;</span><span class="p">},</span></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;item 2&quot;</span><span class="p">},</span></div><div class='line' id='LC32'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;item 3&quot;</span><span class="p">}</span></div><div class='line' id='LC33'><span class="p">]);</span></div><div class='line' id='LC34'><br/></div><div class='line' id='LC35'><span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ItemListView</span><span class="p">({</span><span class="nx">collection</span><span class="o">:</span> <span class="nx">items</span><span class="p">});</span></div><div class='line' id='LC36'><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC37'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#showIt&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div></pre></div>
-          </div>
+var items = new ItemCollection([
+    {id: 1, name: &quot;item 1&quot;},
+    {id: 2, name: &quot;item 2&quot;},
+    {id: 3, name: &quot;item 3&quot;}
+]);
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1279523/8b8add5246c38b771f777eb4729992c418e7e0ad/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1279523#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/1279523">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+var view = new ItemListView({collection: items});
+view.render();
+$(&quot;#showIt&quot;).html(view.el);</code></pre></noscript>
 <p>With this HTML template:</p>
-<div id="gist-1279523" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;item-template&quot;</span> <span class="na">type=</span><span class="s">&quot;text/x-jquery-tmpl&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="o">&gt;</span><span class="nx">$</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/a&gt;&lt;/li&gt;</span></div><div class='line' id='LC3'><span class="nt">&lt;/script&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1279523/9622fd51340c0cb93c8e72c9025647aebaff623b/1.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1279523#file_1.html" style="float:right;margin-right:10px;color:#666">1.html</a>
-            <a href="https://gist.github.com/1279523">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1279523.js?file=1.html"></script><noscript><pre><code class="language-html html">&lt;script id=&quot;item-template&quot; type=&quot;text/x-jquery-tmpl&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;${name}&lt;/a&gt;&lt;/li&gt;
+&lt;/script&gt;</code></pre></noscript>
 <p>In this example, we are rendering a list of items inside of a view. We&#8217;re looping through each of the models in our collection and rendering an item to produce a nice little list. We are also setting up a click event for the &lt;a&gt; tags in our list.</p>
 <h3>The Problem: Which Item Did I Click?</h3>
 <p>The goal of this sample code is to show an alert box stating the item&#8217;s `name` attribute when we click on a link. But how do we do this? The click event that we set up listens to any and all clicks for any and all &lt;a&gt; tags in our list. This is because the events declared in a view use the view&#8217;s `el` element to wire up the events. Since the `el` in this example is being generated by the view, as a `ul` tag, the click event is wired up to all of the &lt;a&gt; tags in each of the &lt;li&gt; tags.</p>
 <p><span style="font-size: 14px; font-weight: bold;">The Solution: Data-Id Attributes</span></p>
 <p>To know which item we clicked, we need to attach some meta-data to the &lt;a&gt; tag that tells us exactly which model we are trying to deal with. The &#8220;best&#8221; approach for this currently is to use the HTML5 data-* attributes. This is a set of attributes that lets us add whatever data we want, and still be valid (some browsers ignore attributes they don&#8217;t know about). In this case, we&#8217;ll add a data-id attribute and store the id of the model, to our template.</p>
-<div id="gist-1279523" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;item-template&quot;</span> <span class="na">type=</span><span class="s">&quot;text/x-jquery-tmpl&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">id</span><span class="o">=</span><span class="s2">&quot;${id}&quot;</span><span class="o">&gt;</span><span class="nx">$</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/a&gt;&lt;/li&gt;</span></div><div class='line' id='LC3'><span class="nt">&lt;/script&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1279523/7df4cf881338b1b95209b9c811972ab11cad1272/2.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1279523#file_2.html" style="float:right;margin-right:10px;color:#666">2.html</a>
-            <a href="https://gist.github.com/1279523">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1279523.js?file=2.html"></script><noscript><pre><code class="language-html html">&lt;script id=&quot;item-template&quot; type=&quot;text/x-jquery-tmpl&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;#&quot; data-id=&quot;${id}&quot;&gt;${name}&lt;/a&gt;&lt;/li&gt;
+&lt;/script&gt;</code></pre></noscript>
 <p>Now that we have a data-id attribute in place, we can grab it from the &lt;a&gt; element that we clicked. Then we can get the model from the collection, get the name and show an alert box.</p>
-<div id="gist-1279523" class="gist">
+<script src="https://gist.github.com/1279523.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">Item = Backbone.Model.extend({});
+ItemCollection = Backbone.Collection.extend({
+    model: Item
+});
+
+ItemListView = Backbone.View.extend({
+    tagName: &quot;ul&quot;,
+    events: {
+        &quot;click a&quot;: &quot;clicked&quot;
+    },
     
+    clicked: function(e){
+        e.preventDefault();
+        var id = $(e.currentTarget).data(&quot;id&quot;);
+        var item = this.collection.get(id);
+        var name = item.get(&quot;name&quot;);
+        alert(name);
+    },
+    
+    render: function(){
+        var template = $(&quot;#item-template&quot;);
+        var el = $(this.el);
+        this.collection.each(function(model){
+            var html = template.tmpl(model.toJSON());
+            el.append(html);
+        });
+    }
+});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Item</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({});</span></div><div class='line' id='LC2'><span class="nx">ItemCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">Item</span></div><div class='line' id='LC4'><span class="p">});</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'><span class="nx">ItemListView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;ul&quot;</span><span class="p">,</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click a&quot;</span><span class="o">:</span> <span class="s2">&quot;clicked&quot;</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">clicked</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">);</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#item-template&quot;</span><span class="p">);</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">){</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">template</span><span class="p">.</span><span class="nx">tmpl</span><span class="p">(</span><span class="nx">model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">());</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">el</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC28'><span class="p">});</span></div><div class='line' id='LC29'><br/></div><div class='line' id='LC30'><span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ItemCollection</span><span class="p">([</span></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;item 1&quot;</span><span class="p">},</span></div><div class='line' id='LC32'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;item 2&quot;</span><span class="p">},</span></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;item 3&quot;</span><span class="p">}</span></div><div class='line' id='LC34'><span class="p">]);</span></div><div class='line' id='LC35'><br/></div><div class='line' id='LC36'><span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ItemListView</span><span class="p">({</span><span class="nx">collection</span><span class="o">:</span> <span class="nx">items</span><span class="p">});</span></div><div class='line' id='LC37'><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC38'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#showIt&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div></pre></div>
-          </div>
+var items = new ItemCollection([
+    {id: 1, name: &quot;item 1&quot;},
+    {id: 2, name: &quot;item 2&quot;},
+    {id: 3, name: &quot;item 3&quot;}
+]);
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1279523/e0458c8c5ef292695c232ec0219867be2b8c31cf/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1279523#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/1279523">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+var view = new ItemListView({collection: items});
+view.render();
+$(&quot;#showIt&quot;).html(view.el);</code></pre></noscript>
 <p><a href="http://jsfiddle.net/derickbailey/sh6Dv/14/">Here&#8217;s the code running in a JSFiddle</a></p>
 <p><iframe src="http://jsfiddle.net/derickbailey/sh6Dv/14/embedded/result,js,html/" style="width: 100%; height: 300px;"></iframe></p>
 <h3>The Problem Introduced By The Solution</h3>
@@ -168,39 +184,61 @@
 <p>The other approach that we can take, to know which of the models we are trying to work with when we click an HTML element, is to have one View object per Model rendered. That is, each model in our collection has it&#8217;s own view object to render that mode&#8217;s data. This does not remove the need to have a View object that iterates the collection and populates the list, though. It only moves the implementation for each individual model down to a View for that Model.</p>
 <h3>Knowing Which Model&#8217;s Link You Clicked</h3>
 <p>The primary advantage that we get from using a View per Model is knowing exactly which model instance we are working with, when an event fires. This happens because we have one view instance for every model instance, and each view holds a direct reference to that model.</p>
-<div id="gist-1279523" class="gist">
+<script src="https://gist.github.com/1279523.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">Item = Backbone.Model.extend({});
+ItemCollection = Backbone.Collection.extend({
+    model: Item
+});
+
+ItemListView = Backbone.View.extend({
+    tagName: &quot;ul&quot;,
     
+    initialize: function(){
+        _.bindAll(this, &quot;renderItem&quot;);
+    },
+    
+    renderItem: function(model){
+        var itemView = new ItemView({model: model});
+        itemView.render();
+        $(this.el).append(itemView.el);
+    },
+    
+    render: function(){
+        this.collection.each(this.renderItem);
+    }
+});
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">Item</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({});</span></div><div class='line' id='LC2'><span class="nx">ItemCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">model</span><span class="o">:</span> <span class="nx">Item</span></div><div class='line' id='LC4'><span class="p">});</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'><span class="nx">ItemListView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;ul&quot;</span><span class="p">,</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;renderItem&quot;</span><span class="p">);</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">renderItem</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">model</span><span class="p">){</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">itemView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ItemView</span><span class="p">({</span><span class="nx">model</span><span class="o">:</span> <span class="nx">model</span><span class="p">});</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">itemView</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">itemView</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">renderItem</span><span class="p">);</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC22'><span class="p">});</span></div><div class='line' id='LC23'><br/></div><div class='line' id='LC24'><span class="nx">ItemView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC25'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">tagName</span><span class="o">:</span> <span class="s2">&quot;li&quot;</span><span class="p">,</span></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click a&quot;</span><span class="o">:</span> <span class="s2">&quot;clicked&quot;</span></div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;</div><div class='line' id='LC30'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">clicked</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span></div><div class='line' id='LC32'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">);</span></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC35'><br/></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#item-template&quot;</span><span class="p">);</span></div><div class='line' id='LC38'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">template</span><span class="p">.</span><span class="nx">tmpl</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">());</span></div><div class='line' id='LC39'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC40'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span>  </div><div class='line' id='LC41'><span class="p">});</span></div><div class='line' id='LC42'><br/></div><div class='line' id='LC43'><span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ItemCollection</span><span class="p">([</span></div><div class='line' id='LC44'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;item 1&quot;</span><span class="p">},</span></div><div class='line' id='LC45'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;item 2&quot;</span><span class="p">},</span></div><div class='line' id='LC46'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">{</span><span class="nx">id</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;item 3&quot;</span><span class="p">}</span></div><div class='line' id='LC47'><span class="p">]);</span></div><div class='line' id='LC48'><br/></div><div class='line' id='LC49'><span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ItemListView</span><span class="p">({</span><span class="nx">collection</span><span class="o">:</span> <span class="nx">items</span><span class="p">});</span></div><div class='line' id='LC50'><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC51'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#showIt&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span></div></pre></div>
-          </div>
+ItemView = Backbone.View.extend({
+    tagName: &quot;li&quot;,
+    events: {
+        &quot;click a&quot;: &quot;clicked&quot;
+    },
+    
+    clicked: function(e){
+        e.preventDefault();
+        var name = this.model.get(&quot;name&quot;);
+        alert(name);
+    },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1279523/dadcc5208186fd07d4a85dadd62c850f84584c00/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1279523#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/1279523">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+    render: function(){
+        var template = $(&quot;#item-template&quot;);
+        var html = template.tmpl(this.model.toJSON());
+        $(this.el).append(html);
+    }  
+});
 
+var items = new ItemCollection([
+    {id: 1, name: &quot;item 1&quot;},
+    {id: 2, name: &quot;item 2&quot;},
+    {id: 3, name: &quot;item 3&quot;}
+]);
+
+var view = new ItemListView({collection: items});
+view.render();
+$(&quot;#showIt&quot;).html(view.el);</code></pre></noscript>
 <p>Our HTML template for each model is almost the same. We need to remove the &lt;li&gt; tag from the template because each view instance for each model will generate the &lt;li&gt; tag for us (using the `tagName` attribute in the above code). We also don&#8217;t need the `data-id` attribute anymore.</p>
-<div id="gist-1279523" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;item-template&quot;</span> <span class="na">type=</span><span class="s">&quot;text/x-jquery-tmpl&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="o">&gt;</span><span class="nx">$</span><span class="p">{</span><span class="nx">name</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/a&gt;</span></div><div class='line' id='LC3'><span class="nt">&lt;/script&gt;</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1279523/233a1d6c081ed0767b5d72f22937066ba437f055/3.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1279523#file_3.html" style="float:right;margin-right:10px;color:#666">3.html</a>
-            <a href="https://gist.github.com/1279523">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1279523.js?file=3.html"></script><noscript><pre><code class="language-html html">&lt;script id=&quot;item-template&quot; type=&quot;text/x-jquery-tmpl&quot;&gt;
+    &lt;a href=&quot;#&quot;&gt;${name}&lt;/a&gt;
+&lt;/script&gt;</code></pre></noscript>
 <p>Now when we render, we will iterate over the list and then render one model at a time. Once the model is rendered and the resulting HTML is stuffed into the `el` of the view instance, the `events` for that view will be scoped to the HTML for that view and model. When we click the link for a given item, then, we have direct access to `this.model` instead of having to look it up via an id. This means we can get right to our actions and code that works with the model.</p>
 <p>Here&#8217;s <a href="http://jsfiddle.net/derickbailey/6cA7C/3/">a running version of the updated code</a>, via JSFiddle</p>
 <p><iframe src="http://jsfiddle.net/derickbailey/6cA7C/4/embedded/result,js,html/" style="width: 100%; height: 300px;"></iframe></p>
@@ -756,6 +794,19 @@ http://mutedsolutions.com                <span id="dsq-author-user-2664">Derick 
     </li>
 </ul>
 </li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2839">
+        <div id="dsq-comment-header-2839" class="dsq-comment-header">
+            <cite id="dsq-cite-2839">
+                <span id="dsq-author-user-2839">Rob Nugen</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2839" class="dsq-comment-body">
+            <div id="dsq-comment-message-2839" class="dsq-comment-message"><p>Your articles are really helpful, and they could be even better if &#8220;its&#8221; was used at it&#8217;s intended.  <a href="http://how-to-spell-its.com/" rel="nofollow">http://how-to-spell-its.com/</a> for reference.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
             </ul>
 
 
@@ -832,14 +883,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2664">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -1075,11 +1127,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2664">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1338,4 +1386,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:47:01 -->
+Served from: lostechies.com @ 2012-12-19 06:30:10 -->

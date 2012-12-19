@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -72,41 +71,54 @@
 						<p>I love <a href="http://pivotal.github.com/jasmine/">Jasmine</a>. It&#8217;s a great BDD-style testing framework for browser based JavaScript, and my preferred tool for doing that kind of work. But the asynchronous testing story in Jasmine is painful at best.</p>
 <h2>Jasmine&#8217;s Async Is Painful</h2>
 <p>Here&#8217;s a short example of how you make Jasmine work with asynchronous JavaScript:</p>
-<div id="gist-3389343" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;an async spec&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">done</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">function</span> <span class="nx">doStuff</span><span class="p">(){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// simulate async stuff and wait 10ms</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span> <span class="mi">10</span><span class="p">);</span> </div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">runs</span><span class="p">(</span><span class="nx">doStuff</span><span class="p">);</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">waitsFor</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">done</span><span class="p">;</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;did stuff&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">expect</span><span class="p">(</span><span class="nx">done</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC22'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC23'><br/></div><div class='line' id='LC24'><span class="p">});</span></div></pre></div>
-          </div>
+<script src="https://gist.github.com/3389343.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;an async spec&quot;, function(){
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3389343/5ab8a20bd06b9da73fce44e0e481df95f118dd05/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3389343#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/3389343">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  beforeEach(function(){
+    var done = false;
 
+    function doStuff(){
+      // simulate async stuff and wait 10ms
+      setTimeout(function(){
+        done = true;
+      }, 10); 
+    }
+
+    runs(doStuff);
+
+    waitsFor(function(){
+      return done;
+    });
+  });
+
+  it(&quot;did stuff&quot;, function(){
+    expect(done).toBe(true);
+  });
+
+});</code></pre></noscript>
 <p>This isn&#8217;t fun. That &#8220;runs&#8221; and &#8220;waitsFor&#8221; code gets repeated all over the place &#8211; every time you need to wait for something async to complete. By contrast, look at <a href="http://lostechies.com/derickbailey/2012/08/17/asynchronous-unit-tests-with-mocha-promises-and-winjs/">my previous post on asynchronous testing with Mocha</a>. That simple little &#8220;done&#8221; function in the beforeEach and it callbacks is so easy to work with. Just add the parameter to the callback, and call &#8220;done()&#8221; when the async code has completed.</p>
 <p>I want Jasmine to work this way, too, because there are things I like about Jasmine vs Mocha and when I use Jasmine, I don&#8217;t want to be stuck with horrible async tests. Thus, <a href="https://github.com/derickbailey/jasmine.async">Jasmine.Async</a> was born out of frustration and little bit of jealousy in how easy it is to do async tests with <a href="http://visionmedia.github.com/mocha/">Mocha</a>.</p>
 <h2>Jasmine.Async</h2>
 <p>To use <a href="https://github.com/derickbailey/jasmine.async">Jasmine.Async</a>, you need to include the jasmine.async.js file in your test suite. In your &#8220;describe&#8221; functions, create a new instance of the &#8220;AsyncSpec&#8221; object and pass in the current context (&#8220;this&#8221;). Now instead of calling &#8220;beforeEach&#8221;, you can call &#8220;async.beforeEach&#8221; which gives you a &#8220;done&#8221; parameter in the callback function, like Mocha does.</p>
-<div id="gist-3389343" class="gist">
-    
+<script src="https://gist.github.com/3389343.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;an async spec&quot;, function(){
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;an async spec&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">async</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AsyncSpec</span><span class="p">(</span><span class="k">this</span><span class="p">);</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">async</span><span class="p">.</span><span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">){</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// simulate async stuff and wait 10ms</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">foo</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">done</span><span class="p">();</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span> <span class="mi">10</span><span class="p">);</span> </div><div class='line' id='LC13'><br/></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC15'><br/></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="nx">it</span><span class="p">(</span><span class="s2">&quot;did stuff&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">expect</span><span class="p">(</span><span class="nx">foo</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC19'><br/></div><div class='line' id='LC20'><span class="p">});</span></div></pre></div>
-          </div>
+  var foo = false,
+      async = new AsyncSpec(this);
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3389343/4e906fa16f578b85df993a09a3160e841b7490d9/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3389343#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/3389343">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  async.beforeEach(function(done){
 
+    // simulate async stuff and wait 10ms
+    setTimeout(function(){
+      foo = true;
+      done();
+    }, 10); 
+
+  });
+
+  it(&quot;did stuff&quot;, function(){
+      expect(foo).toBe(true);
+  });
+
+});</code></pre></noscript>
 <p>There&#8217;s an &#8220;async.beforeEach&#8221;, &#8220;async.afterEach&#8221; and &#8220;async.it&#8221; &#8211; all of which are given the &#8220;done&#8221; callback. This is so much more clean and easy to understand now. </p>
 <p>So go grab <a href="https://github.com/derickbailey/jasmine.async">Jasmine.Async</a> and make your async tests suck less. </p>
 											</div><!-- .entry-content -->
@@ -435,6 +447,48 @@ http://mutedsolutions.com                <span id="dsq-author-user-2742">Derick 
     </li>
 </ul>
 </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2863">
+        <div id="dsq-comment-header-2863" class="dsq-comment-header">
+            <cite id="dsq-cite-2863">
+                <span id="dsq-author-user-2863">millermedeiros</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2863" class="dsq-comment-body">
+            <div id="dsq-comment-message-2863" class="dsq-comment-message"><p>jasmine-node monkey patches the `it`, `beforeEach` and `afterEach` methods: <a href="https://github.com/mhevery/jasmine-node/blob/master/lib/jasmine-node/async-callback.js" rel="nofollow">https://github.com/mhevery/jasmine-node/blob/master/lib/jasmine-node/async-callback.js</a> &#8211; I find it simpler.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2876">
+        <div id="dsq-comment-header-2876" class="dsq-comment-header">
+            <cite id="dsq-cite-2876">
+                <span id="dsq-author-user-2876">Alon Salant</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2876" class="dsq-comment-body">
+            <div id="dsq-comment-message-2876" class="dsq-comment-message"><p>It&#8217;s worth noting that jasmine-node has supported the same async style as Mocha since Feb 2012. <a href="http://bytes.goodeggs.com/post/13332056735/better-asynchronous-jasmine-node-specs" rel="nofollow">http://bytes.goodeggs.com/post/13332056735/better-asynchronous-jasmine-node-specs</a></p>
+<p>Note to the author of Jasmine.Async &#8211; if you wanted you could have Jasmine.Async patch jasmine (as shown in the post above) so then when you include it, jasmine would support the done callback without having to create a new AsyncSpec.</p>
+</div>
+        </div>
+    </li>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2877">
+        <div id="dsq-comment-header-2877" class="dsq-comment-header">
+            <cite id="dsq-cite-2877">
+                <span id="dsq-author-user-2877">Alon Salant</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2877" class="dsq-comment-body">
+            <div id="dsq-comment-message-2877" class="dsq-comment-message"><p>Oops. I see that another poster already pointed this out.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+</ul>
+</li>
             </ul>
 
 
@@ -511,14 +565,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2742">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -754,11 +809,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2742">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1017,4 +1068,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:12:28 -->
+Served from: lostechies.com @ 2012-12-19 07:09:24 -->

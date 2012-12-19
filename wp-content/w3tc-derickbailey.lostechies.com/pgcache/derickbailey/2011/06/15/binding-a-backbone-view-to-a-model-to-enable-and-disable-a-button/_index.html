@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -74,63 +73,78 @@
 <h3>The Form Layout And Functionality</h3>
 <p>It&#8217;s a very simple form. It has a username and password text box, and a button. What I want to to is make the button disabled initially, and then enable it when a username and password have been supplied.</p>
 <p>Here&#8217;s the form HTML and layout:</p>
-<div id="gist-1027710" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;/login&quot;</span> <span class="na">id=</span><span class="s">&quot;login-form&quot;</span><span class="nt">&gt;</span></div><div class='line' id='LC2'>&nbsp;&nbsp;Username: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">id=</span><span class="s">&quot;username&quot;</span><span class="nt">&gt;&lt;br&gt;</span></div><div class='line' id='LC3'>&nbsp;&nbsp;Password: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;password&quot;</span> <span class="na">id=</span><span class="s">&quot;password&quot;</span><span class="nt">&gt;&lt;br&gt;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;login&quot;</span> <span class="na">disabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>Login<span class="nt">&lt;/button&gt;</span></div><div class='line' id='LC5'><span class="nt">&lt;/form&gt;</span></div><div class='line' id='LC6'><br/></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1027710/b409cd6c8afa36519aaa67f232f0a2a2c94fcf14/1-form.html" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1027710#file_1_form.html" style="float:right;margin-right:10px;color:#666">1-form.html</a>
-            <a href="https://gist.github.com/1027710">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1027710.js?file=1-form.html"></script><noscript><pre><code class="language-html html">&lt;form action=&quot;/login&quot; id=&quot;login-form&quot;&gt;
+  Username: &lt;input type=&quot;text&quot; id=&quot;username&quot;&gt;&lt;br&gt;
+  Password: &lt;input type=&quot;password&quot; id=&quot;password&quot;&gt;&lt;br&gt;
+  &lt;button id=&quot;login&quot; disabled=&quot;true&quot;&gt;Login&lt;/button&gt;
+&lt;/form&gt;
+</code></pre></noscript>
 <p> </p>
 <p><img title="Screen shot 2011-06-15 at 1.13.39 PM.png" src="http://lostechies.com/derickbailey/files/2011/06/Screen-shot-2011-06-15-at-1.13.39-PM.png" border="0" alt="Screen shot 2011 06 15 at 1 13 39 PM" width="216" height="82" /></p>
 <p> </p>
 <h3>The Credentials Model</h3>
 <p>We need something on the credentials model for the view to pay attention to, to know when to enable and disable the button. A &#8220;validated&#8221; event would be a great way to listen to the model&#8217;s changes for this purpose. Then, if the model is valid we can enable the button and if the model is invalid, we can disable the button.</p>
-<div id="gist-1027710" class="gist">
-    
+<script src="https://gist.github.com/1027710.js?file=2-credentials.js"></script><noscript><pre><code class="language-javascript javascript">var Credentials = Backbone.Model.extend({
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">Credentials</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">attributesChanged</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">attributesChanged</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">valid</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">))</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">valid</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;validated&quot;</span><span class="p">,</span> <span class="nx">valid</span><span class="p">);</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC13'>&nbsp;&nbsp;</div><div class='line' id='LC14'><span class="p">});</span></div><div class='line' id='LC15'><br/></div></pre></div>
-          </div>
+  initialize: function(){
+    this.bind(&quot;change&quot;, this.attributesChanged);
+  },
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1027710/5d9165d18deec5fda4405fc2f3d010e58dee6b2d/2-credentials.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1027710#file_2_credentials.js" style="float:right;margin-right:10px;color:#666">2-credentials.js</a>
-            <a href="https://gist.github.com/1027710">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  attributesChanged: function(){
+    var valid = false;
+    if (this.get('username') &amp;&amp; this.get('password'))
+      valid = true;
+    this.trigger(&quot;validated&quot;, valid);
+  }
+  
+});
+</code></pre></noscript>
 <p> </p>
 <p>In this code, we are setting up a &#8220;changed&#8221; even listener in the model&#8217;s initializer. The &#8220;changed&#8221; even fired any time an attribute on the model is being changed. For example, calling &#8220;model.set({something: &#8220;whatever&#8221;})&#8221; will change the model&#8217;s &#8220;something&#8221; attribute and cause the change event to fire. Within our change even handler, we are checking to see if the model has both a username and a password. If both are present, the model is valid. If one or both are missing, the model is not valid. We are then raising (triggering) the &#8220;validated&#8221; event and passing along the knowledge of whether or not the model is valid.</p>
 <p> </p>
 <h3>The Login View</h3>
 <p>I&#8217;ve updated this a little from yesterday&#8217;s example and I&#8217;m using backbone&#8217;s built in event system instead JQuery&#8217;s for binding the username and password inputs. I&#8217;ve also added few lines to the initializer to bind to the model&#8217;s &#8220;validated&#8221; event and store the view on the model.</p>
-<div id="gist-1027710" class="gist">
-    
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">LoginView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">el</span><span class="o">:</span> <span class="s2">&quot;#login-form&quot;</span><span class="p">,</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">events</span><span class="o">:</span> <span class="p">{</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;click #login&quot;</span><span class="o">:</span> <span class="s2">&quot;performLogin&quot;</span><span class="p">,</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;change #username&quot;</span><span class="o">:</span> <span class="s2">&quot;setUsername&quot;</span><span class="p">,</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="s2">&quot;change #password&quot;</span><span class="o">:</span> <span class="s2">&quot;setPassword&quot;</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#username&quot;</span><span class="p">);</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">password</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#password&quot;</span><span class="p">);</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">loginButton</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#login&quot;</span><span class="p">);</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">view</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;validated&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">validated</span><span class="p">);</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC17'><br/></div><div class='line' id='LC18'>&nbsp;&nbsp;<span class="nx">validated</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">valid</span><span class="p">){</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">if</span> <span class="p">(</span><span class="nx">valid</span><span class="p">){</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">loginButton</span><span class="p">.</span><span class="nx">removeAttr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">);</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span> <span class="k">else</span> <span class="p">{</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">view</span><span class="p">.</span><span class="nx">loginButton</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">);</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC24'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC25'><br/></div><div class='line' id='LC26'>&nbsp;&nbsp;<span class="nx">setUsername</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">username</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">username</span><span class="p">.</span><span class="nx">val</span><span class="p">()});</span></div><div class='line' id='LC28'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC29'><br/></div><div class='line' id='LC30'>&nbsp;&nbsp;<span class="nx">setPassword</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="nx">password</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">password</span><span class="p">.</span><span class="nx">val</span><span class="p">()});</span></div><div class='line' id='LC32'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC33'><br/></div><div class='line' id='LC34'>&nbsp;&nbsp;<span class="nx">performLogin</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC35'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">user</span><span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">);</span></div><div class='line' id='LC36'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">pword</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">);</span></div><div class='line' id='LC37'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;You logged in as &quot;</span> <span class="o">+</span> <span class="nx">user</span> <span class="o">+</span> <span class="s2">&quot; and a password of &quot;</span> <span class="o">+</span> <span class="nx">pword</span><span class="p">);</span></div><div class='line' id='LC38'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="kc">false</span><span class="p">;</span></div><div class='line' id='LC39'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC40'><span class="p">});</span></div><div class='line' id='LC41'><br/></div></pre></div>
-          </div>
+<script src="https://gist.github.com/1027710.js?file=3-loginview.js"></script><noscript><pre><code class="language-javascript javascript">var LoginView = Backbone.View.extend({
+  el: &quot;#login-form&quot;,
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1027710/dff8367e4b3402bd5d8a0e8bed7c9752d3996cc9/3-loginview.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1027710#file_3_loginview.js" style="float:right;margin-right:10px;color:#666">3-loginview.js</a>
-            <a href="https://gist.github.com/1027710">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  events: {
+    &quot;click #login&quot;: &quot;performLogin&quot;,
+    &quot;change #username&quot;: &quot;setUsername&quot;,
+    &quot;change #password&quot;: &quot;setPassword&quot;
+  },
 
+  initialize: function(){
+    this.username = $(&quot;#username&quot;);
+    this.password = $(&quot;#password&quot;);
+    this.loginButton = $(&quot;#login&quot;);
+    this.model.view = this;
+    this.model.bind(&quot;validated&quot;, this.validated);
+  },
+
+  validated: function(valid){
+    if (valid){
+      this.view.loginButton.removeAttr(&quot;disabled&quot;);
+    } else {
+      this.view.loginButton.attr(&quot;disabled&quot;, &quot;true&quot;);
+    }
+  },
+
+  setUsername: function(e){
+    this.model.set({username: this.username.val()});
+  },
+
+  setPassword: function(e){
+    this.model.set({password: this.password.val()});
+  },
+
+  performLogin: function(){
+    var user= this.model.get('username');
+    var pword = this.model.get('password');
+    alert(&quot;You logged in as &quot; + user + &quot; and a password of &quot; + pword);
+    return false;
+  }
+});
+</code></pre></noscript>
 <p> </p>
 <p>Line 15 binds the view&#8217;s validated method to the model&#8217;s validated event. This gives us a way to have the view pay attention to the model so that we can change the login button&#8217;s disabled attribute. Line 14 is also assigning the view to the model&#8217;s .view attribute so that we can access the view in the validated event handler.</p>
 <p>The validated function receives the valid argument to tell us whether or not the model is valid. If it is valid, we remove the &#8220;disabled&#8221; attribute. If it&#8217;s not valid, we add the &#8220;disabled&#8221; attribute.</p>
@@ -499,14 +513,15 @@ setUsername: function(e){    this.model.set({username: $(this.el).val()});},<br 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -742,11 +757,7 @@ setUsername: function(e){    this.model.set({username: $(this.el).val()});},<br 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -1005,4 +1016,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:02:06 -->
+Served from: lostechies.com @ 2012-12-19 06:48:57 -->

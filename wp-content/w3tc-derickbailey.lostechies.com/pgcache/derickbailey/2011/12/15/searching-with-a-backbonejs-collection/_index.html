@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -74,77 +73,61 @@
 <p>Calling the `fetch` method on a collection will cause the collection to make a call back to the server to retrieve the requested collection. The collection that is returned is determined by the `url` attribute of the collection. This attribute can either be a string or a function.</p>
 <p>If you&#8217;re dealing with a model and a RESTful back-end, it&#8217;s often easy enough to set the collection&#8217;s url to a string, such as &#8220;/images&#8221;. This would load all of the images from the server, as a JSON document, and populate the collection.</p>
 <p>If you&#8217;re doing something more complex and you need to figure out the url at runtime, though, you can set the `url` attribute to a function. My search process requires me to pass urls that look like this: &#8220;/items/{search-term}&#8221;, where {search-term} is the actual search term typed in to the search box. To get the url formatted like this, I need to append the search term to a base url string when the `url` function is called. Unfortunately, there&#8217;s no way to pass parameters to the `url` function. To make this work, then, I rely on my collection to hold the bits of search info that I need and then I have my `url` function read them:</p>
-<div id="gist-1481224" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">SearchResults</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">url</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="s2">&quot;/items/&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">searchTerm</span><span class="p">;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC5'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1481224/bce4cf1628d7fe1695ea123af2e1079c45e1d18b/url.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1481224#file_url.js" style="float:right;margin-right:10px;color:#666">url.js</a>
-            <a href="https://gist.github.com/1481224">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1481224.js?file=url.js"></script><noscript><pre><code class="language-javascript javascript">SearchResults = Backbone.Collection.extend({
+  url: function(){
+    return &quot;/items/&quot; + this.searchTerm;
+  }
+});</code></pre></noscript>
 <p>With this function in place, I can create an instance of my collection, set the .searchTerm on it and then call .fetch:</p>
-<div id="gist-1481224" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SearchResults</span><span class="p">();</span></div><div class='line' id='LC2'><span class="nx">results</span><span class="p">.</span><span class="nx">searchTerm</span> <span class="o">=</span> <span class="s2">&quot;some search term&quot;</span><span class="p">;</span></div><div class='line' id='LC3'><span class="nx">results</span><span class="p">.</span><span class="nx">fetch</span><span class="p">({</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">success</span><span class="o">:</span> <span class="nx">someView</span><span class="p">.</span><span class="nx">showTheResults</span></div><div class='line' id='LC5'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1481224/b3771ce78ca07090483c29ef31bf421c8a93645b/manualcall.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1481224#file_manualcall.js" style="float:right;margin-right:10px;color:#666">manualcall.js</a>
-            <a href="https://gist.github.com/1481224">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1481224.js?file=manualcall.js"></script><noscript><pre><code class="language-javascript javascript">var results = new SearchResults();
+results.searchTerm = &quot;some search term&quot;;
+results.fetch({
+  success: someView.showTheResults
+});</code></pre></noscript>
 <p>However, I&#8217;m not very happy with having to remember to do things like this whenever I want to do a search. I would rather have a simple &#8220;search&#8221; method that I can call, which handles all of these details for me.</p>
 <h2>Encapsulating Search</h2>
 <p>To encapsulate the search process, including the creation of a collection, setting the .searchTerm and then calling .fetch, I want to create a function that hangs directly off of the SearchResults collection. This way I can simply call `SearchResults.search(&#8230;)` and get a result set back. To do this, I need to use the 2nd parameter of the Backbone.Collection.extend method. This parameter is an object literal, just like the first parameter. But, unlike the first parameter, it adds the functionality you specify directly to the collection&#8217;s constructor function, and not to an instance of the collection.</p>
-<div id="gist-1481224" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">SearchResults</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">url</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="s2">&quot;/items/&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">searchTerm</span><span class="p">;</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC5'><span class="p">},</span> <span class="p">{</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">search</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">searchTerm</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SearchResults</span><span class="p">();</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">results</span><span class="p">.</span><span class="nx">searchTerm</span> <span class="o">=</span> <span class="s2">&quot;some search term&quot;</span><span class="p">;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">results</span><span class="p">.</span><span class="nx">fetch</span><span class="p">({</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC11'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;search:results&quot;</span><span class="p">,</span> <span class="nx">results</span><span class="p">);</span></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">error</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">collection</span><span class="p">,</span> <span class="nx">response</span><span class="p">){</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;search:error&quot;</span><span class="p">,</span> <span class="nx">response</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span> </div><div class='line' id='LC17'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC18'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1481224/c7f1007eb4b9cf8b099e051085c3ad0f807f4c21/searchresults.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1481224#file_searchresults.js" style="float:right;margin-right:10px;color:#666">searchresults.js</a>
-            <a href="https://gist.github.com/1481224">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1481224.js?file=searchresults.js"></script><noscript><pre><code class="language-javascript javascript">SearchResults = Backbone.Collection.extend({
+  url: function(){
+    return &quot;/items/&quot; + this.searchTerm;
+  }
+}, {
+  search: function(searchTerm){
+    var results = new SearchResults();
+    results.searchTerm = &quot;some search term&quot;;
+    results.fetch({
+      success: function(){
+        MyApp.vent.trigger(&quot;search:results&quot;, results);
+      },
+      error: function(collection, response){
+        MyApp.vent.trigger(&quot;search:error&quot;, response);
+      }
+    }); 
+  }
+});</code></pre></noscript>
 <p>Here you can see my SearchResults object with the `url` function in the collection instance, and the `search` function in the collection definition. I&#8217;ve also added a call to my event aggregator to notify my application when the search results have returned or have produced an error.</p>
 <h2>Performing The Search</h2>
 <p>Now I can call my search and subscribe to the event that tells me when they have returned, so I can display them:</p>
-<div id="gist-1481224" class="gist">
-    
+<script src="https://gist.github.com/1481224.js?file=search.js"></script><noscript><pre><code class="language-javascript javascript">// handle the search results in a view
+Backbone.View.extend({
+  initialize: function(){
+    MyApp.vent.bind(&quot;search:results&quot;, this.showResults, this);
+  },
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// handle the search results in a view</span></div><div class='line' id='LC2'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">MyApp</span><span class="p">.</span><span class="nx">vent</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;search:results&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">showResults</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">showResults</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">collection</span> <span class="o">=</span> <span class="nx">results</span><span class="p">;</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">},</span></div><div class='line' id='LC11'>&nbsp;&nbsp;</div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#some-template&quot;</span><span class="p">).</span><span class="nx">tmpl</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">());</span></div><div class='line' id='LC14'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC16'><span class="p">});</span></div><div class='line' id='LC17'><br/></div><div class='line' id='LC18'><span class="c1">// do the actual search, based on a search</span></div><div class='line' id='LC19'><span class="c1">// term that was entered in to the search box</span></div><div class='line' id='LC20'><span class="nx">SearchResults</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s2">&quot;some search term&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
+  showResults: function(results){
+    this.collection = results;
+    this.render();
+  },
+  
+  render: function(){
+    var html = $(&quot;#some-template&quot;).tmpl(this.collection.toJSON());
+    $(this.el).html(html);
+  }
+});
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1481224/ad11097006bcaff284bca704665d8237447ab770/search.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1481224#file_search.js" style="float:right;margin-right:10px;color:#666">search.js</a>
-            <a href="https://gist.github.com/1481224">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+// do the actual search, based on a search
+// term that was entered in to the search box
+SearchResults.search(&quot;some search term&quot;);</code></pre></noscript>
 <p>Of course, I&#8217;m sure there are many other ways of accomplishing the same thing with a Backbone.Collection. This is the solution that I&#8217;m currently using, but I would love to see the solutions that you&#8217;ve come up with for searches. Drop a comment here and let me know how you&#8217;re doing it!</p>
 											</div><!-- .entry-content -->
 
@@ -354,14 +337,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2041">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -597,11 +581,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2041">Derick 
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -860,4 +840,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:47:26 -->
+Served from: lostechies.com @ 2012-12-19 06:44:04 -->

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: I’m Presenting SOLID At North Dallas .NET (NDDNUG), July 8th</title>
+	<atom:link href="http://lostechies.com/derickbailey/2009/06/17/i-m-presenting-solid-at-north-dallas-net-nddnug-july-8th/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2009/06/17/i-m-presenting-solid-at-north-dallas-net-nddnug-july-8th/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Sun, 16 Dec 2012 23:48:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2012-12-19 07:14:29 -->

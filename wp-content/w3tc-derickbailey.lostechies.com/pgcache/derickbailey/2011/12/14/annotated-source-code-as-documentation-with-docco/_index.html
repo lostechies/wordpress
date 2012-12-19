@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -80,22 +79,23 @@
 <h2>The Source Code</h2>
 <p>If you read through the source code for Backbone.Marionette, you&#8217;ll find a bunch of standard // comments throughout the code. This is pretty normal stuff, for the most part. I&#8217;ve added some comments above my objects and methods, to help explain what they are and how to call them.</p>
 <p>The only significant difference between a normal command and a Docco ready comment is that some of the comments have a //&#8212;&#8212;&#8212;&#8212;&#8212; line underneath of them. This tells Docco that this is going to be a section header, in the compiled documentation. Using a fixed with font, set the number of &#8211; in that comment line to the same width as your header title:</p>
-<div id="gist-1476877" class="gist">
-    
+<script src="https://gist.github.com/1476877.js?file=comments.js"></script><noscript><pre><code class="language-javascript javascript">// This Is A Header
+// ----------------
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// This Is A Header</span></div><div class='line' id='LC2'><span class="c1">// ----------------</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="c1">// This is a normal comment, that will become part of the</span></div><div class='line' id='LC6'><span class="c1">// annotations after running through the Docco tool. Use this</span></div><div class='line' id='LC7'><span class="c1">// space to describe the function or other code just below </span></div><div class='line' id='LC8'><span class="c1">// this comment. For example: </span></div><div class='line' id='LC9'><span class="c1">//</span></div><div class='line' id='LC10'><span class="c1">// The `DoSomething` method does something! It doesn&#39;t take any</span></div><div class='line' id='LC11'><span class="c1">// parameters... it just does something.</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="kd">function</span> <span class="nx">DoSomething</span><span class="p">(){</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="c1">// and by the way, this will show up</span></div><div class='line' id='LC15'>&nbsp;&nbsp;<span class="c1">// in the docco file, too. :)</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;I&#39;m doing something!&quot;</span><span class="p">);</span></div><div class='line' id='LC17'><span class="p">}</span></div></pre></div>
-          </div>
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1476877/8e0dfad64cf91bff4a08087df700d35004b8d4cb/comments.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1476877#file_comments.js" style="float:right;margin-right:10px;color:#666">comments.js</a>
-            <a href="https://gist.github.com/1476877">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+// This is a normal comment, that will become part of the
+// annotations after running through the Docco tool. Use this
+// space to describe the function or other code just below 
+// this comment. For example: 
+//
+// The `DoSomething` method does something! It doesn't take any
+// parameters... it just does something.
 
+function DoSomething(){
+  // and by the way, this will show up
+  // in the docco file, too. :)
+  alert(&quot;I'm doing something!&quot;);
+}</code></pre></noscript>
 <p>Other than that, comment your code as you normally would. You can also do some cool tricks like using `bacticks` around code, and the generated document will encompass that inside of a &lt;code&gt; tag, with CSS set accordingly. There&#8217;s likely some other tricks you can do, too, as this is all run through a Markdown processor to build the docs.</p>
 <p>Side note: if you haven&#8217;t learned Markdown yet, do yourself a favor and learn it. It&#8217;s becoming the ubiquitous documentation and code commenting style around the development community. I think this is largely due to Github supporting it and encouraging it&#8217;s use in readme files and Github wiki pages. I&#8217;m at the point where I take notes in Markdown, when attending technical sessions or taking notes from conversations.</p>
 <h2>Docco Prerequisites</h2>
@@ -109,132 +109,32 @@
 </ul>
 <p>If you&#8217;re on a Windows machine, you can find installation instructions for NodeJS, NPM and Python around the web fairly easily. Here&#8217;s the instructions for OSX:</p>
 <p><strong>NodeJS (via Homebrew):</strong></p>
-<div id="gist-1476877" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>sudo brew install node</div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1476877/de65aa239ffdd979819114ff168c6c3fd525028d/nodejs.sh" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1476877#file_nodejs.sh" style="float:right;margin-right:10px;color:#666">nodejs.sh</a>
-            <a href="https://gist.github.com/1476877">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1476877.js?file=nodejs.sh"></script><noscript><pre><code class="language-shell shell">sudo brew install node</code></pre></noscript>
 <p><strong>NPM:</strong></p>
-<div id="gist-1476877" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>sudo curl http://npmjs.org/install.sh | sh</div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1476877/830672e7cabf6479c1439303ec13ab5ff92bba54/npm.sh" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1476877#file_npm.sh" style="float:right;margin-right:10px;color:#666">npm.sh</a>
-            <a href="https://gist.github.com/1476877">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1476877.js?file=npm.sh"></script><noscript><pre><code class="language-shell shell">sudo curl http://npmjs.org/install.sh | sh</code></pre></noscript>
 <p><strong>CoffeeScript:</strong></p>
-<div id="gist-1476877" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>sudo npm install -g coffee-script</div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1476877/d875a3811ff82b29150d22decaeaebef8de5300a/coffeescript.sh" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1476877#file_coffeescript.sh" style="float:right;margin-right:10px;color:#666">coffeescript.sh</a>
-            <a href="https://gist.github.com/1476877">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1476877.js?file=coffeescript.sh"></script><noscript><pre><code class="language-shell shell">sudo npm install -g coffee-script</code></pre></noscript>
 <p><strong>Python: </strong></p>
 <p>May be included in OSX… might be part of XCode. I&#8217;m on OSX Lion and I have the latest XCode. I didn&#8217;t need to install anything for Python to be available to me. Python is needed for the &#8220;easy_install&#8221; tool, which is Python&#8217;s package manager (similar to NPM or RubyGems).</p>
 <p><strong>Pygments:</strong></p>
-<div id="gist-1476877" class="gist">
-    
+<script src="https://gist.github.com/1476877.js?file=pygments.sh"></script><noscript><pre><code class="language-shell shell">sudo easy_install pygments
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>sudo easy_install pygments</div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>sudo npm install -g pygments</div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1476877/057917f7169c0982d15059b0d927a05fd4accade/pygments.sh" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1476877#file_pygments.sh" style="float:right;margin-right:10px;color:#666">pygments.sh</a>
-            <a href="https://gist.github.com/1476877">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+sudo npm install -g pygments</code></pre></noscript>
 <p>I&#8217;m not actually sure if you need to install the NPM pygments… I did, and things worked well for me. I&#8217;m assuming this is needed so NodeJS can run the Pygments tool.</p>
 <h2>Installing Docco</h2>
 <p>Once you have all the prerequisites in place, installing Docco is a one liner:</p>
-<div id="gist-1476877" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>sudo npm install -g docco</div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1476877/b1ac2d6d391c6b312b421e024b270b9907a1ab1d/docco.sh" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1476877#file_docco.sh" style="float:right;margin-right:10px;color:#666">docco.sh</a>
-            <a href="https://gist.github.com/1476877">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1476877.js?file=docco.sh"></script><noscript><pre><code class="language-shell shell">sudo npm install -g docco</code></pre></noscript>
 <p>Now you have access to the `docco` command line tool.</p>
 <h2>Running Docco On Your Code</h2>
 <p>This is super easy. Just run `docco {file pattern}` from the command line. For example, the above `comments.js` file can be run like this:</p>
-<div id="gist-1476877" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'>docco comments.js</div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1476877/680840ccc98879e91ae4248c1398d7d182855b88/commandline.sh" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1476877#file_commandline.sh" style="float:right;margin-right:10px;color:#666">commandline.sh</a>
-            <a href="https://gist.github.com/1476877">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1476877.js?file=commandline.sh"></script><noscript><pre><code class="language-shell shell">docco comments.js</code></pre></noscript>
 <p>You can also use file patterns such as `*.js`</p>
 <h2>Setting Up A Rake Task</h2>
 <p>I don&#8217;t like to run things manually when I don&#8217;t have to. Since my Marionette project uses Sinatra and Rake to run it&#8217;s Jasmine test suite, I decided to create a Docco task. Here&#8217;s what that would look like, for the above comments.js file:</p>
-<div id="gist-1476877" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="n">desc</span> <span class="s2">&quot;Build the Docco annotated source documentation&quot;</span></div><div class='line' id='LC2'><span class="n">task</span> <span class="ss">:docco</span> <span class="k">do</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="sb">`docco comments.js`</span></div><div class='line' id='LC4'><span class="k">end</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1476877/c6b8ceb264bd86588b87e006e3c9c759944135d5/rake.rb" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1476877#file_rake.rb" style="float:right;margin-right:10px;color:#666">rake.rb</a>
-            <a href="https://gist.github.com/1476877">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/1476877.js?file=rake.rb"></script><noscript><pre><code class="language-ruby ruby">desc &quot;Build the Docco annotated source documentation&quot;
+task :docco do
+  `docco comments.js`
+end</code></pre></noscript>
 <p>Now I can run `rake docco` from the command line and it will build the docs for me. … yeah, this is probably overkill, but I wanted to do it anyways. :)</p>
 <h2>The Results</h2>
 <p>Here&#8217;s the results of running Docco against the above comments.js file (<a href="http://jsfiddle.net/eHEPS/">view it here, if you&#8217;re in an RSS reader</a>):</p>
@@ -438,14 +338,15 @@ tony</p>
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -681,11 +582,7 @@ tony</p>
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -944,4 +841,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:29:34 -->
+Served from: lostechies.com @ 2012-12-19 06:44:04 -->

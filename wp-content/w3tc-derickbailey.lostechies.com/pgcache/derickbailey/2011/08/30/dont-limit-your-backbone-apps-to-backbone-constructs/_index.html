@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -75,22 +74,17 @@
 <h3>The To-Do List&#8217;s AppView</h3>
 <p>A lot of people look at <a href="http://documentcloud.github.com/backbone/docs/todos.html">the simple to-do list example</a> from Backbone, including me. It&#8217;s a great place to start if you want to see one way of building a small application with backbone. Unfortunately, when people see the AppView portion of the code, they often think that this is &#8220;the backbone way&#8221;. I thought this when I saw it at first, but I didn&#8217;t understand why it was this way. It didn&#8217;t seem right to me, but I didn&#8217;t question it as I was just learning backbone for the first time.</p>
 <p>I built my first app with an AppView and it looked something like this (though honestly, it looked much much worse than this):</p>
-<div id="gist-1182708" class="gist">
-    
+<script src="https://gist.github.com/1182708.js?file=1-appview.js"></script><noscript><pre><code class="language-javascript javascript">AppView = Backbone.View.extend({
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">AppView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">initialize</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AppRouter</span><span class="p">();</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyCollection</span><span class="p">();</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">someView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SomeView</span><span class="p">();</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">someView</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;<span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span> </div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'><span class="p">});</span></div></pre></div>
-          </div>
+  initialize: function(){
+   this.router = new AppRouter();
+   this.collection = new MyCollection();
+   this.someView = new SomeView();
+   this.someView.render();
+   Backbone.history.start(); 
+  }
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1182708/e25df13cbce6114ada956068cf2993a5f1f5a04c/1-appview.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1182708#file_1_appview.js" style="float:right;margin-right:10px;color:#666">1-appview.js</a>
-            <a href="https://gist.github.com/1182708">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+});</code></pre></noscript>
 <p>Sure, this was worked for my simple app &#8211; it got things started up and running when i called `new AppView()`. It&#8217;s even better than putting all of that code right out in the middle of nowhere-land, where it would all become part of the global object. I was proud of myself for not pollution the global object! … but code like this shouldn&#8217;t exist in a view.</p>
 <h3>The Truth About AppView</h3>
 <p>If you look at the AppView in the to-do list example, and really read through the sample code, you&#8217;ll notice that it really is a backbone view. It registers events through the `events: { … }` attribute. It uses `this.$(…)` to do element selection within the view. It renders things into the DOM for display, too.</p>
@@ -100,39 +94,35 @@
 <h3>You Have All Of Javascript Available. Use It.</h3>
 <p>This is the crux of what I&#8217;m trying to get at, really. When you recognize the need for an object that does not appear to fit within the constructs that backbone provides, don&#8217;t force it into one.</p>
 <p>The next time you see a need for an application object that you can kick-start the app with, build your own object to do exactly that:</p>
-<div id="gist-1182708" class="gist">
-    
+<script src="https://gist.github.com/1182708.js?file=2-app.js"></script><noscript><pre><code class="language-javascript javascript">function MyApp(){
+  var router = new MyRouter();
+  var myCollection = new MyCollection();
+  var someView = new SomeView({collection: myCollection});
+  
+  this.start = function(initialModels){
+    myCollection.reset(initialModels);
+    someView.render();
+    Backbone.history.start();
+  }
+}
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">function</span> <span class="nx">MyApp</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyRouter</span><span class="p">();</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">myCollection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyCollection</span><span class="p">();</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">someView</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SomeView</span><span class="p">({</span><span class="nx">collection</span><span class="o">:</span> <span class="nx">myCollection</span><span class="p">});</span></div><div class='line' id='LC5'>&nbsp;&nbsp;</div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="k">this</span><span class="p">.</span><span class="nx">start</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">initialModels</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">myCollection</span><span class="p">.</span><span class="nx">reset</span><span class="p">(</span><span class="nx">initialModels</span><span class="p">);</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">someView</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC11'><span class="p">}</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="kd">var</span> <span class="nx">someModels</span> <span class="o">=</span> <span class="p">[...];</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'><span class="k">new</span> <span class="nx">MyApp</span><span class="p">().</span><span class="nx">start</span><span class="p">(</span><span class="nx">someModels</span><span class="p">);</span></div></pre></div>
-          </div>
+var someModels = [...];
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1182708/bc2ea8f4135e2bd0cd20375417fabc7c2f3742c4/2-app.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1182708#file_2_app.js" style="float:right;margin-right:10px;color:#666">2-app.js</a>
-            <a href="https://gist.github.com/1182708">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+new MyApp().start(someModels);</code></pre></noscript>
 <p>And when you want to take advantage of backbone&#8217;s events, just use backbone&#8217;s events:</p>
-<div id="gist-1182708" class="gist">
-    
+<script src="https://gist.github.com/1182708.js?file=3-events.js"></script><noscript><pre><code class="language-javascript javascript">// simple, object literal event thingy
+var myThingy = _.extend({}, Backbone.Events);
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// simple, object literal event thingy</span></div><div class='line' id='LC2'><span class="kd">var</span> <span class="nx">myThingy</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'><span class="c1">// or a full object</span></div><div class='line' id='LC5'><span class="kd">function</span> <span class="nx">MyThingy</span><span class="p">(){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">MyThingy</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Events</span><span class="p">);</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="c1">// other stuff here</span></div><div class='line' id='LC9'><span class="p">}</span></div><div class='line' id='LC10'><span class="kd">var</span> <span class="nx">myThingy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">myThingy</span><span class="p">();</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'><span class="c1">// use events!</span></div><div class='line' id='LC13'><span class="nx">myThingy</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">&quot;some:event&quot;</span><span class="p">);</span></div></pre></div>
-          </div>
+// or a full object
+function MyThingy(){
+  _.extend(MyThingy.prototype, Backbone.Events);
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/1182708/f2d3884bace65fd2f4b269042e99590dc5eeae44/3-events.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/1182708#file_3_events.js" style="float:right;margin-right:10px;color:#666">3-events.js</a>
-            <a href="https://gist.github.com/1182708">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+  // other stuff here
+}
+var myThingy = new myThingy();
 
+// use events!
+myThingy.trigger(&quot;some:event&quot;);</code></pre></noscript>
 <p>You&#8217;ll find your code is much more understandable, less prone to strange behavioral bugs, and generally much cleaner and easier to work with if you remember that you can use all of javascript and not just the constructs that backbone gives you.</p>
 											</div><!-- .entry-content -->
 
@@ -350,14 +340,15 @@ http://needforair.com/                <span id="dsq-author-user-2354">Louis Chat
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -593,11 +584,7 @@ http://needforair.com/                <span id="dsq-author-user-2354">Louis Chat
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -856,4 +843,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 09:57:17 -->
+Served from: lostechies.com @ 2012-12-19 06:17:27 -->

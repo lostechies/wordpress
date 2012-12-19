@@ -10,7 +10,6 @@
 		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
 	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
 <link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
-<link rel='stylesheet' id='embed_github_gist_from_gist-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/embed-github-gist/stylesheets/embed.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
 <link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
@@ -72,98 +71,71 @@
 						<p>If you&#8217;re not <a href="https://twitter.com/derickbailey">following me on Twitter</a>, you may not know about my current project work. I&#8217;m working with <a href="https://twitter.com/bennage">Christopher Bennage</a> and the <a href="http://msdn.microsoft.com/en-us/practices">Microsoft Patterns &amp; Practices</a> group to build a <a href="http://windows.microsoft.com/">Windows 8</a>, <a href="http://msdn.microsoft.com/en-us/library/windows/apps/br229773.aspx">WinJS</a>, Metro-style app with HTML, CSS and JavaScript. It&#8217;s a tremendously fun project, and I&#8217;m learning a lot &#8211; not only about Windows 8 and metro style apps, but also about raw ECMAScript-5 based development, with no shims or facades, no jQuery and no Backbone.js. And one of the most important things that I&#8217;ve learned about WinJS development so far, is that if you want to build apps for Windows 8 with HTML and JavaScript, you must have a solid understanding of asynchronous JavaScript development and <a href="http://wiki.commonjs.org/wiki/Promises">promises</a>.</p>
 <h2>Basic Async JavaScript: Callbacks</h2>
 <p>The most basic form of asynchronous development in JavaScript is the use of callback methods. If you&#8217;ve written a line of jQuery.ajax code or DOM event handling, you&#8217;ve worked with callbacks:</p>
-<div id="gist-3143855" class="gist">
-    
+<script src="https://gist.github.com/3143855.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">// ajax call with async callback
+// -----------------------------
+$.ajax({
+  type: &quot;GET&quot;,
+  url: &quot;/foo&quot;,
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// ajax call with async callback</span></div><div class='line' id='LC2'><span class="c1">// -----------------------------</span></div><div class='line' id='LC3'><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/foo&quot;</span><span class="p">,</span></div><div class='line' id='LC6'><br/></div><div class='line' id='LC7'>&nbsp;&nbsp;<span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// this is a callback, used for the async result</span></div><div class='line' id='LC9'>&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC10'><br/></div><div class='line' id='LC11'><span class="p">});</span></div><div class='line' id='LC12'><br/></div><div class='line' id='LC13'><span class="c1">// DOM event handler with a callback</span></div><div class='line' id='LC14'><span class="c1">// ---------------------------------</span></div><div class='line' id='LC15'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#some-element&quot;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span></div><div class='line' id='LC16'>&nbsp;&nbsp;<span class="c1">// this is a callback for the element click</span></div><div class='line' id='LC17'><span class="p">});</span></div></pre></div>
-          </div>
+  success: function(data){
+    // this is a callback, used for the async result
+  }
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3143855/db4831e706d78b909049d207d6ffe911c75a6000/1.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3143855#file_1.js" style="float:right;margin-right:10px;color:#666">1.js</a>
-            <a href="https://gist.github.com/3143855">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+});
 
+// DOM event handler with a callback
+// ---------------------------------
+$(&quot;#some-element&quot;).click(function(e){
+  // this is a callback for the element click
+});</code></pre></noscript>
 <p>The anonymous functions in both of these example are callback functions. They are functions that are called at some non-deterministic point in the future. They may be called immediately. They may be called a few seconds from now. They may never be called. The circumstances in which these anonymous callback functions are executed is up to the code that we are calling initially. Fortunately, these circumstances are documented within the jQuery API and documentation and we can be reasonably certain about the timing of the execution of these callbacks.</p>
 <p>The reason that callbacks facilitate asynchronous JavaScript is due to the non-deterministic nature of calling them. As the designer of the API that takes in a callback, you are handed a direct reference to a function when a callback is passed in to your methods parameters. This allows you to call that function whenever you need to:</p>
-<div id="gist-3143855" class="gist">
-    
+<script src="https://gist.github.com/3143855.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">function doSomeStuff(callback){
+  // do some processing here
+  var foo = getBar();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">function</span> <span class="nx">doSomeStuff</span><span class="p">(</span><span class="nx">callback</span><span class="p">){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="c1">// do some processing here</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="nx">getBar</span><span class="p">();</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="c1">// call the callback, passing in a variable</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">callback</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="c1">// do some more processing here if needed</span></div><div class='line' id='LC9'><span class="p">}</span></div></pre></div>
-          </div>
+  // call the callback, passing in a variable
+  callback(foo);
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3143855/2cfaf7b2428125af69ba265008cdafb1ab0f6f1e/2.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3143855#file_2.js" style="float:right;margin-right:10px;color:#666">2.js</a>
-            <a href="https://gist.github.com/3143855">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  // do some more processing here if needed
+}</code></pre></noscript>
 <p>In the case of asynchronous code, such as animations, DOM click events, and AJAX calls across the network, the callback that is supplied to the method is not fired immediately. It is fired when a response from the external network call returns, when the DOM element is manipulated by the user, or when the animation completes. The function that is doing the work simply holds on to the callback reference and calls it when necessary.</p>
 <h2>The Problem With Callbacks</h2>
 <p>Callbacks are a very useful and tremendously powerful tool. They also have some oddities and quirks related to the &#8220;this&#8221; variable (JavaScript&#8217;s context), but <a href="http://www.watchmecode.net/javascript-context">that can easily be managed</a>. But worse than managing &#8220;this&#8221;, callbacks have a much deeper problem relating to code readability and maintainability. </p>
 <p>Look at what happens to the code when we have multiple nested callbacks:</p>
-<div id="gist-3143855" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">doSomething</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">foo</span><span class="p">){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="nx">foo</span> <span class="o">=</span> <span class="nx">processFoo</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span></div><div class='line' id='LC3'>&nbsp;&nbsp;<span class="nx">doMoreStuff</span><span class="p">(</span><span class="nx">foo</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">bar</span><span class="p">){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">baz</span> <span class="o">=</span> <span class="nx">getBaz</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span></div><div class='line' id='LC5'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">stillMore</span><span class="p">(</span><span class="nx">baz</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">quux</span><span class="p">){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">gettingPrettyBad</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">widget</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">widget</span> <span class="o">+</span> <span class="nx">baz</span><span class="p">;</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC11'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3143855/694d30164db47dea77d654c9e96fb01a02e03d43/3.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3143855#file_3.js" style="float:right;margin-right:10px;color:#666">3.js</a>
-            <a href="https://gist.github.com/3143855">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/3143855.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">doSomething(function(foo){
+  foo = processFoo(foo);
+  doMoreStuff(foo, function(bar){
+    var baz = getBaz(foo);
+    stillMore(baz, function(quux){
+      gettingPrettyBad(function(widget){
+        return widget + baz;
+      });
+    });
+  });
+});</code></pre></noscript>
 <p>Yes this is a contrived example, but it is based on the realities of raw callback-based async code in JavaScript. I&#8217;ve seen code 10x worse than this in any number of JavaScript applications. Heavy use of jQuery tends to make this especially awful as we add more and more code to handle more and more sub-sequent callbacks based on changing state within our application.</p>
 <p>Fortunately, it doesn&#8217;t have to be this way. There are some simple things we can do to help clean up the nested callback nightmare, including the use of delegated events within view objects (<a href="http://backbonejs.org/#View">how Backbone handles DOM events in views</a>), named methods and method pointers instead of anonymous callback methods (as described by Rob Conery in <a href="http://wekeroad.com/2012/04/05/cleaning-up-deep-callback-nesting-with-nodes-eventemitter">his post on cleaning up callbacks with Node</a> &#8211; equally applicable to browser based code and WinJS code),  promises (which I&#8217;ll get to in a moment) and some other interesting implementation such as <a href="https://gist.github.com/3136752#gistcomment-375391">using &#8220;reduce&#8221; function calls with promises</a>, etc.</p>
 <h2>I Promise To Call It, But I Really Don&#8217;t Care About Your Callback</h2>
 <p>Promises are a powerful tool that provides some rather significant benefit to both the function that previously took a callback as a parameter, and to the code that needs to provide a callback to the method being called. In short, a promise decouples the callback from the function call, while providing a more flexible method of executing callbacks for code that is potentially asynchronous.</p>
 <p>Ok, what that really means is that a function that previously took a callback method no longer needs to take that callback method. Instead, it can return a promise object. The promise object itself can then handle registering and calling as many callback methods as needed. When the code in the called function is done, it resolves or completes the promise (depending on which promise implementation you&#8217;re using &#8211; more on that in a bit). Resolving or completing the promise will cause all of the callbacks that are registered with the promise to be executed.</p>
-<div id="gist-3143855" class="gist">
-    
+<script src="https://gist.github.com/3143855.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">function doSomething(){
+  var promise = new Promise();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">function</span> <span class="nx">doSomething</span><span class="p">(){</span></div><div class='line' id='LC2'>&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">promise</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">();</span></div><div class='line' id='LC3'><br/></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="c1">// ... do async stuff here</span></div><div class='line' id='LC5'>&nbsp;&nbsp;<span class="nx">asyncFoo</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c1">// resolve the promise</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">promise</span><span class="p">.</span><span class="nx">complete</span><span class="p">();</span></div><div class='line' id='LC8'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC9'><br/></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="k">return</span> <span class="nx">promise</span><span class="p">;</span></div><div class='line' id='LC11'><span class="p">}</span></div></pre></div>
-          </div>
+  // ... do async stuff here
+  asyncFoo(function(){
+    // resolve the promise
+    promise.complete();
+  });
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3143855/d1cca41e504ce4f5a77679f2a0bbeba1bc59b1b2/4.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3143855#file_4.js" style="float:right;margin-right:10px;color:#666">4.js</a>
-            <a href="https://gist.github.com/3143855">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+  return promise;
+}</code></pre></noscript>
 <p>This function used to take a callback, as shown in previous examples. But now it returns a promise instead. To make use of this, we can call it like this:</p>
-<div id="gist-3143855" class="gist">
-    
+<script src="https://gist.github.com/3143855.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">var promise = doSomething();
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="kd">var</span> <span class="nx">promise</span> <span class="o">=</span> <span class="nx">doSomething</span><span class="p">();</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">foo</span><span class="p">){</span></div><div class='line' id='LC4'>&nbsp;&nbsp;<span class="c1">// continue working here</span></div><div class='line' id='LC5'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3143855/9f7dc334523ac30d1f4c27e2f3a469dd31226415/5.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3143855#file_5.js" style="float:right;margin-right:10px;color:#666">5.js</a>
-            <a href="https://gist.github.com/3143855">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+promise.then(function(foo){
+  // continue working here
+});</code></pre></noscript>
 <p>Note that we are still using a callback function, but we&#8217;re no longer passing the callback in to the function that we&#8217;re executing. Instead, we&#8217;re passing it to the promise&#8217; &#8220;then&#8221; function. This is the function, in Promises/A syntax and in (<a href="http://lostechies.com/derickbailey/2012/03/27/providing-synchronous-asynchronous-flexibility-with-jquery-when/">jQuery&#8217;s $.when/then syntax</a>), that gets called when the promise is completed or resolved successfully. This means that when the function we called completes and has all of the information that it needs, it called &#8220;promise.complete()&#8221; which caused all of the registered &#8220;then&#8221; callbacks to be executed. </p>
 <p>One of the primary benefits that promises provides to the code that returns the promise, is the decoupling of the function being called and the callbacks being executed. In the earlier examples, the function being called had to explicitly know about the callback method. It should ideally check for the existence of the callback &#8211; to make sure it&#8217;s not undefined or null &#8211; and also check to make sure it&#8217;s a function.  This is a lot of noise just to call the callback, but it&#8217;s necessary noise. A promise reduces this noise significantly. If a function is creating a promise object, it doesn&#8217;t need to care about the callbacks that are going to be called. It only needs to care about calling the &#8220;complete&#8221; method (or &#8220;resolve&#8221; method on jQuery promises). Beyond this, the function returning the promise doesn&#8217;t care about your callbacks. It doesn&#8217;t need to check for valid functions, check to make sure the callback exists, or do anything else to make sure it can call the callback. It just calls &#8220;complete&#8221; and the promise worries about that other noise.</p>
 <p>There are a number of other benefits that promises bring to the table, too: including more flexibility, the ability to manage multiple callbacks, a guarantee that your registered callback will be fired (even if it&#8217;s added after the promise is resolved), and more. While these are important topics to understand &#8211; especially the part about handling error conditions &#8211; I&#8217;m going to leave those other benefits as explanations for other material that I&#8217;ll link to at the bottom of this post.</p>
@@ -173,78 +145,76 @@
 <h2>WinJS Promises: Promises/A</h2>
 <p>Hey, remember when I started this blog post and was talking about WinJS and building apps for Windows 8? … right :)</p>
 <p>One of the first thing you&#8217;ll notice when getting in to WinJS development and really using the framework to build your applications, is the prevalent use of promises. And they are EVERYWHERE. The first file you open when you create a new project (other than a &#8220;blank&#8221; project) has this line of code in it, in fact:</p>
-<div id="gist-3143855" class="gist">
-    
-
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="nx">args</span><span class="p">.</span><span class="nx">setPromise</span><span class="p">(</span><span class="nx">WinJS</span><span class="p">.</span><span class="nx">UI</span><span class="p">.</span><span class="nx">processAll</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> </div><div class='line' id='LC2'>&nbsp;<span class="c1">// ...</span></div><div class='line' id='LC3'><span class="p">}</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3143855/a0be249d52a094d89e1775bec34d57accdcffa87/6.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3143855#file_6.js" style="float:right;margin-right:10px;color:#666">6.js</a>
-            <a href="https://gist.github.com/3143855">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+<script src="https://gist.github.com/3143855.js?file=6.js"></script><noscript><pre><code class="language-javascript javascript">args.setPromise(WinJS.UI.processAll().then(function () { 
+ // ...
+}</code></pre></noscript>
 <p>What&#8217;s even more fun about that, though, is that this is nested inside of a callback function for an event handler. So… yeah. How&#8217;s that for some async JS love in WinJS? :) </p>
 <p>As you get further into working with WinJS and the WinRT runtime APIs (found <a href="http://msdn.microsoft.com/en-us/library/windows/apps/br211377.aspx">in the &#8220;Windows&#8221; namespace</a>), promises will become more and more common. Any time you want to access the file system to load images or other files, you&#8217;re going to be writing async JavaScript. Any time you want to make a connection to a web service to get some data, it&#8217;s async again. Anytime you want to do just about anything that isn&#8217;t done directly in the application&#8217;s memory space with your code, it&#8217;s going to be async. And nearly every time you do anything async with JavaScript in a WinJS app, it&#8217;s going to be done with promises. This even bubbles it&#8217;s way up to your own code after a while. It&#8217;s not something you can get away from. </p>
 <p>For example, in the app that I&#8217;m helping to build for the P&amp;P team, for example, we&#8217;re working on creating a &#8220;<a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh761490.aspx">Live Tile</a>&#8221; for the application. This involved a countless number of asynchronous calls out to the file system, to various streams of information, and to get and set the template used to create the tile for the app. We did everything we could to hide the implementation details behind some appropriate abstractions, and the code turned out clean. But it required a heavy use of promises in the calls we were making, as well as the code we wrote for our API.</p>
 <p>Of course we could have used callbacks. It would have worked:</p>
-<div id="gist-3136752" class="gist">
-    
+<script src="https://gist.github.com/3136752.js?file=1_before.js"></script><noscript><pre><code class="language-javascript javascript">// Before introducing promises, each of these functions required a callback to be passed in to it.
+// This leads to deeply nested structures and the arrow-anti-pattern, creating more visual complexity
+// and reducing the maintainability of this code
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// Before introducing promises, each of these functions required a callback to be passed in to it.</span></div><div class='line' id='LC2'><span class="c1">// This leads to deeply nested structures and the arrow-anti-pattern, creating more visual complexity</span></div><div class='line' id='LC3'><span class="c1">// and reducing the maintainability of this code</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="nx">Tiles</span><span class="p">.</span><span class="nx">getImagesForTile</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">images</span><span class="p">){</span></div><div class='line' id='LC6'>&nbsp;&nbsp;<span class="nx">Tiles</span><span class="p">.</span><span class="nx">buildThumnails</span><span class="p">(</span><span class="nx">images</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">thumbnails</span><span class="p">){</span></div><div class='line' id='LC7'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">Tiles</span><span class="p">.</span><span class="nx">transmogrify</span><span class="p">(</span><span class="nx">thumbnails</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">notification</span><span class="p">){</span></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">updater</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">notification</span><span class="p">);</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">}</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC11'><span class="p">});</span></div></pre></div>
-          </div>
-
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3136752/acdb27f92f1353400f3bb4670154be9769a6b9be/1_before.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3136752#file_1_before.js" style="float:right;margin-right:10px;color:#666">1_before.js</a>
-            <a href="https://gist.github.com/3136752">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+Tiles.getImagesForTile(function(images){
+  Tiles.buildThumnails(images, function(thumbnails){
+    Tiles.transmogrify(thumbnails, function(notification){
+      updater.update(notification);
+    }
+  });
+});</code></pre></noscript>
 <p>But I personally prefer the promises version:</p>
-<div id="gist-3136752" class="gist">
-    
+<script src="https://gist.github.com/3136752.js?file=2_after.js"></script><noscript><pre><code class="language-javascript javascript">// After introducing promises, the methods can be chained together easily, 
+// reducing the nesting and the visual complexity of the code. This allows
+// the code to be more easily understood, and therefore easier to maintain.
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="c1">// After introducing promises, the methods can be chained together easily, </span></div><div class='line' id='LC2'><span class="c1">// reducing the nesting and the visual complexity of the code. This allows</span></div><div class='line' id='LC3'><span class="c1">// the code to be more easily understood, and therefore easier to maintain.</span></div><div class='line' id='LC4'><br/></div><div class='line' id='LC5'><span class="c1">// Each of these functions still receives the same first-position parameter,</span></div><div class='line' id='LC6'><span class="c1">// but none of them needs to receive a second parameter as a callback. They</span></div><div class='line' id='LC7'><span class="c1">// each return a promise instead of using callbacks.</span></div><div class='line' id='LC8'><br/></div><div class='line' id='LC9'><span class="nx">Tiles</span><span class="p">.</span><span class="nx">getImagesForTile</span><span class="p">()</span></div><div class='line' id='LC10'>&nbsp;&nbsp;<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">Tiles</span><span class="p">.</span><span class="nx">buildThumbails</span><span class="p">)</span></div><div class='line' id='LC11'>&nbsp;&nbsp;<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">Tiles</span><span class="p">.</span><span class="nx">transmogrify</span><span class="p">)</span></div><div class='line' id='LC12'>&nbsp;&nbsp;<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">notification</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">updater</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">notification</span><span class="p">);</span></div><div class='line' id='LC14'>&nbsp;&nbsp;<span class="p">});</span></div></pre></div>
-          </div>
+// Each of these functions still receives the same first-position parameter,
+// but none of them needs to receive a second parameter as a callback. They
+// each return a promise instead of using callbacks.
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3136752/2cbddb3f132b577f39cb477918e0b6ae28add6cd/2_after.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3136752#file_2_after.js" style="float:right;margin-right:10px;color:#666">2_after.js</a>
-            <a href="https://gist.github.com/3136752">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
-
+Tiles.getImagesForTile()
+  .then(Tiles.buildThumbails)
+  .then(Tiles.transmogrify)
+  .then(function (notification) {
+    updater.update(notification);
+  });</code></pre></noscript>
 <p>It&#8217;s much more simple, much more clean, and much easier for me to read and understand. </p>
 <h2>Not A Golden Hammer Of Smashing Problems</h2>
 <p>While promises are certainly useful in cleaning up async code, and it is necessary that you understand them to work with WinJS effectively, it&#8217;s not a complete solution and you can still do stupid stuff with them. Take a look at this code, for example (part of the spike to learn how to build Live Tiles, creating a thumbnail from an existing image file):</p>
-<div id="gist-3143855" class="gist">
-    
+<script src="https://gist.github.com/3143855.js?file=7.js"></script><noscript><pre><code class="language-javascript javascript">return new WinJS.Promise(function (complete, error, progress) {
 
-        <div class="gist-file">
-          <div class="gist-data gist-syntax">
-              <div class="highlight"><pre><div class='line' id='LC1'><span class="k">return</span> <span class="k">new</span> <span class="nx">WinJS</span><span class="p">.</span><span class="nx">Promise</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">complete</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">progress</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC2'><br/></div><div class='line' id='LC3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">applicationData</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">localFolder</span><span class="p">.</span><span class="nx">createFolderAsync</span><span class="p">(</span><span class="nx">thumbnailFolderName</span><span class="p">,</span> <span class="nx">creationCollisionOption</span><span class="p">.</span><span class="nx">replaceExisting</span><span class="p">)</span></div><div class='line' id='LC4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">folder</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC5'><br/></div><div class='line' id='LC6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">localThumbnail</span> <span class="o">=</span> <span class="s1">&#39;ms-appdata:///local/&#39;</span> <span class="o">+</span> <span class="nx">thumbnailFolderName</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span><span class="p">;</span></div><div class='line' id='LC7'><br/></div><div class='line' id='LC8'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">promises</span> <span class="o">=</span> <span class="nx">files</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">fileInfo</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC9'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">createFile</span> <span class="o">=</span> <span class="nx">folder</span><span class="p">.</span><span class="nx">createFileAsync</span><span class="p">(</span><span class="nx">fileInfo</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">creationCollisionOption</span><span class="p">.</span><span class="nx">replaceExisting</span><span class="p">);</span></div><div class='line' id='LC10'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">createFile</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">newFile</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC11'><br/></div><div class='line' id='LC12'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">newFile</span><span class="p">.</span><span class="nx">openAsync</span><span class="p">(</span><span class="nx">Windows</span><span class="p">.</span><span class="nx">Storage</span><span class="p">.</span><span class="nx">FileAccessMode</span><span class="p">.</span><span class="nx">readWrite</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">output</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC13'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">fileInfo</span><span class="p">.</span><span class="nx">thumbnail</span><span class="p">.</span><span class="nx">getInputStreamAt</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span></div><div class='line' id='LC14'><br/></div><div class='line' id='LC15'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">randomAccessStream</span><span class="p">.</span><span class="nx">copyAsync</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">output</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span></div><div class='line' id='LC16'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">output</span><span class="p">.</span><span class="nx">flushAsync</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span></div><div class='line' id='LC17'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">input</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span></div><div class='line' id='LC18'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">output</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span></div><div class='line' id='LC19'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">fileInfo</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span></div><div class='line' id='LC20'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC21'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC22'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC23'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC24'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC25'><br/></div><div class='line' id='LC26'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">WinJS</span><span class="p">.</span><span class="nx">Promise</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">promises</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">files</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC27'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kd">var</span> <span class="nx">paths</span> <span class="o">=</span> <span class="nx">files</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span> <span class="p">{</span></div><div class='line' id='LC28'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> <span class="nx">localThumbnail</span> <span class="o">+</span> <span class="nx">file</span><span class="p">;</span></div><div class='line' id='LC29'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC30'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="nx">complete</span><span class="p">(</span><span class="nx">paths</span><span class="p">);</span></div><div class='line' id='LC31'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC32'><br/></div><div class='line' id='LC33'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div><div class='line' id='LC34'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="p">});</span></div></pre></div>
-          </div>
+                applicationData.current.localFolder.createFolderAsync(thumbnailFolderName, creationCollisionOption.replaceExisting)
+                    .then(function (folder) {
 
-          <div class="gist-meta">
-            <a href="https://gist.github.com/raw/3143855/e3e4837027448fc907acc6f4e1bd25cf048195b9/7.js" style="float:right;">view raw</a>
-            <a href="https://gist.github.com/3143855#file_7.js" style="float:right;margin-right:10px;color:#666">7.js</a>
-            <a href="https://gist.github.com/3143855">This Gist</a> brought to you by <a href="http://github.com">GitHub</a>.
-          </div>
-        </div>
-</div>
+                        var localThumbnail = 'ms-appdata:///local/' + thumbnailFolderName + '/';
 
+                        var promises = files.map(function (fileInfo) {
+                            var createFile = folder.createFileAsync(fileInfo.name, creationCollisionOption.replaceExisting);
+                            return createFile.then(function (newFile) {
+
+                                return newFile.openAsync(Windows.Storage.FileAccessMode.readWrite).then(function (output) {
+                                    var input = fileInfo.thumbnail.getInputStreamAt(0);
+
+                                    return randomAccessStream.copyAsync(input, output).then(function () {
+                                        return output.flushAsync().then(function () {
+                                            input.close();
+                                            output.close();
+                                            return fileInfo.name;
+                                        });
+                                    });
+                                });
+                            });
+                        });
+
+                        WinJS.Promise.join(promises).then(function (files) {
+                            var paths = files.map(function (file) {
+                                return localThumbnail + file;
+                            });
+                            complete(paths);
+                        });
+
+                    });
+            });</code></pre></noscript>
 <p>This is a giant mess… but it uses promises! The problem here is that the promises are being abused as a fancy inline, nested callback mechanism. We may as well be using standard callbacks instead of promises at this point. Promises certainly can be used to clean up code, but promises themselves are not an end-all shiny hammer of awesomeness.</p>
 <p>(And don&#8217;t worry about this sample too much. We&#8217;ve already cleaned this up for the real / production version of the app &#8211; this was just a spike to learn).</p>
 <p>There are still other patterns and practices that you need to understand, such as JavaScript modules, namespaces, object-oriented development, functional aspects of JavaScript, and much much more. Hopefully this little taste of promises will get you ready for what you need to know and provide some context for further ready and study. You need to understand promises anyways, and if you&#8217;re going to work with WinJS and WinRT apps in Windows 8, there is no chance of doing so successfully without knowing promises in and out.</p>
@@ -345,6 +315,19 @@ Specifically the Task.ContinueWith() method. IMO I think Task is a more suitable
     </li>
 
     </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2844">
+        <div id="dsq-comment-header-2844" class="dsq-comment-header">
+            <cite id="dsq-cite-2844">
+                <span id="dsq-author-user-2844">Andi</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2844" class="dsq-comment-body">
+            <div id="dsq-comment-message-2844" class="dsq-comment-message"><p>How did you managed to get rid of the promise chains?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
             </ul>
 
 
@@ -421,14 +404,15 @@ Specifically the Task.ContinueWith() method. IMO I think Task is a more suitable
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/07/javascript-mixins-beyond-simple-object-extension/" title="JavaScript Mixins: Beyond Simple Object Extension">JavaScript Mixins: Beyond Simple Object Extension</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/01/backbone-eventbinder-better-event-management-for-your-backbone-apps/" title="Backbone.EventBinder: Better Event Management For Your Backbone Apps">Backbone.EventBinder: Better Event Management For Your Backbone Apps</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/09/13/backbone-fundamentals-intro-to-marionette-todomvc-and-more/" title="Backbone Fundamentals, Intro To Marionette, TodoMVC, And More">Backbone Fundamentals, Intro To Marionette, TodoMVC, And More</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.aidanfeldman.com' rel='external nofollow' class='url'>Aidan Feldman</a> on <a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/#comment-2827">JavaScript Unit Tests: Jasmine vs Mocha</a></li><li class="recentcomments">Dan Sutton on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2826">Abstraction: The Rule Of Three</a></li><li class="recentcomments">imnotsayinimjustsayin on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2825">Abstraction: The Rule Of Three</a></li><li class="recentcomments">joshuaflanagan on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2824">Abstraction: The Rule Of Three</a></li><li class="recentcomments">Alejandro Varela on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2823">Abstraction: The Rule Of Three</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
@@ -664,11 +648,7 @@ Specifically the Task.ContinueWith() method. IMO I think Task is a more suitable
 </li>
 	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
 </li>
-	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="
-Make your Backbone applications dance with a composite application architecture!
-
-
-The code, documentation and more can be found on Github: http://github.com/derickbailey/backbone.marionette
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
 ">Marionette</a>
 </li>
 	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
@@ -927,4 +907,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-11-05 10:11:43 -->
+Served from: lostechies.com @ 2012-12-19 06:44:17 -->
