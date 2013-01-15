@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Mapping A State Pattern With NHibernate</title>
+	<atom:link href="http://lostechies.com/derickbailey/2008/11/27/mapping-a-state-pattern-with-nhibernate/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2008/11/27/mapping-a-state-pattern-with-nhibernate/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: derick.bailey</title>
+		<link>http://lostechies.com/derickbailey/2008/11/27/mapping-a-state-pattern-with-nhibernate/#comment-75</link>
+		<dc:creator>derick.bailey</dc:creator>
+		<pubDate>Thu, 27 Nov 2008 13:06:24 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/11/26/mapping-a-state-pattern-with-nhibernate.aspx#comment-75</guid>
+		<description>@Maxim
+
+that&#039;s my preferred way passing the parent into the state object. 
+
+another possibility is to create a bi-directional relationship between the Order and base State class with an Order property on the state itself. You would need to change the nhibernate mappings to also map this bidirectional relationship, though. 
+
+I don&#039;t like bidirectional relationships, though, and avoid them whenever i can.</description>
+		<content:encoded><![CDATA[<p>@Maxim</p>
+<p>that&#8217;s my preferred way passing the parent into the state object. </p>
+<p>another possibility is to create a bi-directional relationship between the Order and base State class with an Order property on the state itself. You would need to change the nhibernate mappings to also map this bidirectional relationship, though. </p>
+<p>I don&#8217;t like bidirectional relationships, though, and avoid them whenever i can.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Maxim Tihobrazov</title>
+		<link>http://lostechies.com/derickbailey/2008/11/27/mapping-a-state-pattern-with-nhibernate/#comment-74</link>
+		<dc:creator>Maxim Tihobrazov</dc:creator>
+		<pubDate>Thu, 27 Nov 2008 10:45:16 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/11/26/mapping-a-state-pattern-with-nhibernate.aspx#comment-74</guid>
+		<description>Also, how do you use data from Order class in status?
+
+I can imagine something like this:
+
+class Order {
+...
+     Money TotalAmount() { return Status.TotalAmount(this); }
+}
+
+class OrderStatus {
+...
+    // we have different approaches for calculating total
+    abstract Money TotalAmount(Order o); 
+}</description>
+		<content:encoded><![CDATA[<p>Also, how do you use data from Order class in status?</p>
+<p>I can imagine something like this:</p>
+<p>class Order {<br />
+&#8230;<br />
+     Money TotalAmount() { return Status.TotalAmount(this); }<br />
+}</p>
+<p>class OrderStatus {<br />
+&#8230;<br />
+    // we have different approaches for calculating total<br />
+    abstract Money TotalAmount(Order o);<br />
+}</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Maxim Tihobrazov</title>
+		<link>http://lostechies.com/derickbailey/2008/11/27/mapping-a-state-pattern-with-nhibernate/#comment-73</link>
+		<dc:creator>Maxim Tihobrazov</dc:creator>
+		<pubDate>Thu, 27 Nov 2008 10:39:17 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/11/26/mapping-a-state-pattern-with-nhibernate.aspx#comment-73</guid>
+		<description>Thank you!
+I can add that we probably need to lock OrderStatus instances into NHibernate session, so NH will use them instead of creating it&#039;s own ones.</description>
+		<content:encoded><![CDATA[<p>Thank you!<br />
+I can add that we probably need to lock OrderStatus instances into NHibernate session, so NH will use them instead of creating it&#8217;s own ones.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 15:18:07 -->

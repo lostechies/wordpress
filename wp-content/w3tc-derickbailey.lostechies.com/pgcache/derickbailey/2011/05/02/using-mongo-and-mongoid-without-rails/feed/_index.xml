@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Using Mongo And Mongoid Without Rails</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/05/02/using-mongo-and-mongoid-without-rails/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/05/02/using-mongo-and-mongoid-without-rails/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Radim M</title>
+		<link>http://lostechies.com/derickbailey/2011/05/02/using-mongo-and-mongoid-without-rails/#comment-1755</link>
+		<dc:creator>Radim M</dc:creator>
+		<pubDate>Fri, 02 Sep 2011 21:25:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=280#comment-1755</guid>
+		<description>You need to have RACK_ENV set to be able to use load! from mongoid.yml.
+
+ENV[&quot;RACK_ENV&quot;] = &quot;development&quot;
+Mongoid.load!(&quot;./mongoid.yml&quot;)
+
+and then use something like this:
+
+development:
+    database: db_name
+    host: xyz.domain.com
+
+Hope this helps!</description>
+		<content:encoded><![CDATA[<p>You need to have RACK_ENV set to be able to use load! from mongoid.yml.</p>
+<p>ENV["RACK_ENV"] = &#8220;development&#8221;<br />
+Mongoid.load!(&#8220;./mongoid.yml&#8221;)</p>
+<p>and then use something like this:</p>
+<p>development:<br />
+    database: db_name<br />
+    host: xyz.domain.com</p>
+<p>Hope this helps!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Aluminium Kozijnen</title>
+		<link>http://lostechies.com/derickbailey/2011/05/02/using-mongo-and-mongoid-without-rails/#comment-1511</link>
+		<dc:creator>Aluminium Kozijnen</dc:creator>
+		<pubDate>Tue, 10 May 2011 13:02:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=280#comment-1511</guid>
+		<description> Can you explain about mongo and mongoid database.. Thanks for this..</description>
+		<content:encoded><![CDATA[<p> Can you explain about mongo and mongoid database.. Thanks for this..</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 14:52:17 -->

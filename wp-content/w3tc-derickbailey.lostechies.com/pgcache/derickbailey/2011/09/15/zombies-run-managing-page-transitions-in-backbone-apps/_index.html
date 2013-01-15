@@ -101,27 +101,9 @@
   changeIt: function(){ ... }
 });</code></pre></noscript>
 <p>We bind events from our models and collections so that our views can respond to changes and re-render themselves:</p>
-<script src="https://gist.github.com/1219582.js?file=2-view-model-events.js"></script><noscript><pre><code class="language-javascript javascript">MyView = Backbone.View.extend({
-
-  initialize: function(){
-    this.model.bind(&quot;change&quot;, this.render, this);
-  },
-
-  render: function(){ ... }
-});</code></pre></noscript>
+<div>Could not embed GitHub Gist 1219582: API Rate Limit Exceeded for 70.169.150.251</div>
 <p>We even use Backbone.Events in our own objects so that we can create application-level events and event-driven architectures for our apps.</p>
-<script src="https://gist.github.com/1219582.js?file=3-event-aggregator.js"></script><noscript><pre><code class="language-javascript javascript">MyView = Backbone.View.extend({
-
-  initialize: function(){
-    this.options.vent.bind(&quot;app:event&quot;, this.render, this);
-  },
-
-  render: function() { ... }
-});
-
-var vent = new _.extend({}, Backbone.Events);
-new MyView({vent: vent});
-vent.trigger(&quot;app:event&quot;);</code></pre></noscript>
+<div>Could not embed GitHub Gist 1219582: API Rate Limit Exceeded for 70.169.150.251</div>
 <p>Events are everywhere, and with good reason. They allow us to write modular, reactive code. We don&#8217;t have to stick to procedural loops and long methods that check state in order to figure out what to do next. Events allow us to know when state has changed and respond to that change appropriately.</p>
 <p>Problems arise, though, when we bind objects together through these events but we don&#8217;t bother unbinding them. As long as these objects are bound together, and there is a reference in our app code to at least one of them, they won&#8217;t be cleaned up or garbage collected. The resulting memory leaks are like the zombies of the movies &#8211; hiding in dark corners, waiting to jump out and eat us for lunch.</p>
 <p>For example &#8211; Backbone apps tend to have one or more areas of the screen that are updated with different views based on what the user is doing. It&#8217;s common to see a main area where the focused content is displayed, as well. When we the user interacts with our app, we update this area of the screen by having a new view instance render some new content for us. The result is new information being displayed for the user, as we expect.</p>
@@ -1033,8 +1015,28 @@ I&#8217;ve really enjoyed your backbone posts as well as your contributions to s
         </div>
     </li>
 
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2977">
+        <div id="dsq-comment-header-2977" class="dsq-comment-header">
+            <cite id="dsq-cite-2977">
+                <span id="dsq-author-user-2977">preeti</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2977" class="dsq-comment-body">
+            <div id="dsq-comment-message-2977" class="dsq-comment-message"><p>i am using jquery delgates in each view.js.if i use<br />
+$(this.el).live(&#8216;pagehide&#8217;, function (event, ui) {</p>
+<p>$(this.el).remove();<br />
+});</p>
+<p>will that work equivalent to remove zombies and<br />
+2nd Doubt my application is working slow so i m not getting clue how to increase the frame rate.Could you suggest Something&#8230;thanks in Advance</p>
+</div>
+        </div>
     </li>
-    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2677">
+
+    </li>
+</ul>
+</li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2677">
         <div id="dsq-comment-header-2677" class="dsq-comment-header">
             <cite id="dsq-cite-2677">
                 <span id="dsq-author-user-2677">Michiel van Eerd</span>
@@ -1058,7 +1060,7 @@ I&#8217;ve really enjoyed your backbone posts as well as your contributions to s
     </li>
 
     <ul class='children'>
-    <li class="comment even depth-2" id="dsq-comment-2678">
+    <li class="comment odd alt depth-2" id="dsq-comment-2678">
         <div id="dsq-comment-header-2678" class="dsq-comment-header">
             <cite id="dsq-cite-2678">
 http://mutedsolutions.com                <span id="dsq-author-user-2678">Derick Bailey</span>
@@ -1072,7 +1074,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2678">Derick 
     </li>
 
     <ul class='children'>
-    <li class="comment odd alt depth-3" id="dsq-comment-2683">
+    <li class="comment even depth-3" id="dsq-comment-2683">
         <div id="dsq-comment-header-2683" class="dsq-comment-header">
             <cite id="dsq-cite-2683">
                 <span id="dsq-author-user-2683">Michiel van Eerd</span>
@@ -1092,7 +1094,7 @@ and no other views are affected.</p>
     </li>
 
     <ul class='children'>
-    <li class="comment even depth-4" id="dsq-comment-2684">
+    <li class="comment odd alt depth-4" id="dsq-comment-2684">
         <div id="dsq-comment-header-2684" class="dsq-comment-header">
             <cite id="dsq-cite-2684">
 http://mutedsolutions.com                <span id="dsq-author-user-2684">Derick Bailey</span>
@@ -1105,7 +1107,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2684">Derick 
     </li>
 
     <ul class='children'>
-    <li class="comment odd alt depth-5" id="dsq-comment-2686">
+    <li class="comment even depth-5" id="dsq-comment-2686">
         <div id="dsq-comment-header-2686" class="dsq-comment-header">
             <cite id="dsq-cite-2686">
 http://twitter.com/tommoor                <span id="dsq-author-user-2686">Tom Moor</span>
@@ -1126,7 +1128,7 @@ http://twitter.com/tommoor                <span id="dsq-author-user-2686">Tom Mo
 </li>
 </ul>
 </li>
-    <li class="comment even thread-even depth-1" id="dsq-comment-2733">
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2733">
         <div id="dsq-comment-header-2733" class="dsq-comment-header">
             <cite id="dsq-cite-2733">
                 <span id="dsq-author-user-2733">Salman</span>
@@ -1140,7 +1142,7 @@ This was a great help and nice read.</p>
     </li>
 
     </li>
-    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2807">
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2807">
         <div id="dsq-comment-header-2807" class="dsq-comment-header">
             <cite id="dsq-cite-2807">
                 <span id="dsq-author-user-2807">Miguel</span>
@@ -1153,7 +1155,7 @@ This was a great help and nice read.</p>
     </li>
 
     <ul class='children'>
-    <li class="comment even depth-2" id="dsq-comment-2808">
+    <li class="comment odd alt depth-2" id="dsq-comment-2808">
         <div id="dsq-comment-header-2808" class="dsq-comment-header">
             <cite id="dsq-cite-2808">
 http://mutedsolutions.com                <span id="dsq-author-user-2808">Derick Bailey</span>
@@ -1169,7 +1171,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2808">Derick 
     </li>
 </ul>
 </li>
-    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2809">
+    <li class="comment even thread-even depth-1" id="dsq-comment-2809">
         <div id="dsq-comment-header-2809" class="dsq-comment-header">
             <cite id="dsq-cite-2809">
                 <span id="dsq-author-user-2809">dcz.switcher</span>
@@ -1183,7 +1185,7 @@ can I just define a new model for detail view and render it ?</p>
     </li>
 
     </li>
-    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2838">
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2838">
         <div id="dsq-comment-header-2838" class="dsq-comment-header">
             <cite id="dsq-cite-2838">
 http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Christian Behrens</span>
@@ -1196,7 +1198,7 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
     </li>
 
     </li>
-    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2847">
+    <li class="comment even thread-even depth-1" id="dsq-comment-2847">
         <div id="dsq-comment-header-2847" class="dsq-comment-header">
             <cite id="dsq-cite-2847">
                 <span id="dsq-author-user-2847">Weft</span>
@@ -1204,6 +1206,25 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
         </div>
         <div id="dsq-comment-body-2847" class="dsq-comment-body">
             <div id="dsq-comment-message-2847" class="dsq-comment-message"><p>Great article!. thanks you for help me to kill the zombies</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2976">
+        <div id="dsq-comment-header-2976" class="dsq-comment-header">
+            <cite id="dsq-cite-2976">
+                <span id="dsq-author-user-2976">preeti</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2976" class="dsq-comment-body">
+            <div id="dsq-comment-message-2976" class="dsq-comment-message"><p>Derick,</p>
+<p>i am using jquery delgates in each view.js.if i use<br />
+ $(this.el).live(&#8216;pagehide&#8217;, function (event, ui) {<br />
+ $(this.el).remove();<br />
+ });</p>
+<p>will that work equivalent to remove zombies and<br />
+2nd Doubt  my application is working slow so i m not getting clue how to increase the frame rate.Could you suggest Something&#8230;thanks in Advance</p>
 </div>
         </div>
     </li>
@@ -1291,7 +1312,7 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
 			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
@@ -1744,7 +1765,7 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
 <li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
 <li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
 </ul><br/>
-					LosTechies &copy; 2012<br />
+					LosTechies &copy; 2013<br />
 						Se Habla Code<br />
 				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
 				</div><!-- #fourth .widget-area -->
@@ -1788,4 +1809,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-12-19 07:16:40 -->
+Served from: lostechies.com @ 2013-01-15 15:36:00 -->

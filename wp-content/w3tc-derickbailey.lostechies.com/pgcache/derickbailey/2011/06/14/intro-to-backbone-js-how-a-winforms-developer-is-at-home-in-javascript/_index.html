@@ -90,7 +90,15 @@
 <p>When working with JQuery, I tend to work directly with JSON documents as DTOs. These documents are very useful for a number of reasons. They can transport data around, they have methods that manipulate the data, and JQuery can use them to populate templates with the JQuery template plugin. However, there are some things that are distinctly lacking in JSON documents. For example, there&#8217;s no event system to know when your models are changing. While it&#8217;s not terribly difficult to build some functionality like this, it can get tedious to repeat the code through your documents and troublesome to add it to documents that come out of back-end web servers such as Rails or ASP.NET MVC.</p>
 <p>Backbone models to the rescue!</p>
 <p>Here&#8217;s an example of how you can build a model in Backbone and listen to an event to know when a field has been changed:</p>
-<div>Could not embed GitHub Gist 1026406: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1026406.js?file=1-ModelWithChangedEvents.js"></script><noscript><pre><code class="language-javascript javascript">var SomeModel = Backbone.Model.extend({});
+
+someModel = new SomeModel();
+
+someModel.bind(&quot;change&quot;, function(model, collection){
+  alert(&quot;You set some_attribute to &quot; + model.get('some_attribute'));
+});
+
+someModel.set({some_attribute: &quot;some value&quot;});</code></pre></noscript>
 <p> </p>
 <p>The result of running this example is that you&#8217;ll have an alert box:</p>
 <p><img title="Screen shot 2011-06-14 at 10.36.07 PM.png" src="http://lostechies.com/derickbailey/files/2011/06/Screen-shot-2011-06-14-at-10.36.07-PM.png" border="0" alt="Screen shot 2011 06 14 at 10 36 07 PM" width="426" height="160" /></p>
@@ -103,7 +111,12 @@
 <h3>Views: No, Not The One That You Rendered From Your MVC Back-end</h3>
 <p>Remember, Backbone is a complete MV* setup in your javascript, and it supports the idea of views. While a view in Rails or ASP.NET MVC represents pretty much the entire chunk of HTML that will be sent down to the browser, a view in Backbone seems to represent a smaller piece. From the examples I&#8217;ve seen and the code that Joey and I wrote earlier today, a view tends to be a logical chunk of the larger page. For example, you may have a small form on a login page where you enter your username and password. This form may be represented as a view, while the dozens of other logical groupings of visual elements may or may not be represented as other views.</p>
 <p>Here&#8217;s the super-simple html that you may see for a login form:</p>
-<div>Could not embed GitHub Gist 1026406: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1026406.js?file=3-SimpleLoginForm.html"></script><noscript><pre><code class="language-html html">&lt;form action=&quot;/login&quot; id=&quot;login-form&quot;&gt;
+  Username: &lt;input type=&quot;text&quot; id=&quot;username&quot;&gt;&lt;br&gt;
+  Password: &lt;input type=&quot;password&quot; id=&quot;password&quot;&gt;&lt;br&gt;
+  &lt;button id=&quot;login&quot;&gt;Login&lt;/button&gt;
+&lt;/form&gt;
+</code></pre></noscript>
 <p> </p>
 <p>This produces an amazing UI, of course:</p>
 <p><img title="Screen shot 2011-06-14 at 10.59.58 PM.png" src="http://lostechies.com/derickbailey/files/2011/06/Screen-shot-2011-06-14-at-10.59.58-PM.png" border="0" alt="Screen shot 2011 06 14 at 10 59 58 PM" width="213" height="81" /></p>
@@ -636,7 +649,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-1628">Derick 
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
 			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
@@ -1089,7 +1102,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-1628">Derick 
 <li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
 <li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
 </ul><br/>
-					LosTechies &copy; 2012<br />
+					LosTechies &copy; 2013<br />
 						Se Habla Code<br />
 				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
 				</div><!-- #fourth .widget-area -->
@@ -1133,4 +1146,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-12-19 05:31:54 -->
+Served from: lostechies.com @ 2013-01-15 15:24:21 -->

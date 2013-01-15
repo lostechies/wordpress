@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: I Want Assert.NotYetImplemented(); In .NET Test Frameworks</title>
+	<atom:link href="http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: dotnetchris</title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-2493</link>
+		<dc:creator>dotnetchris</dc:creator>
+		<pubDate>Tue, 29 May 2012 18:51:00 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-2493</guid>
+		<description> I had some confusion on what exactly this meant, mainly from omitting the body specifically . What James was saying is that you should omit the entire assignment of an It assertion.
+
+It should_have_name_foo; 
+
+Will show up as inconclusive on test runners.</description>
+		<content:encoded><![CDATA[<p> I had some confusion on what exactly this meant, mainly from omitting the body specifically . What James was saying is that you should omit the entire assignment of an It assertion.</p>
+<p>It should_have_name_foo; </p>
+<p>Will show up as inconclusive on test runners.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Mark</title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-700</link>
+		<dc:creator>Mark</dc:creator>
+		<pubDate>Mon, 29 Mar 2010 15:31:37 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-700</guid>
+		<description>We just renamed out our FactAttribute to ThenAttribute and then subclassed that to EventuallyThenAttribute and added a message for all skipped tests. 
+
+[Then] public void the_something_happens(){}
+
+[EventuallyThen] public void the_something_happens(){}
+
+We&#039;re dragging out feet on moving to MSpec as well. </description>
+		<content:encoded><![CDATA[<p>We just renamed out our FactAttribute to ThenAttribute and then subclassed that to EventuallyThenAttribute and added a message for all skipped tests. </p>
+<p>[Then] public void the_something_happens(){}</p>
+<p>[EventuallyThen] public void the_something_happens(){}</p>
+<p>We&#8217;re dragging out feet on moving to MSpec as well. </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Igor Brejc</title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-699</link>
+		<dc:creator>Igor Brejc</dc:creator>
+		<pubDate>Sat, 27 Mar 2010 16:55:39 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-699</guid>
+		<description>MbUnit has a number of different ways to achieve what you&#039;re looking for:
+see http://igorbrejc.net/development/continuous-integration/gallio-setting-test-outcome-anyway-you-like
+
+and http://igorbrejc.net/development/continuous-integration/gallio-filter-attributes-for-test-methods
+</description>
+		<content:encoded><![CDATA[<p>MbUnit has a number of different ways to achieve what you&#8217;re looking for:<br />
+see <a href="http://igorbrejc.net/development/continuous-integration/gallio-setting-test-outcome-anyway-you-like" rel="nofollow">http://igorbrejc.net/development/continuous-integration/gallio-setting-test-outcome-anyway-you-like</a></p>
+<p>and <a href="http://igorbrejc.net/development/continuous-integration/gallio-filter-attributes-for-test-methods" rel="nofollow">http://igorbrejc.net/development/continuous-integration/gallio-filter-attributes-for-test-methods</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: derick.bailey</title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-698</link>
+		<dc:creator>derick.bailey</dc:creator>
+		<pubDate>Fri, 26 Mar 2010 15:57:59 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-698</guid>
+		<description>to the peeps that suggested Assert.Fail or throwing a NotImplementedException: you might want to read the blog post you are commenting on. :)
+
+to everyone else: good suggestions! I&#039;m not a fan of Ignore, honestly. i think the semantics between ignore and not yet implemented are significant, but that would at least work. i&#039;ll have to try out the Assert.Inconclusive, too. I was not aware of that assertion.</description>
+		<content:encoded><![CDATA[<p>to the peeps that suggested Assert.Fail or throwing a NotImplementedException: you might want to read the blog post you are commenting on. :)</p>
+<p>to everyone else: good suggestions! I&#8217;m not a fan of Ignore, honestly. i think the semantics between ignore and not yet implemented are significant, but that would at least work. i&#8217;ll have to try out the Assert.Inconclusive, too. I was not aware of that assertion.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Matt</title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-697</link>
+		<dc:creator>Matt</dc:creator>
+		<pubDate>Fri, 26 Mar 2010 12:45:53 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-697</guid>
+		<description>I second (third?) the call for the [Ignore] attribute.  I committed a few &quot;stub&quot; tests just last night using that approach. :) </description>
+		<content:encoded><![CDATA[<p>I second (third?) the call for the [Ignore] attribute.  I committed a few &#8220;stub&#8221; tests just last night using that approach. :) </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Dale</title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-696</link>
+		<dc:creator>Dale</dc:creator>
+		<pubDate>Thu, 25 Mar 2010 03:38:08 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-696</guid>
+		<description>There is also the option of making the class or method under test throw a NotImplementedException and expect that exception in your test.</description>
+		<content:encoded><![CDATA[<p>There is also the option of making the class or method under test throw a NotImplementedException and expect that exception in your test.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Dan</title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-695</link>
+		<dc:creator>Dan</dc:creator>
+		<pubDate>Wed, 24 Mar 2010 22:03:41 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-695</guid>
+		<description>Could you create an Assert extention method that just called Assert.Ignore() ?</description>
+		<content:encoded><![CDATA[<p>Could you create an Assert extention method that just called Assert.Ignore() ?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Harry Steinhilber</title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-694</link>
+		<dc:creator>Harry Steinhilber</dc:creator>
+		<pubDate>Wed, 24 Mar 2010 18:50:37 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-694</guid>
+		<description>MSpec already has this functionality. Simply declare but don&#039;t assign the It delegate:
+
+It should_do_something_I_will_care_about_soon;
+
+This will generate a not implemented message very similar to how RSpec does it. </description>
+		<content:encoded><![CDATA[<p>MSpec already has this functionality. Simply declare but don&#8217;t assign the It delegate:</p>
+<p>It should_do_something_I_will_care_about_soon;</p>
+<p>This will generate a not implemented message very similar to how RSpec does it. </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Alastair Smith </title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-693</link>
+		<dc:creator>Alastair Smith </dc:creator>
+		<pubDate>Wed, 24 Mar 2010 16:15:12 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-693</guid>
+		<description>Have you considered Assert.Inconclusive(&quot;Not yet implemented&quot;)? This should give you the nice yellow test result you seek, and should work with existing CI software too.  It&#039;s definitely in NUnit 2.5, maybe 2.4 also.
+
+IgnoreAttribute is also a good option, as other commenters have mentioned. There may be important semantic differences between Assert.Inconclusive() and IgnoreAttribute that I&#039;ve missed.    </description>
+		<content:encoded><![CDATA[<p>Have you considered Assert.Inconclusive(&#8220;Not yet implemented&#8221;)? This should give you the nice yellow test result you seek, and should work with existing CI software too.  It&#8217;s definitely in NUnit 2.5, maybe 2.4 also.</p>
+<p>IgnoreAttribute is also a good option, as other commenters have mentioned. There may be important semantic differences between Assert.Inconclusive() and IgnoreAttribute that I&#8217;ve missed.    </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Simon</title>
+		<link>http://lostechies.com/derickbailey/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks/#comment-692</link>
+		<dc:creator>Simon</dc:creator>
+		<pubDate>Wed, 24 Mar 2010 15:20:58 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/03/24/i-want-assert-notyetimplemented-in-net-test-frameworks.aspx#comment-692</guid>
+		<description>If you wanted failing tests to remind you where you left off, you could use Assert.Fail(&quot;Not yet implemented&quot;) in the test body.</description>
+		<content:encoded><![CDATA[<p>If you wanted failing tests to remind you where you left off, you could use Assert.Fail(&#8220;Not yet implemented&#8221;) in the test body.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 15:27:36 -->

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Welcome, Hugo Bonacci, To LosTechies!</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/06/27/welcome-hugo-bonacci-to-lostechies/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/06/27/welcome-hugo-bonacci-to-lostechies/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Phillip Haydon</title>
+		<link>http://lostechies.com/derickbailey/2011/06/27/welcome-hugo-bonacci-to-lostechies/#comment-1649</link>
+		<dc:creator>Phillip Haydon</dc:creator>
+		<pubDate>Tue, 28 Jun 2011 00:21:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=460#comment-1649</guid>
+		<description>OH! Congratulations Hugo. Been using your jLinq since you first started the project. &lt;3</description>
+		<content:encoded><![CDATA[<p>OH! Congratulations Hugo. Been using your jLinq since you first started the project. &lt;3</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 14:57:13 -->

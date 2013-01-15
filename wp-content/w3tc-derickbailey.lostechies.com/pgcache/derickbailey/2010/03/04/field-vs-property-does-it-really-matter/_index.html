@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>Field Vs. Property: Does It Really Matter? | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Failure Is Not An Option, It Is A Requirement.' href='http://lostechies.com/derickbailey/2010/02/28/failure-is-not-an-option-it-is-a-requirement/' />
+<link rel='next' title='When Do You Specify Expected Parameters In Stub Methods?' href='http://lostechies.com/derickbailey/2010/03/04/when-do-you-specify-expected-parameters-in-stub-methods/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2010/03/04/field-vs-property-does-it-really-matter/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=107' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-107" class="post-107 post type-post status-publish format-standard hentry category-net category-pragmatism category-principles-and-patterns category-ruby">
+					<h1 class="entry-title">Field Vs. Property: Does It Really Matter?</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2010/03/04/field-vs-property-does-it-really-matter/" title="8:27 pm" rel="bookmark"><span class="entry-date">March 4, 2010</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>Given my recent experiences with Ruby, my cursory knowledge of Java, and my past experiences with other object oriented systems, I find myself asking a lot of questions about why we do things the way we do in the C#/.NET space. Today’s questioning is about one of those fundamental things that I have been preaching for a long time, yet suddenly find myself unable to answer ‘why’: </p>
+<blockquote><h3>field vs property: does it really matter?</h3>
+</blockquote>
+<p>As I sit and think about in the back of my head while writing code or this post, I can’t really say that I have any good reason for saying “you should use a property instead of a field” other than the defacto answer of encapsulation. But what if encapsulation doesn’t matter when you just want to store and retrieve a simple piece of data? Why is oh so important to use a property as the public API for a class?</p>
+<p>Ruby doesn’t really have properties. It just has methods that allow you to use an = sign, but those methods are not even required to “set” a value. It’s only the conventional use of = methods that say you should. Java doesn’t have properties at all. It’s convention to use getWhatever and setWhatever methods, but it’s better design to <a href="http://codebetter.com/blogs/david_laribee/archive/2008/07/08/super-models-part-2-avoid-mutators.aspx">not use mutators</a> and I like the general reasons behind that.</p>
+<p>So why does it matter if it’s a field vs. a property? Someone convince me that it’s important. Someone convince me that it’s not.&#160; Better yet – someone explain the contexts in which it is important and the contexts in which it’s not, and someone point out where it’s important to hide the data behind the process through a mutator-less API of service methods.</p>
+<p>…</p>
+<p>Question everything – especially your own assumptions.</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/net/" title="View all posts in .NET" rel="category tag">.NET</a>, <a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts in Pragmatism" rel="category tag">Pragmatism</a>, <a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts in Principles and Patterns" rel="category tag">Principles and Patterns</a>, <a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts in Ruby" rel="category tag">Ruby</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2010/03/04/field-vs-property-does-it-really-matter/" title="Permalink to Field Vs. Property: Does It Really Matter?" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2010/03/04/field-vs-property-does-it-really-matter/feed/" title="Comments RSS to Field Vs. Property: Does It Really Matter?" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-107 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2010/02/28/failure-is-not-an-option-it-is-a-requirement/" rel="prev"><span class="meta-nav">&larr;</span> Failure Is Not An Option, It Is A Requirement.</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2010/03/04/when-do-you-specify-expected-parameters-in-stub-methods/" rel="next">When Do You Specify Expected Parameters In Stub Methods? <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-572">
+        <div id="dsq-comment-header-572" class="dsq-comment-header">
+            <cite id="dsq-cite-572">
+http://stevenharman.net                <span id="dsq-author-user-572">Steven Harman</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-572" class="dsq-comment-body">
+            <div id="dsq-comment-message-572" class="dsq-comment-message"><p>three words: Representation Independent Code</p>
+<p>Gilad Bracha wrote about this back int 2007&#8230; <a href="http://gbracha.blogspot.com/2007/01/representation-independent-code.html" rel="nofollow">http://gbracha.blogspot.com/2007/01/representation-independent-code.html</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-573">
+        <div id="dsq-comment-header-573" class="dsq-comment-header">
+            <cite id="dsq-cite-573">
+http://mynerditorium.blogspot.com                <span id="dsq-author-user-573">Daniel Auger</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-573" class="dsq-comment-body">
+            <div id="dsq-comment-message-573" class="dsq-comment-message"><p>Philosophy aside &#8211; the .NET framework treats properties different than fields in scenarios such as databinding. That being the case, I tend to follow what the framework is expecting.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-574">
+        <div id="dsq-comment-header-574" class="dsq-comment-header">
+            <cite id="dsq-cite-574">
+                <span id="dsq-author-user-574">Ben</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-574" class="dsq-comment-body">
+            <div id="dsq-comment-message-574" class="dsq-comment-message"><p>The main reason I could think of off the top of my head is if you want to expose state as readable but writable only through a method (ala Mr. Laribee&#8217;s article that you linked).</p>
+<p>I&#8217;ve never like side-effect mutators&#8230; like a property called Salary where the setter validates a business rule and reacts accordingly. I&#8217;d rather that be done through a method&#8230;.</p>
+<p>I mainly think it&#8217;s cargo cult programming. &#8220;I&#8217;d better use a property because otherwise I&#8217;m breaking encapsulation and the other programmers will laugh at me&#8230; ooo, look, I can do public MyField { get;set; }&#8230; I&#8217;ll pass code review now!&#8221;</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-575">
+        <div id="dsq-comment-header-575" class="dsq-comment-header">
+            <cite id="dsq-cite-575">
+                <span id="dsq-author-user-575">Ben</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-575" class="dsq-comment-body">
+            <div id="dsq-comment-message-575" class="dsq-comment-message"><p>Counterpoint to my above statement&#8230; there&#8217;s seldom a reason not to use a property since it has nearly zero implementation overhead. public MyProperty { get; set; } and you&#8217;re done. </p>
+<p>as for contexts&#8230; given NHibernate</p>
+<p>class User {<br />
+  private IList<role> roles = new List</role><role>();</p>
+<p>  public IEnumerable</role><role> Roles { get { return roles; } }</p>
+<p> public void AddToRole(Role role) {}<br />
+}</p>
+<p>Allowing someone to override your list on a loaded-from-NH user could cause some wonderful wackiness when you go to persist back. In many dev environments, this would be caught by unit testing, code review, pair programming, QA, or the fact that one person is writing it all so they won&#8217;t forget. </p>
+<p>Or, suppose you want to &#8216;enforce&#8217; some state across entities (contrived here)&#8230; interface IAuditable { DateTime LastOpened { get; } }&#8230; you can&#8217;t do that with a field (ignoring that simply forcing state on an object doesn&#8217;t assure you of much&#8230;)</role></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-576">
+        <div id="dsq-comment-header-576" class="dsq-comment-header">
+            <cite id="dsq-cite-576">
+http://www.lostechies.com/members/jagregory/default.aspx                <span id="dsq-author-user-576">James Gregory</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-576" class="dsq-comment-body">
+            <div id="dsq-comment-message-576" class="dsq-comment-message"><p>Two words: &#8220;private set&#8221;.</p>
+<p>Consistent state, immutable objects, always-valid objects, etc&#8230; Fields provide no access control and, without a true immutable object, make it dead easy to create objects in an invalid state.</p>
+<p>My question is: If it really doesn&#8217;t matter, why favour fields over properties? What does a public field get you that a public property doesn&#8217;t?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-577">
+        <div id="dsq-comment-header-577" class="dsq-comment-header">
+            <cite id="dsq-cite-577">
+                <span id="dsq-author-user-577">Brian</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-577" class="dsq-comment-body">
+            <div id="dsq-comment-message-577" class="dsq-comment-message"><p>When someone reflects over yer object &#038; does GetProperty or GetField and you used the other, you&#8217;re pwnd.  </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-578">
+        <div id="dsq-comment-header-578" class="dsq-comment-header">
+            <cite id="dsq-cite-578">
+                <span id="dsq-author-user-578">J</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-578" class="dsq-comment-body">
+            <div id="dsq-comment-message-578" class="dsq-comment-message"><p>I&#8217;ll tend to use public members in classes where I just need to expose a bunch of information. Properties are more full featured (Read only, can be overridden for sub classes, and as someone above mentioned about the whole databinding thing in .NET) I think as anything if I need the functionality of properties I&#8217;ll go that route, but I&#8217;m just storing a bunch of data I&#8217;ll go with public fields.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-579">
+        <div id="dsq-comment-header-579" class="dsq-comment-header">
+            <cite id="dsq-cite-579">
+                <span id="dsq-author-user-579">dave-ilsw</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-579" class="dsq-comment-body">
+            <div id="dsq-comment-message-579" class="dsq-comment-message"><p>Generally speaking, if I&#8217;m just transporting data around, I use a field. If the data needs to be massaged, validated, or computed, then I use a property. Whether or not it&#8217;s important to use a field or a property depends entirely on your design and development context. Sometimes it matters. Sometimes it doesn&#8217;t.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-580">
+        <div id="dsq-comment-header-580" class="dsq-comment-header">
+            <cite id="dsq-cite-580">
+http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-580">MM</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-580" class="dsq-comment-body">
+            <div id="dsq-comment-message-580" class="dsq-comment-message"><p><a href="http://csharpindepth.com/Articles/Chapter8/PropertiesMatter.aspx" rel="nofollow">http://csharpindepth.com/Articles/Chapter8/PropertiesMatter.aspx</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-581">
+        <div id="dsq-comment-header-581" class="dsq-comment-header">
+            <cite id="dsq-cite-581">
+http://kearon.blogspot.com                <span id="dsq-author-user-581">Sean Kearon</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-581" class="dsq-comment-body">
+            <div id="dsq-comment-message-581" class="dsq-comment-message"><p>My convention is to prefer properties for &#8220;data that matters&#8221;.  I know where to look when I want see the members that matter.  I also use protected or private properties quite a lot when they are the &#8220;members that matter&#8221;.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-582">
+        <div id="dsq-comment-header-582" class="dsq-comment-header">
+            <cite id="dsq-cite-582">
+http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-582">MM</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-582" class="dsq-comment-body">
+            <div id="dsq-comment-message-582" class="dsq-comment-message"><p>i think you&#8217;re doing a bit of apples v. oranges in parts of this post. you try to use the fact that java doesn&#8217;t have properties as an argument in favor of public fields in C#. but java&#8217;s lack of properties doesn&#8217;t mean that people then use public fields, it means, as you say, that they use get/set methods. </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-583">
+        <div id="dsq-comment-header-583" class="dsq-comment-header">
+            <cite id="dsq-cite-583">
+http://www.tobinharris.com                <span id="dsq-author-user-583">Tobin Harris</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-583" class="dsq-comment-body">
+            <div id="dsq-comment-message-583" class="dsq-comment-message"><p>I use fields tons, because I&#8217;m lazy.</p>
+<p>public string Name;</p>
+<p>VS</p>
+<p>public string Name{get;set;}</p>
+<p>The first one is shorter. If I don&#8217;t need the good stuff a property brings to the table, why use it?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-584">
+        <div id="dsq-comment-header-584" class="dsq-comment-header">
+            <cite id="dsq-cite-584">
+http://kevhunter.wordpress.com                <span id="dsq-author-user-584">Kev Hunter</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-584" class="dsq-comment-body">
+            <div id="dsq-comment-message-584" class="dsq-comment-message"><p>I always use properties for exposing data, databinding, encapsulation, the ability to do INotifyPropertychanged and reflection as all valid reasons.</p>
+<p>Your probably using resharper so where&#8217;s the effort.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-585">
+        <div id="dsq-comment-header-585" class="dsq-comment-header">
+            <cite id="dsq-cite-585">
+http://paulbatum.com                <span id="dsq-author-user-585">Paul Batum</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-585" class="dsq-comment-body">
+            <div id="dsq-comment-message-585" class="dsq-comment-message"><p>Just wanted to +1 the link to Jon Skeet&#8217;s explanation<br />
+<a href="http://csharpindepth.com/Articles/Chapter8/PropertiesMatter.aspx" rel="nofollow">http://csharpindepth.com/Articles/Chapter8/PropertiesMatter.aspx</a></p>
+<p>If we spend our brain cycles questioning the stuff that smart people have already thought about and answered, we&#8217;ve got less time for figuring out the stuff that has NOT already been answered. I say life&#8217;s too short to question absolutely everything. Gotta be pragmatic and take some things as a given :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-586">
+        <div id="dsq-comment-header-586" class="dsq-comment-header">
+            <cite id="dsq-cite-586">
+                <span id="dsq-author-user-586">Michael Chandler</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-586" class="dsq-comment-body">
+            <div id="dsq-comment-message-586" class="dsq-comment-message"><p>It allows you a central place to set a breakpoint? :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-587">
+        <div id="dsq-comment-header-587" class="dsq-comment-header">
+            <cite id="dsq-cite-587">
+http://nolanegly.edgewolf.com                <span id="dsq-author-user-587">Nolan Egly</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-587" class="dsq-comment-body">
+            <div id="dsq-comment-message-587" class="dsq-comment-message"><p>Hey Derick,</p>
+<p>I started to write out my thoughts on this, and ended publishing my first blog post.  Congrats, two years after first encouraging me to blog you finally got me to write something :)</p>
+<p><a href="http://nolanegly.edgewolf.com/content/fields-vs-properties-when-does-it-matter-when-it-preference" rel="nofollow">http://nolanegly.edgewolf.com/content/fields-vs-properties-when-does-it-matter-when-it-preference</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-588">
+        <div id="dsq-comment-header-588" class="dsq-comment-header">
+            <cite id="dsq-cite-588">
+http://mikehadlow.blogspot.com/                <span id="dsq-author-user-588">Mike Hadlow</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-588" class="dsq-comment-body">
+            <div id="dsq-comment-message-588" class="dsq-comment-message"><p>Polymorphism? Or don&#8217;t we care about OO any more?</p>
+<p>Fields cannot be defined in interfaces, be declared virtual or overriden, so you can&#8217;t provide alternative implementations of any class where public fields provide the API. It pretty much rules out mocking or Dependency Injection.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-589">
+        <div id="dsq-comment-header-589" class="dsq-comment-header">
+            <cite id="dsq-cite-589">
+http://mikenichols.devlicio.us                <span id="dsq-author-user-589">Mike</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-589" class="dsq-comment-body">
+            <div id="dsq-comment-message-589" class="dsq-comment-message"><p>This depends on the context of your objects. In my domain, there had better be a real good reason for me to expose _any_ state. DTOs though may be safer to use properties since some frameworks handle these better or exclusively for serialization, proxying, etc&#8230;</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-590">
+        <div id="dsq-comment-header-590" class="dsq-comment-header">
+            <cite id="dsq-cite-590">
+                <span id="dsq-author-user-590">AHZ</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-590" class="dsq-comment-body">
+            <div id="dsq-comment-message-590" class="dsq-comment-message"><p>For many of the reasons given above I prefer to use properties for any non-private members.  That said, I think that the question is why is it that &#8220;public string Name {get; set; }&#8221; is any different than &#8220;public string Name;&#8221;?  I personally feel like there should be no difference and if someone can explain why there should be a difference then that reason should answer your question.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-591">
+        <div id="dsq-comment-header-591" class="dsq-comment-header">
+            <cite id="dsq-cite-591">
+http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-591">MM</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-591" class="dsq-comment-body">
+            <div id="dsq-comment-message-591" class="dsq-comment-message"><p>@AHZ, it&#8217;s no different &#8220;today&#8221;. but what if next year my requirements change and i need to do the following:</p>
+<p>private string name;<br />
+public string Name<br />
+{<br />
+    get<br />
+    {<br />
+        return name;<br />
+    }<br />
+    set<br />
+    {<br />
+        if (value == &#8220;Joey Joe Joe Junior Shabadoo&#8221;)<br />
+        {<br />
+            throw new ArgumentException(&#8220;That&#8217;s the worst name I ever heard!&#8221;);<br />
+        }<br />
+        else<br />
+        {<br />
+            name = value;<br />
+        }<br />
+    }<br />
+}</p>
+<p>if i had just put forth the minuscule effort of using a property from the start, i don&#8217;t have to change code all over the place. i know you could argue YAGNI but i think YAGNI only applies when the &#8220;future proofing&#8221; effort is non-trivial.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-592">
+        <div id="dsq-comment-header-592" class="dsq-comment-header">
+            <cite id="dsq-cite-592">
+http://adventuresinsoftware.com/blog                <span id="dsq-author-user-592">Michael L Perry</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-592" class="dsq-comment-body">
+            <div id="dsq-comment-message-592" class="dsq-comment-message"><p>Absolutely it matters. Think about degrees of freedom (number of unknowns &#8211; number of equations). A field is an unknown, and therefore increases the degrees of freedom. A property does not.</p>
+<p>A property backed by a field (or an auto-implemented property) increases the degrees of freedom, because it has a field. But a property doesn&#8217;t have to be backed by a field. In these situations, it does not increase the degrees of freedom:</p>
+<p>* A property exposing an immutable constructor parameter.<br />
+* A property referencing data in a related object.<br />
+* A property performing calculations based on other fields/properties of the same object.</p>
+<p>Limiting the degrees of freedom in your code, you can reduce complexity and simplify testing. Properties can do that, but fields cannot.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-593">
+        <div id="dsq-comment-header-593" class="dsq-comment-header">
+            <cite id="dsq-cite-593">
+http://blog.kellybrownsberger.com                <span id="dsq-author-user-593">Kelly Brownsberger</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-593" class="dsq-comment-body">
+            <div id="dsq-comment-message-593" class="dsq-comment-message"><p>I&#8217;ve wondered this myself a few times.  Generally speaking, I think the .NET community is so fragmented on application design patterns and principles.  The use of properties vs. fields is one of the few things that we all follow more or less blindly.  While it&#8217;s its always important to question things, I&#8217;m a little proud that at least we agree on this one across the board.  It&#8217;s a start at least.  Hopefully some other more value-add things make it into this category of &#8220;obeyed common-knowledge&#8221;.</p>
+<p>Having said that, I don&#8217;t think there&#8217;s a ton of value in properties over fields &#8211; especially for small apps that don&#8217;t change.  But for other, more real world apps, there are differences (as others have pointed out).</p>
+<p>- The ability to make a setter as private is the big encapsulation factor in my book<br />
+- The ability to implement things like INotifyPropertyChange<br />
+- Fields and Properties are different things (look at System.Reflection &#8211; MemberInfo, FieldInfo, PropertyInfo) and can change the behavior of things like serialization and data binding.<br />
+- Changing a field to a property or vice versa will force a recompile of consuming applications (not a small impact for the kind of applications I build).</p>
+<p>It sounds like maybe your really questioning whether C# needed both of these in general.  You could probably make a good argument there.  Now that we have them, I think we should continue to treat them as we have&#8230; but, again, probably not all that important to you, but there&#8217;s value is the ubiquitous best practice and the language has made so easy to follow, that I don&#8217;t know why you wouldn&#8217;t. </p>
+<p>My $0.02</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-594">
+        <div id="dsq-comment-header-594" class="dsq-comment-header">
+            <cite id="dsq-cite-594">
+http://geekswithblogs.net/technobabble                <span id="dsq-author-user-594">Tom Besser</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-594" class="dsq-comment-body">
+            <div id="dsq-comment-message-594" class="dsq-comment-message"><p>The MSDN Design Guidelines cite versioning and security issues with fields that are overcome with properties.  </p>
+<p><a href="http://msdn.microsoft.com/en-us/library/ms229057(v=VS.90)" rel="nofollow">http://msdn.microsoft.com/en-us/library/ms229057(v=VS.90)</a>.aspx</p>
+<p>Chris Anderson also reveals that data binding only works with properties in the .NET Framework Design Guidelines, by Krzysztof Cwalina and Brad Abrams (2nd ed. p.161).</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-595">
+        <div id="dsq-comment-header-595" class="dsq-comment-header">
+            <cite id="dsq-cite-595">
+http://jarrettmeyer.com                <span id="dsq-author-user-595">Jarrett</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-595" class="dsq-comment-body">
+            <div id="dsq-comment-message-595" class="dsq-comment-message"><p>XML serialization is automatic on properties with public getters and setters. Of course, you can also use [XmlInclude] if you really want to include a field.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-596">
+        <div id="dsq-comment-header-596" class="dsq-comment-header">
+            <cite id="dsq-cite-596">
+http://www.lennybacon.com                <span id="dsq-author-user-596">Daniel Fisher</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-596" class="dsq-comment-body">
+            <div id="dsq-comment-message-596" class="dsq-comment-message"><p>Reason #1: You cannot set a breakpoint on a field</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2010/03/04/field-vs-property-does-it-really-matter/';
+    var disqus_identifier = '107 /blogs/derickbailey/archive/2010/03/04/field-vs-property-does-it-really-matter.aspx';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "Field Vs. Property: Does It Really Matter?";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=107';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2010\/03\/04\/field-vs-property-does-it-really-matter\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2013<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 15:16:03 -->

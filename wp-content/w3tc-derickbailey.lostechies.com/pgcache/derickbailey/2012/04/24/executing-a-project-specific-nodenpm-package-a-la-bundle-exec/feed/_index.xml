@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Executing A Project-Specific Node/NPM Package A-la &#8220;bundle exec&#8221;</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/04/24/executing-a-project-specific-nodenpm-package-a-la-bundle-exec/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/04/24/executing-a-project-specific-nodenpm-package-a-la-bundle-exec/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: James Smith</title>
+		<link>http://lostechies.com/derickbailey/2012/04/24/executing-a-project-specific-nodenpm-package-a-la-bundle-exec/#comment-2549</link>
+		<dc:creator>James Smith</dc:creator>
+		<pubDate>Wed, 13 Jun 2012 02:50:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=906#comment-2549</guid>
+		<description>Here&#039;s my hack I use for coffee.
+
+
+Create a new bash script under /usr/local/bin/coffee with the following:
+`npm bin`/coffee
+
+npm bin will resolve to the node_modules/.bin path even if you&#039;re in a sub directory of a project. Best of all is allows multiple version of coffee across different projects. 
+
+This could be used for any bin package you use like express, just make the necessary changes. I imagine someone well versed in bash could also use the bash script&#039;s name instead so you can just copy the script as a new name for any npm binary</description>
+		<content:encoded><![CDATA[<p>Here&#8217;s my hack I use for coffee.</p>
+<p>Create a new bash script under /usr/local/bin/coffee with the following:<br />
+`npm bin`/coffee</p>
+<p>npm bin will resolve to the node_modules/.bin path even if you&#8217;re in a sub directory of a project. Best of all is allows multiple version of coffee across different projects. </p>
+<p>This could be used for any bin package you use like express, just make the necessary changes. I imagine someone well versed in bash could also use the bash script&#8217;s name instead so you can just copy the script as a new name for any npm binary</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/04/24/executing-a-project-specific-nodenpm-package-a-la-bundle-exec/#comment-2390</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Tue, 24 Apr 2012 17:01:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=906#comment-2390</guid>
+		<description>DOH! i accidentally got the gist # wrong on that one. fixed. thanks for letting me know!</description>
+		<content:encoded><![CDATA[<p>DOH! i accidentally got the gist # wrong on that one. fixed. thanks for letting me know!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Guest</title>
+		<link>http://lostechies.com/derickbailey/2012/04/24/executing-a-project-specific-nodenpm-package-a-la-bundle-exec/#comment-2389</link>
+		<dc:creator>Guest</dc:creator>
+		<pubDate>Tue, 24 Apr 2012 16:57:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=906#comment-2389</guid>
+		<description>gist-240904 has been turned into spam.</description>
+		<content:encoded><![CDATA[<p>gist-240904 has been turned into spam.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Esa-Matti Suuronen</title>
+		<link>http://lostechies.com/derickbailey/2012/04/24/executing-a-project-specific-nodenpm-package-a-la-bundle-exec/#comment-2388</link>
+		<dc:creator>Esa-Matti Suuronen</dc:creator>
+		<pubDate>Tue, 24 Apr 2012 13:22:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=906#comment-2388</guid>
+		<description>Here&#039;s a fun hack. Put 
+
+export PATH=./node_modules/.bin/:$PATH
+
+to your ~/.bashrc and tada! You can now run your locally installed npm binaries without any prefixes. You just have to be in your project directory where the node_modules subdirectory is.</description>
+		<content:encoded><![CDATA[<p>Here&#8217;s a fun hack. Put </p>
+<p>export PATH=./node_modules/.bin/:$PATH</p>
+<p>to your ~/.bashrc and tada! You can now run your locally installed npm binaries without any prefixes. You just have to be in your project directory where the node_modules subdirectory is.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 14:46:39 -->

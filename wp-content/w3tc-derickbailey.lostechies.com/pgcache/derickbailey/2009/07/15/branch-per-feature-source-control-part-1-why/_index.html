@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>Branch-Per-Feature Source Control. Part 1: Why | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Branch-Per-Feature Source Control. Introduction' href='http://lostechies.com/derickbailey/2009/07/15/branch-per-feature-source-control-introduction/' />
+<link rel='next' title='Branch-Per-Feature Source Control. Part 2: How (Theory)' href='http://lostechies.com/derickbailey/2009/07/21/branch-per-feature-source-control-part-2-how-theory/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2009/07/15/branch-per-feature-source-control-part-1-why/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=69' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-69" class="post-69 post type-post status-publish format-standard hentry category-branch-per-feature category-continuous-integration category-git category-management category-productivity category-quality category-source-control category-standardized-work category-subversion category-workflow">
+					<h1 class="entry-title">Branch-Per-Feature Source Control. Part 1: Why</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2009/07/15/branch-per-feature-source-control-part-1-why/" title="9:27 pm" rel="bookmark"><span class="entry-date">July 15, 2009</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>Several years ago, I started using source control systems to store all of my code. It was a life saver. I was no longer worried about losing changes that I had made. Then a few years ago, I found <a href="http://subversion.tigris.org/">Subversion</a>. It was a god-send compared to visual source safe. The feature set was very nice, <a href="http://tortoisesvn.org/">TortoiseSVN</a> was easy to use, and I eventually found <a href="http://visualsvn.com/">VisualSVN</a> which made life even easier. My team(s) quickly picked up on Subversion and we were very, very happy. We even started using some continuous integration processes to ensure our code built correctly, etc. </p>
+<h3>How We Used To Work</h3>
+<p>The way that my team worked, at the time, was based on the industry standard of “Branches”, “Tags”, “Trunk” for the high level organization. I’m honestly not sure if the industry standard is to have everyone working on the trunk, but that is what we standardized on. All live software development processes were done on the trunk, no matter the size of the team. This meant that there were multiple commits from multiple people, multiple times per day, all on the trunk.</p>
+<p><img style="border-top-width: 0px;border-left-width: 0px;border-bottom-width: 0px;border-right-width: 0px" height="57" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_1339C246.png" width="764" border="0" /> </p>
+<p>This worked fine for a very long time. Especially when we looked back at having no source control. The easy to use svn applications made life good, and no one seemed to mind that everyone was committing to the trunk all the time. It really didn’t matter what feature a person was working on, because we tended to work in horizontal layers of the application. This meant that there would be, in any given period of time, multiple commits from multiple features (represented by “F#” in the following diagram).</p>
+<p><img style="border-top-width: 0px;border-left-width: 0px;border-bottom-width: 0px;border-right-width: 0px" height="88" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_4BE46C53.png" width="764" border="0" />&#160;</p>
+<h3>The Problems With The Status Quo</h3>
+<p>As time went by, we started working differently. Rather than having an unknown number of features in development, at any given point in time, we started refocusing our efforts to develop in vertical feature slices. There were a large number of advantages to this, including the ability to test one feature at a time and call it good. As our team size grew from more than one or two people, though, we found that we were again working on more than one feature at a time. This made sense in that we had multiple “feature teams” working on one feature each. But we started having problems… or at least, we started to recognize the problems that had always been inherent in our processes.</p>
+<h4><strong>CI Builds Broken</strong></h4>
+<p>In moving forward with multiple feature teams and everyone committing to the trunk, we started having problems with our continuous integration process. One team’s commits would cause another team’s work to fail the build… it wouldn’t compile correctly, or unit tests would fail, or … whatever the case was. We ignored our CI builds most of the time, and rationalized it to our project management team. The CI builds were essentially useless to us, at this point. I even remember hearing about a team that I wasn’t working with, turning off their CI build because “it’s always broken.”</p>
+<p>We continued on, though, assuming that this was just the way the world worked. </p>
+<h4><strong>Developer Downtime</strong></h4>
+<p>We also started having problems on individual developer’s machines. A commit from one person would cause another person’s local changes to break, and they wouldn’t be able to continue working until the issue was resolved. There were times when this would take hours, if not days. This often led developers down the path of “I’m not going to commit until it works completely”. Since most of our development efforts would take days on end, if not weeks, we ended up in situations where developers would only commit once or twice a week. The possibilities of lost work, and the realized problems of people going on vacation or being out sick, caused a significant amount of problems. We set standards to commit often, and tried to enforce it, but continued to run into problems that caused the team members to not commit regularly.</p>
+<p>So, we just continued working this way, under the assumption that this is how the world works.</p>
+<h4><strong>Troubles With Testing</strong></h4>
+<p>The other major problem that we had, was testing. We were trying to deliver builds to our business analysts and testers, as often as possible. We wanted them to give us feedback on how the system was working, whether the workflow was good, etc. The problem was that we had multiple features in the delivery, whether or not those features were ready for delivery. This left half finished code in place, and often left those portions of the system unstable or unusable. There were times when a core bottleneck in the software’s process would be broken – such as the login screen – and prevent the BAs and testers from doing any work to verify any part of the system that had changed. </p>
+<p>We eventually started delivering “don’t touch this” lists with our builds. These lists were often rather lengthy, and contained nothing more than instructions on what the BAs and testers were and were not supposed to be testing at the moment. In spite of these lists, the testing process often required touching those areas, or the people testing would simply ignore the list. This lead to many issues tickets being opened against the system, for areas that we already knew were broken or incomplete. There was a lot of frustration between the developers who knew what not to touch, and the people doing the test, who thought they should be able to use the entire system at any given time. </p>
+<p>Once again, we continued to work this way, assuming that there was nothing we could do about it. </p>
+<h3>Branching For Breaking Changes</h3>
+<p>After struggling through these issues for a while, we started looking at the branching capabilities in subversion. I was wary of this at first, having had horrible experiences with it in visual source safe. After some trial and error, reading, and more trails, we finally figured out how to correctly branch and merge in subversion. </p>
+<p><img style="border-top-width: 0px;border-left-width: 0px;border-bottom-width: 0px;border-right-width: 0px" height="122" alt="image" src="http://lostechies.com/derickbailey/files/2011/03/image_2B5D2CA1.png" width="779" border="0" /> </p>
+<p>At that time, we decided that when we knew were going to have breaking changes, we would make those changes on a branch. This would allow everyone to continue working on the trunk, while the breaking changes were finished up on the branch. Once those changes were made, we would merge the changes back into the trunk and everyone would continue forward on the trunk, doing their small, regular commits for their work.</p>
+<h3>The Epiphany</h3>
+<p>Then, in October of 2008, I attended the Continuous Improvement in Software Development Conference (a.k.a. “<a href="http://kaizenconf.com/">Kaizen Conference</a>”) in Austin. Most of the sessions that I attended centered around the principles of pull based systems. During one of the sessions, <a href="http://codebetter.com/blogs/david_laribee/">Dave Laribee</a> talked about the idea of release per feature. I was hooked almost immediately as I suddenly saw “that’s the way the world works” as serious problem in how we worked with source control. Later on in the conference, Dave set up an open discussion to cover some of the issues and options that were surrounding the notions of release per feature. This was a tremendously valuable conversation for me, and I took a lot away from it. </p>
+<p>By the end of the conference, I was excited about the possibilities of being able to code against my feature without having to worry about another developer’s feature bleeding into my change set and causing the problems mentioned above. After some discussion with my team, we decided to move forward with the notion of release per feature. There were a lot of other nuances that we included, which led us to a more complete <a href="http://www.lostechies.com/blogs/derickbailey/archive/2008/11/19/adventures-in-lean.aspx">Kanban system</a>. In the end, though, I found that it did not matter what type of release scheduling we were doing. Whether we were working in a “waterfall” manner, a Scrum sprint, XP iteration, <a href="http://en.wikipedia.org/wiki/Kanban">Kanban</a> or other iterationless release per feature style, the notion of working in my own branch as the primary means of committing to source control stuck with me.</p>
+<h3>The Standards For Committing</h3>
+<p>At this point, I have a few standards that I set within every team I am working directly with. Many of these standards have been in place in my teams for a very long time – even during the problem years, mentioned above. The real difference is that we now have the ability to actually follow these standards without a great deal of administrative nightmare, like we previously had. The reason for this is standard #3 – <strong>Branch-Per-Feature</strong>.</p>
+<ol>
+<li><strong>Commit often</strong>
+<ol>
+<li>It doesn’t matter how small the change; if it compiles, you are allowed to commit </li>
+<li>Commit at least once, at the end of the day. You should never have uncommitted code on your machine, when you leave for the day </li>
+</ol>
+</li>
+<li><strong>Minimize CI Build Downtime</strong>&#160;
+<ol>
+<li>Don’t commit broken unit tests or other test automation, to the CI build code base </li>
+<li>Our unit tests and integration tests should always be green on the CI server </li>
+<li>A broken CI build is a red flag that must immediately be rectified </li>
+</ol>
+</li>
+<li><strong>Branch-Per-Feature</strong>
+<ol>
+<li>No work-in-process (WIP) is committed directly to the trunk </li>
+<li>Every feature team, task team, or bug fix, is worked on it’s own branch in source control </li>
+<li>Only finished work it merged into the trunk </li>
+</ol>
+</li>
+</ol>
+<h3>Branch-Per-Feature By Name</h3>
+<p>The truth about “Branch-Per-Feature” is that it is only “Feature” in name. I make no distinction between a feature, a story, a bug fix, a task, or however else you want to segment the work to be done. The reason that I call it “Feature” is that we will group the work to be done, based on where the work is happening, functionally. That is, we group the work by the feature that it is tied to. But we do not limit the feature to a single branch. </p>
+<p>If a given feature has 10 user stories against it, and we need more than one sprint or iteration to complete the feature, we will effectively create multiple branches for the same feature – one at a time. During the first sprint or iteration, the team that is working on that feature will work on the same branch. When the sprint or iteration is done, we will deliver the working version of that branch by merging it into the trunk. At that point, we either continue working on the feature branch, or we re-branch to simplify later merges. I prefer re-branching, honestly. It simplifies the trunk-to-branch-to-trunk synchronization during development efforts, by giving a clear cut start and stop in the revision history.</p>
+<p>When a bug is found in the system, we will also branch for that bug. This follows the same grouping rules and heuristics as the feature branches, though. If multiple bugs are found against the same feature, we will include as many of those bugs as we can in the same branch and delivery set.</p>
+<h3>Except…</h3>
+<p>The major exception to Branch-Per-Feature, is the smallest of changes that has no impact outside of the change that you just made. A label might be misspelled, as an example. It would probably take more time and effort to branch for this, than it would be worth. However, if there is documentation that needs to be updated, screen shots that need to change, help files that need correcting, or … The full impact of that one label change needs to be understood before anyone decides to make that change directly on the trunk. </p>
+<p>Therefore, the default rule of thumb is that everything is done on a branch. If anyone is ever in doubt, the doubter must discuss this with the team or team leadership and make their case for changing directly in the trunk. This does not need to be a bureaucratic process, though. It can be as simple as sending an IM, or walking to someone’s desk to say “hey, I don’t think I need to branch for …, what do you think?”</p>
+<h3>The Underlying Principles</h3>
+<p>There are some underlying principles or philosophies on why Branch-Per-Feature works so well: Decoupling&#160; and/or Sand-Boxing. </p>
+<p><strong>Decoupling</strong></p>
+<p>As a software development principle, <a href="http://en.wikipedia.org/wiki/Decoupling">decoupling</a> says that we want to be able to change one part of the code without affecting the other. We also want to be able to replace or reuse one part of the code without having to bring along or change the others. When we start talking about <a href="http://en.wikipedia.org/wiki/Model_view_controller">Model-View-Controller</a>, <a href="http://en.wikipedia.org/wiki/Composite_application">Composite Applications</a>, <a href="http://en.wikipedia.org/wiki/Service-oriented_architecture">Service Oriented Architecture</a>, <a href="http://en.wikipedia.org/wiki/Message_Bus">Message Bus</a> / <a href="http://en.wikipedia.org/wiki/Enterprise_service_bus">Enterprise Service Bus</a> and other architectural concepts, we are still talking about the principle of decoupling. At this point, though, we are taking decoupling out of the class and method level, up into the architecture. So, why shouldn’t this principle apply to higher level organization and process, as well? I say we should be decoupling our feature set development efforts from each other. Don’t let one feature development effort require another feature development effort to coincide, change, or be inadvertently affected. </p>
+<p>When we start operating our higher level processes like this, the undeniable truth of structure causing behavior begins to emerge. The system architectures and the lower level implementations also begin to reflect this idea. Composite applications suddenly become “well, duh. of course we do that”, as they facilitate the easy decoupling of the feature sets from each other. Furthermore, concepts such as <a href="http://domaindrivendesign.org/">Domain Driven Design</a>’s <a href="http://domaindrivendesign.org/node/91">Bounded Context</a> are suddenly very real in our system (<a href="http://twitter.com/UdiDahan/status/2666623959">thanks, Udi!</a>). Our structure and how we operate at a process level, begin to drive the behavior and values of the product that is being created in that structure.</p>
+<p><strong>Sand-Boxing</strong></p>
+<p>The idea of <a href="http://en.wikipedia.org/wiki/Sandbox_(software_development)">sand-boxing</a> our development efforts is almost as ubiquitous as decoupling. The real difference is that most of us haven’t yet recognized the implicit sand-boxing that we do every day. </p>
+<p>When was the last time you worked on a web project? Did you have every developer hitting a shared web server, when working on the functionality? I certainly hope not (and if you did, you have other issues that need to be addressed before you try branch-per-feature). Or, when was the last time you worked on a WinForms application? Did you have every developer using the same workstation computer to write their code? I doubt it, and again I certainly hope not. </p>
+<p>Instead of forcing everyone into these types of irresponsible bottlenecks and resource limitations, we provide developers with workstations that can run the Web app or the WinForms app directly on their machine. This is sand-boxing. This is letting everyone have their own little world in which they can control the variables and limit the interactions, changes, and other forces that want to impede their progress. So why wouldn’t we want to continue that sand-boxing mentality outside of our individual workstations? We should be providing a complete sand-box for the individual or team effort, as needed. A developer or team of developers should be in control of the resources they need to get their job done. This includes not only the workstation and web site or winform host, but also the source control, database, messaging bus, and other resources that are needed for the effort. </p>
+<p>To illustrate how far this can (and possibly, should) be taken, I am currently working with another team lead to define a VMWare Workstation image that his entire project development stack is installed into. This will give everyone on the team a complete sandbox, wrapped up neatly into a VM that can be updated and redistributed easily. The only part that will not be sand-boxed into this VM, is the source control… but we will still sand-box the source control via branch-per-feature.</p>
+<h3>The Cost Of Branching And Merging</h3>
+<p>A few of the comments that I’ve seen, recently, indicate that people are wary of the administrative overhead for this. I’ve even heard indication that some people don’t want to dedicate an individual person to be the ‘branch admin’ or ‘subversion admin’, to handle the branch and merge needs. I don’t think this is the right idea at all. On my team(s), every individual has been properly trained on how to branch and merge in our source control system. This goes for the most senior of developers, as well as the college interns that are on my current team. The training of how to correctly branch and merge takes no more than 30 minutes for the whole team, and then a few follow up sessions with individuals as they try to do it for the first time on their own. The net result, though, is that I don’t have to worry about it anymore. I don’t need a ‘branch admin’ or anyone else that has ‘uber-svn skillz’, because subversion makes the branch and merge process fairly straightforward and simple (and if you’re lucky enough to use Git or another distributed system, you don’t even need to worry about this because branch-per-team/feature is the natural workflow).</p>
+<p>In subversion, creating a branch is a “constant-time” function. That is, it does not take any more time to branch one file with no history, than to branch 300 gigs with 30,000,000 commit history. Merging, on the other hand, takes some time and patience to learn. However, the ability for a large scale team to work in smaller, independent feature teams has made a tremendous improvement in productivity for us. The shear reduction in communication overhead to coordinate 10 or 15 people all committing the trunk multiple times a day, is in itself, paying for the additional overhead of branching and merging. </p>
+<h3>The Benefits</h3>
+<p>Having worked in a Branch-Per-Feature mode for almost a year now, I am all but refusing to work in any other way. I no longer have to worry about other developers clobbering my WIP. I no longer have to worry about clobbering their WIP. I can deliver my build to the BA or Test environment, without fear of someone else’s feature being half-done and getting invalid tickets entered against my feature. I can even do a complete release to production based on a single feature being complete, at this point. In fact, my current customer prefers to have single features released and even wants to pay us by completed feature.</p>
+<p>The end result is that we can have multiple feature teams working on different features, without clobbering each other. The cost of branch management is negligible compared to the benefits of decoupling our feature development. The ability to process multiple features in parallel, is essentially like working on a single feature; with the added benefit of working on multiple features. Now, there does come a point where the features merge into each other. The strategy for merging is very context dependent, though, and will be covered in future posts in this series.</p>
+<h3>Coming Up, Next</h3>
+<p>In the next part of the <a href="http://www.lostechies.com/blogs/derickbailey/archive/2009/07/15/branch-per-feature-source-control-introduction.aspx">Branch Per Feature series</a>, I’ll cover the high level How-To. This will give the overview of the steps that need to be taken, all from the perspective that it should not matter which source control system you are using. A future post will then cover the specifics of how I manage Branch Per Feature in Subversion, and another will focus on CI-Build-Per-Branch. I’ll also try to include a “lessons learned” post, at some point. We made a lot of mistakes in the process of learning how to manage branch-per-feature, and I’m hoping that I can help others avoid them.</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
+<a href="http://backbonetraining.net">BackboneTraining.net</a>,
+<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts in Branch-Per-Feature" rel="category tag">Branch-Per-Feature</a>, <a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts in Continuous Integration" rel="category tag">Continuous Integration</a>, <a href="http://lostechies.com/derickbailey/category/git/" title="View all posts in Git" rel="category tag">Git</a>, <a href="http://lostechies.com/derickbailey/category/management/" title="View all posts in Management" rel="category tag">Management</a>, <a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts in Productivity" rel="category tag">Productivity</a>, <a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts in Quality" rel="category tag">Quality</a>, <a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts in Source Control" rel="category tag">Source Control</a>, <a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts in Standardized Work" rel="category tag">Standardized Work</a>, <a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts in Subversion" rel="category tag">Subversion</a>, <a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts in Workflow" rel="category tag">Workflow</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2009/07/15/branch-per-feature-source-control-part-1-why/" title="Permalink to Branch-Per-Feature Source Control. Part 1: Why" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2009/07/15/branch-per-feature-source-control-part-1-why/feed/" title="Comments RSS to Branch-Per-Feature Source Control. Part 1: Why" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-69 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2009/07/15/branch-per-feature-source-control-introduction/" rel="prev"><span class="meta-nav">&larr;</span> Branch-Per-Feature Source Control. Introduction</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2009/07/21/branch-per-feature-source-control-part-2-how-theory/" rel="next">Branch-Per-Feature Source Control. Part 2: How (Theory) <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-363">
+        <div id="dsq-comment-header-363" class="dsq-comment-header">
+            <cite id="dsq-cite-363">
+http://www.robertbeal.com                <span id="dsq-author-user-363">Rob</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-363" class="dsq-comment-body">
+            <div id="dsq-comment-message-363" class="dsq-comment-message"><p>Interesting idea. I&#8217;ve always wanted to do something similar but when we&#8217;ve switched (if we ever do, but I&#8217;d like to) to Git.</p>
+<p>The main reason being branching and merging is so much easier and quicker in Git. Plus you have to adopt a lots of smaller repositories approach (encourages better partitioning) than one repo to rule them all a la subversion.</p>
+<p>When you say &#8220;finished&#8221; work do you mean, developed AND tested. As that would be truly Agile. The only problem I have is with regards to testing. How do you go about setting up so many test environments for each feature. There&#8217;s also the added problem of databases, does it mean having a separate database per feature? This is the overhead I&#8217;ve not yet figured out.</p>
+<p>We&#8217;re not quite there in terms of environment. The only thing I can think of would be to test it on the developers machine (on a test website so the developer can continue work) but our QA team would have a field day over that proposal.</p>
+<p>Still I like the idea. </p>
+<p>* Also you mention it can take days to fix a broken trunk! Surely that&#8217;s a team/communication issue rather than a all-working-on-the-trunk issue. I can understand hours worth of downtime, but days worth highlights other issues.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-364">
+        <div id="dsq-comment-header-364" class="dsq-comment-header">
+            <cite id="dsq-cite-364">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-364">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-364" class="dsq-comment-body">
+            <div id="dsq-comment-message-364" class="dsq-comment-message"><p>@Rob,</p>
+<p>Good questions. </p>
+<p>The &#8220;finished&#8221; definition, in the terms of Branch-Per-Feature is very context dependent (but then, what isn&#8217;t?) We have to set the boundaries based on the capabilities of the team, the availability of resources, the expectations of delivery, etc, etc. This may end up coming out during the other entries in the series. I may write up a specific post to address it, though. </p>
+<p>The &#8216;testing&#8217; and &#8216;database&#8217; questions are also very detailed ideas that I&#8217;ve dealt with in a few different ways. I think I&#8217;m going to add both of these as entries on their own. </p>
+<p>Of course, I have to remember to always add the disclaimer of &#8220;it depends&#8221; to everything. :) </p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-365">
+        <div id="dsq-comment-header-365" class="dsq-comment-header">
+            <cite id="dsq-cite-365">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-365">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-365" class="dsq-comment-body">
+            <div id="dsq-comment-message-365" class="dsq-comment-message"><p>@Rob,</p>
+<p>oh yeah&#8230; the &#8220;days&#8221; to fix the trunk&#8230; yeah, that was the height of the problems in the team and the process for a massive &#8216;legacy&#8217; system. It was not a good situation, and everyone knew it. I don&#8217;t think that happens, anymore&#8230; but I haven&#8217;t worked directly with that team in a number of months.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-366">
+        <div id="dsq-comment-header-366" class="dsq-comment-header">
+            <cite id="dsq-cite-366">
+http://erichauser.net/                <span id="dsq-author-user-366">Eric Hauser</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-366" class="dsq-comment-body">
+            <div id="dsq-comment-message-366" class="dsq-comment-message"><p>While it is true creating a branch is a constant time function, you still have to check it back out or use switch to move back and forth.  For big repositories and changes, this can take some time.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-367">
+        <div id="dsq-comment-header-367" class="dsq-comment-header">
+            <cite id="dsq-cite-367">
+                <span id="dsq-author-user-367">Andy Rose</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-367" class="dsq-comment-body">
+            <div id="dsq-comment-message-367" class="dsq-comment-message"><p>Great article and very timely for my team.<br />
+We&#8217;ve just switched from VSS to SVN and are currently releasing weekly features using feature branches very much as you have described except the branch is merged into the trunk before release to QA (this rapid release schedule is going to slow down a bit soon i hope ;-)). </p>
+<p>At the moment I have become the team SVN admin due to time constraints and I am very much learning  SVN on the job. I have run into some pain where a feature branch has been merged into the trunk and deployed to test. Defects from the testing are then fixed on the feature branch but re-merging that with the trunk has not been too successful (tree conflicts etc).<br />
+Much of this is probably down to lack of understanding of SVN however I like the idea of only merging once a feature branch is complete or starting a new branch to address the defects.</p>
+<p>Looking forward to the rest of the series.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-368">
+        <div id="dsq-comment-header-368" class="dsq-comment-header">
+            <cite id="dsq-cite-368">
+http://www.sprydon.com                <span id="dsq-author-user-368">Richard</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-368" class="dsq-comment-body">
+            <div id="dsq-comment-message-368" class="dsq-comment-message"><p>There is a great paper on this called streamed lines:<br />
+<a href="http://www.cmcrossroads.com/bradapp/acme/branching/" rel="nofollow">http://www.cmcrossroads.com/bradapp/acme/branching/</a></p>
+<p>which covers a lot of branching ideas, arguments for and against</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-369">
+        <div id="dsq-comment-header-369" class="dsq-comment-header">
+            <cite id="dsq-cite-369">
+http://www.lookbeforeyouleap.net                <span id="dsq-author-user-369">Nathan Prather</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-369" class="dsq-comment-body">
+            <div id="dsq-comment-message-369" class="dsq-comment-message"><p>Great article.  I look forward to your discussion of branching and merging using Subversion.  </p>
+<p>Keep it up!</p>
+<p>Thanks,<br />
+Nathan</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-370">
+        <div id="dsq-comment-header-370" class="dsq-comment-header">
+            <cite id="dsq-cite-370">
+http://flux88.com                <span id="dsq-author-user-370">Ben Scheirman</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-370" class="dsq-comment-body">
+            <div id="dsq-comment-message-370" class="dsq-comment-message"><p>Thanks for the detailed post!  I found it to be very informative.  I&#8217;m leaning towards doing this on future projects.</p>
+<p>One more reason not to use TFS I guess.  Like I needed any more :)</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-371">
+        <div id="dsq-comment-header-371" class="dsq-comment-header">
+            <cite id="dsq-cite-371">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-371">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-371" class="dsq-comment-body">
+            <div id="dsq-comment-message-371" class="dsq-comment-message"><p>Thanks for the feedback everyone (including those on Twitter)! I&#8217;ve updated the article to include a section on the underlying principles, and have tried to make the &#8220;Benefits&#8221; more explicit by putting them into their own section after the &#8220;Cost&#8221;.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-372">
+        <div id="dsq-comment-header-372" class="dsq-comment-header">
+            <cite id="dsq-cite-372">
+http://www.twitter.com/adymitruk                <span id="dsq-author-user-372">Adam D.</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-372" class="dsq-comment-body">
+            <div id="dsq-comment-message-372" class="dsq-comment-message"><p>@Rob</p>
+<p>For the database issue. Use a version script. In git you can use the attribute command to force a conflict if there&#8217;s any merging. You manually change it. It&#8217;s not hard. And you&#8217;re good to go. Most of the time the db changes are additive.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-373">
+        <div id="dsq-comment-header-373" class="dsq-comment-header">
+            <cite id="dsq-cite-373">
+                <span id="dsq-author-user-373">Ike Casteleyn</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-373" class="dsq-comment-body">
+            <div id="dsq-comment-message-373" class="dsq-comment-message"><p>I&#8217;m running into these problems aswell, however I think I have more problems on releasing.<br />
+Partially done work on the trunk and I need to be able to create a release from that trunk.<br />
+Could you talk a little about release too in a later post.</p>
+<p>One other thing.<br />
+You branch per feature, so you don&#8217;t bring in any changes from others.<br />
+Does this mean that you don&#8217;t merge daily from the trunk to your branch too?</p>
+<p>Best regards,<br />
+Ike</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-374">
+        <div id="dsq-comment-header-374" class="dsq-comment-header">
+            <cite id="dsq-cite-374">
+                <span id="dsq-author-user-374">charl</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-374" class="dsq-comment-body">
+            <div id="dsq-comment-message-374" class="dsq-comment-message"><p>Great article.  I can&#8217;t wait for the next one in the series.  I have also tried the feature branching in one of my Java projects with mixed success. Like Andy, I also had some issues with conflicts when merging back into the trunk and lost changes that I thought merge correctly.</p>
+<p>I had a situation where I had 2 feature branches and while in the middle of that I also had to make a critical bug fix.  My route I went was to always keep my trunk as the operational version so that you can do these kind of bug fixes in there and ALWAYS deploy from my trunk compilation and not from a branch.</p>
+<p>So what do you send for QA and deployment, your feature branch or your trunk?  </p>
+<p>You face breaking your trunk and delaying bug fixes or face having testing a branch and when merging into the trunk causing issues.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-375">
+        <div id="dsq-comment-header-375" class="dsq-comment-header">
+            <cite id="dsq-cite-375">
+http://ars-excellentia.vox.com                <span id="dsq-author-user-375">Dale</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-375" class="dsq-comment-body">
+            <div id="dsq-comment-message-375" class="dsq-comment-message"><p>On the face of it, this seems like a great idea. It would have saved a lot of grief on the large project I was just on. I&#8217;m wondering, though, where code review fits in. Do you save code reviews for the merges?</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-376">
+        <div id="dsq-comment-header-376" class="dsq-comment-header">
+            <cite id="dsq-cite-376">
+http://www.lostechies.com/members/derick.bailey/default.aspx                <span id="dsq-author-user-376">derick.bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-376" class="dsq-comment-body">
+            <div id="dsq-comment-message-376" class="dsq-comment-message"><p>@ike,</p>
+<p>since we don&#8217;t work directly on the trunk, we don&#8217;t have changes in the trunk every day. when someone does push changes into the trunk, though, they notify the team so that the team can pull updates into their branch. this will be discussed in more detail, in my next post</p>
+<p>@charl,</p>
+<p>my next post should help to address your issues of bug fixes, from a concept level. at a high level, you need to define the merge strategy for your team. what merges where, when, and how often, etc.</p>
+<p>@Dale,</p>
+<p>code reviews are part of the merge strategy that a team has to define. for my team, they happen before we allow merging back into the trunk</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-377">
+        <div id="dsq-comment-header-377" class="dsq-comment-header">
+            <cite id="dsq-cite-377">
+                <span id="dsq-author-user-377">Jeffrey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-377" class="dsq-comment-body">
+            <div id="dsq-comment-message-377" class="dsq-comment-message"><p>I switched to Git about 6 months ago and I started doing BPF since the switch. Compare to svn git is so much (1 million ahead of the game) better than svn. Only complain is that I am a c# guy it&#8217;s a bit hard to get started on windows. I am using Git extentions as the GUI.</p>
+</div>
+        </div>
+    </li>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-378">
+        <div id="dsq-comment-header-378" class="dsq-comment-header">
+            <cite id="dsq-cite-378">
+http://blogs.msdn.com/jasonba                <span id="dsq-author-user-378">Jason</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-378" class="dsq-comment-body">
+            <div id="dsq-comment-message-378" class="dsq-comment-message"><p>@Ben, check out this post on branch-per-feature with TFS.  Maybe it&#8217;ll change your opinion ;)</p>
+<p><a href="http://staxmanade.blogspot.com/2009/08/branch-per-feature-with-team-foundation_06.html" rel="nofollow">http://staxmanade.blogspot.com/2009/08/branch-per-feature-with-team-foundation_06.html</a></p>
+</div>
+        </div>
+    </li>
+
+    </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2009/07/15/branch-per-feature-source-control-part-1-why/';
+    var disqus_identifier = '69 /blogs/derickbailey/archive/2009/07/15/branch-per-feature-source-control-part-1-why.aspx';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "Branch-Per-Feature Source Control. Part 1: Why";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=69';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2009\/07\/15\/branch-per-feature-source-control-part-1-why\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2013<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 14:23:48 -->

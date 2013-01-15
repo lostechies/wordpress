@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: DDD Question: Where does required info validation belong for an Entity?</title>
+	<atom:link href="http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: John</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-35</link>
+		<dc:creator>John</dc:creator>
+		<pubDate>Thu, 23 Oct 2008 14:44:08 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-35</guid>
+		<description>I don&#039;t believe in putting supporting methods in the object itself.  What if the validation depends on another type of object?  Or another method that needs to be called?  Then, all of a sudden, your object becomes depending on other objects.
+
+I always create a ValidateX method in my business layer that returns a collection of strings.  If the collection count is 0, there are no validation errors.  Otherwise, there are, and I can display them.  I call it in the presentation layer, and I also call it in my save method, and throw an execption if there are errors.  This way, even if the developer forgets to check before trying to save, I&#039;ll still prevent the save from occurring.
+
+So, I have the following:
+
+Part
+{
+	prop1
+	prop2
+	prop3
+}
+
+PartsService, PartsBusinessLayer, whatever your name for Parts business layer code
+{
+	public List&lt;String&gt; Validate(Part p)
+	{
+		return strings containing errors, if any, otherwise empty collection
+		This method might also call other business layer services, such as loading the fault to see if if supports this fault, or doing a calculation
+		on the part cost to see if it&#039;s too excessive, or whatever.  I wouldn&#039;t want these dependencies in my Part object.
+	}
+	
+	public Part Save(Part p)
+	{
+		if (Validate(p).Count &gt; 0)
+		{
+			throw exception, since user should have called Validate first to display the errors in a friendly fashion.
+		}
+		else
+		{
+			Save part
+		}
+	}
+}
+
+John</description>
+		<content:encoded><![CDATA[<p>I don&#8217;t believe in putting supporting methods in the object itself.  What if the validation depends on another type of object?  Or another method that needs to be called?  Then, all of a sudden, your object becomes depending on other objects.</p>
+<p>I always create a ValidateX method in my business layer that returns a collection of strings.  If the collection count is 0, there are no validation errors.  Otherwise, there are, and I can display them.  I call it in the presentation layer, and I also call it in my save method, and throw an execption if there are errors.  This way, even if the developer forgets to check before trying to save, I&#8217;ll still prevent the save from occurring.</p>
+<p>So, I have the following:</p>
+<p>Part<br />
+{<br />
+	prop1<br />
+	prop2<br />
+	prop3<br />
+}</p>
+<p>PartsService, PartsBusinessLayer, whatever your name for Parts business layer code<br />
+{<br />
+	public List<string> Validate(Part p)<br />
+	{<br />
+		return strings containing errors, if any, otherwise empty collection<br />
+		This method might also call other business layer services, such as loading the fault to see if if supports this fault, or doing a calculation<br />
+		on the part cost to see if it&#8217;s too excessive, or whatever.  I wouldn&#8217;t want these dependencies in my Part object.<br />
+	}</p>
+<p>	public Part Save(Part p)<br />
+	{<br />
+		if (Validate(p).Count > 0)<br />
+		{<br />
+			throw exception, since user should have called Validate first to display the errors in a friendly fashion.<br />
+		}<br />
+		else<br />
+		{<br />
+			Save part<br />
+		}<br />
+	}<br />
+}</p>
+<p>John</string></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Chad Myers</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-34</link>
+		<dc:creator>Chad Myers</dc:creator>
+		<pubDate>Thu, 23 Oct 2008 00:34:59 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-34</guid>
+		<description>We&#039;ve been successful using attributes and putting validation external.  We&#039;re not real strict on the &quot;object can never be in an invalid state&quot; thing. For testing, it&#039;s easier to allow it to be invalid and we can use an ObjectMother or some common factory to assemble one for us when we need it in a valid state. The entity has all the information on-or-in itself to tell us whether it&#039;s valid or not.
+
+public class Part
+{
+   [Required]
+   public string Description{ get; set; }
+}
+
+The &quot;Required&quot; attribute is also used to determine whether the column is nullable in the DB when we generate our DB from the domain. We also have other attributes like MaxStringLength, MustBePositive, and the like.
+
+For tricky situations, we can implement IValidated  and do a custom IsValid() method, but we try to keep this to a minimum and limit the number of conditionals in these methods.
+
+</description>
+		<content:encoded><![CDATA[<p>We&#8217;ve been successful using attributes and putting validation external.  We&#8217;re not real strict on the &#8220;object can never be in an invalid state&#8221; thing. For testing, it&#8217;s easier to allow it to be invalid and we can use an ObjectMother or some common factory to assemble one for us when we need it in a valid state. The entity has all the information on-or-in itself to tell us whether it&#8217;s valid or not.</p>
+<p>public class Part<br />
+{<br />
+   [Required]<br />
+   public string Description{ get; set; }<br />
+}</p>
+<p>The &#8220;Required&#8221; attribute is also used to determine whether the column is nullable in the DB when we generate our DB from the domain. We also have other attributes like MaxStringLength, MustBePositive, and the like.</p>
+<p>For tricky situations, we can implement IValidated  and do a custom IsValid() method, but we try to keep this to a minimum and limit the number of conditionals in these methods.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: derick.bailey</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-33</link>
+		<dc:creator>derick.bailey</dc:creator>
+		<pubDate>Mon, 20 Oct 2008 12:27:52 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-33</guid>
+		<description>@Sam @Colin
+
+I agree with Colin. I&#039;ve run into serious limitations using attributes for various purposes, in the past, and I tend to avoid them when I can, these days. 
+
+On top of that, there are so many frameworks out there that want attributes to be used, it turns into a bunch of visual noise and really takes away from the simplicity of an object, after more than a few attributes are applied.</description>
+		<content:encoded><![CDATA[<p>@Sam @Colin</p>
+<p>I agree with Colin. I&#8217;ve run into serious limitations using attributes for various purposes, in the past, and I tend to avoid them when I can, these days. </p>
+<p>On top of that, there are so many frameworks out there that want attributes to be used, it turns into a bunch of visual noise and really takes away from the simplicity of an object, after more than a few attributes are applied.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Colin Jack</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-32</link>
+		<dc:creator>Colin Jack</dc:creator>
+		<pubDate>Sat, 18 Oct 2008 18:07:00 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-32</guid>
+		<description>@Sam
+Attributes are too inflexible to use for all domain validation, they solve simple problems well but fall over badly in other situations:
+
+http://colinjack.blogspot.com/2008/03/domain-model-validation.html
+
+That&#039;s my view on it anyway.</description>
+		<content:encoded><![CDATA[<p>@Sam<br />
+Attributes are too inflexible to use for all domain validation, they solve simple problems well but fall over badly in other situations:</p>
+<p><a href="http://colinjack.blogspot.com/2008/03/domain-model-validation.html" rel="nofollow">http://colinjack.blogspot.com/2008/03/domain-model-validation.html</a></p>
+<p>That&#8217;s my view on it anyway.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Sam</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-31</link>
+		<dc:creator>Sam</dc:creator>
+		<pubDate>Fri, 17 Oct 2008 11:24:34 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-31</guid>
+		<description>The MS Enterprise Library Validation Block does a great job at solving this problem. 
+
+Rather than using a set of if/else if/else blocks, properties on the domain object are decorated with a set of attributes which specify the conditions under which they are valid. 
+
+My team has been using it in production code for the last couple of project, and it&#039;s working very well.
+
+Example code here: http://msdn.microsoft.com/en-us/library/cc511873.aspx</description>
+		<content:encoded><![CDATA[<p>The MS Enterprise Library Validation Block does a great job at solving this problem. </p>
+<p>Rather than using a set of if/else if/else blocks, properties on the domain object are decorated with a set of attributes which specify the conditions under which they are valid. </p>
+<p>My team has been using it in production code for the last couple of project, and it&#8217;s working very well.</p>
+<p>Example code here: <a href="http://msdn.microsoft.com/en-us/library/cc511873.aspx" rel="nofollow">http://msdn.microsoft.com/en-us/library/cc511873.aspx</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: shovavnik</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-30</link>
+		<dc:creator>shovavnik</dc:creator>
+		<pubDate>Fri, 17 Oct 2008 09:59:22 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-30</guid>
+		<description>The way I see it, validation is layer-specific and required in one form or another on most every layer. This does two things: it provides an in depth validation (and data integrity) solution, and it forces communication between developers working on disparate parts of an application.
+
+The difficulty is usually figuring out what the minimal amount of validation is at any layer.
+
+For example, you could have a database record for an Employee that has a non-null BirthDate field. The &quot;non-null&quot; and &quot;date&quot; type are a form of validation that determine that every Employee record must assign a date type value to the BirthDate field.
+
+In the data access layer, the validation would probably just ensure that the value for the Employee class object&#039;s BirthDate property can map correctly to the appropriate database field for the specific database provider.
+
+In the domain, you&#039;d validate the actual value, based on domain/business rules. For example, an employee cannot be under 18 or over 65, or whatever. Whether the validation occurs only when persisting the data (which allows invalid state otherwise) or always depends on the application-specific requirements.
+
+On the client, you&#039;re usually validating data entry, so the client is responsible for ensuring, for example, that the value is actually a date, possibly converting to the format to the format required by the domain classes (e.g., from 17/6/80 to 6/17/80 in some locales). In applications that allow invalid domain state, the client usually hooks into the domain validation in addition to the client-specific validation. So the client could optimize the process by also checking that the age is within domain-specified bounds by setting max and min values on a client validator control.
+
+When I describe a layered approach to validation with examples like this, I usually get a better response, because instead of thinking about WHERE to put the validation, the developers think about WHAT kind of validation is appropriate or requisite at any given level. The idea is to promote loose coupling and a non-layered validation approach defeats that purpose.</description>
+		<content:encoded><![CDATA[<p>The way I see it, validation is layer-specific and required in one form or another on most every layer. This does two things: it provides an in depth validation (and data integrity) solution, and it forces communication between developers working on disparate parts of an application.</p>
+<p>The difficulty is usually figuring out what the minimal amount of validation is at any layer.</p>
+<p>For example, you could have a database record for an Employee that has a non-null BirthDate field. The &#8220;non-null&#8221; and &#8220;date&#8221; type are a form of validation that determine that every Employee record must assign a date type value to the BirthDate field.</p>
+<p>In the data access layer, the validation would probably just ensure that the value for the Employee class object&#8217;s BirthDate property can map correctly to the appropriate database field for the specific database provider.</p>
+<p>In the domain, you&#8217;d validate the actual value, based on domain/business rules. For example, an employee cannot be under 18 or over 65, or whatever. Whether the validation occurs only when persisting the data (which allows invalid state otherwise) or always depends on the application-specific requirements.</p>
+<p>On the client, you&#8217;re usually validating data entry, so the client is responsible for ensuring, for example, that the value is actually a date, possibly converting to the format to the format required by the domain classes (e.g., from 17/6/80 to 6/17/80 in some locales). In applications that allow invalid domain state, the client usually hooks into the domain validation in addition to the client-specific validation. So the client could optimize the process by also checking that the age is within domain-specified bounds by setting max and min values on a client validator control.</p>
+<p>When I describe a layered approach to validation with examples like this, I usually get a better response, because instead of thinking about WHERE to put the validation, the developers think about WHAT kind of validation is appropriate or requisite at any given level. The idea is to promote loose coupling and a non-layered validation approach defeats that purpose.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Tobin Harris</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-29</link>
+		<dc:creator>Tobin Harris</dc:creator>
+		<pubDate>Thu, 16 Oct 2008 18:16:43 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-29</guid>
+		<description>@Neeva. I think that Ruby on Rails handles this quite nicely. It&#039;s something like this (psudocode).
+
+void OnSave(){
+  if( ! customer.Validate() )
+    view.ShowErrors( customer.ValidationErrors );
+  else
+    customerRepos.Save( customer );
+}
+
+That would list the error messages at the top of the page after a user tries to submit. 
+
+This is possible in ASP.NET too (MVC or otherwise). 
+
+In Rails, because the validation errors also contain information about the object properties that were invalid, you can easily write code to highlight the appropriate text fields etc. Last time I did a Rails project, I added 5 lines of framework code on got this facility on every form in the project! You have to use a convention in your field naming for this, but that&#039;s no bad thing IMHO.</description>
+		<content:encoded><![CDATA[<p>@Neeva. I think that Ruby on Rails handles this quite nicely. It&#8217;s something like this (psudocode).</p>
+<p>void OnSave(){<br />
+  if( ! customer.Validate() )<br />
+    view.ShowErrors( customer.ValidationErrors );<br />
+  else<br />
+    customerRepos.Save( customer );<br />
+}</p>
+<p>That would list the error messages at the top of the page after a user tries to submit. </p>
+<p>This is possible in ASP.NET too (MVC or otherwise). </p>
+<p>In Rails, because the validation errors also contain information about the object properties that were invalid, you can easily write code to highlight the appropriate text fields etc. Last time I did a Rails project, I added 5 lines of framework code on got this facility on every form in the project! You have to use a convention in your field naming for this, but that&#8217;s no bad thing IMHO.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Colin Jack</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-28</link>
+		<dc:creator>Colin Jack</dc:creator>
+		<pubDate>Thu, 16 Oct 2008 15:35:31 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-28</guid>
+		<description>@Neeva
+I&#039;d say either don&#039;t combine both worlds, just repeat the validation in the domain (which will ofcourse do additional validation) or maybe generate your client side validation (e.g. JS) from your domain rules. There are other options of course...</description>
+		<content:encoded><![CDATA[<p>@Neeva<br />
+I&#8217;d say either don&#8217;t combine both worlds, just repeat the validation in the domain (which will ofcourse do additional validation) or maybe generate your client side validation (e.g. JS) from your domain rules. There are other options of course&#8230;</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Neeva</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-27</link>
+		<dc:creator>Neeva</dc:creator>
+		<pubDate>Thu, 16 Oct 2008 13:23:52 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-27</guid>
+		<description>Great post and good discussion. One element, tied to webapps, that I see frequently missing is the notion of client side validation. The average ASP.NET developer uses ASP.NET validators to validate on both server and client side. While this is nice, it seperates the validation from the domain classes. I have yet to see a good solution to combine both worlds. Any ideas here?</description>
+		<content:encoded><![CDATA[<p>Great post and good discussion. One element, tied to webapps, that I see frequently missing is the notion of client side validation. The average ASP.NET developer uses ASP.NET validators to validate on both server and client side. While this is nice, it seperates the validation from the domain classes. I have yet to see a good solution to combine both worlds. Any ideas here?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Colin Jack</title>
+		<link>http://lostechies.com/derickbailey/2008/10/15/ddd-question-where-does-input-validation-belong/#comment-26</link>
+		<dc:creator>Colin Jack</dc:creator>
+		<pubDate>Thu, 16 Oct 2008 07:01:03 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/15/ddd-question-where-does-input-validation-belong.aspx#comment-26</guid>
+		<description>&gt; i&#039;m not fond of a lot of if-then statement littering my 
+&gt; code, and handling specific broken rules like this is 
+&gt; especially prone to massive if then statements, in my 
+&gt; experience. perhaps some sort of strategy pattern for the 
+&gt; rules, or command pattern, to execute when a rule is 
+&gt; broken or satisfied, allowing me to register a specific 
+&gt; command to execute in my specific contexts
+
+One approach I&#039;ve used is to model the conditions as little rules implementing something like IDomainRule and inheriting from ISpecification. You can thus say &quot;new CustomerNameRule().IsSatisfiedBy(customer)&quot;.
+
+The IDomainRule interface adds extra meta-data about the rule (not necessarily a description which would be resourced but maybe some other useful informaiton.</description>
+		<content:encoded><![CDATA[<p>> i&#8217;m not fond of a lot of if-then statement littering my<br />
+> code, and handling specific broken rules like this is<br />
+> especially prone to massive if then statements, in my<br />
+> experience. perhaps some sort of strategy pattern for the<br />
+> rules, or command pattern, to execute when a rule is<br />
+> broken or satisfied, allowing me to register a specific<br />
+> command to execute in my specific contexts</p>
+<p>One approach I&#8217;ve used is to model the conditions as little rules implementing something like IDomainRule and inheriting from ISpecification. You can thus say &#8220;new CustomerNameRule().IsSatisfiedBy(customer)&#8221;.</p>
+<p>The IDomainRule interface adds extra meta-data about the rule (not necessarily a description which would be resourced but maybe some other useful informaiton.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 14:37:48 -->

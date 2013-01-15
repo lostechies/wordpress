@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Encapsulation: Entities, Collections And Business Rules</title>
+	<atom:link href="http://lostechies.com/derickbailey/2008/10/23/encapsulation-entities-collections-and-business-rules/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2008/10/23/encapsulation-entities-collections-and-business-rules/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Colin Jack</title>
+		<link>http://lostechies.com/derickbailey/2008/10/23/encapsulation-entities-collections-and-business-rules/#comment-47</link>
+		<dc:creator>Colin Jack</dc:creator>
+		<pubDate>Sat, 25 Oct 2008 15:30:00 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/23/encapsulation-entities-collections-and-business-rules.aspx#comment-47</guid>
+		<description>@Joe
+The other side of that is if/when that second requirements comes along you can refactor the model so you don&#039;t need to design for it upfront. 
+
+Having said that in general though I think association/relationship objects (which Consultations are) are an under-developed part of DDD, Randy Stafford raised that a few times on the forum and I hope its dealt with in any second edition.</description>
+		<content:encoded><![CDATA[<p>@Joe<br />
+The other side of that is if/when that second requirements comes along you can refactor the model so you don&#8217;t need to design for it upfront. </p>
+<p>Having said that in general though I think association/relationship objects (which Consultations are) are an under-developed part of DDD, Randy Stafford raised that a few times on the forum and I hope its dealt with in any second edition.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: derick.bailey</title>
+		<link>http://lostechies.com/derickbailey/2008/10/23/encapsulation-entities-collections-and-business-rules/#comment-46</link>
+		<dc:creator>derick.bailey</dc:creator>
+		<pubDate>Fri, 24 Oct 2008 01:25:27 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/23/encapsulation-entities-collections-and-business-rules.aspx#comment-46</guid>
+		<description>There&#039;s plenty of room to share the stage on this subject... I believe the &quot;short&quot; version by Eric Evans is about 300 pages. :)</description>
+		<content:encoded><![CDATA[<p>There&#8217;s plenty of room to share the stage on this subject&#8230; I believe the &#8220;short&#8221; version by Eric Evans is about 300 pages. :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Joe Ocampo</title>
+		<link>http://lostechies.com/derickbailey/2008/10/23/encapsulation-entities-collections-and-business-rules/#comment-45</link>
+		<dc:creator>Joe Ocampo</dc:creator>
+		<pubDate>Fri, 24 Oct 2008 00:31:32 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/23/encapsulation-entities-collections-and-business-rules.aspx#comment-45</guid>
+		<description>Darn...I was going to create a whole post on this concept...I won&#039;t steel another brothers thunder.  :-)</description>
+		<content:encoded><![CDATA[<p>Darn&#8230;I was going to create a whole post on this concept&#8230;I won&#8217;t steel another brothers thunder.  :-)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: derick.bailey</title>
+		<link>http://lostechies.com/derickbailey/2008/10/23/encapsulation-entities-collections-and-business-rules/#comment-44</link>
+		<dc:creator>derick.bailey</dc:creator>
+		<pubDate>Thu, 23 Oct 2008 23:47:09 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/23/encapsulation-entities-collections-and-business-rules.aspx#comment-44</guid>
+		<description>@Joe
+
+SSHHHH!!! You&#039;re giving away all the secrets of my next post! :)
+
+yeah, we came to that same conclusion in the second half of our conversation last night, and re-discussed it today concluding that it really is the right thing to do. What&#039;s really interesting is that our NHibernate mappings were the final straw that confirmed we were doing things wrong, so my next post was going to talk about design smells showing up in interesting places.
+</description>
+		<content:encoded><![CDATA[<p>@Joe</p>
+<p>SSHHHH!!! You&#8217;re giving away all the secrets of my next post! :)</p>
+<p>yeah, we came to that same conclusion in the second half of our conversation last night, and re-discussed it today concluding that it really is the right thing to do. What&#8217;s really interesting is that our NHibernate mappings were the final straw that confirmed we were doing things wrong, so my next post was going to talk about design smells showing up in interesting places.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Joe Ocampo</title>
+		<link>http://lostechies.com/derickbailey/2008/10/23/encapsulation-entities-collections-and-business-rules/#comment-43</link>
+		<dc:creator>Joe Ocampo</dc:creator>
+		<pubDate>Thu, 23 Oct 2008 21:20:25 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/23/encapsulation-entities-collections-and-business-rules.aspx#comment-43</guid>
+		<description>One thing I like to challenge developers with when I teach DDD is to flip the aggregate to determine if the model is sound.
+
+I know this is only an example but work with me here.  You indicated you are dealing with a medical system.  We can assume there are certain entities such as Patient, Consultations, Doctor and Practice. In your example you created a model where the patient is the aggregate root for consultations but what if the Doctor simply asked what consultations do I have today?  In this paradigm the Practice is the aggregate root and Consultations are aggregate within where Patient is an aspect of the consultation.  The code would look something like this.
+
+consultations = practiceService(IConsultationService).GetConsultationsFor(doctor);
+This also allows the consultation service to encapsulate its own logic for creating a consultation for creating a consultation. You can’t get any closer than that :-)
+
+consultationService.CreateConsultationFor(patient).with(doctor).at(date);
+
+The point I am trying to make is be careful of aggregate roots.  Once you go down that path it is really difficult to back the train up and break it apart.
+
+</description>
+		<content:encoded><![CDATA[<p>One thing I like to challenge developers with when I teach DDD is to flip the aggregate to determine if the model is sound.</p>
+<p>I know this is only an example but work with me here.  You indicated you are dealing with a medical system.  We can assume there are certain entities such as Patient, Consultations, Doctor and Practice. In your example you created a model where the patient is the aggregate root for consultations but what if the Doctor simply asked what consultations do I have today?  In this paradigm the Practice is the aggregate root and Consultations are aggregate within where Patient is an aspect of the consultation.  The code would look something like this.</p>
+<p>consultations = practiceService(IConsultationService).GetConsultationsFor(doctor);<br />
+This also allows the consultation service to encapsulate its own logic for creating a consultation for creating a consultation. You can’t get any closer than that :-)</p>
+<p>consultationService.CreateConsultationFor(patient).with(doctor).at(date);</p>
+<p>The point I am trying to make is be careful of aggregate roots.  Once you go down that path it is really difficult to back the train up and break it apart.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Jimmy Bogard</title>
+		<link>http://lostechies.com/derickbailey/2008/10/23/encapsulation-entities-collections-and-business-rules/#comment-42</link>
+		<dc:creator>Jimmy Bogard</dc:creator>
+		<pubDate>Thu, 23 Oct 2008 14:55:14 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/10/23/encapsulation-entities-collections-and-business-rules.aspx#comment-42</guid>
+		<description>I think wherever it is, the closer to the model the better.  On the model == fairly rad.</description>
+		<content:encoded><![CDATA[<p>I think wherever it is, the closer to the model the better.  On the model == fairly rad.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 15:17:07 -->

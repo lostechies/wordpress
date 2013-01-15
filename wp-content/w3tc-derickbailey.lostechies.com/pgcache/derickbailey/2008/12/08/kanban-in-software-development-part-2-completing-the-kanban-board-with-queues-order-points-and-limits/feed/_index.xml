@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Kanban in Software Development. Part 2: Completing the Kanban Board with Queues, Order Points and Limits</title>
+	<atom:link href="http://lostechies.com/derickbailey/2008/12/08/kanban-in-software-development-part-2-completing-the-kanban-board-with-queues-order-points-and-limits/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2008/12/08/kanban-in-software-development-part-2-completing-the-kanban-board-with-queues-order-points-and-limits/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Agustin Villena</title>
+		<link>http://lostechies.com/derickbailey/2008/12/08/kanban-in-software-development-part-2-completing-the-kanban-board-with-queues-order-points-and-limits/#comment-81</link>
+		<dc:creator>Agustin Villena</dc:creator>
+		<pubDate>Thu, 18 Dec 2008 21:30:13 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/12/08/kanban-in-software-development-part-2-completing-the-kanban-board-with-queues-order-points-and-limits.aspx#comment-81</guid>
+		<description>Hi Derick!
+
+Thanks for your answer.
+I have a question: If the bussines analist has a card in the &quot;analysis&quot; column, how the developer knows when to pull it from this column? Maybe we can divide the column in 3 sub-columns (queue, work in progress, done) and when the card is on the &quot;done&quot; sub-column of analysis, the developer knows that he can pull it
+
+Any thougst?
+
+agustin.villena at gmail dot com</description>
+		<content:encoded><![CDATA[<p>Hi Derick!</p>
+<p>Thanks for your answer.<br />
+I have a question: If the bussines analist has a card in the &#8220;analysis&#8221; column, how the developer knows when to pull it from this column? Maybe we can divide the column in 3 sub-columns (queue, work in progress, done) and when the card is on the &#8220;done&#8221; sub-column of analysis, the developer knows that he can pull it</p>
+<p>Any thougst?</p>
+<p>agustin.villena at gmail dot com</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: derick.bailey</title>
+		<link>http://lostechies.com/derickbailey/2008/12/08/kanban-in-software-development-part-2-completing-the-kanban-board-with-queues-order-points-and-limits/#comment-80</link>
+		<dc:creator>derick.bailey</dc:creator>
+		<pubDate>Mon, 15 Dec 2008 13:02:12 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/12/08/kanban-in-software-development-part-2-completing-the-kanban-board-with-queues-order-points-and-limits.aspx#comment-80</guid>
+		<description>@Agustin
+
+&quot;what role has the right to move one card form a column to another one&quot;
+
+The person who going to do the work of a particular column is responsible for moving it. For example, if a business analyst is working on the &quot;Analysis&quot; column and finishes their task, the card will sit in that column until a Developer is ready to pull the card into the Work In Progress / Development column.
+
+Your 4 column list is very common for task boards - we started with that same list, a while back, and it grew over time as we recognized specific tasks that needed to be called out. To apply these 4 columns to Kanban, though, I would need to know a lot more about your situation and company. I tried to illustrate some of the principles and rules for creating a kanban board in this article, talking about queues and pipelines, handling for bottlenecks, etc. Think about your own company and team, what bottlenecks you have (if any), and see what you can come up with.
+
+I am planning on several more articles in my Adventures In Lean series, as well. Some of your questions may be answered in later articles.
+
+If you would like to discuss this in more detail, though, feel free to contact me via the &quot;Contact&quot; link in the upper right hand corner, and we can talk via email.</description>
+		<content:encoded><![CDATA[<p>@Agustin</p>
+<p>&#8220;what role has the right to move one card form a column to another one&#8221;</p>
+<p>The person who going to do the work of a particular column is responsible for moving it. For example, if a business analyst is working on the &#8220;Analysis&#8221; column and finishes their task, the card will sit in that column until a Developer is ready to pull the card into the Work In Progress / Development column.</p>
+<p>Your 4 column list is very common for task boards &#8211; we started with that same list, a while back, and it grew over time as we recognized specific tasks that needed to be called out. To apply these 4 columns to Kanban, though, I would need to know a lot more about your situation and company. I tried to illustrate some of the principles and rules for creating a kanban board in this article, talking about queues and pipelines, handling for bottlenecks, etc. Think about your own company and team, what bottlenecks you have (if any), and see what you can come up with.</p>
+<p>I am planning on several more articles in my Adventures In Lean series, as well. Some of your questions may be answered in later articles.</p>
+<p>If you would like to discuss this in more detail, though, feel free to contact me via the &#8220;Contact&#8221; link in the upper right hand corner, and we can talk via email.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Agustin Villena</title>
+		<link>http://lostechies.com/derickbailey/2008/12/08/kanban-in-software-development-part-2-completing-the-kanban-board-with-queues-order-points-and-limits/#comment-79</link>
+		<dc:creator>Agustin Villena</dc:creator>
+		<pubDate>Mon, 15 Dec 2008 11:48:57 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2008/12/08/kanban-in-software-development-part-2-completing-the-kanban-board-with-queues-order-points-and-limits.aspx#comment-79</guid>
+		<description>I read with interest your articles about Kanban
+It will be great to have some example of the flow of a kanban through the kanban board. I&#039;m really puzzled about how the people involved in the project interacts with the cards and, specially,  what role has the right to move one card form a column to another one?.
+
+I&#039;m acustommed to the scrum task board, where the product owner puts the cards in the first column (in &quot;not started&quot; state), from which the develoers pulls them to the &quot;work in progress&quot; column-state and then to the &quot;validate&quot; state, where the product owner has the right to take the card  and put it in the &quot;done&quot; column IF the feature was validated.
+
+Can you give a similar example that works in this particular kanban board?
+
+Thanks!
+  Agustin</description>
+		<content:encoded><![CDATA[<p>I read with interest your articles about Kanban<br />
+It will be great to have some example of the flow of a kanban through the kanban board. I&#8217;m really puzzled about how the people involved in the project interacts with the cards and, specially,  what role has the right to move one card form a column to another one?.</p>
+<p>I&#8217;m acustommed to the scrum task board, where the product owner puts the cards in the first column (in &#8220;not started&#8221; state), from which the develoers pulls them to the &#8220;work in progress&#8221; column-state and then to the &#8220;validate&#8221; state, where the product owner has the right to take the card  and put it in the &#8220;done&#8221; column IF the feature was validated.</p>
+<p>Can you give a similar example that works in this particular kanban board?</p>
+<p>Thanks!<br />
+  Agustin</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 14:39:24 -->

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Branching Strategies: The Cost Of Branching And Merging</title>
+	<atom:link href="http://lostechies.com/derickbailey/2010/02/24/branching-strategies-the-cost-of-branching-and-merging/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2010/02/24/branching-strategies-the-cost-of-branching-and-merging/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Paul Hammant</title>
+		<link>http://lostechies.com/derickbailey/2010/02/24/branching-strategies-the-cost-of-branching-and-merging/#comment-565</link>
+		<dc:creator>Paul Hammant</dc:creator>
+		<pubDate>Wed, 14 Apr 2010 18:18:02 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/02/24/branching-strategies-the-cost-of-branching-and-merging.aspx#comment-565</guid>
+		<description>Even for Branch by Abstraction projects, you will still have one CI pipeline per branch.  Trunk will of course account for 99% of the activity, but you still want CI to watch past and future release branches for those 1% bug-fix-merges.</description>
+		<content:encoded><![CDATA[<p>Even for Branch by Abstraction projects, you will still have one CI pipeline per branch.  Trunk will of course account for 99% of the activity, but you still want CI to watch past and future release branches for those 1% bug-fix-merges.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: derick.bailey</title>
+		<link>http://lostechies.com/derickbailey/2010/02/24/branching-strategies-the-cost-of-branching-and-merging/#comment-564</link>
+		<dc:creator>derick.bailey</dc:creator>
+		<pubDate>Fri, 26 Feb 2010 16:36:19 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/02/24/branching-strategies-the-cost-of-branching-and-merging.aspx#comment-564</guid>
+		<description>@Graham,
+
+if you are just branching and not worrying out integration while working on the branch, then yes you will cause all kinds of pain. any good branching strategy - by abstraction or otherwise - will have a CI per branch to do continuous integration of the branches and check for integration issues. I have briefly touched on this in previous posts, and am planning a post dedicated entirely to this subject.</description>
+		<content:encoded><![CDATA[<p>@Graham,</p>
+<p>if you are just branching and not worrying out integration while working on the branch, then yes you will cause all kinds of pain. any good branching strategy &#8211; by abstraction or otherwise &#8211; will have a CI per branch to do continuous integration of the branches and check for integration issues. I have briefly touched on this in previous posts, and am planning a post dedicated entirely to this subject.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Graham</title>
+		<link>http://lostechies.com/derickbailey/2010/02/24/branching-strategies-the-cost-of-branching-and-merging/#comment-563</link>
+		<dc:creator>Graham</dc:creator>
+		<pubDate>Fri, 26 Feb 2010 16:08:44 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/02/24/branching-strategies-the-cost-of-branching-and-merging.aspx#comment-563</guid>
+		<description>The whole point of CI is to surface pain early, in which case surely branching (per-feature or otherwise) is just brushing problems beneath the carpet, to spring back out at an inconvenient point later? (i.e. integration &quot;hell&quot;). In which case, you&#039;d be far better off doing something like branch-by-abstraction - http://paulhammant.com/blog/branch_by_abstraction.html.</description>
+		<content:encoded><![CDATA[<p>The whole point of CI is to surface pain early, in which case surely branching (per-feature or otherwise) is just brushing problems beneath the carpet, to spring back out at an inconvenient point later? (i.e. integration &#8220;hell&#8221;). In which case, you&#8217;d be far better off doing something like branch-by-abstraction &#8211; <a href="http://paulhammant.com/blog/branch_by_abstraction.html" rel="nofollow">http://paulhammant.com/blog/branch_by_abstraction.html</a>.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Ed Hintz</title>
+		<link>http://lostechies.com/derickbailey/2010/02/24/branching-strategies-the-cost-of-branching-and-merging/#comment-562</link>
+		<dc:creator>Ed Hintz</dc:creator>
+		<pubDate>Thu, 25 Feb 2010 16:42:24 +0000</pubDate>
+		<guid isPermaLink="false">/blogs/derickbailey/archive/2010/02/24/branching-strategies-the-cost-of-branching-and-merging.aspx#comment-562</guid>
+		<description>TFS branching and merging is much improved, especially in the upcoming release of Visual Studio 2010.  You can read about it here: http://blogs.msdn.com/edhintz/archive/2010/01/20/visual-studio-team-foundation-server-branching-guide-2010.aspx</description>
+		<content:encoded><![CDATA[<p>TFS branching and merging is much improved, especially in the upcoming release of Visual Studio 2010.  You can read about it here: <a href="http://blogs.msdn.com/edhintz/archive/2010/01/20/visual-studio-team-foundation-server-branching-guide-2010.aspx" rel="nofollow">http://blogs.msdn.com/edhintz/archive/2010/01/20/visual-studio-team-foundation-server-branching-guide-2010.aspx</a></p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 15:09:56 -->

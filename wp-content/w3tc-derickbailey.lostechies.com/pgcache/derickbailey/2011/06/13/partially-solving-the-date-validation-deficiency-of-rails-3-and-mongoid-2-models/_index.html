@@ -72,7 +72,29 @@
 <p> </p>
 <h3>The Original Workaround</h3>
 <p>The answer I came up with was based on the answer posted to the question, by Rod Paddock, but was a bit of a hack compared to what I wanted (keep in mind that I&#8217;m using Mongoid instead of ActiveRecord when looking at this example):</p>
-<div>Could not embed GitHub Gist 1023657: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1023657.js?file=1-model-workaround.rb"></script><noscript><pre><code class="language-ruby ruby">class SomeModel
+  include Mongoid::Document
+
+  field :date, :type =&gt; Date
+  validates_presence_of :date
+
+  def date=(value)
+    begin
+      date_parsed = value.to_date
+      write_attribute :date, date_parsed
+      @bad_date = nil
+    rescue
+      write_attribute :date, nil
+      @bad_date = value
+    end
+  end
+
+  def date
+    return @bad_date if @bad_date
+    read_attribute :date
+  end
+
+end</code></pre></noscript>
 <p> </p>
 <p>This code effectively accomplishes what I want. It allows me to assign any arbitrary value to the model, validate the input to see if it&#8217;s even a valid date format. It let&#8217;s me keep the arbitrary value around and return it from the attribute when called. It also prevents bad dates from being considered ok, if you combine it with a &#8216;validates_presennce_of :date&#8217; validation.</p>
 <p> </p>
@@ -83,7 +105,84 @@
 <h3>A Better Solution With ActiveSupport::Concern And Meta-Programming</h3>
 <p>My recent use of ActiveSupport::Concern that I talked about in another post gave me an idea, and I ran with it. I could use a concern as a module to plug into a model, and provide a method that would not only define the date field for me, but provide accessor methods that know how to handle all of the parsing and storage needs that I have. I could also use a better data structure to store the results of the parsing, which would give me a better way to handle a custom validator without having to re-parse the input.</p>
 <p>The result of a day&#8217;s hacking this weekend, is the following concern:</p>
-<div>Could not embed GitHub Gist 1023657: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1023657.js?file=2-datefield-concern.rb"></script><noscript><pre><code class="language-ruby ruby">module Mongoid
+  module DateField
+    extend ActiveSupport::Concern
+
+    included do
+      validates_with Mongoid::DateFieldValidator
+    end
+
+    module ClassMethods
+      def date_field(name)
+        self.class_eval(&lt;&lt;-EOL, __FILE__, __LINE__)
+          field :#{name}, :type =&gt; Date
+
+          def #{name}=(value)
+            set_date_field_value :#{name}, value
+          end
+
+          def #{name}
+            get_date_field_value :#{name}
+          end
+        EOL
+      end
+    end
+
+    def date_fields
+      @date_fields ||= {}
+    end
+
+    def set_date_field_value(name, value)
+      field = get_date_field name
+      begin
+        parsed_value = value.to_date
+        field[:broken_value] = nil
+        field[:valid] = true
+      rescue
+        parsed_value = nil
+        field[:broken_value] = value
+        field[:valid] = false
+      end
+      write_attribute name, parsed_value
+    end
+
+    def get_date_field_value(name)
+      field = get_date_field name
+      if !field.key?(:valid) or field[:valid]
+        raw_value = read_attribute(name)
+        value = raw_value.to_date if raw_value
+      else
+        value = field[:broken_value]
+      end
+      value
+    end
+
+    def get_date_field(name)
+      if date_fields.key? name
+        field = date_fields[name]
+      else
+        field = {}
+        date_fields[name] = field
+      end
+      field
+    end
+
+  end
+
+  class DateFieldValidator &lt; ActiveModel::Validator
+    def validate(model)
+      is_valid = true
+      model.date_fields.each do |name, data|
+        if !data[:valid]
+          is_valid = false
+          model.errors.add name, &quot;must be a valid date: MM/DD/YYYY&quot;
+        end
+      end
+      is_valid
+    end
+  end
+end</code></pre></noscript>
 <p> </p>
 <p>The first thing you&#8217;ll notice is that this concern is namespaced for Mongoid. I did this specifically because the solution I built only works with Mongoid, at this point. I don&#8217;t use any of the usual ActiveRecord stuff in this project, so there was no need for me to build support for ActiveRecord. Someone else might be able to make it work with ActiveRecord fairly easily, though.</p>
 <p>Next, note the nested ClassMethods module. This module name is recognized by ActiveSupport::Concern and tells the concern to turn all of the method inside of it, into class level methods on the class that is including the concern. The end result is that my model will have a &#8216;date_field&#8217; method that can be called in the class definition.</p>
@@ -109,7 +208,18 @@ end
 <h3>One Remaining Issue: Mass Attribute Updates</h3>
 <p>Although I&#8217;ve solved the majority of the problems I had with this solution, there is one remaining issue: I can&#8217;t call .write_attributes or .update_attributes, and by extension, cannot call .create or .new with a hash of values that contains the date fields. Since the solution only provides the parsing and validation during a call to the get and set accessor methods, the parsing and validation doesn&#8217;t run and an exception would be thrown for an invalid date.</p>
 <p>The workaround here, is that I have to resort to rejecting the values from the form&#8217;s params when posting to the server and then manually assign them to the attributes:</p>
-<div>Could not embed GitHub Gist 1023657: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1023657.js?file=4-write_attributes-workaround.rb"></script><noscript><pre><code class="language-ruby ruby">med_data = params[:medication]
+start_date = med_data[:start_date]
+prescription_date = med_data[:prescription_date]
+
+med_data.reject! {|k,v| [:start_date, :prescription_date].include? k.to_sym}
+
+med = Medication.new med_data
+med.start_date = start_date
+med.prescription_date = prescription_date
+
+med.save
+</code></pre></noscript>
 <p> </p>
 <p>It&#8217;s a small price to pay for having a generally clean solution. However, I would love to solve this and be able to pass the invalid date strings into .write_attributes without worrying. I would love to see a modification to my solution that allows this to happen&#8230; *wink wink nudge nudge* :)</p>
 											</div><!-- .entry-content -->
@@ -225,7 +335,7 @@ Find me on the web:
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">UKB on <a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/#comment-2943">Abstraction: The Rule Of Three</a></li><li class="recentcomments">no one on <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/#comment-2942">References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2941">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/RAFraudwha' rel='external nofollow' class='url'>Rage Against Fraudy</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2940">Dear Open Source Project Leader: Quit Being A Jerk</a></li><li class="recentcomments"><a href='http://twitter.com/ToniKorpela' rel='external nofollow' class='url'>Toni Korpela</a> on <a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/#comment-2939">Dear Open Source Project Leader: Quit Being A Jerk</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
 			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
@@ -678,7 +788,7 @@ Find me on the web:
 <li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
 <li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
 </ul><br/>
-					LosTechies &copy; 2012<br />
+					LosTechies &copy; 2013<br />
 						Se Habla Code<br />
 				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
 				</div><!-- #fourth .widget-area -->
@@ -722,4 +832,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2012-12-19 06:44:10 -->
+Served from: lostechies.com @ 2013-01-15 14:28:28 -->

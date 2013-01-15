@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Partially Applied Functions In JavaScript</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Tue, 15 Jan 2013 14:03:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Andrew Kirkegaard</title>
+		<link>http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/#comment-2731</link>
+		<dc:creator>Andrew Kirkegaard</dc:creator>
+		<pubDate>Tue, 04 Sep 2012 16:21:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=962#comment-2731</guid>
+		<description>How would you bind the second attribute? 
+Like: var render = _.bind(Backbone.Marionette.Renderer.render, null, undefined, this.options.x); 
+Backbone.Marionette.TemplateCache.get(this.template) 
+.then(render) 
+.then(function (html) { that.$el.html(html); }) ; 
+In order to partially apply Marionette&#039;s render to the serialized data, and then run when the Template is received.</description>
+		<content:encoded><![CDATA[<p>How would you bind the second attribute?<br />
+Like: var render = _.bind(Backbone.Marionette.Renderer.render, null, undefined, this.options.x);<br />
+Backbone.Marionette.TemplateCache.get(this.template)<br />
+.then(render)<br />
+.then(function (html) { that.$el.html(html); }) ;<br />
+In order to partially apply Marionette&#8217;s render to the serialized data, and then run when the Template is received.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: David Tchepak</title>
+		<link>http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/#comment-2641</link>
+		<dc:creator>David Tchepak</dc:creator>
+		<pubDate>Wed, 25 Jul 2012 01:11:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=962#comment-2641</guid>
+		<description>I get what you mean, although compose is still a list of steps:
+
+
+
+_.compose(a, b, c)(x)  ==  a(b(c(x)))
+// Which is the same as
+var resultC = c(x)
+var resultB = b (resultC)
+var resultA = a ( resultB )
+
+
+
+While &quot;then&quot; reads naturally to imperative programmers like me, I&#039;m aware that learning to &quot;speak&quot; FP will probably make composition seem just as natural. I&#039;m trying to learn this at the moment, as I feel being able to think in terms of composition will give me additional ways of thinking about problems. 
+
+
+For example, it may lead me to think of testing the composed &quot;buildThumbnails&quot; function separately from the async &quot;whenFolderCreated&quot; function, where I previously may have stubbed out the &quot;localFolder.createFolderAsync&quot; call.
+
+
+You can also write a flipped compose function to compose left-to-right instead of right-to-left for cases where that reads more naturally.
+
+
+Obviously none of this is to say that the chained calls are wrong, just that I&#039;ve found it interesting and potentially useful to also think in terms of composition, so thought I&#039;d share. :)
+
+
+Cheers,
+Dave</description>
+		<content:encoded><![CDATA[<p>I get what you mean, although compose is still a list of steps:</p>
+<p>_.compose(a, b, c)(x)  ==  a(b(c(x)))<br />
+// Which is the same as<br />
+var resultC = c(x)<br />
+var resultB = b (resultC)<br />
+var resultA = a ( resultB )</p>
+<p>While &#8220;then&#8221; reads naturally to imperative programmers like me, I&#8217;m aware that learning to &#8220;speak&#8221; FP will probably make composition seem just as natural. I&#8217;m trying to learn this at the moment, as I feel being able to think in terms of composition will give me additional ways of thinking about problems. </p>
+<p>For example, it may lead me to think of testing the composed &#8220;buildThumbnails&#8221; function separately from the async &#8220;whenFolderCreated&#8221; function, where I previously may have stubbed out the &#8220;localFolder.createFolderAsync&#8221; call.</p>
+<p>You can also write a flipped compose function to compose left-to-right instead of right-to-left for cases where that reads more naturally.</p>
+<p>Obviously none of this is to say that the chained calls are wrong, just that I&#8217;ve found it interesting and potentially useful to also think in terms of composition, so thought I&#8217;d share. :)</p>
+<p>Cheers,<br />
+Dave</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/#comment-2639</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Tue, 24 Jul 2012 15:29:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=962#comment-2639</guid>
+		<description>oops! yes. :) 
+
+
+i updated the gist to correct this. it will take a day or two for the cache to clear and be reflected in this post.</description>
+		<content:encoded><![CDATA[<p>oops! yes. :) </p>
+<p>i updated the gist to correct this. it will take a day or two for the cache to clear and be reflected in this post.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: dan</title>
+		<link>http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/#comment-2638</link>
+		<dc:creator>dan</dc:creator>
+		<pubDate>Tue, 24 Jul 2012 15:23:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=962#comment-2638</guid>
+		<description>https://gist.github.com/3151016#file_3.js
+
+
+Does partial need to bind to add?
+
+
+var partial = _.bind(add, null, 1);</description>
+		<content:encoded><![CDATA[<p><a href="https://gist.github.com/3151016#file_3.js" rel="nofollow">https://gist.github.com/3151016#file_3.js</a></p>
+<p>Does partial need to bind to add?</p>
+<p>var partial = _.bind(add, null, 1);</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/#comment-2637</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Tue, 24 Jul 2012 13:54:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=962#comment-2637</guid>
+		<description>nice! wasn&#039;t aware of that. in situations where you need to pass one function around, that would definitely be useful. 
+
+
+in my case, i don&#039;t need to pass anything around. i want the code to read as a list of steps &quot;this, then this, then this, then this&quot;. 
+
+
+i&#039;ll have to keep &quot;compose&quot; in mind, though. will be very useful.</description>
+		<content:encoded><![CDATA[<p>nice! wasn&#8217;t aware of that. in situations where you need to pass one function around, that would definitely be useful. </p>
+<p>in my case, i don&#8217;t need to pass anything around. i want the code to read as a list of steps &#8220;this, then this, then this, then this&#8221;. </p>
+<p>i&#8217;ll have to keep &#8220;compose&#8221; in mind, though. will be very useful.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: David Tchepak</title>
+		<link>http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/#comment-2634</link>
+		<dc:creator>David Tchepak</dc:creator>
+		<pubDate>Tue, 24 Jul 2012 12:55:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=962#comment-2634</guid>
+		<description>Have you tried using function composition instead of chaining calls? I haven&#039;t tried it in JS myself, but &lt;a href=&quot;https://twitter.com/liammclennan&quot; rel=&quot;nofollow&quot;&gt;Liam&lt;/a&gt; recently pointed me to &lt;a href=&quot;http://underscorejs.org/#compose&quot; rel=&quot;nofollow&quot;&gt;underscore&#039;s compose function&lt;/a&gt; which looks quite interesting. AFAICT it would let you do something like:
+
+
+
+//pseudocode
+var buildThumbnails = _.compose(
+&#160;&#160;  Tiles.update, 
+&#160;&#160;  Tiles.getFolderNamesFromFiles,
+&#160;&#160;  Tiles.copyImages.bind(null, files));
+&#160;
+whenFolderCreated.then(buildThumbnails);
+
+
+Just another way to write the same thing I think, although a single composed function has the advantage of being able to be picked up and moved around / reused more easily than a chain of calls.
+</description>
+		<content:encoded><![CDATA[<p>Have you tried using function composition instead of chaining calls? I haven&#8217;t tried it in JS myself, but <a href="https://twitter.com/liammclennan" rel="nofollow">Liam</a> recently pointed me to <a href="http://underscorejs.org/#compose" rel="nofollow">underscore&#8217;s compose function</a> which looks quite interesting. AFAICT it would let you do something like:</p>
+<p>//pseudocode<br />
+var buildThumbnails = _.compose(<br />
+&nbsp;&nbsp;  Tiles.update,<br />
+&nbsp;&nbsp;  Tiles.getFolderNamesFromFiles,<br />
+&nbsp;&nbsp;  Tiles.copyImages.bind(null, files));<br />
+&nbsp;<br />
+whenFolderCreated.then(buildThumbnails);</p>
+<p>Just another way to write the same thing I think, although a single composed function has the advantage of being able to be picked up and moved around / reused more easily than a chain of calls.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/#comment-2628</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Fri, 20 Jul 2012 15:56:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=962#comment-2628</guid>
+		<description>D&#039;oh! I copied the wrong function out of that article. Thanks for letting me know :) I updated the gist, but it might take a day or so for the caching to clear up.</description>
+		<content:encoded><![CDATA[<p>D&#8217;oh! I copied the wrong function out of that article. Thanks for letting me know :) I updated the gist, but it might take a day or so for the caching to clear up.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Matthew Manela</title>
+		<link>http://lostechies.com/derickbailey/2012/07/20/partially-applied-functions-in-javascript/#comment-2627</link>
+		<dc:creator>Matthew Manela</dc:creator>
+		<pubDate>Fri, 20 Jul 2012 15:45:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=962#comment-2627</guid>
+		<description>I think the example usage you provide from the Partial functional implementation from John Resig&#039;s blog is incorrect.
+
+
+The way that function works you need to pass in &#039;undefined&#039; for the parameters you would like to be filled later. 
+
+
+var partial = add.partial(1);
+console.log(partial(2) === 3); // = false
+console.log(partial(2) === NaN); // = true
+
+partial = add.partial(1,undefined);
+console.log(partial(2) === 3); // = true </description>
+		<content:encoded><![CDATA[<p>I think the example usage you provide from the Partial functional implementation from John Resig&#8217;s blog is incorrect.</p>
+<p>The way that function works you need to pass in &#8216;undefined&#8217; for the parameters you would like to be filled later. </p>
+<p>var partial = add.partial(1);<br />
+console.log(partial(2) === 3); // = false<br />
+console.log(partial(2) === NaN); // = true</p>
+<p>partial = add.partial(1,undefined);<br />
+console.log(partial(2) === 3); // = true </p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-15 15:13:52 -->
