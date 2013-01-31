@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Google Analyticator
- * Version: 6.3.4
+ * Version: 6.4.2
  * Plugin URI: http://wordpress.org/extend/plugins/google-analyticator/
  * Description: Adds the necessary JavaScript code to enable <a href="http://www.google.com/analytics/">Google's Analytics</a>. After enabling this plugin you need to authenticate with Google, then select your domain and you're set.
  * Author: Video User Manuals
@@ -9,7 +9,7 @@
  * Text Domain: google-analyticator
  */
 
-define('GOOGLE_ANALYTICATOR_VERSION', '6.3.4');
+define('GOOGLE_ANALYTICATOR_VERSION', '6.4.2');
 
 define('GOOGLE_ANALYTICATOR_CLIENTID', '1007949979410.apps.googleusercontent.com');
 define('GOOGLE_ANALYTICATOR_CLIENTSECRET', 'q06U41XDXtzaXD14E-KO1hti'); //don't worry - this don't need to be secret in our case
@@ -36,7 +36,7 @@ define("key_ga_outbound_prefix", "ga_outbound_prefix", true);
 define("key_ga_downloads", "ga_downloads", true);
 define("key_ga_downloads_prefix", "ga_downloads_prefix", true);
 define("key_ga_widgets", "ga_widgets", true);
-define("key_ga_sitespeed", "ga_sitespeed", true);
+define("key_ga_annon", "ga_annon", true);
 
 define("ga_uid_default", "UA-XXXXXXXX-X", true);
 define("ga_google_token_default", "", true);
@@ -52,9 +52,9 @@ define("ga_outbound_prefix_default", 'outgoing', true);
 define("ga_downloads_default", "", true);
 define("ga_downloads_prefix_default", "download", true);
 define("ga_widgets_default", ga_enabled, true);
-define("ga_sitespeed_default", ga_enabled, true);
 
 // Create the default key and status
+add_option( 'ga_version', GOOGLE_ANALYTICATOR_VERSION );
 add_option(key_ga_status, ga_status_default, '');
 add_option(key_ga_uid, ga_uid_default, '');
 add_option(key_ga_admin, ga_admin_default, '');
@@ -69,11 +69,10 @@ add_option(key_ga_outbound, ga_outbound_default, '');
 add_option(key_ga_outbound_prefix, ga_outbound_prefix_default, '');
 add_option(key_ga_downloads, ga_downloads_default, '');
 add_option(key_ga_downloads_prefix, ga_downloads_prefix_default, '');
-add_option(key_ga_sitespeed, ga_sitespeed_default, '');
 add_option(key_ga_widgets, ga_widgets_default, '');
+add_option(key_ga_annon, false );
 add_option('ga_defaults', 'yes' );
 add_option('ga_google_token', '', '');
-
 
  $useAuth = ( get_option( 'ga_google_token' ) == '' ? false : true );
 
@@ -238,6 +237,8 @@ function ga_filter_plugin_actions($links) {
 
 function ga_do_reset()
 {
+    global $wpdb;
+    
     // Delete all GA options.
     delete_option(key_ga_status);
     delete_option(key_ga_uid);
@@ -253,15 +254,17 @@ function ga_do_reset()
     delete_option(key_ga_outbound_prefix);
     delete_option(key_ga_downloads);
     delete_option(key_ga_downloads_prefix);
-    delete_option(key_ga_sitespeed);
     delete_option(key_ga_widgets);
+    delete_option(key_ga_annon);
     delete_option('ga_defaults');
     delete_option('ga_google_token');
     delete_option('ga_google_authtoken');
     delete_option('ga_profileid');
-
-
-
+    delete_transient('ga_admin_stats_widget');
+    
+    // Need to remove cached items from GA widgets 
+    $wpdb->query( "delete from $wpdb->options where `option_name` like 'google_stats_visitsGraph_%'");
+ 
     wp_redirect( admin_url( 'options-general.php?page=ga_activate' ) );
     exit;
 }
@@ -280,32 +283,32 @@ function ga_options_page() {
 
 
 		// Update the status
-		$ga_status = $_POST[key_ga_status];
+		$ga_status = wp_filter_kses( $_POST[key_ga_status] );
 		if (($ga_status != ga_enabled) && ($ga_status != ga_disabled))
 			$ga_status = ga_status_default;
 		update_option(key_ga_status, $ga_status);
 
 		// Update the UID
-		$ga_uid = $_POST[key_ga_uid];
+		$ga_uid = wp_filter_kses( $_POST[key_ga_uid] );
 		if ($ga_uid == '')
 			$ga_uid = ga_uid_default;
 		update_option(key_ga_uid, $ga_uid);
 
 		// Update the admin logging
-		$ga_admin = $_POST[key_ga_admin];
+		$ga_admin = wp_filter_kses( $_POST[key_ga_admin] );
 		if (($ga_admin != ga_enabled) && ($ga_admin != ga_disabled))
 			$ga_admin = ga_admin_default;
-		update_option(key_ga_admin, $ga_admin);
+		update_option(key_ga_admin, wp_filter_kses( $ga_admin ) );
 
 		// Update the admin disable setting
-		$ga_admin_disable = $_POST[key_ga_admin_disable];
+		$ga_admin_disable = wp_filter_kses( $_POST[key_ga_admin_disable] );
 		if ( $ga_admin_disable == '' )
 			$ga_admin_disable = ga_admin_disable_default;
-		update_option(key_ga_admin_disable, $ga_admin_disable);
+		update_option(key_ga_admin_disable, wp_filter_kses( $ga_admin_disable) );
 
 		// Update the admin level
 		if ( array_key_exists(key_ga_admin_role, $_POST) ) {
-			$ga_admin_role = $_POST[key_ga_admin_role];
+			$ga_admin_role = wp_filter_kses( $_POST[key_ga_admin_role] );
 		} else {
 			$ga_admin_role = "";
 		}
@@ -313,65 +316,62 @@ function ga_options_page() {
 
 		// Update the dashboard level
 		if ( array_key_exists(key_ga_dashboard_role, $_POST) ) {
-			$ga_dashboard_role = $_POST[key_ga_dashboard_role];
+			$ga_dashboard_role = wp_filter_kses( $_POST[key_ga_dashboard_role] );
 		} else {
 			$ga_dashboard_role = "";
 		}
-		update_option(key_ga_dashboard_role, $ga_dashboard_role);
+		update_option(key_ga_dashboard_role, wp_filter_kses( $ga_dashboard_role ) );
 
 		// Update the extra tracking code
 		$ga_extra = $_POST[key_ga_extra];
-		update_option(key_ga_extra, $ga_extra);
+		update_option(key_ga_extra, wp_filter_kses( $ga_extra ) );
 
 		// Update the extra after tracking code
 		$ga_extra_after = $_POST[key_ga_extra_after];
-		update_option(key_ga_extra_after, $ga_extra_after);
+		update_option(key_ga_extra_after, wp_filter_kses( $ga_extra_after ));
 
 		// Update the adsense key
 		$ga_adsense = $_POST[key_ga_adsense];
-		update_option(key_ga_adsense, $ga_adsense);
+		update_option(key_ga_adsense, wp_filter_kses( $ga_adsense ) );
 
 		// Update the event tracking
 		$ga_event = $_POST[key_ga_event];
 		if (($ga_event != ga_enabled) && ($ga_event != ga_disabled))
 			$ga_event = ga_event_default;
-		update_option(key_ga_event, $ga_event);
+		update_option(key_ga_event, wp_filter_kses ( $ga_event ) );
 
 		// Update the outbound tracking
 		$ga_outbound = $_POST[key_ga_outbound];
 		if (($ga_outbound != ga_enabled) && ($ga_outbound != ga_disabled))
 			$ga_outbound = ga_outbound_default;
-		update_option(key_ga_outbound, $ga_outbound);
+		update_option(key_ga_outbound, wp_filter_kses( $ga_outbound ) );
 
 		// Update the outbound prefix
 		$ga_outbound_prefix = $_POST[key_ga_outbound_prefix];
 		if ($ga_outbound_prefix == '')
 			$ga_outbound_prefix = ga_outbound_prefix_default;
-		update_option(key_ga_outbound_prefix, $ga_outbound_prefix);
+		update_option(key_ga_outbound_prefix, wp_filter_kses( $ga_outbound_prefix) );
 
 		// Update the download tracking code
 		$ga_downloads = $_POST[key_ga_downloads];
-		update_option(key_ga_downloads, $ga_downloads);
+		update_option(key_ga_downloads, wp_filter_kses( $ga_downloads ) );
 
 		// Update the download prefix
 		$ga_downloads_prefix = $_POST[key_ga_downloads_prefix];
 		if ($ga_downloads_prefix == '')
 			$ga_downloads_prefix = ga_downloads_prefix_default;
-		update_option(key_ga_downloads_prefix, $ga_downloads_prefix);
+		update_option(key_ga_downloads_prefix, wp_filter_kses( $ga_downloads_prefix) );
 
 		// Update the widgets option
 		$ga_widgets = $_POST[key_ga_widgets];
 		if (($ga_widgets != ga_enabled) && ($ga_widgets != ga_disabled))
 			$ga_widgets = ga_widgets_default;
-		update_option(key_ga_widgets, $ga_widgets);
+		update_option(key_ga_widgets, wp_filter_kses( $ga_widgets ) );
 
+                // Update the widgets option
+		update_option(key_ga_annon, wp_filter_kses( $_POST[key_ga_annon] ) );
 
-		// Update the sitespeed option
-		$ga_sitespeed = $_POST[key_ga_sitespeed];
-		if (($ga_sitespeed != ga_enabled) && ($ga_sitespeed != ga_disabled))
-			$ga_sitespeed = ga_widgets_default;
-		update_option(key_ga_sitespeed, $ga_sitespeed);
-
+                
 		// Give an updated message
 		echo "<div class='updated fade'><p><strong>" . __('Google Analyticator settings saved.', 'google-analyticator') . "</strong></p></div>";
 	}
@@ -387,7 +387,6 @@ function ga_options_page() {
 		<div class="wrap">
 
 		<h2><?php _e('Google Analyticator Settings', 'google-analyticator'); ?></h2>
-
 		<form method="post" action="<?php echo admin_url('options-general.php?page=google-analyticator.php');?>">
 			<?php
 			# Add a nonce
@@ -447,13 +446,15 @@ function ga_options_page() {
 
                                                 echo "<select name='".key_ga_uid."'> ";
 
+                                                $hasSelected = false; // Will be set to true once a match is found. Cant echo selected twice.
+
                                                 foreach($uids as $id=>$domain):
 
                                                     echo '<option value="'.$id.'"';
                                                     // If set in DB.
-                                                    if( get_option(key_ga_uid) == $id ) { echo ' selected="selected"'; }
+                                                    if( get_option(key_ga_uid) == $id ) { $hasSelected=true; echo ' selected="selected"'; }
                                                     // Else if the domain matches the current domain & nothing set in DB.
-                                                    elseif( $_SERVER['HTTP_HOST'] == $domain && ( get_option(key_ga_uid) != '' ) ) { echo ' selected="selected"'; }
+                                                    elseif( ( $_SERVER['HTTP_HOST'] == $domain ) && ( ! $hasSelected ) ) { $hasSelected=true; echo ' selected="selected"'; }
                                                     echo '>'.$domain.'</option>';
 
                                                 endforeach;
@@ -495,6 +496,30 @@ function ga_options_page() {
 
 						?>
 						<p  class="setting-description"><?php _e('Selecting "no" to this option will prevent logged in WordPress users from showing up on your Google Analytics reports. This setting will prevent yourself or other users from showing up in your Analytics reports. Use the next setting to determine what user groups to exclude.', 'google-analyticator'); ?></p>
+					</td>
+				</tr>
+                                <tr>
+					<th width="30%" valign="top" style="padding-top: 10px;">
+						<label><?php _e('Anonymize IP Addresses', 'google-analyticator'); ?>:</label>
+					</th>
+					<td>
+						<?php
+						echo "<select name='".key_ga_annon."' id='".key_ga_annon."'>\n";
+
+						echo "<option value='0'";
+						if(get_option(key_ga_annon) == false )
+							echo " selected='selected'";
+						echo ">" . __('No', 'google-analyticator') . "</option>\n";
+
+						echo "<option value='1'";
+						if(get_option(key_ga_annon) == true)
+							echo" selected='selected'";
+						echo ">" . __('Yes', 'google-analyticator') . "</option>\n";
+
+						echo "</select>\n";
+
+						?>
+						<p  class="setting-description"><?php _e('By selecting "Yes", This tells Google Analytics to anonymize the information sent by the tracker objects by removing the last octet of the IP address prior to its storage. Note that this will slightly reduce the accuracy of geographic reporting.', 'google-analyticator'); ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -542,29 +567,6 @@ function ga_options_page() {
 						echo "</select>\n";
 						?>
 						<p  class="setting-description"><?php _e('Selecting the "Remove" option will physically remove the tracking code from logged in users. Selecting the "Use \'admin\' variable" option will assign a variable called \'admin\' to logged in users. This option will allow Google Analytics\' site overlay feature to work, but you will have to manually configure Google Analytics to exclude tracking from pageviews with the \'admin\' variable.', 'google-analyticator'); ?></p>
-					</td>
-				</tr>
-				<tr>
-					<th width="30%" valign="top" style="padding-top: 10px;">
-						<label for="<?php echo key_ga_sitespeed ?>"><?php _e('Site speed tracking', 'google-analyticator'); ?>:</label>
-					</th>
-					<td>
-						<?php
-						echo "<select name='".key_ga_sitespeed."' id='".key_ga_sitespeed."'>\n";
-
-						echo "<option value='".ga_enabled."'";
-						if(get_option(key_ga_sitespeed) == ga_enabled)
-							echo " selected='selected'";
-						echo ">" . __('Enabled', 'google-analyticator') . "</option>\n";
-
-						echo "<option value='".ga_disabled."'";
-						if(get_option(key_ga_sitespeed) == ga_disabled)
-							echo" selected='selected'";
-						echo ">" . __('Disabled', 'google-analyticator') . "</option>\n";
-
-						echo "</select>\n";
-						?>
-						<p  class="setting-description"><?php _e('Disabling this option will turn off the tracking required for <a href="http://www.google.com/support/analyticshelp/bin/answer.py?hl=en&answer=1205784&topic=1120718&utm_source=gablog&utm_medium=blog&utm_campaign=newga-blog&utm_content=sitespeed">Google Analytics\' Site Speed tracking report</a>.', 'google-analyticator'); ?></p>
 					</td>
 				</tr>
                                 <tr>
@@ -627,7 +629,7 @@ function ga_options_page() {
 						echo "<input type='text' size='50' ";
 						echo "name='".key_ga_downloads."' ";
 						echo "id='".key_ga_downloads."' ";
-						echo "value='".stripslashes(get_option(key_ga_downloads))."' />\n";
+						echo "value='".wp_filter_kses(get_option(key_ga_downloads))."' />\n";
 						?>
 						<p  class="setting-description"><?php _e('Enter any extensions of files you would like to be tracked as a download. For example to track all MP3s and PDFs enter <strong>mp3,pdf</strong>. <em>Outbound link tracking must be enabled for downloads to be tracked.</em>', 'google-analyticator'); ?></p>
 					</td>
@@ -641,7 +643,7 @@ function ga_options_page() {
 						echo "<input type='text' size='50' ";
 						echo "name='".key_ga_outbound_prefix."' ";
 						echo "id='".key_ga_outbound_prefix."' ";
-						echo "value='".stripslashes(get_option(key_ga_outbound_prefix))."' />\n";
+						echo "value='".  stripslashes( wp_filter_kses(get_option(key_ga_outbound_prefix)))."' />\n";
 						?>
 						<p  class="setting-description"><?php _e('Enter a name for the section tracked external links will appear under. This option has no effect if event tracking is enabled.', 'google-analyticator'); ?></em></p>
 					</td>
@@ -655,7 +657,7 @@ function ga_options_page() {
 						echo "<input type='text' size='50' ";
 						echo "name='".key_ga_downloads_prefix."' ";
 						echo "id='".key_ga_downloads_prefix."' ";
-						echo "value='".stripslashes(get_option(key_ga_downloads_prefix))."' />\n";
+						echo "value='".stripslashes(wp_filter_kses ( get_option(key_ga_downloads_prefix) ))."' />\n";
 						?>
 						<p  class="setting-description"><?php _e('Enter a name for the section tracked download links will appear under. This option has no effect if event tracking is enabled.', 'google-analyticator'); ?></em></p>
 					</td>
@@ -767,7 +769,7 @@ function ga_options_page() {
 
 				</table>
 			<p class="submit">
-				<input type="submit" name="info_update" value="<?php _e('Save Changes', 'google-analyticator'); ?>" />
+				<input type="submit" class="button button-primary" name="info_update" value="<?php _e('Save Changes', 'google-analyticator'); ?>" />
 			</p>
 
                         <a href="<?php echo admin_url('/options-general.php?page=ga_reset'); ?>"><?php _e('Deauthorize &amp; Reset Google Analyticator.', 'google-analyticator'); ?></a>
@@ -930,7 +932,11 @@ function add_google_analytics()
 				$outbound_prefix = stripslashes(get_option(key_ga_outbound_prefix));
 				$downloads_prefix = stripslashes(get_option(key_ga_downloads_prefix));
 				$event_tracking = get_option(key_ga_event);
-
+                                
+                                
+                                $need_to_annon = get_option(key_ga_annon);
+ 
+                                
 				?>
 <script type="text/javascript">
 	var analyticsFileTypes = [<?php echo strtolower($ext); ?>];
@@ -947,31 +953,30 @@ function add_google_analytics()
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', '<?php echo $uid; ?>']);
         _gaq.push(['_addDevId', 'i9k95']); // Google Analyticator App ID with Google 
+<?php if ($need_to_annon == '1' ): ?>
+        _gaq.push(['_gat._anonymizeIp']);
+<?php endif; ?>        
 <?php
 
-				# Add any tracking code before the trackPageview
-				do_action('google_analyticator_extra_js_before');
-				if ( '' != $extra )
-					echo "	$extra\n";
+    # Add any tracking code before the trackPageview
+    do_action('google_analyticator_extra_js_before');
+    if ( '' != $extra )
+            echo "	$extra\n";
 
-				# Add the track pageview function
-				echo "	_gaq.push(['_trackPageview']);\n";
+    # Add the track pageview function
+    echo "	_gaq.push(['_trackPageview']);\n";
 
-				# Add the site speed tracking
-				if ( get_option(key_ga_sitespeed) == ga_enabled )
-					echo "	_gaq.push(['_trackPageLoadTime']);\n";
+    # Disable page tracking if admin is logged in
+    if ( ( get_option(key_ga_admin) == ga_disabled ) && ( ga_current_user_is(get_option(key_ga_admin_role)) ) )
+            echo "	_gaq.push(['_setCustomVar', 'admin']);\n";
 
-				# Disable page tracking if admin is logged in
-				if ( ( get_option(key_ga_admin) == ga_disabled ) && ( ga_current_user_is(get_option(key_ga_admin_role)) ) )
-					echo "	_gaq.push(['_setCustomVar', 'admin']);\n";
+    # Add any tracking code after the trackPageview
+    do_action('google_analyticator_extra_js_after');
+    if ( '' != $extra_after )
+            echo "	$extra_after\n";
 
-				# Add any tracking code after the trackPageview
-				do_action('google_analyticator_extra_js_after');
-				if ( '' != $extra_after )
-					echo "	$extra_after\n";
-
-				# Add the final section of the tracking code
-				?>
+    # Add the final section of the tracking code
+    ?>
 
 	(function() {
 		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -1045,6 +1050,3 @@ function ga_current_user_is($roles)
 
 	return false;
 }
-
-
-?>

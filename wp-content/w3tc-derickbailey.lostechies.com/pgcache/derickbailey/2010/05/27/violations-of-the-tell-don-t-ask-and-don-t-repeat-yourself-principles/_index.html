@@ -197,7 +197,7 @@
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -206,9 +206,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -242,7 +241,6 @@ But in the case where you have a function with a response it is even more questi
 Consequently my answer to your question is: &#8230; it depends&#8230;</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-943">
@@ -267,7 +265,6 @@ the method returns True/False based on success and has an &#8220;out&#8221; para
           }</t></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-944">
@@ -280,7 +277,6 @@ the method returns True/False based on success and has an &#8220;out&#8221; para
             <div id="dsq-comment-message-944" class="dsq-comment-message"><p>If <code>formatReader.GetMessageBody()</code> was constructed in such a way that it returned an empty string or NULL if it couldn&#8217;t handle the file contents, then it would be the client&#8217;s responsibility to check.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-945">
@@ -295,7 +291,6 @@ http://jonfuller.codingtomusic.com                <span id="dsq-author-user-945"
 <p>The other thing I&#8217;ve seen that fits in this category, that I&#8217;m not particularly in love with is the TryParse idiom with the bool return value, and an out parameter to give you your value back.  It&#8217;s at least another option, but like I said, not one that I like.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-946">
@@ -311,7 +306,6 @@ http://derekgreer.lostechies.com                <span id="dsq-author-user-946">D
 <p>fileReaderService.RegisterFormatReader(new XmlFormatReader(), new XmlContentHandlerPredicate());</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-947">
@@ -325,7 +319,6 @@ http://www.trainedchimpanzees.blogspot.com/                <span id="dsq-author-
 <p>The problem is that some objects can handle the request and others with the same interface can&#8217;t. What would happen if you call GetThatFromIt in an object that returns false in CanHandle? I supose that an exception would be thrown. But then something is wrong with the hierarchy, as is a little extrange that you implement some interface but do not really implement all its methods.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-948">
@@ -338,7 +331,6 @@ http://sharpbites.blogspot.com                <span id="dsq-author-user-948">alb
             <div id="dsq-comment-message-948" class="dsq-comment-message"><p>It smells to me as a LSP violation, as Lorenzo pointed out.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-949">
@@ -353,7 +345,6 @@ http://blog.sampy.com                <span id="dsq-author-user-949">Sampy</span>
 <p>I was worried that by not throwing an exception or something else unignorable that errors could get lost but with the helper method to invoke services I get clean controllers and better assurance that I&#8217;m not missing something.</t></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-950">
@@ -367,7 +358,6 @@ http://helpqlodhelp.blogspot.com                <span id="dsq-author-user-950">R
 I used code like you have in your first example to implement a message parser framework, which can be extended at runtime. New parsers were added to a dispatcher in Spring. The dispatcher uses the canHandle/handle methods to find and execute the parser for a given input. The idea behind it, is to encapsulate the understanding of the message format in the parser. With Derek&#8217;s solution it is still nicely encapsulated. </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-951">
@@ -381,7 +371,6 @@ http://www.numainnovations.com/mentis-vulgaris                <span id="dsq-auth
 <p>&#8211; Jason</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-952">
@@ -394,7 +383,6 @@ http://weblogs.asp.net/dotjosh                <span id="dsq-author-user-952">Jos
             <div id="dsq-comment-message-952" class="dsq-comment-message"><p>I hate being a pattern zealot, and this is overkill for your concrete example. But the &#8220;Chain of Responsibility&#8221; pattern fits in nicely with what you are wanting to accomplish.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-953">
@@ -408,7 +396,6 @@ http://weblogs.asp.net/dotjosh                <span id="dsq-author-user-953">Jos
 <p>And with that, here is a quick and dirty example that&#8217;s in a formatted link <a href="http://gist.github.com/416324" rel="nofollow">http://gist.github.com/416324</a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-954">
@@ -421,7 +408,6 @@ http://weblogs.asp.net/dotjosh                <span id="dsq-author-user-953">Jos
             <div id="dsq-comment-message-954" class="dsq-comment-message"><p><a href="http://en.wikipedia.org/wiki/Chain-of-responsibility_pattern" rel="nofollow">http://en.wikipedia.org/wiki/Chain-of-responsibility_pattern</a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-955">
@@ -434,7 +420,6 @@ http://weblogs.asp.net/dotjosh                <span id="dsq-author-user-953">Jos
             <div id="dsq-comment-message-955" class="dsq-comment-message"><p>At the very least, the decision about whether or not to have IsThisATellDontAskViolation actually handle the request should be in a different method.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-956">
@@ -450,7 +435,6 @@ I don&#8217;t see this little DRY violation as a problem yet, however it will be
 <p>For format readers, I agree with the commenters above suggesting the Chain of Responsibility pattern. </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-957">
@@ -466,7 +450,6 @@ http://www.lostechies.com/members/jagregory/default.aspx                <span id
 <p>* <a href="http://www.c2.com/cgi/wiki?ChainOfResponsibilityPattern" rel="nofollow">http://www.c2.com/cgi/wiki?ChainOfResponsibilityPattern</a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-958">
@@ -486,7 +469,6 @@ http://www.lostechies.com/members/jagregory/default.aspx                <span id
 }</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-959">
@@ -499,7 +481,6 @@ http://www.lostechies.com/members/jagregory/default.aspx                <span id
             <div id="dsq-comment-message-959" class="dsq-comment-message"><p>@Bill Christie: I like your solution the most. Would lend the tightest syntax, so long as the FallbackAction wasn&#8217;t too involved.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-960">
@@ -513,7 +494,6 @@ http://flatlinerdoa.spaces.live.com                <span id="dsq-author-user-960
 <p>See <a href="http://abdullin.com/journal/2009/10/6/zen-development-practices-c-maybe-monad.html" rel="nofollow">http://abdullin.com/journal/2009/10/6/zen-development-practices-c-maybe-monad.html</a> or <a href="http://weblogs.asp.net/zowens/archive/2009/09/04/maybe-monad-my-c-version.aspx" rel="nofollow">http://weblogs.asp.net/zowens/archive/2009/09/04/maybe-monad-my-c-version.aspx</a> for examples</t></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-961">
@@ -538,7 +518,6 @@ http://codebetter.com/blogs/ian_cooper/                <span id="dsq-author-user
 <p>Where a messageReader than cannot process the file contents simply returns an empty string. This latter part is really just a variation of the null object pattern.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-962">
@@ -554,7 +533,6 @@ http://codebetter.com/blogs/ian_cooper/                <span id="dsq-author-user
 Then you can chain events that does one thing. Requires a bit more infrastructure in place, but I think events can solve a lot of problems :)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-963">
@@ -588,7 +566,6 @@ public class handler {<br />
 }</p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -608,6 +585,7 @@ public class handler {<br />
     var disqus_title = "Violations Of The “Tell, Don’t Ask” and “Don’t Repeat Yourself” Principles?";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -632,7 +610,6 @@ public class handler {<br />
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -650,7 +627,7 @@ public class handler {<br />
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -667,14 +644,15 @@ public class handler {<br />
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -1170,4 +1148,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:28:40 -->
+Served from: lostechies.com @ 2013-01-31 09:57:28 -->

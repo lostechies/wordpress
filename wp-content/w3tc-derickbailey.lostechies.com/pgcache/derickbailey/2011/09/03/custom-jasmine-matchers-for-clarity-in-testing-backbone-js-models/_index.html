@@ -71,53 +71,19 @@
 						<p>I&#8217;ve been writing some <a href="http://pivotal.github.com/jasmine/">Jasmine</a> specs for a sample <a href="http://documentcloud.github.com/backbone/">Backbone.js</a> application that I&#8217;m building. The application is a simple image gallery, and one of the features is the ability to navigate to through the image list with &#8216;next&#8217; and &#8216;previous&#8217; arrows. The code to move to the next or previous image is not terribly difficult, but there are a few edge cases to cover &#8211; such as what happens when no image is selected and you call &#8216;next&#8217;, or when you&#8217;re on the first image in the list and you call &#8216;previous&#8217;. I wanted to make sure I covered these cases in my specs, to make sure I didn&#8217;t have any regression failures as additional features were added to the application.</p>
 <h2>Duplicate Code In My Specs</h2>
 <p>In the process of writing up specs for the image navigation, I found myself repeating a few lines of code in each of them to check the index of the currently selected image.</p>
-<script src="https://gist.github.com/1191641.js?file=1-no-custom-matcher.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;when no image is selected and previous is called&quot;, function(){
-  beforeEach(function(){
-    this.images.previous();
-  });
-
-  it(&quot;should select the last image&quot;, function(){
-    var lastImage = imageList.length-1;
-    var selectedImage = this.images.indexOf(this.images.selectedImage);
-    expect(selectedImage).toBe(lastImage);
-  });
-});</code></pre></noscript>
+<div>Could not embed GitHub Gist 1191641: Bad credentials</div>
 <p>Lines 7, 8 and 9 of this gist show what I was doing to check the index of the selected image against what I expected. This code works and it got me through my first set of tests. I quickly got tired of writing the same lines of code for every test while only varying the actual and expected indexes, though.</p>
 <p>In addition to the duplicated code, a failing test (when the index was not what I expected) would produce an error message like &#8220;Expected 0 to 1&#8243;. This is not terribly informative&#8230; what do &#8220;0&#8243; and &#8220;1&#8243; mean? If I wasn&#8217;t in the code already working with it, I&#8217;d have to go examine the failing code to be able to answer that.</p>
 <h2>Custom Jasmine Matchers FTW!</h2>
 <p>To reduce the code duplication and provide a better error message, I decided to write a custom jasmine matcher. The end result allowed me to have spec code that looks like this:</p>
-<script src="https://gist.github.com/1191641.js?file=2-with-custom-matcher.js"></script><noscript><pre><code class="language-javascript javascript">describe(&quot;when no image is selected and previous is called&quot;, function(){
-  beforeEach(function(){
-    this.images.previous();
-  });
-
-  it(&quot;should select the last image&quot;, function(){
-    expect(this.images).toHaveSelectedImageAt(imageList.length-1);
-  });
-});
-</code></pre></noscript>
+<div>Could not embed GitHub Gist 1191641: Bad credentials</div>
 <p>Line 7 of this gist shows the new matcher in action.</p>
 <p>Note the name of the matcher that I created: &#8216;toHaveSelectedImageAt&#8217;. Not only have I reduced the amount of cod (and code duplication) to check the index, but I&#8217;ve also introduced application-specific language into the syntax of my tests! When I read this test now, I read it in my mind as &#8220;i expect this image collection to have a selected image at index #&#8217;. This provides much greater understanding of what the matcher does and is looking for / checking against.</p>
 <p>Also note that I&#8217;m calling the &#8216;expect(…)&#8217; method on my images collection, directly, and then telling my matcher method what index I expect to see for the selected image. Since the images collection knows which image is selected, there&#8217;s no need for me to pull the index out of the collection in my spec, directly. I can let the custom matcher do this for me and simply tell the matcher what index I&#8217;m expecting the currently selected image to be at.</p>
 <p>Lastly, the error message that I receive when a test fails has been customized to say: &#8220;Expected selected image index of 0 to be 1&#8243;. Again, this gives me application-specific information instead of just raw numbers. Now when my tests fails, I can see exactly what was being checked and have some context to interpret the numbers &#8220;1&#8243; and &#8220;0&#8243; in the error message.</p>
 <h2>Implementing toHaveSelectedImageAt</h2>
 <p>The basic implementation of my &#8216;toHaveSelectedImageAt&#8217; matcher uses the same code that I originally had in my specs.</p>
-<script src="https://gist.github.com/1191641.js?file=3-toHaveSelectedImageAt.js"></script><noscript><pre><code class="language-javascript javascript">beforeEach(function() {
-  this.addMatchers({
-
-    toHaveSelectedImageAt: function(expectedIndex) {
-      var images = this.actual;
-      var actualIndex = images.indexOf(images.selectedImage);
-      this.actual = actualIndex;
-      this.message = function(){
-        return &quot;Expected selected image index of &quot; + actualIndex + &quot; to be &quot; + expectedIndex;
-      };
-      return (actualIndex == expectedIndex);;
-    }
-
-  });
-});
-</code></pre></noscript>
+<div>Could not embed GitHub Gist 1191641: Bad credentials</div>
 <p>In addition to the index checking code, I&#8217;m modifying a few properties of the matcher object to provide better context and information for the error messages.</p>
 <p>&#8220;this.actual&#8221; is initially set by the object that you pass into the &#8216;expect&#8217; method call. It&#8217;s used to report the actual value found by your test, if you don&#8217;t provide a custom error message. I&#8217;m sure there are other uses for this, but that&#8217;s the most basic use I&#8217;ve seen so far.</p>
 <p>The &#8220;this.message&#8221; function returns the error message that I want. I&#8217;m not entirely sure why this needs to be a function, but it does need to be. You&#8217;ll get error messages about not being able to call &#8220;apply&#8221; if it isn&#8217;t a function.</p>
@@ -132,7 +98,7 @@
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -141,9 +107,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -173,6 +138,7 @@ Find me on the web:
     var disqus_title = "Custom Jasmine Matchers For Clarity In Testing Backbone.js Models";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -197,7 +163,6 @@ Find me on the web:
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -215,7 +180,7 @@ Find me on the web:
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -232,14 +197,15 @@ Find me on the web:
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -735,4 +701,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 14:39:21 -->
+Served from: lostechies.com @ 2013-01-31 09:47:02 -->

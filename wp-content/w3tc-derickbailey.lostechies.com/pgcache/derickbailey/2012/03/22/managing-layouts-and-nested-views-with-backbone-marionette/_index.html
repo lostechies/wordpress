@@ -137,7 +137,7 @@ myLayout.anotherRegion.show(moreView);</code></pre></noscript>
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -146,9 +146,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -181,7 +180,6 @@ Find me on the web:
 But what if my layout is already on the DOM? And I just want to use it without calling layout.render()?</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2308">
@@ -200,7 +198,6 @@ If I instead show the collectionView on the main region it works. </p>
 Any ideas?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2309">
@@ -213,7 +210,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2309">Derick 
             <div id="dsq-comment-message-2309" class="dsq-comment-message"><p>off-hand, it&#8217;s hard to say&#8230; i have some ideas, but none of them really make sense based on what you&#8217;ve said. it may be a timing issues, it may be that the jquery selector you specified for the subapp.layout.list is incorrect, or it could be a number of other things. can you post a link to a JSFiddle that reproduces the problem?</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -230,7 +226,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2309">Derick 
 Thanks</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2375">
@@ -251,7 +246,6 @@ Thanks</p>
 <p>Appreciate your help!</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2376">
@@ -264,7 +258,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2376">Derick 
             <div id="dsq-comment-message-2376" class="dsq-comment-message"><p>this should help <a href="http://tbranyen.com/post/missing-jquery-events-while-rendering" rel="nofollow">http://tbranyen.com/post/missing-jquery-events-while-rendering</a></p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2377">
@@ -284,7 +277,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2376">Derick 
 <p>Thanks again!</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-4" id="dsq-comment-2471">
@@ -297,7 +289,6 @@ http://learningthehardway.net                <span id="dsq-author-user-2471">Rob
             <div id="dsq-comment-message-2471" class="dsq-comment-message"><p>not sure if its the best solution, but i found that adding an onRender method to my itemview and having it call this.delagateEvents() did the trick</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -316,7 +307,6 @@ http://learningthehardway.net                <span id="dsq-author-user-2472">Rob
             <div id="dsq-comment-message-2472" class="dsq-comment-message"><p>i stumbled on this for quite a while&#8230; it seems that you have to show(layout) before layout.region.show(view), otherwise nothing appears.  by design?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2473">
@@ -329,7 +319,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2473">Derick 
             <div id="dsq-comment-message-2473" class="dsq-comment-message"><p>you have to call .render on the layout before the regions are available, at this point. that can be changed, though, and probably should be. the only caveat to changing it is that the view&#8217;s `el` must be populated with the elements that the regions are looking for before you try to use the regions.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2474">
@@ -342,7 +331,6 @@ http://learningthehardway.net                <span id="dsq-author-user-2474">Rob
             <div id="dsq-comment-message-2474" class="dsq-comment-message"><p>yeah, the .render thing I understood and was documented so that&#8217;s cool.  The .show order is what threw me off&#8230; I was trying to call .show on the layout regions before .showing the layout itself because I assumed this would yield the best performance &#8211; this doesn&#8217;t work at all though.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-4" id="dsq-comment-2475">
@@ -355,7 +343,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2475">Derick 
             <div id="dsq-comment-message-2475" class="dsq-comment-message"><p>oh&#8230; that&#8217;s not right. it should work without having to show the layout first. i&#8217;ve logged a bug for this in the github issues and will try to get to it (and others) soon.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -375,7 +362,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2475">Derick 
 <p>One question regarding this post: It seems the layout in bbclonemail has changed since you wrote this post. What are the reasons?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2841">
@@ -388,7 +374,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2841">Derick 
             <div id="dsq-comment-message-2841" class="dsq-comment-message"><p>BBCloneMail changes on a regular basis &#8211; as new ideas, new features and new implementation details make their way in to Marionette. I also tend to use it as a playground for what the future of Marionette will bring. At this time, BBCloneMail is rather outdated, though.  I haven&#8217;t had a chance to go back and clean up some of the things that I know are odd / not the way I want them.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2843">
@@ -404,7 +389,6 @@ Things seem to be changing very fast in Marionette..<br />
 Thanks</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -428,6 +412,7 @@ Thanks</p>
     var disqus_title = "Managing Layouts And Nested Views With Backbone.Marionette";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -452,7 +437,6 @@ Thanks</p>
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -470,7 +454,7 @@ Thanks</p>
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -487,14 +471,15 @@ Thanks</p>
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -990,4 +975,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 14:44:26 -->
+Served from: lostechies.com @ 2013-01-31 10:05:23 -->

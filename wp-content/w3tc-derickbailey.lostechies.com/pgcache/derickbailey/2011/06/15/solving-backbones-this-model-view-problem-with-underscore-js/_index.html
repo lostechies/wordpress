@@ -143,7 +143,20 @@
 </code></pre></noscript>
 <p> </p>
 <p>And here&#8217;s the html to run this:</p>
-<div>Could not embed GitHub Gist 1028505: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1028505.js?file=3-thereisnospoon.html"></script><noscript><pre><code class="language-html html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;jquery-1.6.1.min.js&quot;&gt;&lt;/script&gt; 
+    &lt;script src=&quot;underscore-min.js&quot;&gt;&lt;/script&gt; 
+    &lt;script src=&quot;backbone-min.js&quot;&gt;&lt;/script&gt; 
+    &lt;script src=&quot;example.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;form action=&quot;/login&quot; id=&quot;login-form&quot;&gt;
+      input: &lt;input type=&quot;text&quot; id=&quot;input&quot;&gt;
+    &lt;/form&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></noscript>
 <p> </p>
 <p>Before you continue on to the next images, try to imagine what you&#8217;re going to see when you run this code in your browser. Load the page and watch the first two alert boxes go by, then type some text into the input box and tab or click out of it to see the third alert box. Here&#8217;s the results, in order:</p>
 <p><img title="Screen shot 2011-06-15 at 9.17.36 PM.png" src="http://lostechies.com/derickbailey/files/2011/06/Screen-shot-2011-06-15-at-9.17.36-PM.png" border="0" alt="Screen shot 2011 06 15 at 9 17 36 PM" width="459" height="193" /></p>
@@ -174,7 +187,22 @@
 <p> </p>
 <h3>Fixing this.model.view and this.view.loginButton</h3>
 <p>Now that we understand what&#8217;s really going on, we can finally get back to the original login example and fix it.</p>
-<div>Could not embed GitHub Gist 1028505: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1028505.js?file=5-fixingtheloginview.js"></script><noscript><pre><code class="language-javascript javascript">    initialize: function(){
+      _.bindAll(this, &quot;validated&quot;);
+      this.username = $(&quot;#username&quot;);
+      this.password = $(&quot;#password&quot;);
+      this.loginButton = $(&quot;#login&quot;);
+      this.model.bind(&quot;validated&quot;, this.validated);
+    },
+
+    validated: function(valid){
+      if (valid){
+        this.loginButton.removeAttr(&quot;disabled&quot;);
+      } else {
+        this.loginButton.attr(&quot;disabled&quot;, &quot;true&quot;);
+      }
+    }
+</code></pre></noscript>
 <p> </p>
 <p>There&#8217;s only a couple of changes we made to the view. We added line 2 to bind the view as the validated method&#8217;s scope. We removed the line that assigned &#8220;this.mode.view = this;&#8221;. And then in the validated method, we changed &#8220;this.view.loginButton&#8221; to &#8220;this.loginButton&#8221; because &#8220;this&#8221; is now the view, which has our login button!</p>
 <p>Our sample application still works the way we expect, but we&#8217;ve now cleaned up the coupling issue between the view and the model, fixed the Law of Demeter violation, and generally made the code more consistent in behavior by ensuring that the validated method always executes in the scope of the view.</p>
@@ -193,7 +221,7 @@
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -202,9 +230,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -237,7 +264,6 @@ Find me on the web:
 <a href="http://www.google.com/events/io/2011/sessions/learning-to-love-javascript.html" rel="nofollow">http://www.google.com/events/io/2011/sessions/learning-to-love-javascript.html</a></p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1891">
@@ -250,7 +276,6 @@ Find me on the web:
             <div id="dsq-comment-message-1891" class="dsq-comment-message"><p>thanks for sharing, I will definitely will see that video :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -266,7 +291,6 @@ Find me on the web:
 <p>I look forward to your other backbone.js posts.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-even depth-1" id="dsq-comment-1632">
@@ -279,7 +303,6 @@ Find me on the web:
             <div id="dsq-comment-message-1632" class="dsq-comment-message"><p>This whole example seems like it&#8217;s far, far easier to do with Knockout. I&#8217;d love to see you write up a side-by-side comparison of the two. I&#8217;ve messed around with Backbone but Knockout seems to suit my needs nicely and is (mostly) a cinch to use. Still, I don&#8217;t know enough about the two to be able to really figure out when Backbone might be a better fit than Knockout&#8230;.so KO wins by default because it&#8217;s easier to use.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1633">
@@ -292,7 +315,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1633">Derick 
             <div id="dsq-comment-message-1633" class="dsq-comment-message"><p>For simple examples, yes, KO is far easier. I&#8217;m still looking into it, though, so I can&#8217;t really make a good comparison of where each of the two shines. Hopefully I&#8217;ll be able to do that soon, though.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -308,7 +330,6 @@ http://neeraj.name                <span id="dsq-author-user-1759">Neeraj</span>
 <p><a href="http://blog.bigbinary.com/2011/08/18/understanding-bind-and-bindall-in-backbone.html" rel="nofollow">http://blog.bigbinary.com/2011/08/18/understanding-bind-and-bindall-in-backbone.html</a></p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1789">
@@ -321,7 +342,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1789">Derick 
             <div id="dsq-comment-message-1789" class="dsq-comment-message"><p>yeah, i read that post a couple of days ago. it explains more of the detail quite well</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -345,7 +365,6 @@ http://twitter.com/justinhjohnson                <span id="dsq-author-user-1797"
 <p>Edit: I have nested logic in the 2nd example but stripped it out to simplify the discussion. Maybe I should move all of the logic within the anonymous function to a member of the view, which I could then reference as this.handleAnswer()&#8230;</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1798">
@@ -361,7 +380,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1798">Derick 
 <p>the _.bind(this, &#8230;) wrapper does the same thing as _.bindAll, except it takes a function as the 2nd arg and returns a function that is bound to the first parameter as the context.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -377,7 +395,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1798">Derick 
 This was exactly what I needed</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2969">
@@ -390,7 +407,6 @@ http://twitter.com/ozoesono                <span id="dsq-author-user-2969">ozo</
             <div id="dsq-comment-message-2969" class="dsq-comment-message"><p>&#8230; Been battling with this issue and GBAM!!! You just saved my Day! 2 years after your post</p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -410,6 +426,7 @@ http://twitter.com/ozoesono                <span id="dsq-author-user-2969">ozo</
     var disqus_title = "Solving Backbone&#8217;s &#8220;this.model.view&#8221; Problem With Underscore.js";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -434,7 +451,6 @@ http://twitter.com/ozoesono                <span id="dsq-author-user-2969">ozo</
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -452,7 +468,7 @@ http://twitter.com/ozoesono                <span id="dsq-author-user-2969">ozo</
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -469,14 +485,15 @@ http://twitter.com/ozoesono                <span id="dsq-author-user-2969">ozo</
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -972,4 +989,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:35:39 -->
+Served from: lostechies.com @ 2013-01-31 09:38:26 -->

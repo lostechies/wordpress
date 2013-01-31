@@ -74,46 +74,10 @@
 <p>For example, signing a terms of service agreement is a command to sign the agreement, not just a &#8220;create&#8221; on a resource. Sure, the implementation of that may be a &#8220;POST&#8221; on a resource location. But that doesn&#8217;t mean I need a full Backbone model, or need to think about the signature as a RESTful resource from my JavaScript code.</p>
 <h2>Executing Commands vs Making AJAX Calls</h2>
 <p>As a result of all this, I end up using $.ajax a lot… and it&#8217;s getting really ugly and obnoxious seeing this all over my code:</p>
-<script src="https://gist.github.com/2595175.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">var signForm = $.ajax({
-  type: &quot;POST&quot;,
-  url: &quot;/some/form&quot;,
-  dataType: &quot;JSON&quot;,
-  data: myData
-});
-
-signForm.done(function(response){
-  // handle success here
-});
-
-signForm.fail(function(response){
-  // handle failure here
-});</code></pre></noscript>
+<div>Could not embed GitHub Gist 2595175: API Rate Limit Exceeded for 70.169.150.251</div>
 <p>Not only is this ugly when you repeat the $.ajax calls all over the code, but it doesn&#8217;t really give the semantic benefit of knowing what the code is really doing. I&#8217;m not just making a call across an AJAX connection. I&#8217;m trying to execute a command &#8211; I&#8217;m trying to do something important, and I want my code to reflect that.</p>
 <p>So I wrapped up my $.ajax calls in a thin &#8220;command&#8221; wrapper for my current client app (built with Backbone of course), and ended up with this instead:</p>
-<script src="https://gist.github.com/2595175.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">// Register a command to use
-// -------------------------
-
-Backbone.AjaxCommands.register(&quot;signForm&quot;, {
-  url: &quot;/some/form&quot;,
-  type: &quot;POST&quot;
-});
-
-
-// somewhere else in the application, use the command
-// --------------------------------------------------
-
-var signForm = Backbone.AjaxCommands.get(&quot;signForm&quot;);
-
-signForm.on(&quot;success&quot;, function(response){
-  // handle success here
-});
-
-signForm.on(&quot;error&quot;, function(response){
-  // handle failure here
-});
-
-// execute the command and send this data with it
-signForm.execute(myData);</code></pre></noscript>
+<div>Could not embed GitHub Gist 2595175: API Rate Limit Exceeded for 70.169.150.251</div>
 <p>Looking at this in comparison to the original $.ajax calls, there are a few less lines of code. Since I have a thin wrapper around the ajax calls and setup, I can make a few assumptions about the calls and provide a little bit of default configuration. </p>
 <p>I can also move the registration of commands somewhere other than the execution of the commands, which is a huge win for readability and organization of the code when it comes time to execute a command.</p>
 <p>Of course the handling of events for success, error and completed doesn&#8217;t give me any advantage over $.ajax and deferred objects. But the big benefit here and why I don&#8217;t mind the thin wraper around the done/fail/always deferred methods, is the semantic value of executing a named command vs configuring an ajax call.</p>
@@ -123,104 +87,14 @@ signForm.execute(myData);</code></pre></noscript>
 </blockquote>
 <h2>Implementing The Command Structure</h2>
 <p>This implementation relies on Backbone, Underscore and jQuery, so it&#8217;s really only useful in Backbone applications at this point. It&#8217;s also important to note that this code is not unit tested at all. I&#8217;m using it in my current client application and it is functional for me, but I don&#8217;t recommend taking this code as a great implementation, yet. I have plans on turning this into a real plugin, with full testing around it. But like most of my plugins and libraries, it started out as a quick hack in order to get something cleaned up in one of my applications.</p>
-<script src="https://gist.github.com/2595175.js?file=backbone.ajaxcommands.js"></script><noscript><pre><code class="language-javascript javascript">// Backbone.AjaxCommands
-// ---------------------
-
-Backbone.AjaxCommands = (function (Backbone, $, _) {
-    var Commands = {};
-
-    // Private data
-    // ------------
-
-    var commandList = {};
-
-    // Public API
-    // ----------
-
-    Commands.register = function (commandName, options) {
-        commandList[commandName] = options;
-    }
-
-    Commands.get = function (commandName) {
-        var options = commandList[commandName];
-        options = options || {};
-        options = _.clone(options);
-        var command = new Commands.Command(commandName, options);
-        return command;
-    };
-
-    // Command Type
-    // -------------------
-
-    Commands.Command = function (name, options) {
-        this.name = name;
-        this.options = options
-    };
-
-    _.extend(Commands.Command.prototype, Backbone.Events, {
-        execute: function (data) {
-            var that = this;
-
-            var config = this.getAjaxConfig(this.options, data);
-
-            this.trigger(&quot;before:execute&quot;);
-
-            var request = $.ajax(config);
-            request.done(function (response) {
-                that.trigger(&quot;success&quot;, response);
-            });
-
-            request.fail(function (response) {
-                that.trigger(&quot;error&quot;, response);
-            });
-
-            request.always(function (response) {
-                that.trigger(&quot;complete&quot;, response);
-            });
-        },
-
-        getAjaxConfig: function (options, data) {
-            var url = this.getUrl(options, data);
-
-            var ajaxConfig = {
-                type: &quot;GET&quot;,
-                dataType: &quot;JSON&quot;,
-                url: url
-            };
-
-            _.extend(ajaxConfig, options);
-            ajaxConfig.data = data;
-
-            return ajaxConfig;
-        },
-
-        getUrl: function (options, data) {
-            return options.url;
-        }
-    });
-
-    return Commands;
-})(Backbone, $, _);</code></pre></noscript>
+<div>Could not embed GitHub Gist 2595175: API Rate Limit Exceeded for 70.169.150.251</div>
 <p>There ar ea couple of things you&#8217;ll want to note in this code:</p>
 <p>The call to &#8220;register&#8221; a command stores the configuration that you provide. The call to &#8220;get&#8221; a command creates a new command instance and hands it back to you. This is done so that you can have single-use command objects and not have to worry about unbinding events from the command after it has completed. If I held on to a single command instance and just handed that back to you, you would be responsible for unbinding the event handlers after executing the command. </p>
 <p>The wrapper events for &#8220;success&#8221;, &#8220;error&#8221;, and &#8220;complete&#8221; also don&#8217;t guarantee to fire if you subscribe to them after the command has been executed. So, it&#8217;s important to set up your event handlers before calling .execute on the command object.</p>
 <p>I&#8217;ve also extracted the &#8220;getUrl&#8221; method specifically because I need to provide a very custom implementation of this method in my client&#8217;s application. I have another plugin that I&#8217;m looking at writing, which handles storage and retrieval of URLs in my Backbone apps, including :token replacement in the urls … but that&#8217;s another blog post and another plugin to write.</p>
 <h2>A Timed Polling Mechanism</h2>
 <p>One of the more interesting things I&#8217;m doing with this is using it as a timed polling mechanism. I set up a command and then I wrap the commands &#8220;execute&#8221; function in another method that I can call from a setTimeout. When the command executes, I check the response. If I find the data I need, I move on. If I don&#8217;t find the data I need, I call the wrapper function again, inside of a setTimeout.</p>
-<script src="https://gist.github.com/2595175.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">var myCommand = Backbone.AjaxCommands.get(&quot;myCommand&quot;);
-
-var executeCommand = function(){
-  myCommand.execute(someData);
-};
-
-myCommand.on(&quot;success&quot;, function(response){
-  if (response.someValueImChecking){
-    // move on to the next thing, here
-  } else {
-    // poll again, 1 second from now
-    setTimeout(executeCommand, 1000);
-  }
-});</code></pre></noscript>
+<div>Could not embed GitHub Gist 2595175: API Rate Limit Exceeded for 70.169.150.251</div>
 <p>There&#8217;s lot of fun little tricks you can do with a simple object wrapper like this, that would be a little more cumbersome and awkward when directly using $.ajax. </p>
 											</div><!-- .entry-content -->
 
@@ -229,7 +103,7 @@ myCommand.on(&quot;success&quot;, function(response){
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -238,9 +112,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -272,7 +145,6 @@ Find me on the web:
             <div id="dsq-comment-message-2425" class="dsq-comment-message"><p>Very neat and clean solution. Thank you for sharing.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2426">
@@ -285,7 +157,6 @@ Find me on the web:
             <div id="dsq-comment-message-2426" class="dsq-comment-message"><p>This is an interesting read. I also found <a href="http://amplifyjs.com/api/request/" rel="nofollow">http://amplifyjs.com/api/request/</a> which seems to address a similar use case (and more feature AFAICS). What do you think about it ? </p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2427">
@@ -298,7 +169,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2427">Derick 
             <div id="dsq-comment-message-2427" class="dsq-comment-message"><p>yeah, someone else pointed that out to me on twitter as well. it looks exactly what i&#8217;ve done, only with far more features and stability :) definitely something i want to look in to when i have time.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt depth-2" id="dsq-comment-2432">
@@ -311,7 +181,6 @@ http://twitter.com/RomainTribes                <span id="dsq-author-user-2432">R
             <div id="dsq-comment-message-2432" class="dsq-comment-message"><p>Damned, it&#8217;s great! Thanks for that.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -326,7 +195,6 @@ http://twitter.com/RomainTribes                <span id="dsq-author-user-2432">R
             <div id="dsq-comment-message-2567" class="dsq-comment-message"><p>this is absolutely beautiful! exactly what i was looking for and very clean! reminds me of how commandmaps worked in Robotlegs! keep up the amazing posts!!</p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -346,6 +214,7 @@ http://twitter.com/RomainTribes                <span id="dsq-author-user-2432">R
     var disqus_title = "Wrapping $.ajax In A Thin &#8220;Command&#8221; Framework For Backbone Apps";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -370,7 +239,6 @@ http://twitter.com/RomainTribes                <span id="dsq-author-user-2432">R
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -388,7 +256,7 @@ http://twitter.com/RomainTribes                <span id="dsq-author-user-2432">R
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -405,14 +273,15 @@ http://twitter.com/RomainTribes                <span id="dsq-author-user-2432">R
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -908,4 +777,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:22:15 -->
+Served from: lostechies.com @ 2013-01-31 09:17:12 -->

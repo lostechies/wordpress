@@ -118,7 +118,7 @@
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -127,9 +127,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -161,7 +160,6 @@ http://tbranyen.com/                <span id="dsq-author-user-2188">Tim Branyen<
             <div id="dsq-comment-message-2188" class="dsq-comment-message"><p>Completely agree about organizing code around the type of Class it is.  Lumping dozens of Models into a single folder just seems like a completely awful way of structuring your code.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2190">
@@ -174,7 +172,6 @@ http://tbranyen.com/                <span id="dsq-author-user-2188">Tim Branyen<
             <div id="dsq-comment-message-2190" class="dsq-comment-message"><p>Good stuff Derick. Organization with JS is tough sometimes, but then I take a deep breath and realize, it doesn&#8217;t REALLY matter all that much as long as I and the members of my team all have a good understanding about how our app works!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2192">
@@ -188,7 +185,6 @@ http://tbranyen.com/                <span id="dsq-author-user-2188">Tim Branyen<
 <p>I found working with RequireJS if I used a type based folder structure when it came to optimization RequireJS would have issues as &#8220;person.js&#8221; (model) and &#8220;person.js&#8221; (collection) cause name spacing issues if you were trying to build one module unless you hard coded the name in the define method which defeats it&#8217;s purpose.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2849">
@@ -202,7 +198,6 @@ http://tbranyen.com/                <span id="dsq-author-user-2188">Tim Branyen<
 Did you change your mind or haven&#8217;t you gotten around to updating the structure?</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2967">
@@ -215,7 +210,6 @@ http://yaha.me/                <span id="dsq-author-user-2967">lyman</span>
             <div id="dsq-comment-message-2967" class="dsq-comment-message"><p>While Develop more and more complicate apps(maybe like gmail) then I think we will care about the struct. As that we want using AMD(like requirejs) to load the js file as needed? Not just load all file at once.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2968">
@@ -228,7 +222,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2968">Derick 
             <div id="dsq-comment-message-2968" class="dsq-comment-message"><p>yes, definitely. but don&#8217;t make the same mistake I made &#8211; don&#8217;t load every file individually from the server, as needed. that kills performance with network lag. instead, build pre-packaged &#8220;apps&#8221; or sub-apps that can be loaded from the server in a single call.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2970">
@@ -241,7 +234,6 @@ http://yaha.me/                <span id="dsq-author-user-2970">lyman</span>
             <div id="dsq-comment-message-2970" class="dsq-comment-message"><p>hmm, Thx ;)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -265,6 +257,7 @@ http://yaha.me/                <span id="dsq-author-user-2970">lyman</span>
     var disqus_title = "JavaScript File &#038; Folder Structures: Just Pick One";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -289,7 +282,6 @@ http://yaha.me/                <span id="dsq-author-user-2970">lyman</span>
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -307,7 +299,7 @@ http://yaha.me/                <span id="dsq-author-user-2970">lyman</span>
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -324,14 +316,15 @@ http://yaha.me/                <span id="dsq-author-user-2970">lyman</span>
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -827,4 +820,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:35:56 -->
+Served from: lostechies.com @ 2013-01-31 09:38:24 -->

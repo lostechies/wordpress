@@ -131,7 +131,9 @@ var users = new UserList([user1, user2]);
 </code></pre></noscript>
 <p>The &#8216;el&#8217; attribute points to our currently empty, unordered list within our &#8216;#user-list&#8217; element. The &#8220;render&#8221; method is used to do the template rendering with the data that we provide the view &#8211; the list of users.</p>
 <p>With the view in place, we can put it all together with a call to instantiate the view and pass in the data we have.</p>
-<div>Could not embed GitHub Gist 1037163: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1037163.js?file=4-initial-render.js"></script><noscript><pre><code class="language-javascript javascript">var userListView = new UserListView({model: users});
+userListView.render();
+</code></pre></noscript>
 <p>We&#8217;re passing the user list into the user list view with a json document, and an attribute named &#8216;model&#8217;. Backbone recognizes this attribute and assigned the contents of the attribute to &#8216;this.model&#8217; within the view. The call to &#8216;userListView.render()&#8217; method then kicks in the jQuery template and reading the json data from this.model, producing a rendered user list and appending it to the inner html of &#8216;this.el&#8217; &#8211; the unordered list in our &#8216;#user-list&#8217; element.</p>
 <p>The end result of this view rendering itself is a list of user names.</p>
 <p><img title="Screen shot 2011-06-20 at 10.50.00 PM.png" src="http://lostechies.com/derickbailey/files/2011/06/Screen-shot-2011-06-20-at-10.50.00-PM.png" border="0" alt="Screen shot 2011 06 20 at 10 50 00 PM" width="539" height="111" /></p>
@@ -142,15 +144,47 @@ var users = new UserList([user1, user2]);
 <h3>Extracting The Render Method</h3>
 <p>The render method that we provided in this example is very simple &#8211; read the template from the html, render the data from the user list model into it, and append it in to the unordered list. With a small modification, though, we can extract this method into something that is not only simple, but more flexible.</p>
 <p>All we need to do is move the &#8216;template&#8217; variable out of the render method and on to the view definition, directly.</p>
-<div>Could not embed GitHub Gist 1037163: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1037163.js?file=5-extract-template.js"></script><noscript><pre><code class="language-javascript javascript">var UserListView = Backbone.View.extend({
+    el: $(&quot;#user-list ul&quot;),
+    template: $(&quot;#user-list-template&quot;),
+
+    render: function(){
+      var html = this.template.tmpl(this.model.toJSON());
+      this.el.html(html);
+    }
+});
+</code></pre></noscript>
 <p>The rendered view is exactly the same. However, we no longer have to re-compile the template every time the view. We also no longer have anything view-specific in our render method. This makes the method a prime candidate for extracting into a base class, for a scenario where you have multiple views on a page &#8211; which is highly likely in a real backbone app.</p>
 <p>To extract the &#8216;render&#8217; method, create another view called &#8216;TemplatedView&#8217;. This view will extend the usual &#8216;Backbone.View&#8217; but will only have 1 method in it &#8211; the &#8216;render&#8217; method.</p>
-<div>Could not embed GitHub Gist 1037163: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1037163.js?file=6-templated-view.js"></script><noscript><pre><code class="language-javascript javascript">var TemplatedView = Backbone.View.extend({
+    render: function(){
+      var html = this.template.tmpl(this.model.toJSON());
+      this.el.html(html);
+    }
+});
+
+var UserListView = TemplatedView.extend({
+    el: $(&quot;#user-list ul&quot;),
+    template: $(&quot;#user-list-template&quot;),
+});
+</code></pre></noscript>
 <p>We also removed the &#8216;render&#8217; method from the &#8216;UserListView&#8217; and changed the object that it extends to the new &#8216;TemplatedView&#8217;. The end result is still the same as we previously had &#8211; a rendered list of user names. However, we now have the ability to re-use the rendering implementation across multiple views in our backbone page. Additionally, the &#8216;UserListView&#8217; has been reduced to 2 lines of configuration. This is much more appealing on a number of fronts.</p>
 <p> </p>
 <h3>Overriding Render Without Losing The Templating</h3>
 <p>There are going to be times where you want to have a view that is rendered with the same templating mechanism, but has additional needs as well. For example, you may need to render a user edit view and need to attach to a &#8216;#save&#8217; and &#8216;#cancel&#8217; button after the view is rendered. In the world of object-oriented languages, you would normally call the super-class&#8217; implementation of the method that you have overridden. The same holds true for javascript, which is an object-oriented language. Unfortunately, javascript makes this a little more verbose than other languages.</p>
-<div>Could not embed GitHub Gist 1037163: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1037163.js?file=7-subclass-override.js"></script><noscript><pre><code class="language-javascript javascript">var UserEditView = TemplatedView.extend({
+    el: $(&quot;#user-edit&quot;),
+    template: $(&quot;#user-edit-template&quot;),
+
+    render: function(){
+      TemplatedView.prototype.render.call(this);
+
+      this.save = $(&quot;#save&quot;);
+      this.cancel = $(&quot;#cancel&quot;);
+    }
+});
+
+</code></pre></noscript>
 <p>Since javascript uses a prototype-based object inheritance system, we have to reference the prototype that our view inherits from and &#8216;.call&#8217; the &#8216;render&#8217; method from there. The &#8216;call&#8217; method accepts a parameter that is used as the method&#8217;s &#8216;this&#8217; object. We want to pass the current view into the &#8216;call&#8217; method so that the prototype class can reference the model from the current view. This allows the call to &#8216;TemplateView.prototype.render&#8217; to have access to the user model that the UserEditView instance is currently holding on to &#8211; the user that is supposed to be edited.</p>
 <p>Instantiate a UserEditView and pass a user model into it with a &#8216;{model: user1}&#8217; json document, and the end result is our user edit view along side our user list view.</p>
 <p><img title="Screen shot 2011-06-20 at 11.22.50 PM.png" src="http://lostechies.com/derickbailey/files/2011/06/Screen-shot-2011-06-20-at-11.22.50-PM.png" border="0" alt="Screen shot 2011 06 20 at 11 22 50 PM" width="539" height="213" /></p>
@@ -165,7 +199,7 @@ var users = new UserList([user1, user2]);
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -174,9 +208,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -208,7 +241,6 @@ http://www.register-domainname.in                <span id="dsq-author-user-1637"
             <div id="dsq-comment-message-1637" class="dsq-comment-message"><p>Rendering a template had always created headache to me especially on HTML pages. Thanks for this information.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1638">
@@ -223,7 +255,6 @@ http://www.register-domainname.in                <span id="dsq-author-user-1637"
 <p>Thanks, nice post.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1641">
@@ -237,7 +268,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1641">Derick 
 <p>however, i&#8217;m not really showing any kind of best practices for the real world, at this point. i&#8217;m still learning backbone and am blogging about my experiences in learning it. the examples i&#8217;m giving are meant to be trivial and are, as you&#8217;ve noted, easily done better with other approaches. by keeping the examples simple, though, I can keep the context of what I&#8217;m saying clear and show people just the mechanics of how to do things. i think the value in using views comes into play when you have a much more complex set of interactions, with multiple areas of the page that need to be manipulated in a coordinated manner. i&#8217;ll try to talk about this more at some point in the future. right now, i&#8217;m trying to build up a baseline of knowledge so that when i do get to that, I won&#8217;t have to repeat much of the basics / mechanics</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt depth-2" id="dsq-comment-1644">
@@ -250,7 +280,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1641">Derick 
             <div id="dsq-comment-message-1644" class="dsq-comment-message"><p>Backbone.js views can also handle events&#8230; so you could setup a click event inside each view and when the view is clicked on, it&#8217;s handled by that specific view/model.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even depth-2" id="dsq-comment-1884">
@@ -263,7 +292,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1641">Derick 
             <div id="dsq-comment-message-1884" class="dsq-comment-message"><p>nice </p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-1885">
@@ -276,7 +304,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1641">Derick 
             <div id="dsq-comment-message-1885" class="dsq-comment-message"><p> super</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -293,7 +320,6 @@ http://twitter.com/dagda1                <span id="dsq-author-user-1640">dagda1<
             <div id="dsq-comment-message-1640" class="dsq-comment-message"><p>Do you think there is any performance boost from keeping the jquery templates in memory?  I seen they do this in travis.  They load all the templates into memory on the initialise of the application controller.  </p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1642">
@@ -306,7 +332,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1642">Derick 
             <div id="dsq-comment-message-1642" class="dsq-comment-message"><p>yeah, there&#8217;s definitely some benefit to doing that, for performance reasons. i haven&#8217;t really needed to do this yet, because none of my examples have been that large. however, it&#8217;s been on my mind for a while now.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even depth-2" id="dsq-comment-1645">
@@ -319,7 +344,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1642">Derick 
             <div id="dsq-comment-message-1645" class="dsq-comment-message"><p>You can also pre-compile them at init so when the views are rendered they aren&#8217;t re-compiled each time&#8230;</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -334,7 +358,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1642">Derick 
             <div id="dsq-comment-message-1643" class="dsq-comment-message"><p>The documentation also states that view or more of a convention&#8230;a good suggestion for how to organize your code. That&#8217;s, I think, why the render method is there.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-1855">
@@ -347,7 +370,6 @@ http://profiles.google.com/bluestar007                <span id="dsq-author-user-
             <div id="dsq-comment-message-1855" class="dsq-comment-message"><p>Thanks for this detailed explanation. In the examples, you have Rails render ERB templates, which are then being picked up by Backbone views.  The question I have is &#8211; what about the actual model data? Currently, a Backbone model makes an AJAX request, through Backbone.sync, which hits the Rails controller, which returns the data as JSON. This JSON data needs then to be passed to the view, so that it can be &#8220;mixed&#8221; with the ERB data and rendered. But doesn&#8217;t this mean that we have to make two server request each time? So, for example, for getting an &#8220;users index&#8221; page, we would first make a call to UsersController::index requesting &#8220;JSON&#8221;, and then we would make an additional call to the same index method requesting HTML. Unless we overwrite Backbone.sync I don&#8217;t see how the Backbone models can get their data without an additional call.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1857">
@@ -361,7 +383,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1857">Derick 
 <p>I render the template in my page directly, so backbone can pick it up from the page directly.  I&#8217;m not sure what scenario you&#8217;re trying to describe with backbone and getting json data from the server, either. when you call fetch from a backbone model or collection, it deserializes the data into the model for you and then you pass that to the view / template.  what additional call are you seeing a need for, when and why?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-1860">
@@ -380,7 +401,6 @@ http://profiles.google.com/bluestar007                <span id="dsq-author-user-
 Victor</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-4" id="dsq-comment-1861">
@@ -396,7 +416,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1861">Derick 
 <p><a href="http://lostechies.com/derickbailey/2011/10/06/seo-and-accessibility-with-html5-pushstate-part-3-the-video/" rel="nofollow">http://lostechies.com/derickbailey/2011/10/06/seo-and-accessibility-with-html5-pushstate-part-3-the-video/</a></p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -415,7 +434,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1861">Derick 
             <div id="dsq-comment-message-1892" class="dsq-comment-message"><p>I was wondering why people use different templating engines with backbone, if underscore already have one? Is it worth to include another templating engine for this?</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-even depth-1" id="dsq-comment-2061">
@@ -428,7 +446,6 @@ http://register-web-domain.in/                <span id="dsq-author-user-2061">Re
             <div id="dsq-comment-message-2061" class="dsq-comment-message"><p>This is first time seeing this website You got a really useful blog </p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -448,6 +465,7 @@ http://register-web-domain.in/                <span id="dsq-author-user-2061">Re
     var disqus_title = "Rendering jQuery Templates With Backbone Views";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -472,7 +490,6 @@ http://register-web-domain.in/                <span id="dsq-author-user-2061">Re
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -490,7 +507,7 @@ http://register-web-domain.in/                <span id="dsq-author-user-2061">Re
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -507,14 +524,15 @@ http://register-web-domain.in/                <span id="dsq-author-user-2061">Re
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -1010,4 +1028,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:39:51 -->
+Served from: lostechies.com @ 2013-01-31 08:51:05 -->

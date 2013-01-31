@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Backbone.js Is Not An MVC Framework</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Wed, 30 Jan 2013 20:30:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Davide Callegari</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2836</link>
+		<dc:creator>Davide Callegari</dc:creator>
+		<pubDate>Sat, 10 Nov 2012 22:32:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2836</guid>
+		<description>Hi,
+
+I know this is an old post but I found it during my googling and I&#039;d like to give my thoughts on it.
+
+I find Backbone appealing because I come from a Django background and I find it very similar to it, since Django has its own router (a urlpattern tuple), a set of templates, views that are responsible for rendering a template and models.
+
+
+
+Django refers to itself not strictly an MVC but MTV (Model-Template-View), which is a bit different but from the same &quot;family&quot; of frameworks.</description>
+		<content:encoded><![CDATA[<p>Hi,</p>
+<p>I know this is an old post but I found it during my googling and I&#8217;d like to give my thoughts on it.</p>
+<p>I find Backbone appealing because I come from a Django background and I find it very similar to it, since Django has its own router (a urlpattern tuple), a set of templates, views that are responsible for rendering a template and models.</p>
+<p>Django refers to itself not strictly an MVC but MTV (Model-Template-View), which is a bit different but from the same &#8220;family&#8221; of frameworks.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Josh Habdas</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2832</link>
+		<dc:creator>Josh Habdas</dc:creator>
+		<pubDate>Tue, 06 Nov 2012 00:23:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2832</guid>
+		<description>By now the MVW (Model-View-Whatever) has been coined. More patterns have emerged and the carrot, still dangling, seems to be isomorphic javascript:
+
+http://blog.nodejitsu.com/scaling-isomorphic-javascript-code</description>
+		<content:encoded><![CDATA[<p>By now the MVW (Model-View-Whatever) has been coined. More patterns have emerged and the carrot, still dangling, seems to be isomorphic javascript:</p>
+<p><a href="http://blog.nodejitsu.com/scaling-isomorphic-javascript-code" rel="nofollow">http://blog.nodejitsu.com/scaling-isomorphic-javascript-code</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Guest</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2831</link>
+		<dc:creator>Guest</dc:creator>
+		<pubDate>Tue, 06 Nov 2012 00:17:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2831</guid>
+		<description>By now the term MVW (Model-View-Whatever) has already been coined and the carrot that is isomorphic javascript, or JS that runs both on the client and server, is furiously being sought after. Will Flatiron be the first one to the finish line?
+
+http://blog.nodejitsu.com/scaling-isomorphic-javascript-code</description>
+		<content:encoded><![CDATA[<p>By now the term MVW (Model-View-Whatever) has already been coined and the carrot that is isomorphic javascript, or JS that runs both on the client and server, is furiously being sought after. Will Flatiron be the first one to the finish line?</p>
+<p><a href="http://blog.nodejitsu.com/scaling-isomorphic-javascript-code" rel="nofollow">http://blog.nodejitsu.com/scaling-isomorphic-javascript-code</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Guest</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2830</link>
+		<dc:creator>Guest</dc:creator>
+		<pubDate>Tue, 06 Nov 2012 00:16:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2830</guid>
+		<description>By now the term MVW (Model-View-Whatever) has already been coined and the carrot that is isomorphic javascript, or JS that runs both on the client and server, is furiously being sought after. Will Flatiron the first one to the finish line?
+
+
+http://blog.nodejitsu.com/scaling-isomorphic-javascript-code</description>
+		<content:encoded><![CDATA[<p>By now the term MVW (Model-View-Whatever) has already been coined and the carrot that is isomorphic javascript, or JS that runs both on the client and server, is furiously being sought after. Will Flatiron the first one to the finish line?</p>
+<p><a href="http://blog.nodejitsu.com/scaling-isomorphic-javascript-code" rel="nofollow">http://blog.nodejitsu.com/scaling-isomorphic-javascript-code</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Vlad</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2785</link>
+		<dc:creator>Vlad</dc:creator>
+		<pubDate>Sat, 13 Oct 2012 18:38:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2785</guid>
+		<description>cool :)</description>
+		<content:encoded><![CDATA[<p>cool :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2784</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Sat, 13 Oct 2012 18:37:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2784</guid>
+		<description>Yes, you&#039;re correct. I meant to say &quot;views&quot;. Fixed. Thanks! :)</description>
+		<content:encoded><![CDATA[<p>Yes, you&#8217;re correct. I meant to say &#8220;views&#8221;. Fixed. Thanks! :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Vlad</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2783</link>
+		<dc:creator>Vlad</dc:creator>
+		<pubDate>Sat, 13 Oct 2012 18:34:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2783</guid>
+		<description>Hi Derick!
+I have 1 small question/suggestion. When you say 
+
+&quot;A router is not a controller. It’s a router. A view is not a controller.
+ It’s a view. Yes, both routers and controllers share some of what a 
+traditional MVC framework would call a controller&quot;
+
+I think the 5th sentence should be corrected to &quot;yes, both routers and VIEWS share some...&quot;.
+
+Or did you really mean &quot;controller&quot; as old name of router in Backbone?</description>
+		<content:encoded><![CDATA[<p>Hi Derick!<br />
+I have 1 small question/suggestion. When you say </p>
+<p>&#8220;A router is not a controller. It’s a router. A view is not a controller.<br />
+ It’s a view. Yes, both routers and controllers share some of what a<br />
+traditional MVC framework would call a controller&#8221;</p>
+<p>I think the 5th sentence should be corrected to &#8220;yes, both routers and VIEWS share some&#8230;&#8221;.</p>
+<p>Or did you really mean &#8220;controller&#8221; as old name of router in Backbone?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Matt Briggs</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2776</link>
+		<dc:creator>Matt Briggs</dc:creator>
+		<pubDate>Thu, 11 Oct 2012 15:02:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2776</guid>
+		<description>In MVC, a view wires itself to the controller, and changes as the controller changes. The controller has no reference to the view. In MVP, the presenter reaches into the view and messes with it, and can also talk to other presenters.
+
+
+I don&#039;t think these discussions are super important, but I would highly recommend reading http://martinfowler.com/eaaDev/uiArchs.html</description>
+		<content:encoded><![CDATA[<p>In MVC, a view wires itself to the controller, and changes as the controller changes. The controller has no reference to the view. In MVP, the presenter reaches into the view and messes with it, and can also talk to other presenters.</p>
+<p>I don&#8217;t think these discussions are super important, but I would highly recommend reading <a href="http://martinfowler.com/eaaDev/uiArchs.html" rel="nofollow">http://martinfowler.com/eaaDev/uiArchs.html</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Chance</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2713</link>
+		<dc:creator>Chance</dc:creator>
+		<pubDate>Tue, 21 Aug 2012 18:52:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2713</guid>
+		<description>Here is the controller for Backbone.js : http://chance-an.github.com/backbone-mvc/</description>
+		<content:encoded><![CDATA[<p>Here is the controller for Backbone.js : <a href="http://chance-an.github.com/backbone-mvc/" rel="nofollow">http://chance-an.github.com/backbone-mvc/</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Luc Perkins</title>
+		<link>http://lostechies.com/derickbailey/2011/12/23/backbone-js-is-not-an-mvc-framework/#comment-2547</link>
+		<dc:creator>Luc Perkins</dc:creator>
+		<pubDate>Mon, 11 Jun 2012 18:38:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=732#comment-2547</guid>
+		<description>I argue here that Backbone does have an implicit and somewhat creepy deus ex machina controller:
+
+http://blog.appfog.com/putting-some-mvc-meat-into-your-app-backbone-js/ </description>
+		<content:encoded><![CDATA[<p>I argue here that Backbone does have an implicit and somewhat creepy deus ex machina controller:</p>
+<p><a href="http://blog.appfog.com/putting-some-mvc-meat-into-your-app-backbone-js/ " rel="nofollow">http://blog.appfog.com/putting-some-mvc-meat-into-your-app-backbone-js/ </a></p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-31 08:42:55 -->

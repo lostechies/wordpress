@@ -101,9 +101,9 @@
   changeIt: function(){ ... }
 });</code></pre></noscript>
 <p>We bind events from our models and collections so that our views can respond to changes and re-render themselves:</p>
-<div>Could not embed GitHub Gist 1219582: API Rate Limit Exceeded for 70.169.150.251</div>
+<div>Could not embed GitHub Gist 1219582: Bad credentials</div>
 <p>We even use Backbone.Events in our own objects so that we can create application-level events and event-driven architectures for our apps.</p>
-<div>Could not embed GitHub Gist 1219582: API Rate Limit Exceeded for 70.169.150.251</div>
+<div>Could not embed GitHub Gist 1219582: Bad credentials</div>
 <p>Events are everywhere, and with good reason. They allow us to write modular, reactive code. We don&#8217;t have to stick to procedural loops and long methods that check state in order to figure out what to do next. Events allow us to know when state has changed and respond to that change appropriately.</p>
 <p>Problems arise, though, when we bind objects together through these events but we don&#8217;t bother unbinding them. As long as these objects are bound together, and there is a reference in our app code to at least one of them, they won&#8217;t be cleaned up or garbage collected. The resulting memory leaks are like the zombies of the movies &#8211; hiding in dark corners, waiting to jump out and eat us for lunch.</p>
 <p>For example &#8211; Backbone apps tend to have one or more areas of the screen that are updated with different views based on what the user is doing. It&#8217;s common to see a main area where the focused content is displayed, as well. When we the user interacts with our app, we update this area of the screen by having a new view instance render some new content for us. The result is new information being displayed for the user, as we expect.</p>
@@ -207,7 +207,7 @@
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -216,9 +216,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -250,7 +249,6 @@ Find me on the web:
             <div id="dsq-comment-message-1803" class="dsq-comment-message"><p>Just wanted to say a big Thank You for this excellent article. I&#8217;ve had this problem and &#8220;solved&#8221; it by calling jQuery&#8217;s undelegate and unbind before rendering my views, but this solution is far superior, will definately be using this. Once again, thanks, and keep up the good work!</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1804">
@@ -263,7 +261,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1804">Derick 
             <div id="dsq-comment-message-1804" class="dsq-comment-message"><p>thanks, Daniel! glad you found this useful :)</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2483">
@@ -276,7 +273,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1804">Derick 
             <div id="dsq-comment-message-2483" class="dsq-comment-message"><p>Hi Derick, thanks for exelent post. Can you please share last myssing piece of code &#8211; instatiation of the router. Need to see how AppView is passed into router (I assume that that AppView function is actually constructor).</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-4" id="dsq-comment-2484">
@@ -292,7 +288,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2484">Derick 
 <p><a href="http://lostechies.com/derickbailey/2011/08/30/dont-limit-your-backbone-apps-to-backbone-constructs/" rel="nofollow">http://lostechies.com/derickbailey/2011/08/30/dont-limit-your-backbone-apps-to-backbone-constructs/</a></p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -311,7 +306,6 @@ http://twitter.com/shaunoconnor                <span id="dsq-author-user-1805">S
             <div id="dsq-comment-message-1805" class="dsq-comment-message"><p>Great article&#8230; coming from  OOP languages and building view heavy applications this is exactly what you need when using Backbone.js. </p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1806">
@@ -325,7 +319,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1806">Derick 
 <p>and i agree &#8211; the OO aspect of building good backbone apps is what really made me fall in love with it, having spent many years building MV* winforms app.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -368,7 +361,6 @@ Backbone.View.extend({</p>
 <p>Thanks again for all the great information</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1824">
@@ -386,7 +378,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1824">Derick 
 <p>hope that helps!</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-1827">
@@ -399,7 +390,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1824">Derick 
             <div id="dsq-comment-message-1827" class="dsq-comment-message"><p>Thanks! That helps clear a couple things up for me</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -433,7 +423,6 @@ http://twitter.com/ojohnnyo                <span id="dsq-author-user-1840">Johnn
 <p>Keep up the great work!</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1841">
@@ -446,7 +435,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1841">Derick 
             <div id="dsq-comment-message-1841" class="dsq-comment-message"><p>that&#8217;s brilliant! i&#8217;m going to have to try this out on my next project :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -462,7 +450,6 @@ http://twitter.com/bemusedjohnny                <span id="dsq-author-user-1850">
 <p><a href="https://gist.github.com/a5e924419628e54d91cc/697d6dfe165d7b3926f84a5dde7d50aa48a54a3a" rel="nofollow">https://gist.github.com/a5e924419628e54d91cc/697d6dfe165d7b3926f84a5dde7d50aa48a54a3a</a></p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1851">
@@ -475,7 +462,6 @@ http://twitter.com/bemusedjohnny                <span id="dsq-author-user-1851">
             <div id="dsq-comment-message-1851" class="dsq-comment-message"><p>Oops&#8230; here is a public gist.  <a href="https://gist.github.com/1259480" rel="nofollow">https://gist.github.com/1259480</a></p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -490,7 +476,6 @@ http://twitter.com/davehoff                <span id="dsq-author-user-1858">Dave 
             <div id="dsq-comment-message-1858" class="dsq-comment-message"><p>Just have to tell you how much I appreciate your awesome posts regarding Backbone best practices. Brilliant stuff!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-1872">
@@ -503,7 +488,6 @@ http://twitter.com/davehoff                <span id="dsq-author-user-1858">Dave 
             <div id="dsq-comment-message-1872" class="dsq-comment-message"><p> Great post! I didn&#8217;t realize your events are still bound after the .remove() call, glad to know this.  Time for some code cleanup tonight :)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1938">
@@ -516,7 +500,6 @@ http://twitter.com/ataraxia_status                <span id="dsq-author-user-1938
             <div id="dsq-comment-message-1938" class="dsq-comment-message"><p>Your `backticks` aren&#8217;t working</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1939">
@@ -529,7 +512,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1939">Derick 
             <div id="dsq-comment-message-1939" class="dsq-comment-message"><p>yeah &#8211; i know&#8230; i keep hoping i&#8217;ll find a WordPress plugin that translates backticks into inline code blocks, like Github wiki does. one of these days, and then magically all my posts will be extra awesome! :P</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-2094">
@@ -542,7 +524,6 @@ http://twitter.com/ataraxia_status                <span id="dsq-author-user-2094
             <div id="dsq-comment-message-2094" class="dsq-comment-message"><p>Dude why would you use a wordpress plugin for that? You could do that with a tiny piece of javascript. </p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -588,7 +569,6 @@ var listView = Backbone.View.extend({<br />
 })</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2181">
@@ -601,7 +581,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2181">Derick 
             <div id="dsq-comment-message-2181" class="dsq-comment-message"><p>hold them in an array and loop through them is the easiest way i&#8217;ve seen for handling that. i built that in to my Marionette plugin, for example. any time you have a CollectionView instance, it stores the child views in an array. closing the CollectionView will close all of the children</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -620,7 +599,6 @@ or inside  _.extend(Backbone.View.prototype, Backbone.Events, {&#8230;}<br />
  </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-even depth-1" id="dsq-comment-2269">
@@ -634,7 +612,6 @@ or inside  _.extend(Backbone.View.prototype, Backbone.Events, {&#8230;}<br />
 <p> this.showView(view) {</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2273">
@@ -647,7 +624,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2273">Derick 
             <div id="dsq-comment-message-2273" class="dsq-comment-message"><p>&#8230; it does look a little off now that you mention it. check out the updated version of this, called RegionManager: http://lostechies.com/derickbailey/2011/12/12/composite-js-apps-regions-and-region-managers/ it&#8217;s the same concept, just solidified a little more.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-2687">
@@ -660,7 +636,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2273">Derick 
             <div id="dsq-comment-message-2687" class="dsq-comment-message"><p>You should mention this in an update on this post &#8211; I was having same issues with this, but the updated code is way more solid!</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -677,7 +652,6 @@ http://twitter.com/wireddaniel                <span id="dsq-author-user-2277">Da
             <div id="dsq-comment-message-2277" class="dsq-comment-message"><p>Thank you!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-even depth-1" id="dsq-comment-2278">
@@ -690,7 +664,6 @@ https://paydirtapp.com/                <span id="dsq-author-user-2278">Tristan</
             <div id="dsq-comment-message-2278" class="dsq-comment-message"><p>You saved the day, Derick. Can&#8217;t thank you enough.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2292">
@@ -703,7 +676,6 @@ https://paydirtapp.com/                <span id="dsq-author-user-2278">Tristan</
             <div id="dsq-comment-message-2292" class="dsq-comment-message"><p>It&#8217;s funny. Every time I run into a problem, I do a Google search and somehow, quickly find myself back here&#8230; Your articles are very clearly written, informative, and have been uber-helpful. Thanks!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-even depth-1" id="dsq-comment-2293">
@@ -716,7 +688,6 @@ https://paydirtapp.com/                <span id="dsq-author-user-2278">Tristan</
             <div id="dsq-comment-message-2293" class="dsq-comment-message"><p>Thanks for a nice article! I wonder if there&#8217;s a way to double check if the old views and bindings (including sub views) are removed for sure? I was thinking about something like check if a closed view with a specific cid still exists in memory. But from what I have read, you can&#8217;t fetch a view by it&#8217;s cid? Maybe there&#8217;s a way to check which views exists in memory at a specific point?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2294">
@@ -729,7 +700,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2294">Derick 
             <div id="dsq-comment-message-2294" class="dsq-comment-message"><p>There&#8217;s no way to do that at run time. You could keep a list of open views around, but that list would keep all of your views around simply by having a reference to them. They would never close. Backbone doesn&#8217;t keep a list of open views around, specifically for this reason. You can run a memory profiler in your browser (built in to chrome, safari, firebug, etc) but that&#8217;s a development tool and not something you can do in production with other people&#8217;s browsers. Your best bet is to use the development tools and memory profilers during your own testing, to make sure you&#8217;re cleaning things up&#8230; and then trust that it&#8217;s all good when it goes to production.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -745,7 +715,6 @@ http://scottyapp.com                <span id="dsq-author-user-2304">Martin Wawru
 <p>Great article, thanks for writing it.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2328">
@@ -758,7 +727,6 @@ http://scottyapp.com                <span id="dsq-author-user-2304">Martin Wawru
             <div id="dsq-comment-message-2328" class="dsq-comment-message"><p>Hmm does this (<a href="http://documentcloud.github.com/backbone/#Events-off" rel="nofollow">http://documentcloud.github.com/backbone/#Events-off</a>) change how you&#8217;d approach this topic?  Backbone 0.9.x introduced some new event handling business.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2378">
@@ -773,7 +741,6 @@ http://scottyapp.com                <span id="dsq-author-user-2304">Martin Wawru
 <p><a href="http://stackoverflow.com/questions/10259346/backbone-js-large-mutli-page-app-manage-page-transitions-cleanly-destruction-c " rel="nofollow">http://stackoverflow.com/questions/10259346/backbone-js-large-mutli-page-app-manage-page-transitions-cleanly-destruction-c </a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2431">
@@ -786,7 +753,6 @@ http://scottyapp.com                <span id="dsq-author-user-2304">Martin Wawru
             <div id="dsq-comment-message-2431" class="dsq-comment-message"><p>Everytime I search for Backbone .. I land on your page.. then the search ends..  Thank you very much .. Keep posting.. </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2445">
@@ -801,7 +767,6 @@ Yo intente realizarlo de una forma alternativa y obtuve lo siguiente:</p>
 <p><a href="http://stackoverflow.com/a/10559519/1359480" rel="nofollow">http://stackoverflow.com/a/10559519/1359480</a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2450">
@@ -814,7 +779,6 @@ Yo intente realizarlo de una forma alternativa y obtuve lo siguiente:</p>
             <div id="dsq-comment-message-2450" class="dsq-comment-message"><p>Really neat solution to this problem. Love it!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2465">
@@ -827,7 +791,6 @@ Yo intente realizarlo de una forma alternativa y obtuve lo siguiente:</p>
             <div id="dsq-comment-message-2465" class="dsq-comment-message"><p>Thanks for the article Derick. One naive question though, won&#8217;t removing the view take it out of DOM and what will be pattern to add it back again.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2466">
@@ -842,7 +805,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2466">Derick 
 <p>But I don&#8217;t recommend doing this. I recommend creating a new view instance instead. Re-using views always leads to more trouble than its worth.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -857,7 +819,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2466">Derick 
             <div id="dsq-comment-message-2489" class="dsq-comment-message"><p>Saved my day! Tks!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2533">
@@ -874,7 +835,6 @@ I come from a knockoutjs background so am used to always rendering based on mode
 <p>Anyway would love to hear your thoughts on my &#8220;rule of thumb&#8221;</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-even depth-1" id="dsq-comment-2558">
@@ -887,7 +847,6 @@ I come from a knockoutjs background so am used to always rendering based on mode
             <div id="dsq-comment-message-2558" class="dsq-comment-message"><p>Great article Derrick. This is just what I have been looking for. I am wondering if this is necessary for apps that don&#8217;t have a lot of views? And also, will this take care of nested views?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2559">
@@ -902,7 +861,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2559">Derick 
 <p>FWIW: the views in my Backbone.Marionette plugin handles nested views</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -917,7 +875,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2559">Derick 
             <div id="dsq-comment-message-2561" class="dsq-comment-message"><p>Hi,  why not using $(&#8220;body&#8221;).unbind(); in the view constructor  Iinitialize() .. It will unbind all events and view events will be rebounded in the view  events object. I have the same architecture as you and it works great. Correct me if im wrong. </p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2562">
@@ -930,7 +887,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2562">Derick 
             <div id="dsq-comment-message-2562" class="dsq-comment-message"><p>that will unbind all DOM events for all DOM elements on the screen. If you have more than 1 view on the screen, and you are only trying to unbind one of them, unbinding all of them would be a very bad idea. I typically have 10, 15, or as many as 40 or 50 views on the screen at once. &#8230; very bad idea. don&#8217;t do that.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -945,7 +901,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2562">Derick 
             <div id="dsq-comment-message-2571" class="dsq-comment-message"><p>Thanks a lot for this article Derick. I encountered the exact same issue mentioned in this post, where my event handlers were getting called multiple times.  I could only solve it after reading this article.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2588">
@@ -958,7 +913,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2562">Derick 
             <div id="dsq-comment-message-2588" class="dsq-comment-message"><p>Thank you for this post. I think it&#8217;s kinda weird that the backbone.js doc doesn&#8217;t warn developers about these issues</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-even depth-1" id="dsq-comment-2631">
@@ -971,7 +925,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2562">Derick 
             <div id="dsq-comment-message-2631" class="dsq-comment-message"><p>Nice article, thank you for making us aware of that problem :)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2635">
@@ -984,7 +937,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2562">Derick 
             <div id="dsq-comment-message-2635" class="dsq-comment-message"><p>Hi Derick, I wonder if `onClose: function () { this.model.unbind(&#8220;change&#8221;, this.render) }` is necessary. Won&#8217;t `this.model` be garbage collected automatically with the view? Thanks.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2636">
@@ -997,7 +949,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2636">Derick 
             <div id="dsq-comment-message-2636" class="dsq-comment-message"><p>it is necessary for scenarios where the model is use in places other than this one view. if both the model and view are created and destroyed together, then they will both be garbage collected. but if the model is used elsewhere, even for one line of code outside of the view (like creating the model to pass in to the view &#8211; which is what you should be doing) you run in to the potential for a memory leak, even if it&#8217;s only for a short period of time. </p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -1013,7 +964,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2636">Derick 
 I&#8217;ve really enjoyed your backbone posts as well as your contributions to stackoverflow.  You&#8217;ve been instrumental in helping me learn backbone.  Thank you.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2977">
@@ -1031,7 +981,6 @@ $(this.el).live(&#8216;pagehide&#8217;, function (event, ui) {</p>
 2nd Doubt my application is working slow so i m not getting clue how to increase the frame rate.Could you suggest Something&#8230;thanks in Advance</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -1057,7 +1006,6 @@ $(this.el).live(&#8216;pagehide&#8217;, function (event, ui) {</p>
 <p>This way all event handlers that are bound to the model or collection by this view are automatically being removed.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2678">
@@ -1071,7 +1019,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2678">Derick 
 <p>If you have multiple views in your application that are binding to the same model or collection, closing this view would unbind all model events for all views that are attached to this model or collection. Your entire application would stop responding to the model changes, not just this one view.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2683">
@@ -1091,7 +1038,6 @@ the view, only the callbacks for the model of this view are removed,<br />
 and no other views are affected.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-4" id="dsq-comment-2684">
@@ -1104,7 +1050,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2684">Derick 
             <div id="dsq-comment-message-2684" class="dsq-comment-message"><p>ah, sorry. somehow missed that you were passing in the context variable. that might work. i don&#8217;t know for sure, but you could test it out and see pretty easily :)</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-5" id="dsq-comment-2686">
@@ -1117,7 +1062,6 @@ http://twitter.com/tommoor                <span id="dsq-author-user-2686">Tom Mo
             <div id="dsq-comment-message-2686" class="dsq-comment-message"><p>This approach seems to work really well, I&#8217;ve combined it with also having an optional onClose event so that individual views can tidy up anything specific such as events bound directly to the window.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -1139,7 +1083,6 @@ http://twitter.com/tommoor                <span id="dsq-author-user-2686">Tom Mo
 This was a great help and nice read.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2807">
@@ -1152,7 +1095,6 @@ This was a great help and nice read.</p>
             <div id="dsq-comment-message-2807" class="dsq-comment-message"><p>Is there a reason why you chose to create a &#8216;close&#8217; method rather than overriding the &#8216;remove&#8217; method?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2808">
@@ -1166,7 +1108,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2808">Derick 
 <p>the remove method is a convenience method that wraps &#8220;this.$el.remove()&#8221; and is used to remove the view&#8217;s &#8220;el&#8221; from the DOM. this has a very different set of semantics than &#8220;close&#8221; does.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -1182,7 +1123,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2808">Derick 
 can I just define a new model for detail view and render it ?</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2838">
@@ -1195,7 +1135,6 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
             <div id="dsq-comment-message-2838" class="dsq-comment-message"><p>Very comprehensive and informative post. Keep up the great work!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2847">
@@ -1208,7 +1147,6 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
             <div id="dsq-comment-message-2847" class="dsq-comment-message"><p>Great article!. thanks you for help me to kill the zombies</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2976">
@@ -1227,7 +1165,30 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
 2nd Doubt  my application is working slow so i m not getting clue how to increase the frame rate.Could you suggest Something&#8230;thanks in Advance</p>
 </div>
         </div>
+
     </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2981">
+        <div id="dsq-comment-header-2981" class="dsq-comment-header">
+            <cite id="dsq-cite-2981">
+                <span id="dsq-author-user-2981">Flor</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2981" class="dsq-comment-body">
+            <div id="dsq-comment-message-2981" class="dsq-comment-message"><p>Any idea if this will work with Backbone.CollectionBinder and Backbone.ModelBinder? I tried technique in this post after my collection seems to be &#8216;lost&#8217; after hitting the browser back button but looks like it didn&#8217;t fix this (Unless I did something wrong, completely possible)</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-3014">
+        <div id="dsq-comment-header-3014" class="dsq-comment-header">
+            <cite id="dsq-cite-3014">
+http://twitter.com/johannesmauerer                <span id="dsq-author-user-3014">Johannes Mauerer</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-3014" class="dsq-comment-body">
+            <div id="dsq-comment-message-3014" class="dsq-comment-message"><p>Little late to the party but thanks for the good posts. Have been more than once at your blog now since starting nodeJS :). Thanks!</p>
+</div>
+        </div>
 
     </li>
             </ul>
@@ -1247,6 +1208,7 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
     var disqus_title = "Zombies! RUN! (Managing Page Transitions In Backbone Apps)";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -1271,7 +1233,6 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -1289,7 +1250,7 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -1306,14 +1267,15 @@ http://twitter.com/c_behrens                <span id="dsq-author-user-2838">Chri
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -1809,4 +1771,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:36:00 -->
+Served from: lostechies.com @ 2013-01-31 10:04:14 -->

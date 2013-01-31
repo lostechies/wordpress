@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Using HAML, SASS, JQuery And JQuery-Templates To Build An ASync Search</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/03/25/using-haml-sass-jquery-and-jquery-templates-to-build-an-async-search/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/03/25/using-haml-sass-jquery-and-jquery-templates-to-build-an-async-search/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Wed, 30 Jan 2013 20:30:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Dust Extractors</title>
+		<link>http://lostechies.com/derickbailey/2011/03/25/using-haml-sass-jquery-and-jquery-templates-to-build-an-async-search/#comment-1484</link>
+		<dc:creator>Dust Extractors</dc:creator>
+		<pubDate>Thu, 14 Apr 2011 15:31:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=229#comment-1484</guid>
+		<description>There are many reasons to wanting and purchasing dust extractors. Use www.Dust-Extractors.com to obtain Reviews and Information about dust extractors</description>
+		<content:encoded><![CDATA[<p>There are many reasons to wanting and purchasing dust extractors. Use <a href="http://www.Dust-Extractors.com" rel="nofollow">http://www.Dust-Extractors.com</a> to obtain Reviews and Information about dust extractors</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/03/25/using-haml-sass-jquery-and-jquery-templates-to-build-an-async-search/#comment-1422</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Mon, 28 Mar 2011 14:34:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=229#comment-1422</guid>
+		<description>good stuff. will definitely do those things. thanks ben!</description>
+		<content:encoded><![CDATA[<p>good stuff. will definitely do those things. thanks ben!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Ben Scheirman</title>
+		<link>http://lostechies.com/derickbailey/2011/03/25/using-haml-sass-jquery-and-jquery-templates-to-build-an-async-search/#comment-1421</link>
+		<dc:creator>Ben Scheirman</dc:creator>
+		<pubDate>Mon, 28 Mar 2011 14:28:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=229#comment-1421</guid>
+		<description>I&#039;d suggest improving the URL-building part of your javascript.  Instead of matching the term as part of the route (which can get ugly) it&#039;s better to use a query string param.
+
+Something like this:
+
+base_url = &quot;path/to/site?q=&quot; + terms  //don&#039;t forget to url encode thesee
+
+In addition, the .json extension really isn&#039;t required.  You can set the contentType of the request to let Rails know to serve up JSON.  $.getJSON does this for you.
+
+
+
+
+</description>
+		<content:encoded><![CDATA[<p>I&#8217;d suggest improving the URL-building part of your javascript.  Instead of matching the term as part of the route (which can get ugly) it&#8217;s better to use a query string param.</p>
+<p>Something like this:</p>
+<p>base_url = &#8220;path/to/site?q=&#8221; + terms  //don&#8217;t forget to url encode thesee</p>
+<p>In addition, the .json extension really isn&#8217;t required.  You can set the contentType of the request to let Rails know to serve up JSON.  $.getJSON does this for you.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-31 08:34:23 -->

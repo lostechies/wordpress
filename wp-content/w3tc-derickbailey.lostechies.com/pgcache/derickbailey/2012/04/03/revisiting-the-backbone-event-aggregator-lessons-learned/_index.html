@@ -72,7 +72,7 @@
 <h2>Dependency Injection: Bad Idea</h2>
 <p>This is the first of the obvious mistakes that I made my original blog post and implementation. Passing around an event aggregator as a dependency for various objects is just plain painful in JavaScript. There&#8217;s no real value in doing this, either. The few benefits that it may provide are greatly outweighed by the flexibility inherent in JavaScript and our ability to work around the problem that dependency injection solves.</p>
 <p>You can see the obvious problems in the original code, pretty easily:</p>
-<div>Could not embed GitHub Gist 1092444: API Rate Limit Exceeded for 70.169.150.251</div>
+<div>Could not embed GitHub Gist 1092444: Max number of login attempt exceeded</div>
 <p>Having to pass the `vent` object to every single constructor gets frustrating, fast. It turns in to a real nightmare, though, when you want to trigger an event from an object that is 5 or 6 levels deep in an object graph. If this is the only place that needs to trigger an event, you still have to pass the aggregator around to all of the objects in the graph.</p>
 <h3>Solution: Application Level Aggregator</h3>
 <p>One of the solutions, and the easiest way to start using an event aggregator, is to attach the aggregator to your application&#8217;s namespace object. This becomes the application level event aggregator that any code in your application can attach to and trigger events from.</p>
@@ -186,7 +186,7 @@ MyApp.vent.trigger(&quot;some:namespaced:event&quot;);</code></pre></noscript>
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -195,9 +195,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -235,7 +234,6 @@ http://www.cornerstonenw.com/                <span id="dsq-author-user-2330">Pet
 <p>I was surprised by the statement &#8220;The few benefits that [dependency injection] may provide are greatly outweighed by the flexibility inherent in JavaScript and our ability to work around the problem that dependency injection solves.&#8221; JS is indeed a very flexible language and at our shop we regularly work around the lack of dependency injection in our codebase (and the corresponding preponderance of globals) with Jasmin Spies on globals. But I see that as a stop-gap survival technique; not the right solution. For new code that I write, I try to make the dependencies clear and to solve the pain of needing to always pass dependencies via factories. As Uncle Bob argues in Clean Code (ch11, http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) it boils down to Separation of Concerns. For a very simple system with few dependencies, it&#8217;s fine to just use the &#8220;new&#8221; operator and pass dependencies where they&#8217;re needed. But as a system grows more complex, as the dependencies grow and things are refactored to be more fine-grained, it makes sense to consolidate the concern of construction &#8212; what dependencies are required and in what order &#8212; into a factory.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2331">
@@ -252,7 +250,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2331">Derick 
 <p>I definitely like the idea of factories, too. Even if an IoC container is just a mega-meta-uber-factory, keeping simple factories around for specific purposes is usually a good way to keep code clean.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -290,7 +287,6 @@ MyApp.dispatchToProperVent($el, someEvent);</p>
 <p>Am I totally crazy?  Or could this possibly work?</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-even depth-1" id="dsq-comment-2594">
@@ -307,7 +303,6 @@ http://truffles.me.uk                <span id="dsq-author-user-2594">Tim Ruffles
 <p>You&#8217;re relying on two other modules setting up some global state. I understand using a global for vent as a tradeoff (though I might go for sth like <a href="https://gist.github.com/3047279" rel="nofollow">https://gist.github.com/3047279</a>), but I can&#8217;t see how code like the above avoids the common issues with global vars? Namely, for testing, having to mock all the globals then tear them down, needing quite a large graph of objects (BBCM.CA.CL, rather than passing only the required objects for each test), etc.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2659">
@@ -327,7 +322,6 @@ http://truffles.me.uk                <span id="dsq-author-user-2594">Tim Ruffles
 <p>Thoughts?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2660">
@@ -344,7 +338,6 @@ var vent = _.extend({}, Backbone.Events);<br />
 Backbone&#8217;s models use the same Backbone.Events object in the same manner. I&#8217;m just creating an object with less overhead, for a specific purpose, and with a more appropriate name to cut down on semantic confusion for the people reading and writing the code.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2661">
@@ -364,7 +357,6 @@ This brings us back to my point on subscribing to *vent*.  The post suggests tha
 <p>This way the example shows triggering &amp; observing.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-4" id="dsq-comment-2662">
@@ -378,7 +370,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2662">Derick 
 <p>i just showed a really poor example, because &#8230; well&#8230; it&#8217;s an example :D</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -397,7 +388,6 @@ http://robert-agthe.de                <span id="dsq-author-user-2689">Robert Agt
             <div id="dsq-comment-message-2689" class="dsq-comment-message"><p>Thanks for your post Derick, very helpful. Speaks something against jQuerys &#8220;custom events&#8221; as an Event Aggregator? As far as i know is it more or less the same thing. And because backbone relies already on jquery, an additional event aggregator should become obsolete.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2691">
@@ -412,7 +402,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2691">Derick 
 <p>but there&#8217;s no reason you can&#8217;t use jquery for your event aggregator in your apps.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -436,7 +425,6 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2747">Kerry
 <p>Sorry that took so long to explain, and many thanks if you can offer any help :)</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2762">
@@ -452,7 +440,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2762">Derick 
 <p>Hope that helps. If you have any more questions about this, it would be best to ask on the google group for marionette: <a href="https://groups.google.com/forum/#!forum/backbone-marionette" rel="nofollow">https://groups.google.com/forum/#!forum/backbone-marionette</a></p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2772">
@@ -466,7 +453,6 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry
 <p>That makes perfect sense &#8211; I realise now at the time I posted the comment I was also unaware of the third argument in .off, the context, which also answers my own question. Backbone.js has really made me learn about things like events (which you almost take for granted when doing JS development), object lifespan etc in depth &#8211; which can only be a good thing, but also kinda scary when things you thought you knew&#8230;you really don&#8217;t. But, posts like yours have really helped me along the way, so thank you :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -486,7 +472,6 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry
 <p>Some posts below mention that this approach could lead to a &#8220;dumping ground&#8221;. Totally true, but Javascript itself is one huge dumping ground already. It&#8217;s really up to the developers to discipline themselves.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2971">
@@ -499,7 +484,6 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry
             <div id="dsq-comment-message-2971" class="dsq-comment-message"><p>Your article inspired me to put together a little factory method for creating/getting namespaced event channels on the fly. You can check it out here: <a href="https://github.com/mxdubois/backbone-event-channels" rel="nofollow">https://github.com/mxdubois/backbone-event-channels</a></p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -519,6 +503,7 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry
     var disqus_title = "Revisiting The Backbone Event Aggregator: Lessons Learned";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -543,7 +528,6 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -561,7 +545,7 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -578,14 +562,15 @@ http://twitter.com/Kerry350                <span id="dsq-author-user-2772">Kerry
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -1081,4 +1066,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:03:45 -->
+Served from: lostechies.com @ 2013-01-31 09:53:04 -->

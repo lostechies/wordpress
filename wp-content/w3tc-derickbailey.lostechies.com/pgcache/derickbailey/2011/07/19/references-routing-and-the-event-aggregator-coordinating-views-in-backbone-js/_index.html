@@ -88,7 +88,7 @@
 <p>In this simple example, I have an event setup that listens to the edit icon click. When it&#8217;s clicked, I instantiate a new add/edit view with the model from the current medication display view. I then render it, and we&#8217;re on our way &#8211; the add/edit view will display the correct model and life is good.</p>
 <p>In some cases, though, this isn&#8217;t really an option &#8211; or, it may be an option that would cause a little extra code and work to make sure it works correctly. The screen shot above is one of those cases. Both the &#8220;Add Medication&#8221; button and the add/edit form are part of the same view. I did this because it did not seem necessary to have a view just for the &#8220;Add Medication&#8221; button when something as simple as a jQuery click event would suffice. Rather than code the jQuery on it&#8217;s own, though, I decided to put the &#8220;Add Medication&#8221; button into my add/edit view. It makes sense to me &#8211; the button allows you to add a new medication, so it should be part of the add/edit view.</p>
 <p>Because of the choice I made, though, having the edit button for a medication instantiate a new add/edit form was not an option for me. I could have the medication view reference the existing instance of the add/edit view, though.</p>
-<div>Could not embed GitHub Gist 1092444: API Rate Limit Exceeded for 70.169.150.251</div>
+<div>Could not embed GitHub Gist 1092444: Max number of login attempt exceeded</div>
 <p>This also works, giving me the functionality i need with one instance of the add/edit view. Not being satisfied with what works, though, I wanted to explore my other options to see what else would work. Specifically, I wanted to see if I could completely decouple these two views and still provide the functionality that I needed.</p>
 <h3>Routing</h3>
 <p>My next thought was to take advantage of the routing in backbone. I thought I could have the edit button changed from a clickable button to a simple &lt;a href=&#8221;#edit/id&#8221;&gt; link. I could then have the router pick the correct model from the collection and pass it to the add/edit view.</p>
@@ -129,7 +129,7 @@ AddEditView = Backbone.View.extend({
 <script src="https://gist.github.com/1092444.js?file=4-vent.js"></script><noscript><pre><code class="language-javascript javascript">var vent = _.extend({}, Backbone.Events);
 </code></pre></noscript>
 <p>That&#8217;s it! No, really. That&#8217;s all I needed, because backbone already handles events very well. To make use of this, though, I need each of the event publishers and / or subscribers to have a reference to my &#8216;vent&#8217; object. Once they have a reference, they can either subscribe or publish events as needed.</p>
-<div>Could not embed GitHub Gist 1092444: API Rate Limit Exceeded for 70.169.150.251</div>
+<div>Could not embed GitHub Gist 1092444: Max number of login attempt exceeded</div>
 <p>When the edit icon is clicked, the the vent is triggered with an &#8220;editMedication&#8221; event, passing the model that needs to be edited directly to any subscribers. The add/edit view has subscribed to the &#8220;editMedication&#8221; event and receives the medication directly as a parameter. Note that I also used <a href="http://lostechies.com/derickbailey/2011/06/15/solving-backbones-this-model-view-problem-with-underscore-js/">the underscore.js bindAll method</a> to ensure that the editMedication method is executed in the correct context. If you omit this line, the editMedication method will execute with &#8216;this&#8217; being the event aggregator, not the view.</p>
 <p>Now that&#8217;s some code that I can really fall in love with! My application functions perfectly &#8211; I can click the edit icon and have the correct medication populated into the add/edit view, for editing. Yet my views know nothing about each other. I have completely decoupled them from each other. The only thing the views need to know about is the event aggregator object.</p>
 <h3>Decoupling The Views</h3>
@@ -147,7 +147,7 @@ AddEditView = Backbone.View.extend({
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -156,9 +156,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -191,7 +190,6 @@ Find me on the web:
 <p>Thanks!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1655">
@@ -204,7 +202,6 @@ Find me on the web:
             <div id="dsq-comment-message-1655" class="dsq-comment-message"><p>Love the simplicity</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-1656">
@@ -217,7 +214,6 @@ Find me on the web:
             <div id="dsq-comment-message-1656" class="dsq-comment-message"><p>verynice! thank you</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1659">
@@ -230,7 +226,6 @@ http://www.hanselman.com                <span id="dsq-author-user-1659">shanselm
             <div id="dsq-comment-message-1659" class="dsq-comment-message"><p>Rock on. That&#8217;s hot. Great writeup.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-1708">
@@ -243,7 +238,6 @@ http://www.easyate.com/                <span id="dsq-author-user-1708">Viceroy</
             <div id="dsq-comment-message-1708" class="dsq-comment-message"><p>Fine posting would make consistent develop, thanks a ton promote, a build-up with awareness will be to continue to keep knowing, particular attention is definitely the start of huge selection.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1710">
@@ -256,7 +250,6 @@ http://www.astwoodevents.co.uk/                <span id="dsq-author-user-1710">e
             <div id="dsq-comment-message-1710" class="dsq-comment-message"><p>Well written article.I appreciate your writing skills.Its great.You have done a great job by sharing this article with us.I like this article.Keep sharing with us.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-1735">
@@ -270,7 +263,6 @@ http://www.astwoodevents.co.uk/                <span id="dsq-author-user-1710">e
 <p>Thanks a lot</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1738">
@@ -283,7 +275,6 @@ http://www.astwoodevents.co.uk/                <span id="dsq-author-user-1710">e
             <div id="dsq-comment-message-1738" class="dsq-comment-message"><p>Just a question, why not use a Singleton ?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-1739">
@@ -303,7 +294,6 @@ Notifier.getInstance().trigger(&#8216;menu_changed&#8217;, { myArgument : &#8216
 <p>Now, I can instantiate my views in differents scripts with closures without passing the Event aggregator in options</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-4" id="dsq-comment-1740">
@@ -319,7 +309,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1740">Derick 
 <p>since Notifier is attached to the global javascript object at this point (the same as in your example), its&#8217; available everywhere. there&#8217;s really no need to add a getInstance method to it.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-5" id="dsq-comment-1741">
@@ -336,7 +325,6 @@ it&#8217;s really simple and clear now.</p>
 <p>happy coding</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt depth-5" id="dsq-comment-1742">
@@ -349,7 +337,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1742">Derick 
             <div id="dsq-comment-message-1742" class="dsq-comment-message"><p>oops &#8211; yeah, i make that mistake all the time. :P</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -370,7 +357,6 @@ http://www.facebook.com/profile.php?id=2012258                <span id="dsq-auth
             <div id="dsq-comment-message-1799" class="dsq-comment-message"><p>Totally awesome! I was stuck with a bit of code that I was writing that seemed sloppy or incorrectly implemented and this totally solved my issue.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1801">
@@ -383,7 +369,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1801">Derick 
             <div id="dsq-comment-message-1801" class="dsq-comment-message"><p>glad it helped! :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -398,7 +383,6 @@ http://www.facebook.com/profile.php?id=2012258                <span id="dsq-auth
             <div id="dsq-comment-message-1800" class="dsq-comment-message"><p>Totally awesome! I was stuck with a bit of code that I was writing that seemed sloppy or incorrectly implemented and this totally solved my issue.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1894">
@@ -411,7 +395,6 @@ http://www.facebook.com/profile.php?id=694648721                <span id="dsq-au
             <div id="dsq-comment-message-1894" class="dsq-comment-message"><p>Can&#8217;t thank you enough for this. Just one question &#8211; when triggering an event, you have passed a model to the listeners (editMedication, this.model). I want to know if I can other parameters as well?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1895">
@@ -432,7 +415,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1895">Derick 
 }</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -447,7 +429,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1895">Derick 
             <div id="dsq-comment-message-1989" class="dsq-comment-message"><p>Thanks!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2001">
@@ -460,7 +441,6 @@ http://www.slideshare.net/tjercus/ontwikkelen-in-debrowser1                <span
             <div id="dsq-comment-message-2001" class="dsq-comment-message"><p>You can also use jquery  to bind/trigger custom events on the document object. I guess your solution is more testable since it uses a separate event object instead of a global singleton (the document object).</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2002">
@@ -473,7 +453,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2002">Derick 
             <div id="dsq-comment-message-2002" class="dsq-comment-message"><p>Yeah, the backbone way i&#8217;m showing is a little more testable off-hand&#8230; but even that can be solved with jquery. I&#8217;ve been reading the &#8220;JavaScript Web Applications&#8221; book from OReilly Media recently and it shows several examples of using jQuery to create an event aggregator, in a manner that would be easily testable.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2003">
@@ -486,7 +465,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2002">Derick 
             <div id="dsq-comment-message-2003" class="dsq-comment-message"><p>Thanks for the book tip! And complements on the article, there are not a lot good sources of information on backbone, especially the practical implementation details in real world situations.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -504,7 +482,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2002">Derick 
 Thank you very much, it made my Backbone code much easier.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2091">
@@ -518,7 +495,6 @@ http://profiles.google.com/dan.meierotto                <span id="dsq-author-use
 <p>Thanks!</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2093">
@@ -534,7 +510,6 @@ Because of the choice I made, though, having the edit button for a medication in
 In other words u have exposed 3 ways of programming for the same scenario i understood the first and the third and i guess third is awesome and I dont understand the second at all.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -553,7 +528,6 @@ http://www.facebook.com/profile.php?id=4302094                <span id="dsq-auth
 <p>And in implementations of the view, supplying an `_events` property rather than `events` property, starting event names that should be passed to the aggregator with &#8220;:&#8221;</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2105">
@@ -571,7 +545,6 @@ Because of the choice I made, though, having the edit button for a medication in
 In other words u have exposed 3 ways of programming for the same scenario i understood the first and the third and i guess third is awesome and I dont understand the second at al</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2107">
@@ -584,7 +557,6 @@ In other words u have exposed 3 ways of programming for the same scenario i unde
             <div id="dsq-comment-message-2107" class="dsq-comment-message"><p>This is awesome. Thanks!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2108">
@@ -597,7 +569,6 @@ In other words u have exposed 3 ways of programming for the same scenario i unde
             <div id="dsq-comment-message-2108" class="dsq-comment-message"><p>Piece of cake, and so freakin&#8217; handy. </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2166">
@@ -612,7 +583,6 @@ Thanks for the good article. Do you have the html code for the above one so that
 <p>Thanks</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2174">
@@ -625,7 +595,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2174">Derick 
             <div id="dsq-comment-message-2174" class="dsq-comment-message"><p>I don&#8217;t &#8211; that code was part of a client&#8217;s project, so I&#8217;m not allowed to share it. There are other examples available, though. The technique I&#8217;ve described here has become very popular, recently. </p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2178">
@@ -638,7 +607,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2174">Derick 
             <div id="dsq-comment-message-2178" class="dsq-comment-message"><p>Thanks for your reply. Can you please provide an example of this which is available in online. Thanks for your time.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -655,7 +623,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2174">Derick 
             <div id="dsq-comment-message-2168" class="dsq-comment-message"><p>Pardon my ignorance on this, but can you give a quick reason as to why an event aggregator is needed?  What&#8217; wrong with one object subscribing to an event, and another one publishing that event?  What advantage do you gain by creating the aggregator?  Trying to see the value add in this&#8230;thanks. </p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2175">
@@ -669,7 +636,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2175">Derick 
 <p>When you have a scenario where two parts of the application need to communicate, but it would cause design problems, tight coupling, spaghetti code messes, or other issues to have them know about each other directly, then an event aggregator is a good option. It&#8217;s not the only option, but it is one option.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-2177">
@@ -683,7 +649,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2175">Derick 
 <p>I guess I was expecting to see some &#8220;extra&#8221; functionality going on in an aggregator other than just the abstraction and decoupling, but that is probably well worth having it by itself.  It might however, provide a good point for adding code to e.a. object to perform analytics calls against Omniture or Google for each event.  Hmmm&#8230;</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -700,7 +665,6 @@ http://www.facebook.com/austin.fatheree                <span id="dsq-author-user
             <div id="dsq-comment-message-2199" class="dsq-comment-message"><p>This really helped backbone &#8216;click&#8217; for me.  Any reason that this isn&#8217;t just part of backbone?  It seems like they could implement a Notifier singleton pretty easily.  Then you&#8217;d just have to do Backbone.Notifier.bind(&#8216;editMed&#8217;, this.editMed);</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2204">
@@ -714,7 +678,6 @@ http://www.facebook.com/austin.fatheree                <span id="dsq-author-user
 <p>This is second time you&#8217;ve helped me in the same day!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2219">
@@ -727,7 +690,6 @@ http://twitter.com/arnislapsa                <span id="dsq-author-user-2219">Arn
             <div id="dsq-comment-message-2219" class="dsq-comment-message"><p>Thanks a lot, this is useful stuff. Was right looking for it.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2225">
@@ -740,7 +702,6 @@ http://twitter.com/arnislapsa                <span id="dsq-author-user-2219">Arn
             <div id="dsq-comment-message-2225" class="dsq-comment-message"><p>in a case of collection, where each item of the collection spawn nested view. How would trigger an event on the child view, so only the parent &#8220;answer to it&#8221; and not all the items of the collection? </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2228">
@@ -754,7 +715,6 @@ http://twitter.com/edwardbc                <span id="dsq-author-user-2228">Edwar
 <p>I think it&#8217;s also worth to mention that you need to unbind the from the events when you no longer needed, otherwise if you&#8217;re using that specific event in other place it will trigger the previously set function.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2252">
@@ -767,7 +727,6 @@ http://twitter.com/edwardbc                <span id="dsq-author-user-2228">Edwar
             <div id="dsq-comment-message-2252" class="dsq-comment-message"><p>I&#8217;m using Require.js (AMD) throughout my application. How is it possible to have a global event dispatcher that can work with modules and not resort to having the event dispatcher on the global namespace? I could pass the event dispatcher object around to every single model/collection/view module, but that seems a little messy. Any other way of doing this?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2274">
@@ -789,7 +748,6 @@ define([   <br />
 </code></p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -806,7 +764,6 @@ define([   <br />
 <p>2. Do you keep all events for an aggregator within the view context or can a model subscribe to as well?  One main example I see is if you have a collection of Items that have an enabled/disabled state.  There are events, maybe some ajax etc  (triggered through the aggregator) based on a view action.  However, you still want your ItemView to derive it&#8217;s active/inactive change from the model Item object&#8217;s state.  So should the model itself subscribe?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2268">
@@ -820,7 +777,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2268">Derick 
 <p>2) Any code in your app can publish to or subscribe to the app&#8217;s event aggregator. some times it&#8217;s best to decouple the views and models from the event aggregator, though. For example, you might want to have an event handler sitting out in the middle of nowhere, and the handler method fires up a view with a model. This is all contextual, though. Do what makes the most sense. Keep in mind the goal of decoupling the various functional areas of your app.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -835,7 +791,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2268">Derick 
             <div id="dsq-comment-message-2313" class="dsq-comment-message"><p>very helpful. thanks so much!!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2384">
@@ -850,7 +805,6 @@ http://twitter.com/plukevdh                <span id="dsq-author-user-2384">Lukas
 <p>Kinda mimics Redis in this way now.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2453">
@@ -863,7 +817,6 @@ http://twitter.com/plukevdh                <span id="dsq-author-user-2384">Lukas
             <div id="dsq-comment-message-2453" class="dsq-comment-message"><p>I just started working on my first very complex backbone app, and you have saved me a lot of pain, agony, and irritation here.  Thank you.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2524">
@@ -881,7 +834,6 @@ http://twitter.com/rymodi                <span id="dsq-author-user-2524">Ryan Di
 <p>Got the idea here: http://stackoverflow.com/a/7102686</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2539">
@@ -894,7 +846,6 @@ http://twitter.com/rymodi                <span id="dsq-author-user-2524">Ryan Di
             <div id="dsq-comment-message-2539" class="dsq-comment-message"><p>Hi I am a newbie and I have implemented the Vent and triggered it when i wanted to edit a particular model inside a view like you did in your example.I am currently faced with an issue ,let me explain in context to your example, how do i show the details of the shops  on clicking the pencil icon for medication based on the medication name and route name,I need to pass the shops model which is not related to the medication model, but i should be able to display the shop model view</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2540">
@@ -907,7 +858,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2540">Derick 
             <div id="dsq-comment-message-2540" class="dsq-comment-message"><p>there&#8217;s far more detail and code needed to be able to answer this. you should post a question on <a href="http://stackoverflow.com" rel="nofollow">http://stackoverflow.com</a> where you can post all the detail, including the code in question</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-2552">
@@ -920,7 +870,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2540">Derick 
             <div id="dsq-comment-message-2552" class="dsq-comment-message"><p>Hi I have made a backbone.js simple app using asp.net mvc 4 webapi, but i am not sure if i have done it the right way,can you look at my code and suggest me the better approach than I have followed in it.I can give you the  source code of it,let me know if you are willing :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -935,7 +884,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2540">Derick 
             <div id="dsq-comment-message-2541" class="dsq-comment-message"><p> To be more clear suppose I have one view which shows the list of courses,now on clicking on each and every course i want to show the students enrolled in that course,so inside &#8220;click&#8221; of the course item view,i called the vent.trigger(&#8220;loadStudents&#8221;,&#8221;model of student&#8230;?&#8221;) inside the courseitemview,but how do i get the student model for that</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-2542">
@@ -948,7 +896,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2542">Derick 
             <div id="dsq-comment-message-2542" class="dsq-comment-message"><p>please post the question on stackoverflow</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-4" id="dsq-comment-2546">
@@ -962,7 +909,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2542">Derick 
 <p><a href="http://stackoverflow.com/questions/10959267/using-event-aggrevator-to-load-a-view-with-different-model-in-backbone-js" rel="nofollow">http://stackoverflow.com/questions/10959267/using-event-aggrevator-to-load-a-view-with-different-model-in-backbone-js</a></p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -981,7 +927,6 @@ http://twitter.com/braveheart1723                <span id="dsq-author-user-2586"
             <div id="dsq-comment-message-2586" class="dsq-comment-message"><p>Beautiful post Derick &#8211; saved me 3 hours work :)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2608">
@@ -994,7 +939,6 @@ http://twitter.com/braveheart1723                <span id="dsq-author-user-2586"
             <div id="dsq-comment-message-2608" class="dsq-comment-message"><p>I am a total newb but I need some help with something very simple: Where is this global variable, yours is &#8220;vent&#8221;, supposed to go???</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2612">
@@ -1007,7 +951,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2612">Derick 
             <div id="dsq-comment-message-2612" class="dsq-comment-message"><p>not as a global variable. this is sample code just to show how to define it. you should attach it to a namespace object for your app, or some other object that represents your app and is available to use from your other objects (a module, for example).</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -1023,7 +966,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2612">Derick 
 <p>I have a question a very basic one though and please correct me if I am wrong. Isn&#8217;t vent object a global object ? And isn&#8217;t having global variables considered wrong ?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2653">
@@ -1038,7 +980,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2612">Derick 
 <p>Other than that as long as you keep global events properly named you should avoid any confusion as to what they do.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2654">
@@ -1051,7 +992,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2612">Derick 
             <div id="dsq-comment-message-2654" class="dsq-comment-message"><p>@johnml:disqus Meaning that, using a global variables under a namespace is fine. Thanks </p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -1068,7 +1008,6 @@ http://profiles.google.com/eric.bichara                <span id="dsq-author-user
             <div id="dsq-comment-message-2814" class="dsq-comment-message"><p>Great post thanks</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2881">
@@ -1081,7 +1020,6 @@ http://twitter.com/eljojo                <span id="dsq-author-user-2881">josé t
             <div id="dsq-comment-message-2881" class="dsq-comment-message"><p>This post has helped me a lot. Thanks.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2942">
@@ -1094,7 +1032,6 @@ http://twitter.com/eljojo                <span id="dsq-author-user-2881">josé t
             <div id="dsq-comment-message-2942" class="dsq-comment-message"><p>G-d forbid you ever link to a demo in any of your posts</p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -1114,6 +1051,7 @@ http://twitter.com/eljojo                <span id="dsq-author-user-2881">josé t
     var disqus_title = "References, Routing, And The Event Aggregator: Coordinating Views In Backbone.js";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -1138,7 +1076,6 @@ http://twitter.com/eljojo                <span id="dsq-author-user-2881">josé t
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -1156,7 +1093,7 @@ http://twitter.com/eljojo                <span id="dsq-author-user-2881">josé t
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -1173,14 +1110,15 @@ http://twitter.com/eljojo                <span id="dsq-author-user-2881">josé t
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -1676,4 +1614,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:42:18 -->
+Served from: lostechies.com @ 2013-01-31 09:53:12 -->

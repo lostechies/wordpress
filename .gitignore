@@ -1,4 +1,5 @@
 permalinkmap.csv
 *.swp
+wp-settings.php
 wp-config.php
 wp-content/cache/

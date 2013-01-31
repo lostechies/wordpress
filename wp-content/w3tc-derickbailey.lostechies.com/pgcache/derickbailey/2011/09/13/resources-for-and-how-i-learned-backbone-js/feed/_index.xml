@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Resources For, And How I Learned Backbone.js</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Wed, 30 Jan 2013 20:30:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: TechNet</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-2769</link>
+		<dc:creator>TechNet</dc:creator>
+		<pubDate>Fri, 05 Oct 2012 08:53:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-2769</guid>
+		<description>This is what I wrote, in detail tutorial Backbone.js using coffeescript
+http://technetlk.blogspot.com.au/2012/09/laravel-backbonejs-coffeescript.html</description>
+		<content:encoded><![CDATA[<p>This is what I wrote, in detail tutorial Backbone.js using coffeescript<br />
+<a href="http://technetlk.blogspot.com.au/2012/09/laravel-backbonejs-coffeescript.html" rel="nofollow">http://technetlk.blogspot.com.au/2012/09/laravel-backbonejs-coffeescript.html</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Gaurav Ramesh</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-2669</link>
+		<dc:creator>Gaurav Ramesh</dc:creator>
+		<pubDate>Wed, 08 Aug 2012 06:17:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-2669</guid>
+		<description>comprehensive set of resources. Thanks .</description>
+		<content:encoded><![CDATA[<p>comprehensive set of resources. Thanks .</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Vikikamath</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-2482</link>
+		<dc:creator>Vikikamath</dc:creator>
+		<pubDate>Fri, 25 May 2012 20:08:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-2482</guid>
+		<description>nice!</description>
+		<content:encoded><![CDATA[<p>nice!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Kaha</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-1901</link>
+		<dc:creator>Kaha</dc:creator>
+		<pubDate>Sat, 22 Oct 2011 02:37:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-1901</guid>
+		<description>Hey Derick, thank you for your articles. I was searching for some backbone tips, and I found this article which was written recently. Did you see it http://backbonetutorials.com/organizing-backbone-using-modules/ . Idea looks interesting :)</description>
+		<content:encoded><![CDATA[<p>Hey Derick, thank you for your articles. I was searching for some backbone tips, and I found this article which was written recently. Did you see it <a href="http://backbonetutorials.com/organizing-backbone-using-modules/" rel="nofollow">http://backbonetutorials.com/organizing-backbone-using-modules/</a> . Idea looks interesting :)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Jim Newbery</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-1865</link>
+		<dc:creator>Jim Newbery</dc:creator>
+		<pubDate>Tue, 11 Oct 2011 06:35:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-1865</guid>
+		<description>I found I really learned the most when I started testing my Backbone apps. I wrote a series of articles on &lt;a href=&quot;http://tinnedfruit.com/2011/03/03/testing-backbone-apps-with-jasmine-sinon.html&quot; rel=&quot;nofollow&quot;&gt;unit testing Backbone with Jasmine and Sinon.JS&lt;/a&gt; which you might find useful.</description>
+		<content:encoded><![CDATA[<p>I found I really learned the most when I started testing my Backbone apps. I wrote a series of articles on <a href="http://tinnedfruit.com/2011/03/03/testing-backbone-apps-with-jasmine-sinon.html" rel="nofollow">unit testing Backbone with Jasmine and Sinon.JS</a> which you might find useful.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-1835</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Wed, 28 Sep 2011 15:32:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-1835</guid>
+		<description>thanks for the quick response!
+
+BTW if it helps anyone, another heads-up for these backbone tutorials is the load order of the js files (caught me out first time): jquery, underscore, backbone, yourapp</description>
+		<content:encoded><![CDATA[<p>thanks for the quick response!</p>
+<p>BTW if it helps anyone, another heads-up for these backbone tutorials is the load order of the js files (caught me out first time): jquery, underscore, backbone, yourapp</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: joey beninghove</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-1834</link>
+		<dc:creator>joey beninghove</dc:creator>
+		<pubDate>Wed, 28 Sep 2011 14:45:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-1834</guid>
+		<description>Sorry guys, the original link to the Backbone.js screencast has been restored: http://joeybeninghove.com/2011/08/16/backbone-screencast-introduction-views
+
+Sorry again for the confusion.</description>
+		<content:encoded><![CDATA[<p>Sorry guys, the original link to the Backbone.js screencast has been restored: http://joeybeninghove.com/2011/08/16/backbone-screencast-introduction-views</p>
+<p>Sorry again for the confusion.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Derick Bailey</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-1833</link>
+		<dc:creator>Derick Bailey</dc:creator>
+		<pubDate>Wed, 28 Sep 2011 14:36:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-1833</guid>
+		<description>doh! thanks for the headsup on that broken link. fixed in the post. here&#039;s the right one: http://joeybeninghove.com/2011/08/15/backbone-screencast-introduction-views/</description>
+		<content:encoded><![CDATA[<p>doh! thanks for the headsup on that broken link. fixed in the post. here&#8217;s the right one: <a href="http://joeybeninghove.com/2011/08/15/backbone-screencast-introduction-views/" rel="nofollow">http://joeybeninghove.com/2011/08/15/backbone-screencast-introduction-views/</a></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-1832</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Wed, 28 Sep 2011 14:33:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-1832</guid>
+		<description>Thanks - useful! BTW this link (which is the one I wanted most :-) is a github 404: http://joeybeninghove.com/2011/08/16/backbone-screencast-introduction-views/</description>
+		<content:encoded><![CDATA[<p>Thanks &#8211; useful! BTW this link (which is the one I wanted most :-) is a github 404: http://joeybeninghove.com/2011/08/16/backbone-screencast-introduction-views/</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Pascal Precht</title>
+		<link>http://lostechies.com/derickbailey/2011/09/13/resources-for-and-how-i-learned-backbone-js/#comment-1807</link>
+		<dc:creator>Pascal Precht</dc:creator>
+		<pubDate>Tue, 20 Sep 2011 19:36:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=543#comment-1807</guid>
+		<description>Really nice article. Thanks!</description>
+		<content:encoded><![CDATA[<p>Really nice article. Thanks!</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-31 08:31:17 -->

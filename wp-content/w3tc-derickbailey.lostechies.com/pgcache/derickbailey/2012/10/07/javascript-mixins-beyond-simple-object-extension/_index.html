@@ -72,7 +72,14 @@
 <h2>Object Extension Is A Poor Man&#8217;s Mixin</h2>
 <p>I love the &#8220;extend&#8221; methods of <a href="http://api.jquery.com/jQuery.extend/">jQuery</a> and <a href="http://underscorejs.org/#extend">Underscore</a>. I use them a lot. They&#8217;re powerful and simple and make it easy to transfer data and behavior from one object to another &#8211; the essence of a mixin. But in spite of my love of underscore.js and jQuery&#8217;s &#8220;extend&#8221; methods, there&#8217;s a problem with them in that they apply every attribute from one or more source objects to a target objects. </p>
 <p>You can see the effect of this in <a href="http://lostechies.com/chrismissal/2012/10/05/extending-objects-in-underscore/">Chris&#8217; underscore example</a>:</p>
-<script src="https://gist.github.com/3797198.js"></script><noscript><pre><code class="language-javascript javascript">var start = {
+<script src="https://gist.github.com/3797198.js"></script><noscript><pre><code class="language-javascript javascript">{
+    &quot;id&quot;: 123,
+    &quot;count&quot;: 42,
+    &quot;title&quot;: null,
+    &quot;tag&quot;: &quot;javascript&quot;,
+    &quot;values&quot;: [1,3,6,10],
+    &quot;name&quot;: &quot;Los Techies&quot;
+}</code></pre><pre><code class="language-javascript javascript">var start = {
     id: 123,
     count: 41,
     desc: 'this is information',
@@ -92,14 +99,7 @@ var extra = {
 };
 
 var extended = _.extend(start, more, extra);
-console.log(JSON.stringify(extended));</code></pre><pre><code class="language-javascript javascript">{
-    &quot;id&quot;: 123,
-    &quot;count&quot;: 42,
-    &quot;title&quot;: null,
-    &quot;tag&quot;: &quot;javascript&quot;,
-    &quot;values&quot;: [1,3,6,10],
-    &quot;name&quot;: &quot;Los Techies&quot;
-}</code></pre></noscript>
+console.log(JSON.stringify(extended));</code></pre></noscript>
 <p>In this example, the first object contains a key named &#8220;values&#8221; and the third object also contains a key named &#8220;values&#8221;. When the extend method is called, the last one in wins. This means that the &#8220;values&#8221; from the third object end up being the values on the final target object.</p>
 <p>So, what happens if we want to mix two behavioral sets in to one target object, but both of those behavior sets use the same underlying &#8220;values&#8221;, or &#8220;config&#8221;, or &#8220;bindings&#8221; (as reported in <a href="https://github.com/marionettejs/backbone.marionette/issues/269">this Marionette issue</a>)? One or both of them will break, and that&#8217;s definitely not a good thing.</p>
 <h2>A Problem Of Context</h2>
@@ -243,7 +243,7 @@ mixInto(myApp, Marionette.EventBinder, &quot;bindTo&quot;, &quot;unbindFrom&quot
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -252,9 +252,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -286,7 +285,6 @@ Find me on the web:
             <div id="dsq-comment-message-2773" class="dsq-comment-message"><p>Thanks for this post.  It made me understand JavaScript ixins a lot better.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2780">
@@ -300,7 +298,6 @@ Find me on the web:
 <p><a href="http://ericleads.com/2012/08/introducing-applitude-simple-module-management/" rel="nofollow">http://ericleads.com/2012/08/introducing-applitude-simple-module-management/</a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2799">
@@ -315,7 +312,6 @@ Find me on the web:
 <p>That way the component is in control of which methods get mixed in, rather then requiring a developer to manage this manually.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2800">
@@ -336,7 +332,6 @@ How do do imagine Backbone&#8217;s declarative events get bound to the view? </p
 <p>No offense, but this article is spreading some serious mis-information. I feel should warn those unfamiliar with the subject to do make sure they get their facts straight.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2802">
@@ -417,7 +412,6 @@ How do do imagine Backbone&#8217;s declarative events get bound to the view? </p
 <p>-Kevin</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2803">
@@ -430,7 +424,6 @@ How do do imagine Backbone&#8217;s declarative events get bound to the view? </p
             <div id="dsq-comment-message-2803" class="dsq-comment-message"><p>Sorry about the formatting&#8230;</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even depth-2" id="dsq-comment-2804">
@@ -446,7 +439,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2804">Derick 
 <p>i think there&#8217;s value in this idea, still. but it will need to be fleshed out in to something that is easy to use and provides real value without a lot of overhead.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -461,7 +453,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2804">Derick 
             <div id="dsq-comment-message-2858" class="dsq-comment-message"><p>Hi Bailey! this was unique. the logic used really helped me in many ways. there is always a challenging life for programmers. thanks <a href="http://www.a2zonlinetraining.com/datawarehousing-online-training/business-objects-online-training.php" rel="nofollow">Business Objects Online Training</a></p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -481,6 +472,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2804">Derick 
     var disqus_title = "JavaScript Mixins: Beyond Simple Object Extension";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -505,7 +497,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2804">Derick 
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -523,7 +514,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2804">Derick 
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -540,14 +531,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2804">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -1043,4 +1035,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:29:30 -->
+Served from: lostechies.com @ 2013-01-31 09:40:37 -->

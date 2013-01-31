@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Want To Build Win8/WinJS Apps? You Need To Understand Promises.</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/07/19/want-to-build-win8winjs-apps-you-need-to-understand-promises/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/07/19/want-to-build-win8winjs-apps-you-need-to-understand-promises/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Wed, 30 Jan 2013 20:30:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Andi</title>
+		<link>http://lostechies.com/derickbailey/2012/07/19/want-to-build-win8winjs-apps-you-need-to-understand-promises/#comment-2844</link>
+		<dc:creator>Andi</dc:creator>
+		<pubDate>Sat, 17 Nov 2012 10:20:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=958#comment-2844</guid>
+		<description>How did you managed to get rid of the promise chains?</description>
+		<content:encoded><![CDATA[<p>How did you managed to get rid of the promise chains?</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: kamranayub</title>
+		<link>http://lostechies.com/derickbailey/2012/07/19/want-to-build-win8winjs-apps-you-need-to-understand-promises/#comment-2775</link>
+		<dc:creator>kamranayub</dc:creator>
+		<pubDate>Tue, 09 Oct 2012 22:49:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=958#comment-2775</guid>
+		<description>As soon as you start to write a repository/class for going against a service, Promises are your best friend.</description>
+		<content:encoded><![CDATA[<p>As soon as you start to write a repository/class for going against a service, Promises are your best friend.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: CameronW</title>
+		<link>http://lostechies.com/derickbailey/2012/07/19/want-to-build-win8winjs-apps-you-need-to-understand-promises/#comment-2633</link>
+		<dc:creator>CameronW</dc:creator>
+		<pubDate>Mon, 23 Jul 2012 06:49:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=958#comment-2633</guid>
+		<description>It kind of reminds me of the Task class from the .NET Task Parallel Library...
+Specifically the Task.ContinueWith() method. IMO I think Task is a more suitable name/concept than Promise..
+</description>
+		<content:encoded><![CDATA[<p>It kind of reminds me of the Task class from the .NET Task Parallel Library&#8230;<br />
+Specifically the Task.ContinueWith() method. IMO I think Task is a more suitable name/concept than Promise..</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: av</title>
+		<link>http://lostechies.com/derickbailey/2012/07/19/want-to-build-win8winjs-apps-you-need-to-understand-promises/#comment-2629</link>
+		<dc:creator>av</dc:creator>
+		<pubDate>Fri, 20 Jul 2012 21:00:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=958#comment-2629</guid>
+		<description>is there a repo to follow along?</description>
+		<content:encoded><![CDATA[<p>is there a repo to follow along?</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-31 08:30:30 -->

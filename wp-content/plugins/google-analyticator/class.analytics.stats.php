@@ -11,7 +11,6 @@ require_once 'google-api-php-client/src/contrib/Google_AnalyticsService.php';
 /**
  * Handles interactions with Google Analytics' Stat API
  *
- * @author http://www.codebyjeff.com
  **/
 class GoogleAnalyticsStats
 {
@@ -29,90 +28,99 @@ class GoogleAnalyticsStats
 	 **/
 	function GoogleAnalyticsStats()
 	{
+            $this->client = new Google_Client();
+            $this->client->setApprovalPrompt("force");
+            $this->client->setAccessType('offline');
+            $this->client->setClientId(GOOGLE_ANALYTICATOR_CLIENTID);
+            $this->client->setClientSecret(GOOGLE_ANALYTICATOR_CLIENTSECRET);
+            $this->client->setRedirectUri(GOOGLE_ANALYTICATOR_REDIRECT);
+            $this->client->setScopes(array(GOOGLE_ANALYTICATOR_SCOPE));
 
-		$this->client = new Google_Client();
+            // Magic. Returns objects from the Analytics Service instead of associative arrays.
+            $this->client->setUseObjects(true);
 
-		$this->client->setClientId(GOOGLE_ANALYTICATOR_CLIENTID);
-		$this->client->setClientSecret(GOOGLE_ANALYTICATOR_CLIENTSECRET);
-		$this->client->setRedirectUri(GOOGLE_ANALYTICATOR_REDIRECT);
-		$this->client->setScopes(array(GOOGLE_ANALYTICATOR_SCOPE));
-
-		// Magic. Returns objects from the Analytics Service instead of associative arrays.
-		$this->client->setUseObjects(true);
-
-		try {
-                        $this->analytics = new Google_AnalyticsService($this->client);
-                    }
-                    catch (Google_ServiceException $e)
-                    {
-                              print 'There was an Analytics API service error ' . $e->getCode() . ':' . $e->getMessage();
-
-                    }
-
+            try {
+                    $this->analytics = new Google_AnalyticsService($this->client);
+                }
+            catch (Google_ServiceException $e)
+                {
+                    print '(cas:48) There was an Analytics API service error ' . $e->getCode() . ':' . $e->getMessage();
+                }
 	}
 
 	function checkLogin()
 	{
-		$ga_google_authtoken  = get_option('ga_google_authtoken');
+            $ga_google_authtoken  = get_option('ga_google_authtoken');
 
-		if (!empty($ga_google_authtoken))
-		{
-			$this->client->setAccessToken($ga_google_authtoken);
-		}
-		else
-		{
-			$authCode = get_option('ga_google_token');
+            if (!empty($ga_google_authtoken))
+            {
+                    $this->client->setAccessToken($ga_google_authtoken);
+            }
+            else
+            {
+                $authCode = get_option('ga_google_token');
 
-			if (empty($authCode)) return false;
+                if (empty($authCode)) return false;
 
-                        
-			$accessToken = $this->client->authenticate($authCode);
+                try
+                {
+                    $accessToken = $this->client->authenticate($authCode);
+                }
+                catch( Exception $e )
+                {
+                    print '(cas:72) Google Analyticator was unable to authenticate you with
+                            Google using the Auth Token you pasted into the input box on the previous step. <br><br>
+                            This could mean either you pasted the token wrong, or the time/date on your server is wrong,
+                            or an SSL issue preventing Google from Authenticating. <br><br>
+                            <a href="' . admin_url('/options-general.php?page=ga_reset').'"> Try Deauthorizing &amp; Resetting Google Analyticator.</a>
+                            <br><br><strong>Tech Info </strong> ' . $e->getCode() . ':' . $e->getMessage();
 
-                        if($accessToken)
-                        {
-                            $this->client->setAccessToken($accessToken);
-                            update_option('ga_google_authtoken', $accessToken);
-                        }
-                        else
-                        {
-                            return false;
-                        }
-		}
+                    return false;
+                }
 
-		$this->token =  $this->client->getAccessToken();
-		return true;
+                if($accessToken)
+                {
+                    $this->client->setAccessToken($accessToken);
+                    update_option('ga_google_authtoken', $accessToken);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            $this->token =  $this->client->getAccessToken();
+            return true;
 	}
 
 	function deauthorize()
 	{
-		update_option('ga_google_token', '');
-		update_option('ga_google_authtoken', '');
+            update_option('ga_google_token', '');
+            update_option('ga_google_authtoken', '');
 	}
 
 	function getSingleProfile()
 	{
+            $webproperty_id = get_option('ga_uid');
+            list($pre, $account_id, $post) = explode('-',$webproperty_id);
 
-		$webproperty_id = get_option('ga_uid');
-		list($pre, $account_id, $post) = explode('-',$webproperty_id);
+            if (empty($webproperty_id)) return false;
 
-		if (empty($webproperty_id)) return false;
+            try {
+                $profiles = $this->analytics->management_profiles->listManagementProfiles($account_id, $webproperty_id);
+            }
+            catch (Google_ServiceException $e)
+            {
+                print 'There was an Analytics API service error ' . $e->getCode() . ': ' . $e->getMessage();
+                return false;
+            }
 
-                try {
-                    $profiles = $this->analytics->management_profiles->listManagementProfiles($account_id, $webproperty_id);
-                }
-                catch (Google_ServiceException $e)
-                {
-                    print 'There was an Analytics API service error ' . $e->getCode() . ': ' . $e->getMessage();
-                    return false;
-                }
+            $profile_id = $profiles->items[0]->id;
+            if (empty($profile_id)) return false;
 
-		$profile_id = $profiles->items[0]->id;
-		if (empty($profile_id)) return false;
-
-		$account_array = array();
-		array_push($account_array, array('id'=>$profile_id, 'ga:webPropertyId'=>$webproperty_id));
-		return $account_array;
-
+            $account_array = array();
+            array_push($account_array, array('id'=>$profile_id, 'ga:webPropertyId'=>$webproperty_id));
+            return $account_array;
 	}
 
         function getAllProfiles()
@@ -218,9 +226,17 @@ class GoogleAnalyticsStats
 		{
 			$params['max-results'] = $limit;
 		}
-
+           
+           // Just incase, the ga: is still used in the account id, strip it out to prevent it breaking
+           $filtered_id = str_replace( 'ga:', '', $this->accountId );
+           
+           if(!$filtered_id){
+                echo 'Error - Account ID is blank';
+                return false;
+           }
+                
 	   return $analytics->data_ga->get(
-	       'ga:' . $this->accountId,
+	       'ga:'.$filtered_id,
 	       $startDate,
 	       $endDate,
 	       $metric,

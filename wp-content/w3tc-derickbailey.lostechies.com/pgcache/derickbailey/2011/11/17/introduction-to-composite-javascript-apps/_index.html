@@ -79,7 +79,28 @@
 <p>I&#8217;ve only just begun to explore these patterns and architectures in the last few months, but I wanted to share my perspective and what I&#8217;m currently doing.</p>
 <h2>JavaScript Modules</h2>
 <p>A JavaScript module isn&#8217;t a special construct or keyword in the language itself. Rather, it&#8217;s a way to take advantage of functions closures, to create scope. The core of a JavaScript module is usually an &#8220;immediate function&#8221;:</p>
-<div>Could not embed GitHub Gist 1373574: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1373574.js?file=1.js"></script><noscript><pre><code class="language-javascript javascript">// an immediate function
+(function(){
+  // code goes here
+})();
+
+
+// a module with a public API returned
+var MyModule = (function(){
+  // this variable is private
+  var privateVariable = &quot;I'm scoped to the module's internals!&quot;;
+
+  // object to return as a public API
+  var myAPI = {};
+
+  // a public function on the API
+  myAPI.somePublicFunction = function(){
+    alert(&quot;You called: MyModule.somePublicFunction()&quot;);
+  };
+
+  // return the public API so it can be accessed
+  return myAPI;
+})();</code></pre></noscript>
 <p>The use of the parenthesis around the function definition allows the function to be returned, ready to go (if you forget the parenthesis around the function, you&#8217;ll get a syntax error).The second pair of parenthesis immediately execute the returned function. The result can be assigned to a variable, which becomes a reference to the module&#8217;s public API (if anything was returned).</p>
 <p>There&#8217;s been a lot of talk around the web about JavaScript modules already, so I won&#8217;t go in to much more detail here. Two of the more recent articles are focused specifically on Backbone, and I highly recommend reading them:</p>
 <p><a href="http://weblog.bocoup.com/organizing-your-backbone-js-application-with-modules">Organizing Your Backbone.js Applications With Modules</a> &#8211; This article from Bocoup.com covers the basics of file organization and creating a way to easily reference your modules from other modules, using strings as names.</p>
@@ -88,20 +109,98 @@
 <h2>External / Shared Code</h2>
 <p>In spite of our desire to separate each of the functional areas of the application, there is a high likelihood that they will need to talk to each other and have access to some of the same code. You&#8217;ll also want to have access to some external libraries, such as jQuery, Underscore.js, Backbone.js, or any of a number of other libraries and tools that your code uses.</p>
 <p>The usual method of doing this with a plain JavaScript module is to pass the dependencies into the module function. For example, if you need jQuery and Backbone in your module, you might add a $ and Backbone parameters to your module definition. Then you would pass the references to them when you execute the module function:</p>
-<div>Could not embed GitHub Gist 1373574: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1373574.js?file=2.js"></script><noscript><pre><code class="language-javascript javascript">var MyModule = (function($, Backbone){
+
+  // use $ here. it's scoped locally, now.
+  var someEl = $(&quot;#someEl&quot;);
+
+  // use Backbone here. it's scoped locally, now.
+  var MyView = Backbone.View.extend({
+    // ...
+  });
+
+})(jQuery, Backbone);</code></pre></noscript>
 <p>The same thing applies to your own modules and libraries. If you have a module defined somewhere else and you know it will be available before the module your currently working on is loaded, you can pass in a reference like this.</p>
 <p>(You should also know that once you start heading down this path, you may want to think about using asynchronous module definitions: AMDs. Tools such as <a href="http://requirejs.org/">RequireJS</a> make AMDs easier to deal with by handling the dependency management, module definition and other common tasks for you.)</p>
 <h2>Module Initialization</h2>
 <p>Writing a bunch of modules in a decoupled manner is great, but it introduces another problem: initialization. Most JavaScript applications have some public API that you call when you want to initialize the app and make everything run. If you&#8217;re building your app in a modular manner, you don&#8217;t want to have to call a separate public API for every module in your system. This would become a nightmare over time by requiring a lot of app initialization code, and worse.</p>
 <p>To work around this problem, modules need to have some sort of initialization code in them. Module frameworks like RequireJS have this built in to them. In the app I&#8217;m writing, I&#8217;m not using RequireJS or any other module frameworks, so I wrote my own registration. It&#8217;s pretty simple when it comes down to it. Since every module I write for my app receives an app object, I attached a `addInitializer` function to it. This allows each module to add it&#8217;s own initializer code as a callback function, like this:</p>
-<div>Could not embed GitHub Gist 1373574: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1373574.js?file=3.js"></script><noscript><pre><code class="language-javascript javascript">MyModule = (function(MyApp, Backbone){
+  var MyView = Backbone.View.extend({
+    // ...
+  };
+
+  MyApp.addInitializer(function(){
+    new MyView({ 
+      // ...
+    }).render();
+  });
+})(MyApp, Backbone);</code></pre></noscript>
 <p>The application object keeps track of all the callbacks that were passed in to the `addInitializer` function. When the overall application is being initialized, a call to the app object&#8217;s `initialize` method will loop through each of the registered module initializers and call them. Each module gets to do it&#8217;s own thing and spin itself up.</p>
-<div>Could not embed GitHub Gist 1373574: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1373574.js?file=4.js"></script><noscript><pre><code class="language-javascript javascript">MyApp = (function(_){
+  var myApp = {};
+  var initializers = [];
+
+  myApp.addInitializer = function(callback){
+    var initializer = {
+      obj: this,
+      callback: callback
+    }
+    initializers.push(initializer);
+  };
+
+  myApp.initialize(){
+    _.each(initializers, function(initializer){
+      initializer.callback.call(initializer.obj);
+    });
+  };
+})(_);</code></pre></noscript>
 <h2>Event Driven Architecture</h2>
 <p>Modules are great for organizing your code, but present a challenge when you realize that you need these modules to communicate with each other. Your code is now separated into different files, encapsulated in different modules, and generally unable to make direct calls in to your other modules and objects like you may be used to. Don&#8217;t worry, though. You&#8217;re only bumping in to the next steps of decoupling your applications correctly.</p>
 <p>There are many different ways that you can solve this problem, of course. One of my favorite ways is the use of an <a href="http://martinfowler.com/eaaDev/EventAggregator.html">event aggregato</a>r. <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/">I&#8217;ve blogged about the use of an event aggregator with Backbone already</a>. If you need an introduction to the idea, check out that post and some of my many other <a href="http://lostechies.com/derickbailey/category/appcontroller/">Winforms / Application Controller</a> posts. The benefit of an event aggregator in this case, is that is gives you a simple, decoupled way to facilitate communication between your modules.</p>
 <p>To get started,  you need to have a module or other object that is defined prior to any other modules being defined. This object needs to be passed in to each of the modules that you&#8217;re defining, so that these modules can have access to the event aggregator. In my app, I put the event aggregator directly on the top level application namespace, and then pass the namespace object into each of my modules:</p>
-<div>Could not embed GitHub Gist 1373574: API Rate Limit Exceeded for 70.169.150.251</div>
+<script src="https://gist.github.com/1373574.js?file=5.js"></script><noscript><pre><code class="language-javascript javascript">MyApp = (function(_, Backbone){
+  var myApp = {};
+
+  // the event aggregator
+  myApp.vent = _.extend({}, Backbone.Events);
+
+  // the other app initialization code ...
+
+  return myApp;
+})(_, Backbone);
+
+MyModule = (function(MyApp, Backbone){
+  
+  var MyView = Backbone.View.extend({
+    initialize: function(){
+      MyApp.bind(&quot;some:event&quot;, this.someCallback, this);
+    },
+    
+    someCallback: function(){
+      alert(&quot;I'm Doing Stuff!!!&quot;);
+    }
+  });
+
+  // ... other code, including MyApp.addInitializer
+
+})(MyApp, Backbone);
+
+AnotherModule = (function(MyApp){
+  var anotherModule = {};
+
+  anotherModule.SomeFunction = function(){
+    MyApp.trigger(&quot;some:event&quot;);
+  }
+
+  return anotherModule;
+});
+
+// kick it all off and show the alert box
+$(function(){
+  MyApp.initialize();
+  AnotherModule.SomeFunction();
+});</code></pre></noscript>
 <p>Now each of my modules can bind to and trigger events from the event aggregator. This allows one module to send notification of something that happened, without having to know specifically which parts of the application are going to respond to that notification, or how.</p>
 <p>One thing you need to think about, in advance, is what events you&#8217;re going to be triggering through the event aggregator. It&#8217;s a good idea to have thought through this at least a little bit, so that you don&#8217;t end up with a giant mess of similar and undocumented events. I made this mistake and paid for it when I couldn&#8217;t figure out which events needed to be fired, when. By taking the time to think through which events needed to be fired when, though, I was able to plan the communication between my modules, document the catalog of events, and clean up the number of events that were being used. Having this documented is important so that other developers (or you, a month from now) can see if there&#8217;s already an event that has the semantics they need, when writing new code.</p>
 <h2>Runtime Packaging</h2>
@@ -126,7 +225,7 @@
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -135,9 +234,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -170,7 +268,6 @@ Find me on the web:
 <p>BTW, there&#8217;s a typo (&#8220;aggretagor&#8221;) in the code in one spot.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1948">
@@ -186,7 +283,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1948">Derick 
 <p>I updated the gist but it seems to be cached. I think it might take a day or so for the WordPress Gist plugin to refresh it.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -204,7 +300,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1948">Derick 
 myApp.initialize(){Genuine questions, my javascript skillz aren&#8217;t much to write home about! Thanks :)</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1950">
@@ -217,7 +312,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1950">Derick 
             <div id="dsq-comment-message-1950" class="dsq-comment-message"><p>D&#8217;oh! you are correct. I&#8217;ve updated the gist. hopefully wordpress will refresh the cache soon, for the blog post.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -234,7 +328,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1950">Derick 
 <p>Would be neat to see a follow up article about how you go about troubleshooting JS, moving an existing application JS towards a testable Jasmine world.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1952">
@@ -249,7 +342,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1952">Derick 
 <p>I am planning on doing a screencast on refactoring old / bad JavaScript into something better / testable. I&#8217;m not sure when this will be done, though. In the mean time there&#8217;s a slide deck I found recently that talks a lot about this type of stuff, at a very simple level: http://www.slideshare.net/fgalassi/refactoring-to-unobtrusive-javascript and I would highly recommend buying Stoyan Stefanov&#8217;s &#8220;JavaScript Patterns&#8221; book for an in-depth, real world look at good JavaScript patterns.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-1968">
@@ -262,7 +354,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1952">Derick 
             <div id="dsq-comment-message-1968" class="dsq-comment-message"><p>Thanks for the heads-up Derick, ill check those out.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -281,7 +372,6 @@ vs<br />
 initializer.callback();</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1983">
@@ -295,7 +385,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1983">Derick 
 <p>it&#8217;s one of those &#8220;just in case&#8221; things, really&#8230;</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -310,7 +399,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1983">Derick 
             <div id="dsq-comment-message-2024" class="dsq-comment-message"><p>I use the Module pattern quite a bit, but an import thing to remember is that it creates a singleton and can&#8217;t be used in all scenarios and the same care needs to be taken with this Singleton as you would in any other situation.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2025">
@@ -323,7 +411,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2025">Derick 
             <div id="dsq-comment-message-2025" class="dsq-comment-message"><p>it can create a singleton if you have it do that&#8230; but it&#8217;s just an immediate function, and being a function you can have it return whatever you want, including other functions / constructor functions / object literals (singletons) / or whatever</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-2026">
@@ -336,7 +423,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2025">Derick 
             <div id="dsq-comment-message-2026" class="dsq-comment-message"><p>yes it&#8217;s an immediate function that returns one thing.  And only one thing, you cannot get more than one instance of that thing during the scope of execution, so it&#8217;s a Singleton.  That&#8217;s not all bad mind you, just something to be aware of.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-4" id="dsq-comment-2027">
@@ -350,7 +436,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2027">Derick 
 <p>of course, you could wrap an immediate function in another function &#8230; but that would be a memory problem, and would technically be a different function instance every time you executed the outer function. it would have the effect of looking like it&#8217;s not a singleton function, though.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-5" id="dsq-comment-2028">
@@ -363,7 +448,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2027">Derick 
             <div id="dsq-comment-message-2028" class="dsq-comment-message"><p>I think of it more in terms of the classic Singleton object too.  I&#8217;ve never returned a function from a Module, so I don&#8217;t know what that would give you, or what its purpose would be.  But you only get one instance of a Module for the screen it was loaded (which in a single page app would mean for the application too), so there are limitations involved with using the pattern and is not appropriate.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even depth-5" id="dsq-comment-2029">
@@ -377,7 +461,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2029">Derick 
 <p>I think I&#8217;m still missing the point you&#8217;re making&#8230; but I don&#8217;t think my missing your point is important at this point. It&#8217;s likely we&#8217;re saying the same or similar things, and I&#8217;m just not getting it. :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -398,7 +481,6 @@ http://twitter.com/godspeedelbow                <span id="dsq-author-user-2038">
             <div id="dsq-comment-message-2038" class="dsq-comment-message"><p>Great article, Derick. I&#8217;ve been following you a bit and you provide great insight to Backbone and other javascript stuff. Keep it coming!</p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -418,6 +500,7 @@ http://twitter.com/godspeedelbow                <span id="dsq-author-user-2038">
     var disqus_title = "Introduction To Composite JavaScript Apps";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -442,7 +525,6 @@ http://twitter.com/godspeedelbow                <span id="dsq-author-user-2038">
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -460,7 +542,7 @@ http://twitter.com/godspeedelbow                <span id="dsq-author-user-2038">
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -477,14 +559,15 @@ http://twitter.com/godspeedelbow                <span id="dsq-author-user-2038">
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -980,4 +1063,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:36:08 -->
+Served from: lostechies.com @ 2013-01-31 10:05:27 -->

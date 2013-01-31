@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: A JSFiddle To Build Backbone.js Fiddles</title>
+	<atom:link href="http://lostechies.com/derickbailey/2011/10/15/a-jsfiddle-to-build-backbone-js-fiddles/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2011/10/15/a-jsfiddle-to-build-backbone-js-fiddles/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Wed, 30 Jan 2013 20:30:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Arvind</title>
+		<link>http://lostechies.com/derickbailey/2011/10/15/a-jsfiddle-to-build-backbone-js-fiddles/#comment-2812</link>
+		<dc:creator>Arvind</dc:creator>
+		<pubDate>Wed, 31 Oct 2012 05:09:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=612#comment-2812</guid>
+		<description>Thanks</description>
+		<content:encoded><![CDATA[<p>Thanks</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: typesend</title>
+		<link>http://lostechies.com/derickbailey/2011/10/15/a-jsfiddle-to-build-backbone-js-fiddles/#comment-2363</link>
+		<dc:creator>typesend</dc:creator>
+		<pubDate>Wed, 18 Apr 2012 18:18:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=612#comment-2363</guid>
+		<description>Thanks!</description>
+		<content:encoded><![CDATA[<p>Thanks!</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Sebastien Chopin</title>
+		<link>http://lostechies.com/derickbailey/2011/10/15/a-jsfiddle-to-build-backbone-js-fiddles/#comment-1890</link>
+		<dc:creator>Sebastien Chopin</dc:creator>
+		<pubDate>Sat, 15 Oct 2011 22:37:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=612#comment-1890</guid>
+		<description>Yep, you can try a little little app here (just one View) : http://jsfiddle.net/Atinux/z4a8C/
+
+Thanks for this work  :)</description>
+		<content:encoded><![CDATA[<p>Yep, you can try a little little app here (just one View) : http://jsfiddle.net/Atinux/z4a8C/</p>
+<p>Thanks for this work  :)</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-31 08:41:21 -->

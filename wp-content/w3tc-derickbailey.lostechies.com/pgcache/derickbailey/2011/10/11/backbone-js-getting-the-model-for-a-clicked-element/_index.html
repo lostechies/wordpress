@@ -263,7 +263,7 @@ $(&quot;#showIt&quot;).html(view.el);</code></pre></noscript>
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -272,9 +272,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -307,7 +306,6 @@ Find me on the web:
 Does this mean if we were to clean up the ItemListView that we would have to iterate over each ItemView and unbind, remove, onClose individually before finally unbinding, removing and onClosing the ItemListView?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1867">
@@ -327,7 +325,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1867">Derick 
 <p>hope that helps!</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-1868">
@@ -341,7 +338,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1867">Derick 
 <p>Currently I use a viewPointers object within the &#8220;container&#8221; view to save a reference to any created views within the container. I then iterate over viewPointers calling their &#8220;cleanup&#8221; methods. Is there a better way to manage this?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-4" id="dsq-comment-1869">
@@ -354,7 +350,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1869">Derick 
             <div id="dsq-comment-message-1869" class="dsq-comment-message"><p>I&#8217;ve done the same thing in a few cases. Another way I&#8217;ve done it is to iterate the models that I already have in a collection and call .destroy() on each of them. Then each view that I render for the model listens to the &#8220;destroy&#8221; event from the model, and cleans itself up. I&#8217;m sure there are other good ways to do this, too.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-5" id="dsq-comment-1875">
@@ -369,7 +364,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1869">Derick 
 <p>Any idea?</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt depth-5" id="dsq-comment-1876">
@@ -382,7 +376,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1876">Derick 
             <div id="dsq-comment-message-1876" class="dsq-comment-message"><p>hmmm&#8230; the last time i saw that, the model had a set of defaults defined on it as an object literal. the solution for that is to assign the defaults as a function. do you have defaults defined on your model? if not, best to toss this up on StackOverflow or the Backbone mailing list.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even depth-5" id="dsq-comment-1877">
@@ -395,7 +388,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1876">Derick 
             <div id="dsq-comment-message-1877" class="dsq-comment-message"><p>Default was an empty array with [] &#8211; I&#8217;m just treating it as a string concatenated by &#8216;:&#8217; that I can split / join for now which works :)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt depth-5" id="dsq-comment-1878">
@@ -414,7 +406,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1878">Derick 
 <p><a href="http://stackoverflow.com/questions/7673791/backbone-defaults-being-referenced-on-property-change" rel="nofollow">http://stackoverflow.com/questions/7673791/backbone-defaults-being-referenced-on-property-change</a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even depth-5" id="dsq-comment-1879">
@@ -427,7 +418,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1878">Derick 
             <div id="dsq-comment-message-1879" class="dsq-comment-message"><p>That works perfectly, thanks again! :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -449,7 +439,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1878">Derick 
 <p>On performance: from my experience, this approach scales to hundreds of views on a modern (desktop) browser. You probably wouldn&#8217;t want to show hundreds of items in a mobile UI anyways. When I had to display 1,000+ items in a very tight grid, I opted for &#8220;one view to rule them all&#8221; approach, especially since it was (mostly) a tight read-only display of data. My hunch is that thousands of views wouldn&#8217;t scale too well, but I don&#8217;t know that for sure.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-1883">
@@ -462,7 +451,6 @@ http://twitter.com/ojohnnyo                <span id="dsq-author-user-1883">Johnn
             <div id="dsq-comment-message-1883" class="dsq-comment-message"><p>Another great article, Derick.  Thank you.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1897">
@@ -475,7 +463,6 @@ http://pedroborg.es                <span id="dsq-author-user-1897">Pedro Borges<
             <div id="dsq-comment-message-1897" class="dsq-comment-message"><p>Very helpful artitle @derickbailey:disqus . Thanks for sharing good Backbone.js resource!</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-1909">
@@ -488,7 +475,6 @@ http://pedroborg.es                <span id="dsq-author-user-1897">Pedro Borges<
             <div id="dsq-comment-message-1909" class="dsq-comment-message"><p>Good approaches to solving a common use case.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1998">
@@ -503,7 +489,6 @@ http://www.facebook.com/kethatril                <span id="dsq-author-user-1998"
 <p>Of course if you were manipulating the models data within the view then one view per model would be better in my opinion. </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2254">
@@ -516,7 +501,6 @@ http://www.facebook.com/kethatril                <span id="dsq-author-user-1998"
             <div id="dsq-comment-message-2254" class="dsq-comment-message"><p>Minor typo: &#8220;This wreaks of&#8221; should be &#8220;This reeks of&#8221;.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2734">
@@ -530,7 +514,6 @@ http://twitter.com/LazyBucksOnline                <span id="dsq-author-user-2734
 <p>I guess that can be considered nit-picky but it&#8217;s really distracting.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -548,7 +531,6 @@ http://twitter.com/LazyBucksOnline                <span id="dsq-author-user-2734
 <p>What would be your recommendation for managing this type of communication?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2276">
@@ -564,7 +546,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2276">Derick 
 <p>As for getting all of this rendered on to the screen, you might benefit from something like Tim Branyen&#8217;s &#8220;LayoutManager&#8221; plugin https://github.com/tbranyen/backbone.layoutmanager or my own &#8220;Marionette&#8221; plugin https://github.com/derickbailey/backbone.marionette &#8211; both of these plugins basically provide the same thing: an application architecture on top of backbone. they just have different opinions on how to accomplish that. pick the one that best fits your opinions.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-3" id="dsq-comment-2291">
@@ -579,7 +560,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2276">Derick 
 <p>Thanks a ton for all of your contributions to the Backbone community :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -597,7 +577,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2276">Derick 
 <p>I really dont want to use the data-id pattern but I also dont want to store a reference to the parent collection view in each model view.  Jeez. This should be the most simple thing.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2338">
@@ -613,7 +592,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2338">Derick 
 <p>call &#8220;this.model.destroy()&#8221; from the click event handler, which will destroy ithere&#8217;s a working example: http://jsfiddle.net/derickbailey/KgszU/</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-2342">
@@ -626,7 +604,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2338">Derick 
             <div id="dsq-comment-message-2342" class="dsq-comment-message"><p>S0 destroying a model thats in a collection automatically removes it from the collection &#8211; there will be no stale state of the collection?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-4" id="dsq-comment-2343">
@@ -639,7 +616,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2343">Derick 
             <div id="dsq-comment-message-2343" class="dsq-comment-message"><p>correct. you need to clean up the views yourself, though. that&#8217;s where this post comes in to play: http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -663,7 +639,6 @@ which does the following:</p>
 <p>                </p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-2345">
@@ -678,7 +653,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2345">Derick 
 <p><a href="http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/" rel="nofollow">http://lostechies.com/derickbailey/2011/12/27/the-responsibilities-of-the-various-pieces-of-backbone-js/</a></p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-2346">
@@ -691,7 +665,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2345">Derick 
             <div id="dsq-comment-message-2346" class="dsq-comment-message"><p>I guess the correct way then would be to have one itemview with a renderMargin function,  and then subclass that itemview for different kind of views that needs the renderMargin func.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-4" id="dsq-comment-2347">
@@ -708,7 +681,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2347">Derick 
 <p>MySpecificView = MyBaseView.extend({&#8230;});</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-5" id="dsq-comment-2348">
@@ -721,7 +693,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2347">Derick 
             <div id="dsq-comment-message-2348" class="dsq-comment-message"><p>so you always pass your models and collections as json to your templates?</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even depth-5" id="dsq-comment-2349">
@@ -735,7 +706,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2349">Derick 
 <p>fwiw, i&#8217;ve wrapped up template rendering in my Backbone.Marionette framework so that I never have to think about this anymore: https://github.com/derickbailey/backbone.marionette</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt depth-5" id="dsq-comment-2350">
@@ -749,7 +719,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2349">Derick 
 <p>I&#8217;ve seen and read about your marionette project before but right now I think I need to get a better understanding of backbone it self, having to taste the boilerplate stuff you have gone through that led you to building marionette, before I could take advantage of it.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -775,7 +744,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2349">Derick 
 <p>Thanks for the great article again.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-2664">
@@ -789,7 +757,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2664">Derick 
 <p>Pardon the self-promotion for a moment: if you&#8217;re interested in seeing more about how this works, and all the surrounding, I have a (paid) screencast that discusses callback functions and many other ways to execute a function, here: <a href="http://www.watchmecode.net/javascript-context" rel="nofollow">http://www.watchmecode.net/javascript-context</a>    There are, of course, a thousand other resources for learning more about this, online :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -804,9 +771,34 @@ http://mutedsolutions.com                <span id="dsq-author-user-2664">Derick 
             <div id="dsq-comment-message-2839" class="dsq-comment-message"><p>Your articles are really helpful, and they could be even better if &#8220;its&#8221; was used at it&#8217;s intended.  <a href="http://how-to-spell-its.com/" rel="nofollow">http://how-to-spell-its.com/</a> for reference.</p>
 </div>
         </div>
-    </li>
 
     </li>
+    <li class="comment odd alt thread-even depth-1" id="dsq-comment-2982">
+        <div id="dsq-comment-header-2982" class="dsq-comment-header">
+            <cite id="dsq-cite-2982">
+                <span id="dsq-author-user-2982">Jed</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2982" class="dsq-comment-body">
+            <div id="dsq-comment-message-2982" class="dsq-comment-message"><p>This is a great demo of two approaches. Two things that are important to mention about the second approach, however, are: 1) It requires rendering in a loop, which is bad, especially with larger lists. It should be a major priority to minimize writes to the DOM; 2) It binds events to every rendered dom element in a collection, rather than binding once to the closest common ancestor and delegating from there. With a large list, this is a ton of extra noise and management. If you want to unbind the click temporarily, for example, you have to unbind many elements instead of one. The tagName thing is also a little suspect in an otherwise template-based system.</p>
+</div>
+        </div>
+
+    <ul class='children'>
+    <li class="comment even depth-2" id="dsq-comment-2985">
+        <div id="dsq-comment-header-2985" class="dsq-comment-header">
+            <cite id="dsq-cite-2985">
+                <span id="dsq-author-user-2985">Jed</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2985" class="dsq-comment-body">
+            <div id="dsq-comment-message-2985" class="dsq-comment-message"><p>Also, it makes debugging a bit more difficult. It&#8217;s nice to be able to see the model id that the DOM element is associated with, without having to compare attributes or pause a click event.</p>
+</div>
+        </div>
+
+    </li>
+</ul>
+</li>
             </ul>
 
 
@@ -824,6 +816,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2664">Derick 
     var disqus_title = "Backbone.js: Getting The Model For A Clicked Element";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -848,7 +841,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-2664">Derick 
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -866,7 +858,7 @@ http://mutedsolutions.com                <span id="dsq-author-user-2664">Derick 
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -883,14 +875,15 @@ http://mutedsolutions.com                <span id="dsq-author-user-2664">Derick 
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -1386,4 +1379,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:32:39 -->
+Served from: lostechies.com @ 2013-01-31 10:06:28 -->

@@ -83,7 +83,7 @@
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -92,9 +92,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -127,7 +126,6 @@ http://stevenharman.net                <span id="dsq-author-user-572">Steven Har
 <p>Gilad Bracha wrote about this back int 2007&#8230; <a href="http://gbracha.blogspot.com/2007/01/representation-independent-code.html" rel="nofollow">http://gbracha.blogspot.com/2007/01/representation-independent-code.html</a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-573">
@@ -140,7 +138,6 @@ http://mynerditorium.blogspot.com                <span id="dsq-author-user-573">
             <div id="dsq-comment-message-573" class="dsq-comment-message"><p>Philosophy aside &#8211; the .NET framework treats properties different than fields in scenarios such as databinding. That being the case, I tend to follow what the framework is expecting.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-574">
@@ -155,7 +152,6 @@ http://mynerditorium.blogspot.com                <span id="dsq-author-user-573">
 <p>I mainly think it&#8217;s cargo cult programming. &#8220;I&#8217;d better use a property because otherwise I&#8217;m breaking encapsulation and the other programmers will laugh at me&#8230; ooo, look, I can do public MyField { get;set; }&#8230; I&#8217;ll pass code review now!&#8221;</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-575">
@@ -176,7 +172,6 @@ http://mynerditorium.blogspot.com                <span id="dsq-author-user-573">
 <p>Or, suppose you want to &#8216;enforce&#8217; some state across entities (contrived here)&#8230; interface IAuditable { DateTime LastOpened { get; } }&#8230; you can&#8217;t do that with a field (ignoring that simply forcing state on an object doesn&#8217;t assure you of much&#8230;)</role></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-576">
@@ -191,7 +186,6 @@ http://www.lostechies.com/members/jagregory/default.aspx                <span id
 <p>My question is: If it really doesn&#8217;t matter, why favour fields over properties? What does a public field get you that a public property doesn&#8217;t?</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-577">
@@ -204,7 +198,6 @@ http://www.lostechies.com/members/jagregory/default.aspx                <span id
             <div id="dsq-comment-message-577" class="dsq-comment-message"><p>When someone reflects over yer object &#038; does GetProperty or GetField and you used the other, you&#8217;re pwnd.  </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-578">
@@ -217,7 +210,6 @@ http://www.lostechies.com/members/jagregory/default.aspx                <span id
             <div id="dsq-comment-message-578" class="dsq-comment-message"><p>I&#8217;ll tend to use public members in classes where I just need to expose a bunch of information. Properties are more full featured (Read only, can be overridden for sub classes, and as someone above mentioned about the whole databinding thing in .NET) I think as anything if I need the functionality of properties I&#8217;ll go that route, but I&#8217;m just storing a bunch of data I&#8217;ll go with public fields.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-579">
@@ -230,7 +222,6 @@ http://www.lostechies.com/members/jagregory/default.aspx                <span id
             <div id="dsq-comment-message-579" class="dsq-comment-message"><p>Generally speaking, if I&#8217;m just transporting data around, I use a field. If the data needs to be massaged, validated, or computed, then I use a property. Whether or not it&#8217;s important to use a field or a property depends entirely on your design and development context. Sometimes it matters. Sometimes it doesn&#8217;t.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-580">
@@ -243,7 +234,6 @@ http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-
             <div id="dsq-comment-message-580" class="dsq-comment-message"><p><a href="http://csharpindepth.com/Articles/Chapter8/PropertiesMatter.aspx" rel="nofollow">http://csharpindepth.com/Articles/Chapter8/PropertiesMatter.aspx</a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-581">
@@ -256,7 +246,6 @@ http://kearon.blogspot.com                <span id="dsq-author-user-581">Sean Ke
             <div id="dsq-comment-message-581" class="dsq-comment-message"><p>My convention is to prefer properties for &#8220;data that matters&#8221;.  I know where to look when I want see the members that matter.  I also use protected or private properties quite a lot when they are the &#8220;members that matter&#8221;.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-582">
@@ -269,7 +258,6 @@ http://melioratingmonkey.blogspot.com/                <span id="dsq-author-user-
             <div id="dsq-comment-message-582" class="dsq-comment-message"><p>i think you&#8217;re doing a bit of apples v. oranges in parts of this post. you try to use the fact that java doesn&#8217;t have properties as an argument in favor of public fields in C#. but java&#8217;s lack of properties doesn&#8217;t mean that people then use public fields, it means, as you say, that they use get/set methods. </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-583">
@@ -286,7 +274,6 @@ http://www.tobinharris.com                <span id="dsq-author-user-583">Tobin H
 <p>The first one is shorter. If I don&#8217;t need the good stuff a property brings to the table, why use it?</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-584">
@@ -300,7 +287,6 @@ http://kevhunter.wordpress.com                <span id="dsq-author-user-584">Kev
 <p>Your probably using resharper so where&#8217;s the effort.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-585">
@@ -315,7 +301,6 @@ http://paulbatum.com                <span id="dsq-author-user-585">Paul Batum</s
 <p>If we spend our brain cycles questioning the stuff that smart people have already thought about and answered, we&#8217;ve got less time for figuring out the stuff that has NOT already been answered. I say life&#8217;s too short to question absolutely everything. Gotta be pragmatic and take some things as a given :)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-586">
@@ -328,7 +313,6 @@ http://paulbatum.com                <span id="dsq-author-user-585">Paul Batum</s
             <div id="dsq-comment-message-586" class="dsq-comment-message"><p>It allows you a central place to set a breakpoint? :)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-587">
@@ -343,7 +327,6 @@ http://nolanegly.edgewolf.com                <span id="dsq-author-user-587">Nola
 <p><a href="http://nolanegly.edgewolf.com/content/fields-vs-properties-when-does-it-matter-when-it-preference" rel="nofollow">http://nolanegly.edgewolf.com/content/fields-vs-properties-when-does-it-matter-when-it-preference</a></p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-588">
@@ -357,7 +340,6 @@ http://mikehadlow.blogspot.com/                <span id="dsq-author-user-588">Mi
 <p>Fields cannot be defined in interfaces, be declared virtual or overriden, so you can&#8217;t provide alternative implementations of any class where public fields provide the API. It pretty much rules out mocking or Dependency Injection.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-589">
@@ -370,7 +352,6 @@ http://mikenichols.devlicio.us                <span id="dsq-author-user-589">Mik
             <div id="dsq-comment-message-589" class="dsq-comment-message"><p>This depends on the context of your objects. In my domain, there had better be a real good reason for me to expose _any_ state. DTOs though may be safer to use properties since some frameworks handle these better or exclusively for serialization, proxying, etc&#8230;</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-590">
@@ -383,7 +364,6 @@ http://mikenichols.devlicio.us                <span id="dsq-author-user-589">Mik
             <div id="dsq-comment-message-590" class="dsq-comment-message"><p>For many of the reasons given above I prefer to use properties for any non-private members.  That said, I think that the question is why is it that &#8220;public string Name {get; set; }&#8221; is any different than &#8220;public string Name;&#8221;?  I personally feel like there should be no difference and if someone can explain why there should be a difference then that reason should answer your question.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-591">
@@ -416,7 +396,6 @@ public string Name<br />
 <p>if i had just put forth the minuscule effort of using a property from the start, i don&#8217;t have to change code all over the place. i know you could argue YAGNI but i think YAGNI only applies when the &#8220;future proofing&#8221; effort is non-trivial.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-592">
@@ -434,7 +413,6 @@ http://adventuresinsoftware.com/blog                <span id="dsq-author-user-59
 <p>Limiting the degrees of freedom in your code, you can reduce complexity and simplify testing. Properties can do that, but fields cannot.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-593">
@@ -454,7 +432,6 @@ http://blog.kellybrownsberger.com                <span id="dsq-author-user-593">
 <p>My $0.02</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-594">
@@ -469,7 +446,6 @@ http://geekswithblogs.net/technobabble                <span id="dsq-author-user-
 <p>Chris Anderson also reveals that data binding only works with properties in the .NET Framework Design Guidelines, by Krzysztof Cwalina and Brad Abrams (2nd ed. p.161).</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-595">
@@ -482,7 +458,6 @@ http://jarrettmeyer.com                <span id="dsq-author-user-595">Jarrett</s
             <div id="dsq-comment-message-595" class="dsq-comment-message"><p>XML serialization is automatic on properties with public getters and setters. Of course, you can also use [XmlInclude] if you really want to include a field.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-596">
@@ -495,7 +470,6 @@ http://www.lennybacon.com                <span id="dsq-author-user-596">Daniel F
             <div id="dsq-comment-message-596" class="dsq-comment-message"><p>Reason #1: You cannot set a breakpoint on a field</p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -515,6 +489,7 @@ http://www.lennybacon.com                <span id="dsq-author-user-596">Daniel F
     var disqus_title = "Field Vs. Property: Does It Really Matter?";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -539,7 +514,6 @@ http://www.lennybacon.com                <span id="dsq-author-user-596">Daniel F
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -557,7 +531,7 @@ http://www.lennybacon.com                <span id="dsq-author-user-596">Daniel F
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -574,14 +548,15 @@ http://www.lennybacon.com                <span id="dsq-author-user-596">Daniel F
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -1077,4 +1052,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:16:03 -->
+Served from: lostechies.com @ 2013-01-31 10:06:04 -->

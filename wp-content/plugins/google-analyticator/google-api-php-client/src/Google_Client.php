@@ -126,21 +126,9 @@ class Google_Client {
   }
 
   public function authenticate($code = null) {
-      $service = $this->prepareService();
+    $service = $this->prepareService();
     $this->authenticated = true;
-
-    try {
-            return self::$auth->authenticate($service, $code);
-        }
-        catch (Google_AuthException $e)
-        {
-                  print 'There was an Analytics API service error ' . $e->getCode() . ':' . $e->getMessage();
-                  return false;
-
-        }
-
-
-    
+    return self::$auth->authenticate($service, $code);
   }
 
   /**
@@ -283,7 +271,7 @@ class Google_Client {
   public function getClientId() {
     return self::$auth->clientId;
   }
-
+  
   /**
    * Set the OAuth 2.0 Client Secret.
    * @param string $clientSecret
@@ -442,7 +430,7 @@ class Google_ServiceException extends Google_Exception {
     } else {
       parent::__construct($message, $code);
     }
-
+    
     $this->errors = $errors;
   }
 

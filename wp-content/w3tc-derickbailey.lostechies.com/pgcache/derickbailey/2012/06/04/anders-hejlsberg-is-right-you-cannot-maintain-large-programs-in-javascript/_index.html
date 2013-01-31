@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+    <title>Anders Hejlsberg Is Right: You Cannot Maintain Large Programs In JavaScript | ThoughtStream.new :derick_bailey</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	
+	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	
+		<link rel="pingback" href="http://lostechies.com/derickbailey/xmlrpc.php" />
+	<link rel='stylesheet' id='author-avatars-shortcode-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/shortcode.css?ver=1.6.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prettifycss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/css/prettify.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='mainstyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='jquerystyle-css'  href='http://lostechies.com/derickbailey/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='shCore.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shCore.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='shThemeDefault.css-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/styles/shThemeDefault.css?ver=2.1.364' type='text/css' media='all' />
+<link rel='stylesheet' id='prefix-style-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/style.css?ver=3.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='author-avatars-widget-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/author-avatars/css/widget.css?ver=1.6.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/jquery/jquery.js?ver=1.7.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/prettify-wordpress/js/min/prettify_mod.js?ver=3.4.2'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-includes/js/comment-reply.js?ver=3.4.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://lostechies.com/derickbailey/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://lostechies.com/derickbailey/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='$(function(){…}) vs (function($){…})($) or DOMReady vs The Module Pattern' href='http://lostechies.com/derickbailey/2012/05/22/function%e2%80%a6-vs-function%e2%80%a6-or-domready-vs-the-module-pattern/' />
+<link rel='next' title='Why Should I Use Backbone.Marionette Instead Of … ?' href='http://lostechies.com/derickbailey/2012/06/13/why-should-i-use-backbone-marionette-instead-of-%e2%80%a6/' />
+<meta name="generator" content="WordPress 3.4.2" />
+<link rel='canonical' href='http://lostechies.com/derickbailey/2012/06/04/anders-hejlsberg-is-right-you-cannot-maintain-large-programs-in-javascript/' />
+<link rel='shortlink' href='http://lostechies.com/derickbailey/?p=946' />
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+	<style type="text/css">body { padding-top:0px !important; }</style>
+
+</head>
+
+<body>
+
+			
+		<div id="ui-tabs-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom"></div>
+		<div id="ui-tabs-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide"></div>
+			
+		<div class="container_12">
+		
+			<div id="logo" class="grid_3"><a href="/" title="LosTechies.Com - Se Habla Code"><img src="/wp-content/themes/lostechies/images/lostechies_logo.png"/></a></div>
+			<div id="globalNav" class="grid_12">
+				<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+				</ul>
+								
+			</div><!-- end div#globalNav.container_12 -->				
+	
+		<div id="content" class="container_12">
+			<div id="main" class="grid_8">
+
+
+				<div id="post-946" class="post-946 post type-post status-publish format-standard hentry category-antipatterns category-composite-apps category-cqrs category-craftsmanship category-javascript category-philosophy-of-software category-pragmatism category-principles-and-patterns category-risk-management">
+					<h1 class="entry-title">Anders Hejlsberg Is Right: You Cannot Maintain Large Programs In JavaScript</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted by </span>
+						<span class="author vcard"><a class="url fn n" href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">Derick Bailey</a></span>
+						<span class="meta-sep"> on  </span>
+						<a href="http://lostechies.com/derickbailey/2012/06/04/anders-hejlsberg-is-right-you-cannot-maintain-large-programs-in-javascript/" title="2:38 pm" rel="bookmark"><span class="entry-date">June 4, 2012</span></a>
+											</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<p>There&#8217;s a quote over on a Channel 9 video of Anders Hejlsberg:</p>
+<blockquote>
+<p><strong>Erik Meijer:</strong> Are you saying you cannot write large programs in JavaScript?</p>
+<p><strong>Anders Hejlsberg:</strong> No, you can write large programs in JavaScript. You just can’t maintain them.</p>
+</blockquote>
+<p>With <a href="http://css.dzone.com/articles/you-can-write-large-programs">a follow-up post on DZone</a> asking if you agree with this quote or not. I haven&#8217;t listened to the interview so I honestly don&#8217;t know if the quote is taken out of context or not.  But honestly, I don&#8217;t think it matters if the quote is taken out of context because &#8230;</p>
+<h2>Anders Is 100% Correct</h2>
+<p>No ifs, ands or buts about it. Maintaining large JavaScript apps is nearly, if not entirely, impossible.</p>
+<h2>But Derick, You Write Large JavaScript Apps&#8230;</h2>
+<p>No, actually, I don&#8217;t.</p>
+<p>I write JavaScript applications that appear to be large. They may be large systems, but in reality they are very small applications (&#8220;programs&#8221; as Anders says). In spite of 5 to 10 <strong>thousand</strong> lines of JavaScript code per system, easily, my applications follow the secret to building large applications:</p>
+<blockquote>
+<p>&#8220;The secret to building large apps is never build large apps. Break your applications into small pieces. Then, assemble those testable, bite-sized pieces into your big application&#8221; - <strong>Justin Meyer, author JavaScriptMVC</strong></p>
+</blockquote>
+<p>(Quote taken from <a href="http://addyosmani.com/largescalejavascript/">http://addyosmani.com/largescalejavascript/</a> )</p>
+<p>And that&#8217;s what I do. I write dozens of small &#8220;applications&#8221; &#8211; modules, really &#8211; that are then composed in to larger functional systems at runtime.</p>
+<h2>Improving Ander&#8217;s Quote</h2>
+<p>Like I said, Ander&#8217;s quote is 100% correct. I think Ander&#8217;s quote quote can be improved, though.</p>
+<p><strong>Did you notice that Justin Meyer&#8217;s quote didn&#8217;t mention JavaScript at all?</strong> The truth is, it doesn&#8217;t matter what language you&#8217;re writing in. This secret to writing large application is applicable to all of them. It&#8217;s why we have functions, objects, modules, classes, and other ways of grouping related sets of functionality and/or data together.</p>
+<p>So, Ander&#8217;s quote should read:</p>
+<blockquote>
+<p><strong>Erik Meijer:</strong> Are you saying you cannot write large programs in <strong>[any language]</strong>?</p>
+<p><strong>Anders Hejlsberg:</strong> No, you can write large programs in <strong>[any language]</strong>. You just can’t maintain them.</p>
+</blockquote>
+<h2>Maintaining Large Systems</h2>
+<p>You&#8217;ll have to pardon the link-bait title of this post, and really pay attention to the semantics and language for a moment.</p>
+<p>Anders is correct, but not because he is talking about JavaScript. He is correct because it is not possible to maintain large applications in any language / platform / runtime. Write small applications as modules, classes, assemblies, libraries, and/or any other type of modularization technique for your language and runtime environment. Then compose those small &#8220;applications&#8221; (modules, etc) in to large systems which are easier to write and maintain, in JavaScript or any other language.</p>
+											</div><!-- .entry-content -->
+
+					<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
+						<div id="author-description">
+							<h2>About Derick Bailey</h2>
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+
+Find me on twitter: 
+<a href="http://twitter.com/derickbailey">@derickbailey</a>, 
+<a href="http://twitter.com/mutedsolutions">@mutedsolutions</a>, 
+<a href="http://twitter.com/backbonejsclass">@backbonejsclass</a>
+
+
+Find me on the web: 
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
+								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description	-->
+					</div><!-- .entry-author-info -->
+
+					<div class="entry-utility">
+					This entry was posted in <a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts in AntiPatterns" rel="category tag">AntiPatterns</a>, <a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts in Composite Apps" rel="category tag">Composite Apps</a>, <a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts in CQRS" rel="category tag">CQRS</a>, <a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts in Craftsmanship" rel="category tag">Craftsmanship</a>, <a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts in Javascript" rel="category tag">Javascript</a>, <a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts in Philosophy of Software" rel="category tag">Philosophy of Software</a>, <a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts in Pragmatism" rel="category tag">Pragmatism</a>, <a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts in Principles and Patterns" rel="category tag">Principles and Patterns</a>, <a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts in Risk Management" rel="category tag">Risk Management</a>. Bookmark the <a href="http://lostechies.com/derickbailey/2012/06/04/anders-hejlsberg-is-right-you-cannot-maintain-large-programs-in-javascript/" title="Permalink to Anders Hejlsberg Is Right: You Cannot Maintain Large Programs In JavaScript" rel="bookmark">permalink</a>. Follow any comments here with the <a href="http://lostechies.com/derickbailey/2012/06/04/anders-hejlsberg-is-right-you-cannot-maintain-large-programs-in-javascript/feed/" title="Comments RSS to Anders Hejlsberg Is Right: You Cannot Maintain Large Programs In JavaScript" rel="alternate" type="application/rss+xml">RSS feed for this post</a>.
+					</div><!-- .entry-utility -->
+				</div><!-- #post-946 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="http://lostechies.com/derickbailey/2012/05/22/function%e2%80%a6-vs-function%e2%80%a6-or-domready-vs-the-module-pattern/" rel="prev"><span class="meta-nav">&larr;</span> $(function(){…}) vs (function($){…})($) or DOMReady vs The Module Pattern</a></div>
+					<div class="nav-next"><a href="http://lostechies.com/derickbailey/2012/06/13/why-should-i-use-backbone-marionette-instead-of-%e2%80%a6/" rel="next">Why Should I Use Backbone.Marionette Instead Of … ? <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+<div id="disqus_thread">
+                    <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-2508">
+        <div id="dsq-comment-header-2508" class="dsq-comment-header">
+            <cite id="dsq-cite-2508">
+                <span id="dsq-author-user-2508">Nolan Egly</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2508" class="dsq-comment-body">
+            <div id="dsq-comment-message-2508" class="dsq-comment-message"><p>I completely agree with your adjustment of Ander’s<br />
+quote.  However, I would suspect that programming<br />
+language has a huge impact on program size and maintainability.  I don&#8217;t have any citations to hard studies,<br />
+but I&#8217;ll dangerously speculate anyway.</p>
+<p> </p>
+<p>Some languages have much more limited scoping options than<br />
+others (compare C and JavaScript to C++ and Java/C#).  Being able to localize state is essential to limiting<br />
+unintended side effects.</p>
+<p> </p>
+<p>Some languages also make certain mistakes easier than<br />
+others, such as accidently assigning instead of comparing a value inside an if<br />
+statement in C as opposed to C# which requires an if condition to explicitly be<br />
+a boolean.</p>
+<p> </p>
+<p>This doesn&#8217;t even begin to account for the actual complexity<br />
+of the application.  A 10k line chess<br />
+program is going to be a lot more difficult to work with than a 100k line forms<br />
+over data/data driven/CRUD application.</p>
+<p> </p>
+<p>I agree any language at some sufficiently large point will<br />
+suffer a drop in maintainability, but I feel that point will be measurably<br />
+different across languages.  I&#8217;d love to<br />
+see a study on this, but think it would be difficult to factor out developer<br />
+skill, which is an entirely different issue.</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2509">
+        <div id="dsq-comment-header-2509" class="dsq-comment-header">
+            <cite id="dsq-cite-2509">
+                <span id="dsq-author-user-2509">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2509" class="dsq-comment-body">
+            <div id="dsq-comment-message-2509" class="dsq-comment-message"><p>I don&#8217;t think it was taken out of context. If you start watching at about 11:15 in you can hear the whole exchange.</p>
+<p>Regardless, you make a good point.</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2511">
+        <div id="dsq-comment-header-2511" class="dsq-comment-header">
+            <cite id="dsq-cite-2511">
+http://twitter.com/justinbmeyer                <span id="dsq-author-user-2511">justinbmeyer</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2511" class="dsq-comment-body">
+            <div id="dsq-comment-message-2511" class="dsq-comment-message"><p>The other secret &#8230; <a href="http://canjs.us" rel="nofollow">http://canjs.us</a> &#8230; Shameless plug!</p>
+<p>Having being part of a 100k+ LOC, I can asure everyone that you can maintain a large JS project.  You just have to develop everything as independent as possible. <br />
+This is why JMVC tries to organize almost every file in it&#8217;s own folder, with it&#8217;s own test and demo page.  Every component is it&#8217;s own mini library.  And we eat our own dog food, JMVC, CanJS, and jQuery++ are all organized this way.  For example:  https://github.com/jupiterjs/canjsAnd IMO the value of tests isn&#8217;t in finding bugs, it&#8217;s in forcing the developer to isolate their code. If a chunk of code depends to heavily on a large number of other components and a specified state, it&#8217;s going to be a pain to test.</p>
+<p>Finally, people matter more than any technology.  A good manager who understands that taking time for quality now means faster development later is a rare person.</p>
+</div>
+        </div>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2514">
+        <div id="dsq-comment-header-2514" class="dsq-comment-header">
+            <cite id="dsq-cite-2514">
+http://rendion.myopenid.com/                <span id="dsq-author-user-2514">render</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2514" class="dsq-comment-body">
+            <div id="dsq-comment-message-2514" class="dsq-comment-message"><p>100K LOC is large to you?</p>
+</div>
+        </div>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2523">
+        <div id="dsq-comment-header-2523" class="dsq-comment-header">
+            <cite id="dsq-cite-2523">
+http://www.selectioneffect.info/                <span id="dsq-author-user-2523">Corrie Engelbrecht</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2523" class="dsq-comment-body">
+            <div id="dsq-comment-message-2523" class="dsq-comment-message"><p>@openid-26332:disqus So what is large to you? What is the largest JavaScript program you&#8217;ve maintained or developed?<br />
+Not another language, but JavaScript, which is what you commented on.</p>
+</div>
+        </div>
+
+    </li>
+</ul>
+</li>
+    <li class="comment odd alt depth-2" id="dsq-comment-2516">
+        <div id="dsq-comment-header-2516" class="dsq-comment-header">
+            <cite id="dsq-cite-2516">
+http://mutedsolutions.com                <span id="dsq-author-user-2516">Derick Bailey</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2516" class="dsq-comment-body">
+            <div id="dsq-comment-message-2516" class="dsq-comment-message"><p>+1000 to all of that :)</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment even depth-2" id="dsq-comment-2517">
+        <div id="dsq-comment-header-2517" class="dsq-comment-header">
+            <cite id="dsq-cite-2517">
+                <span id="dsq-author-user-2517">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2517" class="dsq-comment-body">
+            <div id="dsq-comment-message-2517" class="dsq-comment-message"><p>&#8220;IMO the value of tests isn&#8217;t in finding bugs, it&#8217;s in forcing the developer to isolate their code.&#8221;</p>
+<p>Yes, and they also allow us to make changes without the fear of breaking things.</p>
+</div>
+        </div>
+
+    </li>
+</ul>
+</li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2512">
+        <div id="dsq-comment-header-2512" class="dsq-comment-header">
+            <cite id="dsq-cite-2512">
+                <span id="dsq-author-user-2512">Daniel Marbach</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2512" class="dsq-comment-body">
+            <div id="dsq-comment-message-2512" class="dsq-comment-message"><p>That is exactly what SOA has always told us to do. Large applications are a composition of several SOA services (attention: NOT webservices). These services itself are decomposed into business components and business components are divided into autonomous components</p>
+<p>Daniel</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2513">
+        <div id="dsq-comment-header-2513" class="dsq-comment-header">
+            <cite id="dsq-cite-2513">
+http://rendion.myopenid.com/                <span id="dsq-author-user-2513">render</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2513" class="dsq-comment-body">
+            <div id="dsq-comment-message-2513" class="dsq-comment-message"><p>The key to the kind of modularization that might make large systems composable in Javascript is well defined APIs.  I have yet to really see decent Javascript APIs, they are getting better, but given the 99% slop that I have encountered on web projects, I doubt the seriousness of folks who want to bet the farm on this language.</p>
+<p>You cant even get javascript web APIs to work together much less compose a large system out of these things.  Good luck?</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2515">
+        <div id="dsq-comment-header-2515" class="dsq-comment-header">
+            <cite id="dsq-cite-2515">
+http://twitter.com/Thoriumi                <span id="dsq-author-user-2515">Tuomas Hietanen</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2515" class="dsq-comment-body">
+            <div id="dsq-comment-message-2515" class="dsq-comment-message"><p>This Javascript in the quote represented a dynamically typed language (vs. statically typed languages like Ander&#8217;s C#).</p>
+<p>Small components are must. But with dynamically typed languages you don&#8217;t know the interfaces: You are not 100% sure what the component may return. This makes defining of component boundaries much harder.</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2518">
+        <div id="dsq-comment-header-2518" class="dsq-comment-header">
+            <cite id="dsq-cite-2518">
+                <span id="dsq-author-user-2518">Anders Pearson</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2518" class="dsq-comment-body">
+            <div id="dsq-comment-message-2518" class="dsq-comment-message"><p>&#8220;Ander&#8217;s&#8221; is not the possessive form of &#8220;Anders&#8221;. </p>
+<p>Speaking as another Anders, this drives us nuts.</p>
+</div>
+        </div>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2525">
+        <div id="dsq-comment-header-2525" class="dsq-comment-header">
+            <cite id="dsq-cite-2525">
+http://chrismissal.lostechies.com                <span id="dsq-author-user-2525">Chris Missal</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2525" class="dsq-comment-body">
+            <div id="dsq-comment-message-2525" class="dsq-comment-message"><p>Anders</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment even depth-2" id="dsq-comment-2529">
+        <div id="dsq-comment-header-2529" class="dsq-comment-header">
+            <cite id="dsq-cite-2529">
+                <span id="dsq-author-user-2529">Neil Haughton</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2529" class="dsq-comment-body">
+            <div id="dsq-comment-message-2529" class="dsq-comment-message"><p>As does &#8220;it&#8217;s&#8221; meaning &#8220;belonging to it&#8221; when it should be &#8220;its&#8221;. </p>
+</div>
+        </div>
+
+    </li>
+</ul>
+</li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2519">
+        <div id="dsq-comment-header-2519" class="dsq-comment-header">
+            <cite id="dsq-cite-2519">
+                <span id="dsq-author-user-2519">Agile Hobo</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2519" class="dsq-comment-body">
+            <div id="dsq-comment-message-2519" class="dsq-comment-message"><p>If so, why Microsoft doesn&#8217;t talk about future of Silverlight? And why they don&#8217;t support it in Metro browser in Windows 8?</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2520">
+        <div id="dsq-comment-header-2520" class="dsq-comment-header">
+            <cite id="dsq-cite-2520">
+                <span id="dsq-author-user-2520">Agile Hobo</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2520" class="dsq-comment-body">
+            <div id="dsq-comment-message-2520" class="dsq-comment-message"><p>Ah, and why they support to develop Metro apps using HTML and JavaScript?</p>
+</div>
+        </div>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2521">
+        <div id="dsq-comment-header-2521" class="dsq-comment-header">
+            <cite id="dsq-cite-2521">
+http://www.facebook.com/people/Anton-Martynenko/100001239604684                <span id="dsq-author-user-2521">Anton Martynenko</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2521" class="dsq-comment-body">
+            <div id="dsq-comment-message-2521" class="dsq-comment-message"><p>Because Microsoft usually invests millions in something and then abandon it (i.e. Silverlight) ;)</p>
+</div>
+        </div>
+
+    </li>
+</ul>
+</li>
+    <li class="comment even thread-odd thread-alt depth-1" id="dsq-comment-2522">
+        <div id="dsq-comment-header-2522" class="dsq-comment-header">
+            <cite id="dsq-cite-2522">
+http://www.selectioneffect.info/                <span id="dsq-author-user-2522">Corrie Engelbrecht</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2522" class="dsq-comment-body">
+            <div id="dsq-comment-message-2522" class="dsq-comment-message"><p>This is a very insightful article. I&#8217;ve programmed large systems in C, Python, Delphi, C++, Java, and C#, and I&#8217;m almost at the stage where I can add JavaScript to that list.</p>
+<p>It&#8217;s universally true that only programmer disciple, and following proper design principles, help with software construction.</p>
+<p>It doesn&#8217;t help to blame a language for unmaintainable programs. You can accomplish that in any language.</p>
+<p>It&#8217;s much better to have testable modules, or varying granularity, that can be assembled together and work as a progressively testable system.</p>
+<p>And then the challenge is to stay consistent. And to keep testing. And to never implement short-cuts that undermine the integrity of the modules. And to always stick to well known design principles. And, and&#8230;</p>
+<p>Language has probably little to nothing to do with the maintainability of a system.</p>
+</div>
+        </div>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-2" id="dsq-comment-2531">
+        <div id="dsq-comment-header-2531" class="dsq-comment-header">
+            <cite id="dsq-cite-2531">
+http://twitter.com/herbrandson                <span id="dsq-author-user-2531">herbrandson</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2531" class="dsq-comment-body">
+            <div id="dsq-comment-message-2531" class="dsq-comment-message"><p>&#8220;Language has probably little to nothing to do with the maintainability of a system.&#8221;</p>
+<p>I have found that to not be true. For example, I worked on a project recently where I had to add some features to an existing codebase that I didn&#8217;t write. The features required work on both the server side code (c#) and client side (javascript). Both the existing c# and javascript were written by the same (very talented) developer. I found the c# to be 10x easier to extend than the javascript. I would attribute this to the better tooling available on the c# side due to being a statically typed language. Just a few examples&#8230;</p>
+<p>1. being able to quickly see what functions are part of a class<br />
+2. knowing what data type each parameter of a function expected<br />
+3. knowing what data type would be returned by each function<br />
+4. being able to change the api (i.e. adding new parameters to a function) and having the compiler quickly tell me what other parts of the system needed to be updated.</p>
+<p>On the javascript side, most of these things required a lot of manual poking around through hundreds of lines of code and a lot of manual testing.</p>
+<p>I realize I am only one data point here, but I have worked on large scale projects in the last few years using c, c++, c#, objective-c, javascript, java, php, and a few others. Each language has been fun to work with and each has it&#8217;s own strengths and weaknesses. But, I have to say that the statically typed languages were significantly easier when it came to extending/maintaining an existing codebase.</p>
+</div>
+        </div>
+
+    <ul class='children'>
+    <li class="comment even depth-3" id="dsq-comment-2535">
+        <div id="dsq-comment-header-2535" class="dsq-comment-header">
+            <cite id="dsq-cite-2535">
+http://www.selectioneffect.info/                <span id="dsq-author-user-2535">Corrie Engelbrecht</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2535" class="dsq-comment-body">
+            <div id="dsq-comment-message-2535" class="dsq-comment-message"><p>Well, nothing you&#8217;ve said actually supports your conclusion that the language itself is related to maintainability.</p>
+<p>Rather, your points appear to rely on tool availability and capability.</p>
+<p>Here are some JavaScript IDEs that support code completion and refactoring to the same degree or better than Visual Studio does for C#:<br />
+1. Aptana Studio (or Eclipse, which is basically the same thing)<br />
+2. BBEdit<br />
+3. Komodo<br />
+4.  NetBeans<br />
+5. WebStorm<br />
+6. JetBrains</p>
+<p>And with all due respect, coding in JavaScript requires a completely different mindset than coding in C#.</p>
+<p>Dynamic typing and functional programming are FEATURES of JavaScript, and requires the correct &#8220;thinking in JavaScript&#8221; approach to utilize. If you  (you = general populace) want static typing in JavaScript, then you&#8217;ve immediately missed a vital, foundational precept of JavaScript, and you will just not succeed in writing maintainable code in the language. But this is NOT the fault of the language, but rather of the programmer. </p>
+<p>And I think most of the rest of what you&#8217;re saying is just arguing from ignorance.</p>
+<p>BDD in JavaScript: Jasmine (<a href="http://pivotal.github.com/jasmine/" rel="nofollow">http://pivotal.github.com/jasmine/</a>)<br />
+TDD in JavaScript:  QUnit, JSMock<br />
+Source Documentation: JsDoc<br />
+Runtime loading: RequireJS<br />
+Libraries: JQuery, JQueryUI, etc.</p>
+<p>I could go on.</p>
+<p>Furthermore, I don&#8217;t know your very talented developer, just as I don&#8217;t know you.</p>
+<p>But if the same developer wrote C# code that is highly maintainable, and JavaScript code that is not maintainable, according to a 2nd developer, namely you, then your conclusions are mere supposition.</p>
+<p>It could be that you yourself cannot &#8220;think in JavaScript&#8221;, and that is the source of your problems.</p>
+<p>It could be that the original developer was not good at JavaScript.</p>
+<p>I&#8217;m sorry, but I&#8217;ve had quite enough of all the C# developers who think they can comment on JavaScript just because they think they can program.</p>
+<p>Programming languages are different from each other. JavaScript is a FUNCTIONAL programming language. To try and use it as a structured OO language is like trying to use a rapier to mow the lawn. You might think you&#8217;re doing well, but actually you&#8217;re completely misunderstanding what a rapier is and is used for, and how to do it.</p>
+</div>
+        </div>
+
+    <ul class='children'>
+    <li class="comment odd alt depth-4" id="dsq-comment-2536">
+        <div id="dsq-comment-header-2536" class="dsq-comment-header">
+            <cite id="dsq-cite-2536">
+                <span id="dsq-author-user-2536">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2536" class="dsq-comment-body">
+            <div id="dsq-comment-message-2536" class="dsq-comment-message"><p>@CorrieEngelbrecht:disqus You raise some good points&#8230;<br />
+1. It is important to make a distinction between the tools used to develop in a language and the language it&#8217;s self. Poor tools does not equal a poor language (and vice versa).</p>
+<p>2. Trying to use dynamic languages in the same way you would use a static language is missing the point. Dynamic languages strengths are completely lost if you don&#8217;t approach them in a different way.</p>
+<p>3. &#8220;Programming languages are different from each other&#8221;. Each has its own strengths and weaknesses. There is no &#8221;one language to rule them all&#8221;.</p>
+<p>4. I completely agree that my opinion is only one data point and far from scientific. I don&#8217;t pretend to speak the authoritative truth on this subject and readily acknowledge that I have much to learn.</p>
+<p>Also, thanks for the list of IDEs and libraries you listed. I&#8217;ve used many, but not all of them. I&#8217;ll check the rest out. I do love new toys :)</p>
+<p>There are also a few points I&#8217;d like to clarify&#8230;</p>
+<p>1. I get the impression from your comments that you believe me to be a c# only developer (forgive me if I&#8217;m mistaken). On the contrary, I pointed out in my original comment that I consistently work in multiple languages. I therefor don&#8217;t believe that I am unable to &#8220;think in JavaScript&#8221;.</p>
+<p>2. If c# developers were unable to think in JavaScript, it would seem to follow that JavaScript developers would also not be able to think in c#. If that were true then we&#8217;d be wasting our time with this discussion. Neither of us would be capable of understanding the others side. I don&#8217;t believe that to be the case at all.</p>
+<p>3. I enjoy developing in JavaScript. There&#8217;s much about it that&#8217;s fantastic. JQuery is one of the best libraries I have used in any language. However, my personal experience has been that JavaScript is less maintainable then other languages. Again, just one data point. But not an uninformed or unqualified opinion.</p>
+<p>4. Not all languages are equally maintainable. To take an extreme case, try modifying (or even reading) someone else&#8217;s assembly code. Pearl is also commonly referred to as a &#8220;write only&#8221; language.</p>
+<p>5. Maintainability is not the only reason to select a language. I find c# to be more maintainable then JavaScript, but c# is a very poor choice if you want to write code that will run in the browser. JavaScript is fun and lends itself to rapid development, but it&#8217;s not really an option if you want to write a native iPhone app (yes, i know you code use an embedded browser, but that&#8217;s really not a native app IMHO). C++ is fast and pretty portable, but  in general it&#8217;s too slow to develop with for your typical web app.</p>
+<p>6. Good tools go a long way toward making a project maintainable. They are not the only factor by a long shot, but they can make a significant impact. I have personally found static code analysis tools to make a significant impact on my ability to modify code without introducing bugs. </p>
+<p>7. Many good tools are the result of good metadata about the code, and a good Type system is the best source of code metadata I&#8217;ve seen. Most of the points I listed in my original comment are only possible with good metadata.</p>
+<p>8. It&#8217;s very possible that I&#8217;m ignorant on this point, but I have not yet seen a tool that does a great job with the points I listed in my original comment (especially points 2 and 3). In fact, it&#8217;s the very strengths of JavaScript (it&#8217;s dynamic nature) that would seem to make these impossible.</p>
+<p>Once again, I&#8217;m not saying that JavaScript is a bad language. But, I do believe there is a case to be made that it is less maintainable over the long run then other languages. Especially as the scale of an application grows (even with best practices such as modular design, unit tests, etc.).</p>
+<p>Thoughts?</p>
+</div>
+        </div>
+
+    <ul class='children'>
+    <li class="comment even depth-5" id="dsq-comment-2538">
+        <div id="dsq-comment-header-2538" class="dsq-comment-header">
+            <cite id="dsq-cite-2538">
+http://www.selectioneffect.info/                <span id="dsq-author-user-2538">Corrie Engelbrecht</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2538" class="dsq-comment-body">
+            <div id="dsq-comment-message-2538" class="dsq-comment-message"><p>Hi @twitter-14289895:disqus </p>
+<p>To clarify:<br />
+1. I explicitely wrote &#8220; (you = general populace) &#8221; so that you would understand that I mean you in the general sense, and not you specifically, unless stated otherwise.</p>
+<p>2. No, this does not follow at all. Any developer can think in one or more languages. Just because a developer cannot &#8220;think in JavaScript&#8221; says nothing at all about a completely different developer, and what languages that developer might be able to think in.</p>
+<p>4. A Perl (which is what you probably meant) programmer that applies loose coupling and high cohesion principles will produce a maintainable system.</p>
+<p>A Perl programmer that does not, will produce an unmaintainable system.</p>
+<p>It&#8217;s as simple as that. And this applies to any language you care to insert there.</p>
+<p>5. Maintainability is a completely nonsensical differentiator among languages. You cannot judge a future, not yet written, system&#8217;s maintainability based on some sort of predictive crystal ball that extrapolates maintainability given the name of a programming language as input.</p>
+<p>6. Why do you mention this? I have listed the tools for JavaScript that make the JavaScript ecosystem exactly on par with the C# ecosystem. JavaScript has JSLint for static analysts, and testing frameworks, and refactoring IDEs and mocking suites, and testing suites (non-TDD type testing and TDD type testing), and code completion.</p>
+<p>There&#8217;s no tool you can mention that exists in Visual Studio or for C# that does not also exist for JavaScript.</p>
+<p>7. I don&#8217;t think you understand dynamic typing. JavaScript does not have classes. It only has functions. Any OO concept is done on object prototyping. But this does not prevent any static analysis, or any documentation generation, or any refactoring, or any code completion from being performed on JavaScript source code.</p>
+<p>8. So this is where I&#8217;m starting to think that the &#8220;you = general populace&#8221; that can&#8217;t think in JavaScript should become &#8220;you = herbrandson&#8221; cannot think in JavaScript.</p>
+<p>And I say this without trying to be insulting, even though I&#8217;m probably failing at that:)</p>
+<p>You do not need to know what data type is expected by a function in its parameters, nor do you need to know what data type will be returned by a function. JavaScript does not work that way.</p>
+<p>I want to mention two good sources of information, with the idea that future visitors might be able to use this information as well, so don&#8217;t take this personally:</p>
+<p>a). The book Object-Oriented JavaScript is one of the best sources of good JavaScript practices, with specific sections on writing maintainable code: http://www.packtpub.com/object-oriented-javascript-applications-libraries/book</p>
+<p>b) The book &#8220;JavaScript: The GoodParts&#8221; is another standard source of excellent information: http://shop.oreilly.com/product/9780596517748.do</p>
+<p>I could go into this, but basically it comes down to this: if you find yourself wanting a type system in JavaScript, then you&#8217;re not writing JavaScript.</p>
+<p>JavaScript is a functional programming language, with objects prototypes as an added structural bonus.</p>
+<p>But of course, developers depend heavily on object prototyping because we want to use OOP.</p>
+<p>However, this requires the JavaScript developer to understand something fundamental about JavaScript: object prototyping IS NOT the same as a class system.</p>
+<p>Object prototyping is a paradigm all on its own, and it results in a polymorphic typing system, which is immensely powerful.</p>
+<p>However, if you want to misuse this object prototyping mechanism and pretend it&#8217;s a class modelling system like in C#/Java/C++, then you&#8217;re not only missing the point, but it&#8217;s like you&#8217;re trying to use gasoline in a diesel engine. The two things are superficially equivalent, but they require completely different approaches.</p>
+<p>Once again, when you mention tools that can make use of parameter types or function return types, then you&#8217;re actually mentioning &#8230; tools.</p>
+<p>Not the language.</p>
+<p>It is completely feasible to write large, maintainable JavaScript systems.</p>
+<p>The key is just modularisation.</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment odd alt depth-5" id="dsq-comment-2543">
+        <div id="dsq-comment-header-2543" class="dsq-comment-header">
+            <cite id="dsq-cite-2543">
+                <span id="dsq-author-user-2543">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2543" class="dsq-comment-body">
+            <div id="dsq-comment-message-2543" class="dsq-comment-message"><p>@derickbailey:disqus Sorry we&#8217;ve sorta hijacked your blog post at this point :(. If it goes on much longer maybe we can take it off line.</p>
+<p>@CorrieEngelbrecht:disqus First let me say how much I am enjoying this discussion. I&#8217;ve learned some new things and have also been able to better think through and clarify some of my opinions. So, thanks!</p>
+<p>I&#8217;d like to respond to a few of your points, but in re-reading my responses I think I&#8217;m trying to make too many points in too small of a format, so I&#8217;m going to try to reign it in a bit here :)</p>
+<p>I think it&#8217;s important to make the distinction that I am not saying that ANY language is NOT maintainable. It&#8217;s not a boolean thing. Of course you can maintain anything given enough time and patience. Rather, I&#8217;m trying to make the argument that some languages, and by extension the tools that those languages support, lend themselves in varying degrees to application maintainability (same thing goes for tools. JSLint and gcc both do static analysis, but in different ways and to different degrees). </p>
+<p>Take the following example. I admit it&#8217;s a bit contrived but I think it still works to illustrates my point. Both sets of code do the exact same thing. Would you agree that the second one will be easier to maintain?</p>
+<p>ASSEMBLY:</p>
+<p>push        ebp <br />
+mov         ebp,esp <br />
+push        edi <br />
+push        esi <br />
+push        ebx <br />
+sub         esp,38h <br />
+mov         esi,ecx <br />
+lea         edi,[ebp-38h] <br />
+mov         ecx,0Bh <br />
+xor         eax,eax <br />
+rep stos    dword ptr es:[edi] <br />
+mov         ecx,esi <br />
+mov         dword ptr [ebp-3Ch],ecx <br />
+mov         dword ptr [ebp-40h],edx <br />
+cmp         dword ptr ds:[04AE0AF4h],0 <br />
+je          0000002D <br />
+call        73114587 <br />
+xor         edx,edx <br />
+mov         dword ptr [ebp-44h],edx <br />
+nop <br />
+mov         eax,dword ptr [ebp-3Ch] <br />
+add         eax,dword ptr [ebp-40h] <br />
+mov         dword ptr [ebp-44h],eax <br />
+nop <br />
+jmp         0000003F <br />
+mov         eax,dword ptr [ebp-44h] <br />
+lea         esp,[ebp-0Ch] <br />
+pop         ebx <br />
+pop         esi <br />
+pop         edi <br />
+pop         ebp <br />
+retC#:</p>
+<p>public static int Add(int value1, int value2)<br />
+{     return value1 + value2;}</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment even depth-5" id="dsq-comment-2544">
+        <div id="dsq-comment-header-2544" class="dsq-comment-header">
+            <cite id="dsq-cite-2544">
+http://www.selectioneffect.info/                <span id="dsq-author-user-2544">Corrie Engelbrecht</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2544" class="dsq-comment-body">
+            <div id="dsq-comment-message-2544" class="dsq-comment-message"><p>@herbrandson:disqus This is a straw man argument, my friend.</p>
+<p>You&#8217;ve copied the CPU view code from a debug view or something from a function you wrote.</p>
+<p>This does not correspond at all to maintaining a system written in Assembler.</p>
+<p>I actually have programmed large systems in Assembler, namely device drivers for network cards way back then.</p>
+<p>When programming in assembler, you can do the following:</p>
+<p>1. Modularize functionality into separate files<br />
+2. Organize files into a directory structure, which is a form of namespacing<br />
+3. Label your routines and call them or jump to them as the occasion demands</p>
+<p>If you were to take just those facts, it&#8217;s obvious that you can write tools and an IDE that are 100% equivalent to what is available to C# developers today.</p>
+<p>It is definitely a lot more work to program in Assembler, because you have to basically write everything you want to use from scratch.</p>
+<p>But coding in Assembler is not very hard. All you have to do is to program only in Assembler for about a year, and then you&#8217;ve done the learning curve. From then on, coding in assembler is like coding in any other language that you know intimately: easy.</p>
+<p>I will grant you that the type of projects where you actually code in Assembler are complicated, low-level stuff, where you have to be extremely detail oriented and fastidious, but that has nothing to do with Assembler. Because those same projects can be, and often are, written in C instead. And C is very definitely maintainable.</p>
+<p>Coding in assembler also requires you to write programs in layers:</p>
+<p>a) First write the very basic routines, like reading a hardware port, or something like that<br />
+b) Write layer on top of that, which makes use of the lower level layer<br />
+b) Repeat as necessary</p>
+<p>Just coding in layers like that actually has the beneficial side-effect of enforcing a layered architecture (logically level), which is a fundamental property of any well-designed system.</p>
+<p>Now, if you were to listen to Assembler programmers who do not structure their code like this, and who do not modularize as in a)-c), then you have discovered an incompetent programmer. You have NOT discovered anything about the maintainability of programs written in Assembler. But you might have discovered something about the maintainability of programs written by the aforementioned programmer:)</p>
+<p>Also, if you were to just stare at a block of assembler code, it would look like gibberish, I suppose.</p>
+<p>But I promise you that there are large systems written in Assembler, and they&#8217;re shining examples of how to code a highly maintainable system in any language.</p>
+<p>It&#8217;s all about applying basic design principles.</p>
+<p>It&#8217;s NOT about what language you choose to do the final &#8220;typing in&#8221; of the previously designed system.</p>
+<p>Here&#8217;s an OS written in Assembler. I&#8217;ve looked at the source code, and it&#8217;s extremely good, and I would find it easy to maintain that system, if I had to:<br />
+<a href="http://www.menuetos.net/64bit.htm " rel="nofollow">http://www.menuetos.net/64bit.htm </a></p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment odd alt depth-5" id="dsq-comment-2545">
+        <div id="dsq-comment-header-2545" class="dsq-comment-header">
+            <cite id="dsq-cite-2545">
+                <span id="dsq-author-user-2545">Eric Herbrandson</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2545" class="dsq-comment-body">
+            <div id="dsq-comment-message-2545" class="dsq-comment-message"><p>@CorrieEngelbrecht:disqus Are you saying Assembly is every bit as easy to maintain as C? Every bit as easy to maintain as JavaScript (all else being equal)?</p>
+</div>
+        </div>
+
+    </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2526">
+        <div id="dsq-comment-header-2526" class="dsq-comment-header">
+            <cite id="dsq-cite-2526">
+                <span id="dsq-author-user-2526">Anonymous</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2526" class="dsq-comment-body">
+            <div id="dsq-comment-message-2526" class="dsq-comment-message"><p>Agreed, but there is another problem in deviding application to small modules: the huge amount of this modules and their interoperation.</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2527">
+        <div id="dsq-comment-header-2527" class="dsq-comment-header">
+            <cite id="dsq-cite-2527">
+                <span id="dsq-author-user-2527">Frank</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2527" class="dsq-comment-body">
+            <div id="dsq-comment-message-2527" class="dsq-comment-message"><p>‘The secret to building large apps is never build large apps.’,I can not agree more.<br />
+But I want to ask a question, how do you handle the error(ajax,incorrect param) interaction?<br />
+first,where to (parse() or validate() ) and how to(globally,or in  the model view,or in a specify view );</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2528">
+        <div id="dsq-comment-header-2528" class="dsq-comment-header">
+            <cite id="dsq-cite-2528">
+                <span id="dsq-author-user-2528">Donzo</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2528" class="dsq-comment-body">
+            <div id="dsq-comment-message-2528" class="dsq-comment-message"><p>Your opinion should be backed up by some facts or examples to use this &#8220;teachable moment&#8221;. Also, warn at the other end of the scale, about chunks of code that are so tiny,<br />
+no one can follow the overall program flow. best, donzo</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2530">
+        <div id="dsq-comment-header-2530" class="dsq-comment-header">
+            <cite id="dsq-cite-2530">
+                <span id="dsq-author-user-2530">martin</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2530" class="dsq-comment-body">
+            <div id="dsq-comment-message-2530" class="dsq-comment-message"><p>Well sure, if you want to write a large system you need to break it up into smaller pieces. That&#8217;s standard software development practice, so what&#8217;s new here?</p>
+</div>
+        </div>
+
+    </li>
+    <li class="comment even thread-even depth-1" id="dsq-comment-2532">
+        <div id="dsq-comment-header-2532" class="dsq-comment-header">
+            <cite id="dsq-cite-2532">
+                <span id="dsq-author-user-2532">jmh</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-2532" class="dsq-comment-body">
+            <div id="dsq-comment-message-2532" class="dsq-comment-message"><p>&#8220;So, Ander’s quote should read&#8230;&#8221;Really?  You can just edit someone&#8217;s quote?<br />
+Cool!<br />
+So,  Derick&#8217;s blog entry should read: &#8230;</p>
+</div>
+        </div>
+
+    </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var disqus_url = 'http://lostechies.com/derickbailey/2012/06/04/anders-hejlsberg-is-right-you-cannot-maintain-large-programs-in-javascript/';
+    var disqus_identifier = '946 http://lostechies.com/derickbailey/?p=946';
+    var disqus_container_id = 'disqus_thread';
+    var disqus_domain = 'disqus.com';
+    var disqus_shortname = 'derickbailey-lostechies';
+    var disqus_title = "Anders Hejlsberg Is Right: You Cannot Maintain Large Programs In JavaScript";
+        var disqus_config = function () {
+        var config = this; // Access to the config object
+        config.language = '';
+
+        /*
+           All currently supported events:
+            * preData — fires just before we request for initial data
+            * preInit - fires after we get initial data but before we load any dependencies
+            * onInit  - fires when all dependencies are resolved but before dtpl template is rendered
+            * afterRender - fires when template is rendered but before we show it
+            * onReady - everything is done
+         */
+
+        config.callbacks.preData.push(function() {
+            // clear out the container (its filled for SEO/legacy purposes)
+            document.getElementById(disqus_container_id).innerHTML = '';
+        });
+                config.callbacks.onReady.push(function() {
+            // sync comments in the background so we don't block the page
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = '?cf_action=sync_comments&post_id=946';
+
+            var firstScript = document.getElementsByTagName( "script" )[0];
+            firstScript.parentNode.insertBefore(script, firstScript);
+        });
+                    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    var DsqLocal = {
+        'trackbacks': [
+        ],
+        'trackback_url': "http:\/\/lostechies.com\/derickbailey\/2012\/06\/04\/anders-hejlsberg-is-right-you-cannot-maintain-large-programs-in-javascript\/trackback\/"    };
+/* ]]> */
+</script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+/* ]]> */
+</script>
+
+		</div><!-- #main -->
+			<div id="sidebar" class="grid_4">
+
+		<div id="primary" class="widget-area">
+			<ul class="xoxo">
+				<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" action="http://lostechies.com/derickbailey/" >
+	<div><label class="screen-reader-text" for="s">Search for:</label>
+	<input type="text" value="" name="s" id="s" />
+	<input type="submit" id="searchsubmit" value="Search" />
+	</div>
+	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
+				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
+				</ul>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/08/' title='August 2012'>August 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/07/' title='July 2012'>July 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/06/' title='June 2012'>June 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/05/' title='May 2012'>May 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/04/' title='April 2012'>April 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/03/' title='March 2012'>March 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/02/' title='February 2012'>February 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/01/' title='January 2012'>January 2012</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/12/' title='December 2011'>December 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/11/' title='November 2011'>November 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/10/' title='October 2011'>October 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/09/' title='September 2011'>September 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/08/' title='August 2011'>August 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/07/' title='July 2011'>July 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/06/' title='June 2011'>June 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/05/' title='May 2011'>May 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/04/' title='April 2011'>April 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/03/' title='March 2011'>March 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/02/' title='February 2011'>February 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2011/01/' title='January 2011'>January 2011</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/12/' title='December 2010'>December 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/11/' title='November 2010'>November 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/10/' title='October 2010'>October 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/09/' title='September 2010'>September 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/08/' title='August 2010'>August 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/07/' title='July 2010'>July 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/06/' title='June 2010'>June 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/05/' title='May 2010'>May 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/04/' title='April 2010'>April 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/03/' title='March 2010'>March 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/02/' title='February 2010'>February 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2010/01/' title='January 2010'>January 2010</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/12/' title='December 2009'>December 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/11/' title='November 2009'>November 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/10/' title='October 2009'>October 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/09/' title='September 2009'>September 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/08/' title='August 2009'>August 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/07/' title='July 2009'>July 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/06/' title='June 2009'>June 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/05/' title='May 2009'>May 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/04/' title='April 2009'>April 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/03/' title='March 2009'>March 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/02/' title='February 2009'>February 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2009/01/' title='January 2009'>January 2009</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/12/' title='December 2008'>December 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/11/' title='November 2008'>November 2008</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2008/10/' title='October 2008'>October 2008</a></li>
+		</ul>
+</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-3"><a href="http://lostechies.com/derickbailey/category/net/" title="View all posts filed under .NET">.NET</a>
+</li>
+	<li class="cat-item cat-item-126"><a href="http://lostechies.com/derickbailey/category/accessibility/" title="View all posts filed under Accessibility">Accessibility</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://lostechies.com/derickbailey/category/agile/" title="View all posts filed under Agile">Agile</a>
+</li>
+	<li class="cat-item cat-item-159"><a href="http://lostechies.com/derickbailey/category/ajax/" title="View all posts filed under AJAX">AJAX</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://lostechies.com/derickbailey/category/albacore/" title="View all posts filed under Albacore">Albacore</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://lostechies.com/derickbailey/category/analysis-and-design/" title="View all posts filed under Analysis and Design">Analysis and Design</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://lostechies.com/derickbailey/category/android/" title="View all posts filed under Android">Android</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://lostechies.com/derickbailey/category/antipatterns/" title="View all posts filed under AntiPatterns">AntiPatterns</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://lostechies.com/derickbailey/category/appcontroller/" title="View all posts filed under AppController">AppController</a>
+</li>
+	<li class="cat-item cat-item-170"><a href="http://lostechies.com/derickbailey/category/applescript/" title="View all posts filed under AppleScript">AppleScript</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://lostechies.com/derickbailey/category/async/" title="View all posts filed under Async">Async</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://lostechies.com/derickbailey/category/austin-code-camp/" title="View all posts filed under Austin Code Camp">Austin Code Camp</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://lostechies.com/derickbailey/category/automocking/" title="View all posts filed under AutoMocking">AutoMocking</a>
+</li>
+	<li class="cat-item cat-item-122"><a href="http://lostechies.com/derickbailey/category/backbone/" title="View all posts filed under Backbone">Backbone</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://lostechies.com/derickbailey/category/backbone-eventbinder/" title="View all posts filed under Backbone.EventBinder">Backbone.EventBinder</a>
+</li>
+	<li class="cat-item cat-item-131"><a href="http://lostechies.com/derickbailey/category/backbone-memento/" title="View all posts filed under Backbone.Memento">Backbone.Memento</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="http://lostechies.com/derickbailey/category/backbone-modelbinding/" title="View all posts filed under Backbone.ModelBinding">Backbone.ModelBinding</a>
+</li>
+	<li class="cat-item cat-item-160"><a href="http://lostechies.com/derickbailey/category/backbone-syphon/" title="View all posts filed under Backbone.Syphon">Backbone.Syphon</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://lostechies.com/derickbailey/category/behavior-driven-development/" title="View all posts filed under Behavior Driven Development">Behavior Driven Development</a>
+</li>
+	<li class="cat-item cat-item-161"><a href="http://lostechies.com/derickbailey/category/books/" title="View all posts filed under Books">Books</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://lostechies.com/derickbailey/category/books-reviews/" title="View all posts filed under Books Reviews">Books Reviews</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://lostechies.com/derickbailey/category/bootstrap/" title="View all posts filed under Bootstrap">Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://lostechies.com/derickbailey/category/branch-per-feature/" title="View all posts filed under Branch-Per-Feature">Branch-Per-Feature</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://lostechies.com/derickbailey/category/branching-strategies/" title="View all posts filed under Branching Strategies">Branching Strategies</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://lostechies.com/derickbailey/category/brownfield/" title="View all posts filed under Brownfield">Brownfield</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://lostechies.com/derickbailey/category/build-tools/" title="View all posts filed under Build Tools">Build Tools</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://lostechies.com/derickbailey/category/bundler/" title="View all posts filed under Bundler">Bundler</a>
+</li>
+	<li class="cat-item cat-item-165"><a href="http://lostechies.com/derickbailey/category/business/" title="View all posts filed under Business">Business</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://lostechies.com/derickbailey/category/c/" title="View all posts filed under C#">C#</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://lostechies.com/derickbailey/category/capybara/" title="View all posts filed under Capybara">Capybara</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://lostechies.com/derickbailey/category/certification/" title="View all posts filed under Certification">Certification</a>
+</li>
+	<li class="cat-item cat-item-167"><a href="http://lostechies.com/derickbailey/category/chaijs/" title="View all posts filed under ChaiJS">ChaiJS</a>
+</li>
+	<li class="cat-item cat-item-147"><a href="http://lostechies.com/derickbailey/category/classy-inheritance/" title="View all posts filed under Classy Inheritance">Classy Inheritance</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://lostechies.com/derickbailey/category/coaching/" title="View all posts filed under Coaching">Coaching</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://lostechies.com/derickbailey/category/code-review/" title="View all posts filed under Code Review">Code Review</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://lostechies.com/derickbailey/category/command-line/" title="View all posts filed under Command Line">Command Line</a>
+</li>
+	<li class="cat-item cat-item-163"><a href="http://lostechies.com/derickbailey/category/commonjs/" title="View all posts filed under CommonJS">CommonJS</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://lostechies.com/derickbailey/category/community/" title="View all posts filed under Community">Community</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://lostechies.com/derickbailey/category/compact-framework/" title="View all posts filed under Compact Framework">Compact Framework</a>
+</li>
+	<li class="cat-item cat-item-134"><a href="http://lostechies.com/derickbailey/category/composite-apps/" title="View all posts filed under Composite Apps">Composite Apps</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://lostechies.com/derickbailey/category/consulting/" title="View all posts filed under Consulting">Consulting</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://lostechies.com/derickbailey/category/continuous-improvement/" title="View all posts filed under Continuous Improvement">Continuous Improvement</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://lostechies.com/derickbailey/category/continuous-integration/" title="View all posts filed under Continuous Integration">Continuous Integration</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://lostechies.com/derickbailey/category/cqrs/" title="View all posts filed under CQRS">CQRS</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://lostechies.com/derickbailey/category/craftsmanship/" title="View all posts filed under Craftsmanship">Craftsmanship</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://lostechies.com/derickbailey/category/cucumber/" title="View all posts filed under Cucumber">Cucumber</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://lostechies.com/derickbailey/category/daily-standups/" title="View all posts filed under Daily Standups">Daily Standups</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://lostechies.com/derickbailey/category/data-access/" title="View all posts filed under Data Access">Data Access</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://lostechies.com/derickbailey/category/database/" title="View all posts filed under Database">Database</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://lostechies.com/derickbailey/category/debugging/" title="View all posts filed under Debugging">Debugging</a>
+</li>
+	<li class="cat-item cat-item-112"><a href="http://lostechies.com/derickbailey/category/deployment/" title="View all posts filed under Deployment">Deployment</a>
+</li>
+	<li class="cat-item cat-item-133"><a href="http://lostechies.com/derickbailey/category/design/" title="View all posts filed under Design">Design</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://lostechies.com/derickbailey/category/design-patterns/" title="View all posts filed under Design Patterns">Design Patterns</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://lostechies.com/derickbailey/category/dlr/" title="View all posts filed under DLR">DLR</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="http://lostechies.com/derickbailey/category/documentation/" title="View all posts filed under Documentation">Documentation</a>
+</li>
+	<li class="cat-item cat-item-140"><a href="http://lostechies.com/derickbailey/category/dom/" title="View all posts filed under DOM">DOM</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="http://lostechies.com/derickbailey/category/domain-driven-design/" title="View all posts filed under Domain Driven Design">Domain Driven Design</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://lostechies.com/derickbailey/category/dsl/" title="View all posts filed under DSL">DSL</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://lostechies.com/derickbailey/category/e-books/" title="View all posts filed under E-Books">E-Books</a>
+</li>
+	<li class="cat-item cat-item-164"><a href="http://lostechies.com/derickbailey/category/ecmascript/" title="View all posts filed under ECMAScript">ECMAScript</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://lostechies.com/derickbailey/category/education/" title="View all posts filed under Education">Education</a>
+</li>
+	<li class="cat-item cat-item-142"><a href="http://lostechies.com/derickbailey/category/ember/" title="View all posts filed under Ember">Ember</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://lostechies.com/derickbailey/category/fluent-nhibernate/" title="View all posts filed under Fluent NHibernate">Fluent NHibernate</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://lostechies.com/derickbailey/category/fnh-contrib/" title="View all posts filed under FNH.Contrib">FNH.Contrib</a>
+</li>
+	<li class="cat-item cat-item-137"><a href="http://lostechies.com/derickbailey/category/functional/" title="View all posts filed under Functional">Functional</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://lostechies.com/derickbailey/category/git/" title="View all posts filed under Git">Git</a>
+</li>
+	<li class="cat-item cat-item-120"><a href="http://lostechies.com/derickbailey/category/goals/" title="View all posts filed under Goals">Goals</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://lostechies.com/derickbailey/category/growl/" title="View all posts filed under Growl">Growl</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="http://lostechies.com/derickbailey/category/haml/" title="View all posts filed under HAML">HAML</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://lostechies.com/derickbailey/category/handlebars/" title="View all posts filed under Handlebars">Handlebars</a>
+</li>
+	<li class="cat-item cat-item-132"><a href="http://lostechies.com/derickbailey/category/haskell/" title="View all posts filed under Haskell">Haskell</a>
+</li>
+	<li class="cat-item cat-item-127"><a href="http://lostechies.com/derickbailey/category/html5/" title="View all posts filed under HTML5">HTML5</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://lostechies.com/derickbailey/category/ironruby/" title="View all posts filed under IronRuby">IronRuby</a>
+</li>
+	<li class="cat-item cat-item-129"><a href="http://lostechies.com/derickbailey/category/jasmine/" title="View all posts filed under Jasmine">Jasmine</a>
+</li>
+	<li class="cat-item cat-item-168"><a href="http://lostechies.com/derickbailey/category/jasmine-async/" title="View all posts filed under jasmine-async">jasmine-async</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://lostechies.com/derickbailey/category/java/" title="View all posts filed under Java">Java</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="http://lostechies.com/derickbailey/category/javascript/" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-111"><a href="http://lostechies.com/derickbailey/category/jquery/" title="View all posts filed under JQuery">JQuery</a>
+</li>
+	<li class="cat-item cat-item-130"><a href="http://lostechies.com/derickbailey/category/jsfiddle/" title="View all posts filed under JSFiddle">JSFiddle</a>
+</li>
+	<li class="cat-item cat-item-123"><a href="http://lostechies.com/derickbailey/category/json/" title="View all posts filed under JSON">JSON</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://lostechies.com/derickbailey/category/kaizen/" title="View all posts filed under Kaizen">Kaizen</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://lostechies.com/derickbailey/category/kanban/" title="View all posts filed under Kanban">Kanban</a>
+</li>
+	<li class="cat-item cat-item-141"><a href="http://lostechies.com/derickbailey/category/kendoui/" title="View all posts filed under KendoUI">KendoUI</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="http://lostechies.com/derickbailey/category/knockout/" title="View all posts filed under Knockout">Knockout</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://lostechies.com/derickbailey/category/lambda-expressions/" title="View all posts filed under Lambda Expressions">Lambda Expressions</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://lostechies.com/derickbailey/category/lean-systems/" title="View all posts filed under Lean Systems">Lean Systems</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://lostechies.com/derickbailey/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-115"><a href="http://lostechies.com/derickbailey/category/logs/" title="View all posts filed under Logs">Logs</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://lostechies.com/derickbailey/category/lssc/" title="View all posts filed under LSSC">LSSC</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://lostechies.com/derickbailey/category/lssc10infoq/" title="View all posts filed under LSSC10InfoQ">LSSC10InfoQ</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="http://lostechies.com/derickbailey/category/macruby/" title="View all posts filed under MacRuby">MacRuby</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://lostechies.com/derickbailey/category/management/" title="View all posts filed under Management">Management</a>
+</li>
+	<li class="cat-item cat-item-136"><a href="http://lostechies.com/derickbailey/category/marionette/" title="Make your Backbone applications dance with a composite application architecture! MarionetteJS.com
+">Marionette</a>
+</li>
+	<li class="cat-item cat-item-118"><a href="http://lostechies.com/derickbailey/category/math/" title="View all posts filed under Math">Math</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://lostechies.com/derickbailey/category/messaging/" title="View all posts filed under Messaging">Messaging</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="http://lostechies.com/derickbailey/category/metrics/" title="View all posts filed under Metrics">Metrics</a>
+</li>
+	<li class="cat-item cat-item-166"><a href="http://lostechies.com/derickbailey/category/mochajs/" title="View all posts filed under MochaJS">MochaJS</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://lostechies.com/derickbailey/category/model-view-controller/" title="View all posts filed under Model-View-Controller">Model-View-Controller</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://lostechies.com/derickbailey/category/model-view-presenter/" title="View all posts filed under Model-View-Presenter">Model-View-Presenter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="http://lostechies.com/derickbailey/category/monads/" title="View all posts filed under Monads">Monads</a>
+</li>
+	<li class="cat-item cat-item-117"><a href="http://lostechies.com/derickbailey/category/mongodb/" title="View all posts filed under MongoDB">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-119"><a href="http://lostechies.com/derickbailey/category/mongoid/" title="View all posts filed under Mongoid">Mongoid</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://lostechies.com/derickbailey/category/networking/" title="View all posts filed under Networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://lostechies.com/derickbailey/category/nhibernate/" title="View all posts filed under NHibernate">NHibernate</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://lostechies.com/derickbailey/category/ninject/" title="View all posts filed under Ninject">Ninject</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://lostechies.com/derickbailey/category/nodejs/" title="View all posts filed under NodeJS">NodeJS</a>
+</li>
+	<li class="cat-item cat-item-154"><a href="http://lostechies.com/derickbailey/category/npm/" title="View all posts filed under NPM">NPM</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://lostechies.com/derickbailey/category/open-source/" title="View all posts filed under Open Source">Open Source</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://lostechies.com/derickbailey/category/osx/" title="View all posts filed under OSX">OSX</a>
+</li>
+	<li class="cat-item cat-item-146"><a href="http://lostechies.com/derickbailey/category/performance/" title="View all posts filed under Performance">Performance</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://lostechies.com/derickbailey/category/philosophy-of-software/" title="View all posts filed under Philosophy of Software">Philosophy of Software</a>
+</li>
+	<li class="cat-item cat-item-145"><a href="http://lostechies.com/derickbailey/category/podcast/" title="View all posts filed under Podcast">Podcast</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://lostechies.com/derickbailey/category/pragmatism/" title="View all posts filed under Pragmatism">Pragmatism</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://lostechies.com/derickbailey/category/presentations/" title="View all posts filed under Presentations">Presentations</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://lostechies.com/derickbailey/category/principles-and-patterns/" title="View all posts filed under Principles and Patterns">Principles and Patterns</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://lostechies.com/derickbailey/category/product-reviews/" title="View all posts filed under Product Reviews">Product Reviews</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://lostechies.com/derickbailey/category/productivity/" title="View all posts filed under Productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-148"><a href="http://lostechies.com/derickbailey/category/prototypal-inheritance/" title="View all posts filed under Prototypal Inheritance">Prototypal Inheritance</a>
+</li>
+	<li class="cat-item cat-item-152"><a href="http://lostechies.com/derickbailey/category/pusher/" title="View all posts filed under Pusher">Pusher</a>
+</li>
+	<li class="cat-item cat-item-128"><a href="http://lostechies.com/derickbailey/category/pushstate/" title="View all posts filed under PushState">PushState</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://lostechies.com/derickbailey/category/quality/" title="View all posts filed under Quality">Quality</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://lostechies.com/derickbailey/category/rails/" title="View all posts filed under Rails">Rails</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://lostechies.com/derickbailey/category/rake/" title="View all posts filed under Rake">Rake</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://lostechies.com/derickbailey/category/re-post/" title="View all posts filed under Re-Post">Re-Post</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://lostechies.com/derickbailey/category/refactoring/" title="View all posts filed under Refactoring">Refactoring</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://lostechies.com/derickbailey/category/resharper/" title="View all posts filed under Resharper">Resharper</a>
+</li>
+	<li class="cat-item cat-item-138"><a href="http://lostechies.com/derickbailey/category/rest/" title="View all posts filed under REST">REST</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://lostechies.com/derickbailey/category/retrospectives/" title="View all posts filed under Retrospectives">Retrospectives</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://lostechies.com/derickbailey/category/rhinomocks/" title="View all posts filed under RhinoMocks">RhinoMocks</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="http://lostechies.com/derickbailey/category/risk-management/" title="View all posts filed under Risk Management">Risk Management</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="http://lostechies.com/derickbailey/category/rspec/" title="View all posts filed under RSpec">RSpec</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="http://lostechies.com/derickbailey/category/ruby/" title="View all posts filed under Ruby">Ruby</a>
+</li>
+	<li class="cat-item cat-item-110"><a href="http://lostechies.com/derickbailey/category/sass/" title="View all posts filed under SASS">SASS</a>
+</li>
+	<li class="cat-item cat-item-157"><a href="http://lostechies.com/derickbailey/category/screencast/" title="View all posts filed under Screencast">Screencast</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="http://lostechies.com/derickbailey/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="http://lostechies.com/derickbailey/category/selenium/" title="View all posts filed under Selenium">Selenium</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="http://lostechies.com/derickbailey/category/semantics/" title="View all posts filed under Semantics">Semantics</a>
+</li>
+	<li class="cat-item cat-item-125"><a href="http://lostechies.com/derickbailey/category/seo/" title="View all posts filed under SEO">SEO</a>
+</li>
+	<li class="cat-item cat-item-153"><a href="http://lostechies.com/derickbailey/category/signalr/" title="View all posts filed under SignalR">SignalR</a>
+</li>
+	<li class="cat-item cat-item-144"><a href="http://lostechies.com/derickbailey/category/sinatra/" title="View all posts filed under Sinatra">Sinatra</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="http://lostechies.com/derickbailey/category/smoke-test/" title="View all posts filed under Smoke Test">Smoke Test</a>
+</li>
+	<li class="cat-item cat-item-150"><a href="http://lostechies.com/derickbailey/category/socket-io/" title="View all posts filed under Socket.IO">Socket.IO</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="http://lostechies.com/derickbailey/category/source-control/" title="View all posts filed under Source Control">Source Control</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="http://lostechies.com/derickbailey/category/stack-trace/" title="View all posts filed under Stack Trace">Stack Trace</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="http://lostechies.com/derickbailey/category/standardized-work/" title="View all posts filed under Standardized Work">Standardized Work</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="http://lostechies.com/derickbailey/category/subversion/" title="View all posts filed under Subversion">Subversion</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="http://lostechies.com/derickbailey/category/technical-debt/" title="View all posts filed under Technical Debt">Technical Debt</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="http://lostechies.com/derickbailey/category/telerik/" title="View all posts filed under Telerik">Telerik</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="http://lostechies.com/derickbailey/category/test-automation/" title="View all posts filed under Test Automation">Test Automation</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="http://lostechies.com/derickbailey/category/testing/" title="View all posts filed under Testing">Testing</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="http://lostechies.com/derickbailey/category/theory-of-constraints/" title="View all posts filed under Theory Of Constraints">Theory Of Constraints</a>
+</li>
+	<li class="cat-item cat-item-116"><a href="http://lostechies.com/derickbailey/category/thor/" title="View all posts filed under Thor">Thor</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="http://lostechies.com/derickbailey/category/throughput/" title="View all posts filed under Throughput">Throughput</a>
+</li>
+	<li class="cat-item cat-item-102"><a href="http://lostechies.com/derickbailey/category/tools-and-vendors/" title="View all posts filed under Tools and Vendors">Tools and Vendors</a>
+</li>
+	<li class="cat-item cat-item-149"><a href="http://lostechies.com/derickbailey/category/twitter-bootstrap/" title="View all posts filed under Twitter Bootstrap">Twitter Bootstrap</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://lostechies.com/derickbailey/category/uncategorized/" title="View all posts filed under Uncategorized">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-158"><a href="http://lostechies.com/derickbailey/category/underscore/" title="View all posts filed under Underscore">Underscore</a>
+</li>
+	<li class="cat-item cat-item-103"><a href="http://lostechies.com/derickbailey/category/unit-testing/" title="View all posts filed under Unit Testing">Unit Testing</a>
+</li>
+	<li class="cat-item cat-item-104"><a href="http://lostechies.com/derickbailey/category/user-experience/" title="View all posts filed under User Experience">User Experience</a>
+</li>
+	<li class="cat-item cat-item-139"><a href="http://lostechies.com/derickbailey/category/validation/" title="View all posts filed under Validation">Validation</a>
+</li>
+	<li class="cat-item cat-item-105"><a href="http://lostechies.com/derickbailey/category/vim/" title="View all posts filed under Vim">Vim</a>
+</li>
+	<li class="cat-item cat-item-106"><a href="http://lostechies.com/derickbailey/category/visual-studio/" title="View all posts filed under Visual Studio">Visual Studio</a>
+</li>
+	<li class="cat-item cat-item-113"><a href="http://lostechies.com/derickbailey/category/vlad/" title="View all posts filed under Vlad">Vlad</a>
+</li>
+	<li class="cat-item cat-item-156"><a href="http://lostechies.com/derickbailey/category/watchmecode/" title="View all posts filed under WatchMeCode">WatchMeCode</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="http://lostechies.com/derickbailey/category/web-sockets/" title="View all posts filed under Web Sockets">Web Sockets</a>
+</li>
+	<li class="cat-item cat-item-107"><a href="http://lostechies.com/derickbailey/category/winforms/" title="View all posts filed under WinForms">WinForms</a>
+</li>
+	<li class="cat-item cat-item-162"><a href="http://lostechies.com/derickbailey/category/winjs/" title="View all posts filed under WinJS">WinJS</a>
+</li>
+	<li class="cat-item cat-item-108"><a href="http://lostechies.com/derickbailey/category/workflow/" title="View all posts filed under Workflow">Workflow</a>
+</li>
+	<li class="cat-item cat-item-109"><a href="http://lostechies.com/derickbailey/category/xcode/" title="View all posts filed under Xcode">Xcode</a>
+</li>
+		</ul>
+</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+						<li><a href="http://lostechies.com/derickbailey/wp-login.php">Log in</a></li>
+			<li><a href="http://lostechies.com/derickbailey/feed/" title="Syndicate this site using RSS 2.0">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://derickbailey-lostechies.disqus.com/latest.rss" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>
+						</ul>
+</li>		
+						
+			</ul>
+
+			
+		</div><!-- #primary .widget-area -->
+
+		
+		<div id="secondary" class="widget-area">
+				
+				<ul class="xoxo">		
+														</ul>	
+				
+		</div><!-- #secondary .widget-area -->
+			</div><!--sidebar-->
+		</div><!-- #container -->
+</div><!-- end div tabs see header.php -->
+	
+	<div id="footer">
+		<div class="container_12">
+		<div id="footer-widget-area">
+				<div class="grid_4">					
+					<ul>
+					<li><a href="http://lostechies.com" title="home">Home</a></li>
+					<li class="page_item page-item-62"><a href="http://lostechies.com/about-us/">About Us</a></li>
+<li class="page_item page-item-20"><a href="http://lostechies.com/e-books/">E-Books</a></li>
+<li class="page_item page-item-18"><a href="http://lostechies.com/events/">Events</a></li>
+<li class="page_item page-item-5"><a href="http://lostechies.com/in-print/">In Print</a></li>
+<li class="page_item page-item-16"><a href="http://lostechies.com/topic-of-the-month/">Topic of the Month</a></li>
+					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					</ul>
+				</div><!-- #second .widget-area -->
+				<div class="grid_4">
+					
+					<h3>Friends of Pablo</h3>
+<ul>
+<li><a href="http://www.watchmecode.net" target="_blank">WatchMeCode</a></li>
+<li><a href="http://tekpub.com" target="_blank">TekPub</a></li>
+<li><a href="http://www.pec.stedwards.edu/" target="_blank">St. Edward's Professional Education Center</a></li>
+<li><a href="http://www.pragprog.com/" target="_blank">Pragmatic Bookshelf</a></li>
+<li><a href="http://www.jetbrains.com/resharper/" target="_blank">ReSharper - Develop with Pleasure!</a></li>
+<li><a href="http://www.nhprof.com/" target="_blank">NHProf</a></li>
+
+</ul>				
+				</div><!-- #third .widget-area -->
+				<div class="grid_4">
+					<h3>Pablo's Extended Family</h3>
+<ul>
+<li><a href="http://codebetter.com" target="_blank">CodeBetter</a></li>
+<li><a href="http://devlicio.us" target="_blank">Devlicious</a></li>
+<li><a href="http://dimecasts.net" target="_blank">Dimecasts</a></li>
+<li><a href="http://elegantcode.com" target="_blank">ElegantCode</a></li>
+</ul><br/>
+					LosTechies &copy; 2013<br />
+						Se Habla Code<br />
+				Proudly powered by <span id="generator-link"><a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="generator">WordPress</a></span>.					
+				</div><!-- #fourth .widget-area -->
+			</div><!-- #footer-widget-area -->		
+		
+			</div><!-- end div.container_12 -->
+
+	</div><!-- end div#footer -->
+		<!-- GOOGLE ANALYTICS -->
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-1265430-2");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+
+<script type="text/javascript">SyntaxHighlighter.config.clipboardSwf = "http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/clipboard.swf";SyntaxHighlighter.all();</script><link rel='stylesheet' id='wpnotecss-css'  href='http://lostechies.com/derickbailey/wp-content/plugins/wp-note/wp-note.css?ver=3.4.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shCore.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushBash.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCpp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCSharp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushCss.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushGroovy.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJava.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushJScript.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPerl.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPhp.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushPlain.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushRuby.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushSql.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushXml.js?ver=2.1.364'></script>
+<script type='text/javascript' src='http://lostechies.com/derickbailey/wp-content/plugins/syntaxhighlighterpro/scripts/shBrushObjC.js?ver=2.1.364'></script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-31 09:10:03 -->

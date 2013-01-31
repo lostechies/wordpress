@@ -641,7 +641,7 @@
  *
  * <p>
  * For more information about this service, see the
- * <a href="https://code.google.com/apis/adsense/management/" target="_blank">API Documentation</a>
+ * <a href="https://developers.google.com/adsense/management/" target="_blank">API Documentation</a>
  * </p>
  *
  * @author Google, Inc.
@@ -711,7 +711,7 @@ class Google_Account extends Google_Model {
   public function getId() {
     return $this->id;
   }
-  public function setSubAccounts(/* array(Google_Account) */ $subAccounts) {
+  public function setSubAccounts($subAccounts) {
     $this->assertIsArray($subAccounts, 'Google_Account', __METHOD__);
     $this->subAccounts = $subAccounts;
   }
@@ -739,7 +739,7 @@ class Google_Accounts extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_Account) */ $items) {
+  public function setItems($items) {
     $this->assertIsArray($items, 'Google_Account', __METHOD__);
     $this->items = $items;
   }
@@ -804,7 +804,7 @@ class Google_AdClients extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_AdClient) */ $items) {
+  public function setItems($items) {
     $this->assertIsArray($items, 'Google_AdClient', __METHOD__);
     $this->items = $items;
   }
@@ -876,7 +876,7 @@ class Google_AdUnits extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_AdUnit) */ $items) {
+  public function setItems($items) {
     $this->assertIsArray($items, 'Google_AdUnit', __METHOD__);
     $this->items = $items;
   }
@@ -913,28 +913,25 @@ class Google_AdsenseReportsGenerateResponse extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setRows(/* array(Google_string) */ $rows) {
-    $this->assertIsArray($rows, 'Google_string', __METHOD__);
+  public function setRows($rows) {
     $this->rows = $rows;
   }
   public function getRows() {
     return $this->rows;
   }
-  public function setWarnings(/* array(Google_string) */ $warnings) {
-    $this->assertIsArray($warnings, 'Google_string', __METHOD__);
+  public function setWarnings($warnings) {
     $this->warnings = $warnings;
   }
   public function getWarnings() {
     return $this->warnings;
   }
-  public function setTotals(/* array(Google_string) */ $totals) {
-    $this->assertIsArray($totals, 'Google_string', __METHOD__);
+  public function setTotals($totals) {
     $this->totals = $totals;
   }
   public function getTotals() {
     return $this->totals;
   }
-  public function setHeaders(/* array(Google_AdsenseReportsGenerateResponseHeaders) */ $headers) {
+  public function setHeaders($headers) {
     $this->assertIsArray($headers, 'Google_AdsenseReportsGenerateResponseHeaders', __METHOD__);
     $this->headers = $headers;
   }
@@ -947,8 +944,7 @@ class Google_AdsenseReportsGenerateResponse extends Google_Model {
   public function getTotalMatchedRows() {
     return $this->totalMatchedRows;
   }
-  public function setAverages(/* array(Google_string) */ $averages) {
-    $this->assertIsArray($averages, 'Google_string', __METHOD__);
+  public function setAverages($averages) {
     $this->averages = $averages;
   }
   public function getAverages() {
@@ -1064,7 +1060,7 @@ class Google_CustomChannels extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_CustomChannel) */ $items) {
+  public function setItems($items) {
     $this->assertIsArray($items, 'Google_CustomChannel', __METHOD__);
     $this->items = $items;
   }
@@ -1122,7 +1118,7 @@ class Google_UrlChannels extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_UrlChannel) */ $items) {
+  public function setItems($items) {
     $this->assertIsArray($items, 'Google_UrlChannel', __METHOD__);
     $this->items = $items;
   }

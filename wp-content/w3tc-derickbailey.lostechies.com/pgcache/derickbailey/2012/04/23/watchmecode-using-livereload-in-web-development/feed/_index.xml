@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: WatchMeCode: Using LiveReload In Web Development</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/04/23/watchmecode-using-livereload-in-web-development/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/04/23/watchmecode-using-livereload-in-web-development/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Wed, 30 Jan 2013 20:30:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Anonymous</title>
+		<link>http://lostechies.com/derickbailey/2012/04/23/watchmecode-using-livereload-in-web-development/#comment-2383</link>
+		<dc:creator>Anonymous</dc:creator>
+		<pubDate>Mon, 23 Apr 2012 14:47:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=908#comment-2383</guid>
+		<description>For cheapskates:
+
+a js lib: http://cssrefresh.frebsite.nl/ 
+a SignalR implementation http://nuget.org/packages/ExpressCss
+Node.js http://aboutcode.net/vogue/ 
+
+(credit due to Andrew Davey for the last two)</description>
+		<content:encoded><![CDATA[<p>For cheapskates:</p>
+<p>a js lib: http://cssrefresh.frebsite.nl/ <br />
+a SignalR implementation http://nuget.org/packages/ExpressCss<br />
+Node.js http://aboutcode.net/vogue/ </p>
+<p>(credit due to Andrew Davey for the last two)</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: fernandozamoraj</title>
+		<link>http://lostechies.com/derickbailey/2012/04/23/watchmecode-using-livereload-in-web-development/#comment-2382</link>
+		<dc:creator>fernandozamoraj</dc:creator>
+		<pubDate>Mon, 23 Apr 2012 13:57:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=908#comment-2382</guid>
+		<description>Great Tool Thanks for Sharing.</description>
+		<content:encoded><![CDATA[<p>Great Tool Thanks for Sharing.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-31 08:40:22 -->

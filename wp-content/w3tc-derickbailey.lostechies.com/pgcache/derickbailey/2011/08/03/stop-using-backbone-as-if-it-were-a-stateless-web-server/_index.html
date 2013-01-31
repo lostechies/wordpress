@@ -107,7 +107,7 @@ SomeRouter = Backbone.Router.extend({
   }
 });</code></pre></noscript>
 <p>With an HTML layout that looks like this (after being rendered):</p>
-<div>Could not embed GitHub Gist 1123795: API Rate Limit Exceeded for 70.169.150.251</div>
+<div>Could not embed GitHub Gist 1123795: Bad credentials</div>
 <p>Yes, this is functional. You can click on that link and it will delete the model in question. The rendered view for that model will also be removed from the HTML that is displayed on the screen. As functional as this is, though, there are several problems with it.</p>
 <h3>Browser History</h3>
 <p>One of the features that we get with Backbone&#8217;s router is the ability to control the browser&#8217;s history and the back button. Every time we send the browser to a new url#route, Backbone records it in the browser&#8217;s history. This allows us to move backward and forward in the application, using the browser&#8217;s backward and forward navigation button.</p>
@@ -184,7 +184,7 @@ SomeView = Backbone.view.extend({
 							<img alt='' src='http://0.gravatar.com/avatar/e592bd1326b1e80188ed4c0bf26b9f75?s=60&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G' class='avatar avatar-60 photo' height='60' width='60' />						</div><!-- #author-avatar 	-->
 						<div id="author-description">
 							<h2>About Derick Bailey</h2>
-							Derick Bailey is an independent consultant, software developer, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
+							Derick Bailey is a Developer Advocate for <a href="http://kendoui.com">Kendo UI</a>, a problem solver (and creator? :P ), software developer, screecaster, writer, blogger, speaker and technology leader in central Texas (north of Austin). He has been a professional software developer since the late 90's, and has been writing code since the late 80's. 
 
 Find me on twitter: 
 <a href="http://twitter.com/derickbailey">@derickbailey</a>, 
@@ -193,9 +193,8 @@ Find me on twitter:
 
 
 Find me on the web: 
-<a href="http://mutedsolutions.com">MutedSolutions.com</a>, 
-<a href="http://backbonetraining.net">BackboneTraining.net</a>,
-<a href="http://watchmecode.net">WatchMeCode</a>							<div id="author-link">
+<a href="http://watchmecode.net">WatchMeCode</a> (screencasts), 
+<a href="http://www.kendoui.com/blogs.aspx">Kendo UI blog</a>, <a href="http://marionettejs.com">MarionetteJS</a>, <a href="http://github.com/derickbailey">My Github profile</a>.							<div id="author-link">
 								<a href="http://lostechies.com/derickbailey/author/derickbailey/" title="View all posts by Derick Bailey">View all posts by Derick Bailey &rarr;</a>
 							</div><!-- #author-link	-->
 						</div><!-- #author-description	-->
@@ -228,7 +227,6 @@ http://citizenparker.com                <span id="dsq-author-user-1691">Scott Pa
 <p>Something like a delete then is a transition from one state to the next, but should itself *not* be a state.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1694">
@@ -241,7 +239,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1694">Derick 
             <div id="dsq-comment-message-1694" class="dsq-comment-message"><p>that&#8217;s a good way to look at it. i really need to dig into sproutcore. i&#8217;ve read some of the tutorials, and like what I see but i haven&#8217;t had time to try it out yet.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even depth-2" id="dsq-comment-1695">
@@ -255,7 +252,6 @@ http://erichocean.com                <span id="dsq-author-user-1695">Erich Ocean
 <p>Code will be up at <a href="http://statechartjs.org" rel="nofollow">http://statechartjs.org</a> shortly.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -275,7 +271,6 @@ http://kazimanzurrashid.com                <span id="dsq-author-user-1692">Kazi 
 <p>Again, keep up posting on backbone, so that we can learn.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1693">
@@ -289,7 +284,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1693">Derick 
 <p>and thanks for the tip on that typo! i&#8217;ve updated the gist, but it doesn&#8217;t seem to be reflected in the post, yet. there&#8217;s probably some caching that needs time to clear out.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -312,7 +306,6 @@ The really cool thing about Backbone (and other MVC frameworks) is that FOR ONCE
 <p>I don&#8217;t mean to split hairs here :) I promise. The thing I think I&#8217;d like to focus on is that Backbone is a UX tool &#8211; the &#8220;U&#8221; meaning &#8220;User&#8221;. Sure, a #delete might be a PITA for you but if it serves the U&#8217;s purpose in any way &#8211; do it!</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1700">
@@ -327,7 +320,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1700">Derick 
 <p>&#8220;Routes aren&#8217;t for actions&#8221; says it perfectly.</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -347,7 +339,6 @@ http://blog.wekeroad.com                <span id="dsq-author-user-1697">robconer
 <p>Hope you don&#8217;t mind my long comments. Backbone (and JS in general) really give a huge leg up with respect to UX. I think it&#8217;s OK to let your mind go free just a bit more.</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-2" id="dsq-comment-1701">
@@ -362,7 +353,6 @@ http://blog.wekeroad.com                <span id="dsq-author-user-1697">robconer
 That&#8217;s not something I want in my history, and going back to it is either going to give unexpected results or require some fugly hacking to show what you&#8217;d expect (the listing prior to the delete having taken place)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt depth-2" id="dsq-comment-1702">
@@ -379,7 +369,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1702">Derick 
 <p>&#8230; that&#8217;s a lot of stuff to think about. thanks for the input! :)</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -394,7 +383,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1702">Derick 
             <div id="dsq-comment-message-1699" class="dsq-comment-message"><p>Really interesting. Obvious, but worth reading anyway.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1703">
@@ -407,7 +395,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1702">Derick 
             <div id="dsq-comment-message-1703" class="dsq-comment-message"><p>Derick &#8211; very interesting post.  In my own play projects with Backbone, I&#8217;ve tended to only use routes for navigation-related state, not destructive editing of state (deletes/changes/adds).  I think Rob&#8217;s point about logical delete/restore is pretty interesting.  It does mean you&#8217;ll have some additional complexity to cover (for which many of us are more than happy to write a framework to handle!).  I think as a general rule it&#8217;s a &#8220;don&#8217;t pull the trigger while aiming at your head&#8221; approach to avoid storing model state changes as part of the route/history (unless you have a model representing navigational-related history), and that writable actions should be tied to uniquely identifiable entities to make your operation idempotent.  I&#8217;m excited to see these kinds of discussions more and more &#8211; since I think the implications that come with client-side frameworks like Backbone are going to challenge us and our users to rethink some of the assumptions that web 1.0 and 2.0 have thrust upon us.  I get giddy thinking about the implications of client side routing, while taking your advice into account, Rob&#8217;s points about the potential richness of logical delete/restore &#8211; AND throw websockets into the mix.  Welcome to the age of &#8220;application as a resource&#8221;. :-)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-1704">
@@ -421,7 +408,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1702">Derick 
 <p>The approach@robconery:disqus  mentions would indeed be idempotent, if it shows a message like &#8220;record already deleted&#8221;</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-1705">
@@ -434,7 +420,6 @@ http://www.easyate.com/                <span id="dsq-author-user-1705">Viceroy</
             <div id="dsq-comment-message-1705" class="dsq-comment-message"><p>Thanks for you sharing.That is good article.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-1730">
@@ -450,7 +435,6 @@ http://www.easyate.com/                <span id="dsq-author-user-1705">Viceroy</
 <p>Thoughts?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-2" id="dsq-comment-1731">
@@ -464,7 +448,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1731">Derick 
 <p>it&#8217;s a good way to cut down on the code, but may have some drawbacks if you need to worry about accessibility. a screen reader, for example, won&#8217;t know to tell the person about the link. i realize that this may be an uncommon case for backbone apps, but it may be important.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even depth-2" id="dsq-comment-1732">
@@ -478,7 +461,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1731">Derick 
 <p>&lt;a href=&#8221;javascript:&#8221;&gt; &#8230; &lt;/a&gt;</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment odd alt depth-3" id="dsq-comment-1733">
@@ -491,7 +473,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1733">Derick 
             <div id="dsq-comment-message-1733" class="dsq-comment-message"><p>that&#8217;s interesting&#8230; i don&#8217;t think i&#8217;ve seen that one before. is that supported by all the major browsers?</p>
 </div>
         </div>
-    </li>
 
     <ul class='children'>
     <li class="comment even depth-4" id="dsq-comment-1734">
@@ -504,7 +485,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1733">Derick 
             <div id="dsq-comment-message-1734" class="dsq-comment-message"><p>I&#8217;ve not had any problems using it. Really it&#8217;s just a shortened version of &lt;a href=&#8221;javascript:void(0)&#8221;&gt;</p>
 </div>
         </div>
-    </li>
 
     </li>
 </ul>
@@ -523,7 +503,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1733">Derick 
             <div id="dsq-comment-message-1743" class="dsq-comment-message"><p>Others have echoed my sentiments.  Web devs that have been so used to stateless nature of the web do need to look at clientside-apps like desktop applications.  Good post.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2326">
@@ -536,7 +515,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1733">Derick 
             <div id="dsq-comment-message-2326" class="dsq-comment-message"><p>isn&#8217;t this stuff obvious? i&#8217;m shocked, honestly</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2429">
@@ -549,7 +527,6 @@ http://mutedsolutions.com                <span id="dsq-author-user-1733">Derick 
             <div id="dsq-comment-message-2429" class="dsq-comment-message"><p>Well quite a lot of words for one simple thing &#8211; use route for routing to items (views), not for actions. ;-)</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2486">
@@ -566,7 +543,6 @@ http://twitter.com/GertSallaerts                <span id="dsq-author-user-2486">
 <p>This just makes more sense to me personally.</p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-2732">
@@ -579,7 +555,6 @@ http://twitter.com/GertSallaerts                <span id="dsq-author-user-2486">
             <div id="dsq-comment-message-2732" class="dsq-comment-message"><p>i finally read your post. I was wondering if it creates a larger memory footprint to bind each individual event on a view. Ie.You have a list of elements. Each element has a delete button. You can bind the delete event to each element vs binding the delete event to the list and have event propagation handle each elements delete. </p>
 </div>
         </div>
-    </li>
 
     </li>
     <li class="comment even thread-even depth-1" id="dsq-comment-2751">
@@ -592,7 +567,6 @@ http://twitter.com/GertSallaerts                <span id="dsq-author-user-2486">
             <div id="dsq-comment-message-2751" class="dsq-comment-message"><p>I&#8217;ve seen another approach where the views for models are being stored in a cache. To remove a view you just look it up in the list and call .remove().This way we have symmetry &#8211; both adding and removing of views is done on the same level, in collection view. As opposed to adding views in collection view, and removing in model view (as you described). Which way do you think is better?</p>
 </div>
         </div>
-    </li>
 
     </li>
             </ul>
@@ -612,6 +586,7 @@ http://twitter.com/GertSallaerts                <span id="dsq-author-user-2486">
     var disqus_title = "Stop Using Backbone As If It Were A Stateless Web Server";
         var disqus_config = function () {
         var config = this; // Access to the config object
+        config.language = '';
 
         /*
            All currently supported events:
@@ -636,7 +611,6 @@ http://twitter.com/GertSallaerts                <span id="dsq-author-user-2486">
             firstScript.parentNode.insertBefore(script, firstScript);
         });
                     };
-    var facebookXdReceiverPath = 'http://lostechies.com/derickbailey/wp-content/plugins/disqus-comment-system/xd_receiver.htm';
 /* ]]> */
 </script>
 
@@ -654,7 +628,7 @@ http://twitter.com/GertSallaerts                <span id="dsq-author-user-2486">
 (function() {
     var dsq = document.createElement('script'); dsq.type = 'text/javascript';
     dsq.async = true;
-        dsq.src = 'http' + '://' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.73';
+    dsq.src = '//' + disqus_shortname + '.' + 'disqus.com' + '/embed.js?pname=wordpress&pver=2.74';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 /* ]]> */
@@ -671,14 +645,15 @@ http://twitter.com/GertSallaerts                <span id="dsq-author-user-2486">
 	<input type="submit" id="searchsubmit" value="Search" />
 	</div>
 	</form></li>		<li id="recent-posts-2" class="widget-container widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+				<li><a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/" title="You Are Not Paid To Write Software">You Are Not Paid To Write Software</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/12/14/dear-open-source-project-leader-quit-being-a-jerk/" title="Dear Open Source Project Leader: Quit Being A Jerk">Dear Open Source Project Leader: Quit Being A Jerk</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/28/warm-crocodile-conference-copenhagen-denmark/" title="Warm Crocodile Conference: Copenhagen, Denmark">Warm Crocodile Conference: Copenhagen, Denmark</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/26/moving-forward-kendoui/" title="Moving Forward: KendoUI">Moving Forward: KendoUI</a></li>
 				<li><a href="http://lostechies.com/derickbailey/2012/11/01/javascript-unit-tests-jasmine-vs-mocha/" title="JavaScript Unit Tests: Jasmine vs Mocha">JavaScript Unit Tests: Jasmine vs Mocha</a></li>
-				<li><a href="http://lostechies.com/derickbailey/2012/10/31/abstraction-the-rule-of-three/" title="Abstraction: The Rule Of Three">Abstraction: The Rule Of Three</a></li>
 				</ul>
-		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments">Dale Anderson on <a href="http://lostechies.com/derickbailey/2011/12/16/composite-javascript-applications-with-backbone-and-backbone-marionette/#comment-2978">Composite JavaScript Applications With Backbone And Backbone.Marionette</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2977">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">preeti on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-2976">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">petehawkins on <a href="http://lostechies.com/derickbailey/2012/04/10/javascript-performance-pre-compiling-and-caching-html-templates/#comment-2975">JavaScript Performance: Pre-Compiling And Caching HTML Templates</a></li><li class="recentcomments">Mark on <a href="http://lostechies.com/derickbailey/2012/05/10/modeling-explicit-workflow-with-code-in-javascript-and-backbone-apps/#comment-2974">Modeling Explicit Workflow With Code, In JavaScript And Backbone Apps</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
-			<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
+		</li><li id="recent-comments-2" class="widget-container widget_recent_comments"><h3 class="widget-title">Recent Comments</h3><ul id="recentcomments"><li class="recentcomments"><a href='http://www.Marisic.Net/' rel='external nofollow' class='url'>dotnetchris</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3015">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://twitter.com/johannesmauerer' rel='external nofollow' class='url'>Johannes Mauerer</a> on <a href="http://lostechies.com/derickbailey/2011/09/15/zombies-run-managing-page-transitions-in-backbone-apps/#comment-3014">Zombies! RUN! (Managing Page Transitions In Backbone Apps)</a></li><li class="recentcomments">Brian on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3013">You Are Not Paid To Write Software</a></li><li class="recentcomments"><a href='http://mutedsolutions.com' rel='external nofollow' class='url'>Derick Bailey</a> on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3012">You Are Not Paid To Write Software</a></li><li class="recentcomments">Nathan Alden on <a href="http://lostechies.com/derickbailey/2013/01/21/you-are-not-paid-to-write-software/#comment-3011">You Are Not Paid To Write Software</a></li></ul></li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href='http://lostechies.com/derickbailey/2013/01/' title='January 2013'>January 2013</a></li>
+	<li><a href='http://lostechies.com/derickbailey/2012/12/' title='December 2012'>December 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/11/' title='November 2012'>November 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/10/' title='October 2012'>October 2012</a></li>
 	<li><a href='http://lostechies.com/derickbailey/2012/09/' title='September 2012'>September 2012</a></li>
@@ -1174,4 +1149,4 @@ pageTracker._trackPageview();
 
 Page Caching using disk: enhanced
 
-Served from: lostechies.com @ 2013-01-15 15:41:13 -->
+Served from: lostechies.com @ 2013-01-31 09:56:32 -->

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Reducing Backbone Routers To Nothing More Than Configuration</title>
+	<atom:link href="http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/feed/" rel="self" type="application/rss+xml" />
+	<link>http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/</link>
+	<description>Better Than Yesterday</description>
+	<lastBuildDate>Wed, 30 Jan 2013 20:30:00 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.4.2</generator>
+	<item>
+		<title>By: Zach Curtis</title>
+		<link>http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/#comment-2642</link>
+		<dc:creator>Zach Curtis</dc:creator>
+		<pubDate>Wed, 25 Jul 2012 02:08:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=747#comment-2642</guid>
+		<description>Overriding the router ctor was the ticket for me!  I messed around with overriding initialize WAY too long.  Thanks so much.</description>
+		<content:encoded><![CDATA[<p>Overriding the router ctor was the ticket for me!  I messed around with overriding initialize WAY too long.  Thanks so much.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Colin Jack</title>
+		<link>http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/#comment-2109</link>
+		<dc:creator>Colin Jack</dc:creator>
+		<pubDate>Thu, 19 Jan 2012 12:34:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=747#comment-2109</guid>
+		<description>Looks like something I would definitely like to try, keep up the good work with 
+these excellent BB posts.</description>
+		<content:encoded><![CDATA[<p>Looks like something I would definitely like to try, keep up the good work with<br />
+these excellent BB posts.</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Dan (Danny) Fellars</title>
+		<link>http://lostechies.com/derickbailey/2012/01/02/reducing-backbone-routers-to-nothing-more-than-configuration/#comment-2095</link>
+		<dc:creator>Dan (Danny) Fellars</dc:creator>
+		<pubDate>Sun, 08 Jan 2012 03:55:00 +0000</pubDate>
+		<guid isPermaLink="false">http://lostechies.com/derickbailey/?p=747#comment-2095</guid>
+		<description>Hey Derick, I was going through your BBMailApp code and saw this boiler plate code and wondered why it wasn&#039;t part of Marionette itself.  Good to hear that is your plan.  That would be very useful.
+</description>
+		<content:encoded><![CDATA[<p>Hey Derick, I was going through your BBMailApp code and saw this boiler plate code and wondered why it wasn&#8217;t part of Marionette itself.  Good to hear that is your plan.  That would be very useful.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+Served from: lostechies.com @ 2013-01-31 08:33:43 -->
