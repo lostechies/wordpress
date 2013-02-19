@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Google Analyticator
- * Version: 6.4.2
+ * Version: 6.4.3
  * Plugin URI: http://wordpress.org/extend/plugins/google-analyticator/
  * Description: Adds the necessary JavaScript code to enable <a href="http://www.google.com/analytics/">Google's Analytics</a>. After enabling this plugin you need to authenticate with Google, then select your domain and you're set.
  * Author: Video User Manuals
@@ -9,7 +9,7 @@
  * Text Domain: google-analyticator
  */
 
-define('GOOGLE_ANALYTICATOR_VERSION', '6.4.2');
+define('GOOGLE_ANALYTICATOR_VERSION', '6.4.3');
 
 define('GOOGLE_ANALYTICATOR_CLIENTID', '1007949979410.apps.googleusercontent.com');
 define('GOOGLE_ANALYTICATOR_CLIENTSECRET', 'q06U41XDXtzaXD14E-KO1hti'); //don't worry - this don't need to be secret in our case
@@ -308,7 +308,7 @@ function ga_options_page() {
 
 		// Update the admin level
 		if ( array_key_exists(key_ga_admin_role, $_POST) ) {
-			$ga_admin_role = wp_filter_kses( $_POST[key_ga_admin_role] );
+			$ga_admin_role = $_POST[key_ga_admin_role];
 		} else {
 			$ga_admin_role = "";
 		}
@@ -316,11 +316,11 @@ function ga_options_page() {
 
 		// Update the dashboard level
 		if ( array_key_exists(key_ga_dashboard_role, $_POST) ) {
-			$ga_dashboard_role = wp_filter_kses( $_POST[key_ga_dashboard_role] );
+			$ga_dashboard_role = $_POST[key_ga_dashboard_role];
 		} else {
 			$ga_dashboard_role = "";
 		}
-		update_option(key_ga_dashboard_role, wp_filter_kses( $ga_dashboard_role ) );
+		update_option(key_ga_dashboard_role, $ga_dashboard_role );
 
 		// Update the extra tracking code
 		$ga_extra = $_POST[key_ga_extra];

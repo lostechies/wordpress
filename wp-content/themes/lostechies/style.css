@@ -1283,8 +1283,10 @@ code {
 	-webkit-text-size-adjust: none;
 }
 
-.gist pre {
-    line-height: 21px !important;   
+
+
+.highlight pre {
+    background-color: none;
 }
 
 #author_avatars-2 .avatar { display: none; }
