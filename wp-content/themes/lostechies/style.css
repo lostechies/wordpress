@@ -1283,10 +1283,19 @@ code {
 	-webkit-text-size-adjust: none;
 }
 
+.gist .line-data {
+    line-height: 21px !important;
+    background-color: ##1E1E27;
+}
 
+.gist .line-data .kd,
+.gist .line-data .o,
+.gist .line-data .kc {
+    color: #cfbfad;
+}
 
 .highlight pre {
-    background-color: none;
+    background-color: #000;
 }
 
 #author_avatars-2 .avatar { display: none; }
