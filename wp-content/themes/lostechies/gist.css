@@ -1,5 +1,5 @@
-.gist .line-data  { line-height: 21px !important; background: #1E1E27; color: #cfbfad }
-.gist .line-data .line-pre .line { color: #cfbfad }
+.gist .line-data  { line-height: 21px !important; background: #1E1E27;}
+.gist .line-data * { color: #cfbfad }
 .gist .line-data .c { color: #999988; font-style: italic } /* Comment */
 .gist .line-data .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 .gist .line-data .k { color: #cfbfad; font-weight: bold } /* Keyword */
