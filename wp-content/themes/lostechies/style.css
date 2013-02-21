@@ -9,6 +9,7 @@ Author URI: http://lostechies.com/
 */
 
 @import url("960/960.css");
+@import url("gist.css");
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -1283,16 +1284,6 @@ code {
 	-webkit-text-size-adjust: none;
 }
 
-.gist .line-data {
-    line-height: 21px !important;
-    background-color: ##1E1E27;
-}
-
-.gist .line-data .kd,
-.gist .line-data .o,
-.gist .line-data .kc {
-    color: #cfbfad;
-}
 
 .highlight pre {
     background-color: #000;
