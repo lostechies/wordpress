@@ -45,11 +45,20 @@ class UserList {
 	 * Flag wether to show the post count for each user after the username.
 	 */
 	var $show_postcount = false;
+	/**
+	 * Flag wether to show the post count for each user after the username.
+	 */
+	var $show_bbpress_post_count = false;
 
 	/**
 	 * Flag whether to show a user's biography
 	 */
 	var $show_biography = false;
+
+	/**
+	 * Flag whether to show a user's email
+	 */
+	var $show_email = false;
 	
 	/**
 	 * Size of avatars.
@@ -267,7 +276,9 @@ class UserList {
 		'user_link' => $this->user_link,
 		'show_name' => $this->show_name,
 		'show_postcount' => $this->show_postcount,
+		'show_bbpress_post_count' => $this->show_bbpress_post_count,
 		'show_biography' => $this->show_biography,
+		'show_email' => $this->show_email,
 		'avatar_size' => $this->avatar_size,
 		'limit' => $this->limit,
 		'min_post_count' => $this->min_post_count,
@@ -299,7 +310,10 @@ class UserList {
 		$avatar_size = intval($this->avatar_size);
 		if (!$avatar_size) $avatar_size = false;
 
-		$name = $user->display_name;
+		$name = "";
+		if($this->show_name)
+			$name = $user->display_name;
+		
 		$alt = $title = $name;
 
 		$divcss = array('user');
@@ -356,12 +370,29 @@ class UserList {
 			$name .= sprintf(' (%d)', $postcount);
 		}
 
+		if($this->show_bbpress_post_count){
+			$BBPRESS_postcount = 0;
+			if(function_exists('bbp_get_user_topic_count_raw')){
+				$BBPRESS_postcount = bbp_get_user_topic_count_raw(  $user->user_id ) + bbp_get_user_reply_count_raw(  $user->user_id );
+				$title .= ' ('. sprintf(_n("%d BBPress post", "%d BBPress posts", $BBPRESS_postcount, 'author-avatars'), $BBPRESS_postcount) .')';
+			}
+			$name .= sprintf(' (%d)', $BBPRESS_postcount);
+		}
+
 		$biography = false;
 		if ($this->show_biography && $user->user_id > 0) {
 			$biography = get_the_author_meta('description', $user->user_id);
 			$divcss[] = 'with-biography';
 			$name = '<strong>'. $name .'</strong>';
 			if (empty($biography)) $divcss[] = 'biography-missing';
+		}
+
+		$email = false;
+		if ($this->show_email && $user->user_id > 0) {
+			$userEmail = get_the_author_meta('user_email', $user->user_id);
+			$email = "<a href='mailto:".$userEmail."''>".$userEmail."</a>";
+			$divcss[] = 'with-email';
+			if (empty($email)) $divcss[] = 'email-missing';
 		}
 
 		if ($user->user_id == -1) {
@@ -399,16 +430,18 @@ class UserList {
 		}
 
 		$html = '';
-		if ($link) $html .= '<a href="'. $link .'">';
+		if ($link) $html .= '<a href="'. $link .'" alt="'. $title .'">';
 		$html .= '<span class="avatar">'. $avatar .'</span>';
-		if ($this->show_name) $html .= '<span class="name">'. $name . '</span>';
+		if ($this->show_name || $this->show_bbpress_post_count || $this->show_postcount)
+			$html .= '<span class="name">'. $name . '</span>';
 		if ($link) $html .= '</a>';
+		if ($email) $html .= '<div class="email">'. $email .'</div>';
 		if ($biography) $html .= '<div class="biography">'. $biography .'</div>';
 		
 		$tpl_vars['{class}'] = implode($divcss, ' ');
 		$tpl_vars['{user}'] = $html;
 
-		return str_replace(array_keys($tpl_vars), $tpl_vars, apply_filters('aa_user_template', $this->user_template));
+		return str_replace(array_keys($tpl_vars), $tpl_vars, apply_filters('aa_user_template', $this->user_template,$user));
 	}
 	
 	/**
@@ -418,7 +451,7 @@ class UserList {
 	 */
 	function get_users() {
 		// get all users
-		$users = $this->get_blog_users();
+		$users = $this->get_blog_users($this->roles);
 
 		// add commentators if requested
 		if(in_array('Commentator', $this->roles)) {
@@ -442,7 +475,7 @@ class UserList {
 		
 		// and limit the number
 		if (intval($this->limit) > 0) {
-			$users = atrim($users, intval($this->limit));
+			$users = AA_atrim($users, intval($this->limit));
 		}
 		
 		return $users;
@@ -454,34 +487,55 @@ class UserList {
 	 * 
 	 * @return Array of users (WP_User objects).
 	 */
-	function get_blog_users() {
+	function get_blog_users($roles) {
 		global $wpdb, $blog_id;
-		
-		if (AA_is_wpmu() && !empty($this->blogs)) {
 
-			// make sure all values are integers
-			$this->blogs = array_map ('intval', $this->blogs);
-			
-			// if -1 is in the array display all users (no filtering)
-			if (in_array('-1', $this->blogs)) {
-				$blogs_condition = "meta_key LIKE '". $wpdb->base_prefix ."%capabilities'";
+		$cache_id = join("_",$roles)."_".$blog_id;
+		if(!empty($this->blogs))
+			$cache_id .= "_".join("_",$this->blogs);
+
+		$users = wp_cache_get( $cache_id,"author-avatars-UserList");
+
+		if ( false === $users ) {
+		
+			if (AA_is_wpmu() && !empty($this->blogs)) {
+
+				// make sure all values are integers
+				$this->blogs = array_map ('intval', $this->blogs);
+				
+				// if -1 is in the array display all users (no filtering)
+				if (in_array('-1', $this->blogs)) {
+					$blogs_condition = "meta_key LIKE '". $wpdb->base_prefix ."%capabilities'";
+				}
+				// else filter by set blog ids
+				else {
+					$blogs = array_map(create_function('$v', 'global $wpdb; return "\'" . $wpdb->get_blog_prefix($v) . "capabilities\'";'), $this->blogs);
+					$blogs_condition = 'meta_key IN ('.  implode(', ', $blogs) .')';
+				}
 			}
-			// else filter by set blog ids
 			else {
-				$blogs = array_map(create_function('$v', 'global $wpdb; return "\'" . $wpdb->get_blog_prefix($v) . "capabilities\'";'), $this->blogs);
-				$blogs_condition = 'meta_key IN ('.  implode(', ', $blogs) .')';
+				$blogs_condition = "meta_key = '". $wpdb->prefix ."capabilities'";
 			}
+
+			$roleQuery = "";
+			foreach ($roles as $role) {
+				$role = "%".$role."%";
+				$or = "";
+				if ($roleQuery)
+					$or = " or ";
+				$roleQuery .= $wpdb->prepare($or."meta_value like %s",$role);
+			}
+			if ($roleQuery)
+				$roleQuery = " AND(".$roleQuery.")";
+
+			$query = "SELECT user_id, user_login, display_name, user_email, user_url, user_registered, meta_key, meta_value FROM $wpdb->users, $wpdb->usermeta".
+				" WHERE " . $wpdb->users . ".ID = " . $wpdb->usermeta . ".user_id AND ". $blogs_condition . " AND user_status = 0".$roleQuery;
+
+			$users = $wpdb->get_results( $query);
+
+			wp_cache_set($cache_id, $users,"author-avatars-UserList");
+
 		}
-		else {
-			$blogs_condition = "meta_key = '". $wpdb->prefix ."capabilities'";
-		}
-
-		$query = "SELECT user_id, user_login, display_name, user_email, user_url, user_registered, meta_key, meta_value FROM $wpdb->users, $wpdb->usermeta".
-			" WHERE " . $wpdb->users . ".ID = " . $wpdb->usermeta . ".user_id AND ". $blogs_condition . " AND user_status = 0";
-
-		$users = $wpdb->get_results( $query );
-
-		
 		return $users;
 	}
 
@@ -534,7 +588,7 @@ class UserList {
 						$user->user_roles = array_keys(unserialize($user->meta_value));
 					}
 					// if the current user does not have one of those roles
-					if (!array_in_array($user->user_roles, $this->roles)) {
+					if (!AA_array_in_array($user->user_roles, $this->roles)) {
 						// do not add this user
 						$add = false;
 					}
@@ -620,34 +674,37 @@ class UserList {
 	 */
 	function _sort(&$users, $order=false) {
 		if (!$order) $order = $this->order;
-		
+
 		switch ($order) {
 			case 'random':
 				shuffle($users);
 				break;
 			case 'user_id':
-				usort($users, array($this, '_users_cmp_id'));
+				@usort($users, array($this, '_users_cmp_id'));
 				break;
 			case 'user_login':
-				usort($users, array($this, '_users_cmp_login'));
+				@usort($users, array($this, '_users_cmp_login'));
 				break;
 			case 'display_name':
-				usort($users, array($this, '_users_cmp_name'));
+				@usort($users, array($this, '_users_cmp_name'));
 				break;
 			case 'first_name':
-				usort($users, array($this, '_users_cmp_first_name'));
+				@usort($users, array($this, '_users_cmp_first_name'));
 				break;
 			case 'last_name':
-				usort($users, array($this, '_users_cmp_last_name'));
+				@usort($users, array($this, '_users_cmp_last_name'));
 				break;
 			case 'post_count':
-				usort($users, array($this, '_user_cmp_postcount'));
+				@usort($users, array($this, '_user_cmp_postcount'));
 				break;
+			case 'bbpress_post_count':
+				@usort($users, array($this, '_user_cmp_BBPRESS_post_count'));
+				break;				
 			case 'date_registered':
-				usort($users, array($this, '_user_cmp_regdate'));
+				@usort($users, array($this, '_user_cmp_regdate'));
 				break;
 			case 'recent_activity':
-				usort($users, array($this, '_user_cmp_activity'));
+				@usort($users, array($this, '_user_cmp_activity'));
 				break;
 		}
 	}
@@ -674,7 +731,7 @@ class UserList {
 	 * @return int result of a string compare of the user_logins.
 	 */
 	function _users_cmp_login($a, $b) {
-		return $this->_sort_direction() * strcasecmp($a->user_login, $b->user_login);
+		return $this->_sort_direction() * strcasecmp(remove_accents($a->user_login), remove_accents($b->user_login));
 	}
 
 	/**
@@ -686,7 +743,7 @@ class UserList {
 	 * @return int result of a string compare of the user display names.
 	 */
 	function _users_cmp_name($a, $b) {
-		return $this->_sort_direction() * strcasecmp($a->display_name, $b->display_name);
+		return $this->_sort_direction() * strcasecmp(remove_accents($a->display_name), remove_accents($b->display_name));
 	}
 
 	/**
@@ -698,8 +755,8 @@ class UserList {
 	 * @return int result of a string compare of the user first names.
 	 */
 	function _users_cmp_first_name($a, $b) {
-		$an = $this->get_user_firstname ($a->user_id);
-		$bn = $this->get_user_firstname ($b->user_id);
+		$an = remove_accents($this->get_user_firstname ($a->user_id));
+		$bn = remove_accents($this->get_user_firstname ($b->user_id));
 		return $this->_sort_direction() * strcasecmp( $an, $bn );
 	}
 
@@ -710,7 +767,7 @@ class UserList {
 	 * @return string first name of user
 	 */
 	function get_user_firstname($user_id) {
-		return get_usermeta( $user_id, 'first_name', true );
+			return get_user_meta( $user_id, 'first_name', true );
 	}
 
 	/**
@@ -722,8 +779,8 @@ class UserList {
 	 * @return int result of a string compare of the user display names.
 	 */
 	function _users_cmp_last_name($a, $b) {
-		$an = $this->get_user_lastname ($a->user_id);
-		$bn = $this->get_user_lastname ($b->user_id);
+		$an = remove_accents($this->get_user_lastname ($a->user_id));
+		$bn = remove_accents($this->get_user_lastname ($b->user_id));
 		return $this->_sort_direction() * strcasecmp( $an, $bn );
 	}
 
@@ -734,7 +791,7 @@ class UserList {
 	 * @return string last name of user
 	 */
 	function get_user_lastname($user_id) {
-		return get_usermeta( $user_id, 'last_name', true );
+			return get_user_meta( $user_id, 'last_name', true );
 	}
 	
 	/**
@@ -752,7 +809,22 @@ class UserList {
 		if ($ac == $bc) return 0;
 		return $this->_sort_direction() * ($ac < $bc ? -1 : 1);
 	}
+
+	/**
+	 * Given two users, this function compares the user's post count.
+	 * 
+	 * @access private
+	 * @param WP_User $a
+	 * @param WP_User $b
+	 * @return int result of a string compare of the user display names.
+	 */
+	function _user_cmp_BBPRESS_post_count($a, $b) {
+		$ac = bbp_get_user_topic_count_raw(  $a->user_id) + bbp_get_user_reply_count_raw($a->user_id );
+		$bc = bbp_get_user_topic_count_raw( $b->user_id) + bbp_get_user_reply_count_raw( $b->user_id );
 	
+		if ($ac == $bc) return 0;
+		return $this->_sort_direction() * ($ac < $bc ? -1 : 1);
+	}	
 	/**
 	 * Returns the postcount for a given user. 
 	 * On WPMU sites posts are counted from all blogs in field $blogs and summed up.
@@ -770,12 +842,13 @@ class UserList {
 			}
 			foreach ($blogs as $blog_id) {
 				switch_to_blog($blog_id);
-				$total += get_usernumposts($user_id);
-				restore_current_blog();
+				$total += count_user_posts($user_id);
 			}
+			// reset to current blog done out side to save lot of switching
+			restore_current_blog();
 		}
 		else {
-			$total += get_usernumposts($user_id);
+			$total += count_user_posts($user_id);
 		}
 		
 		return $total;
@@ -842,15 +915,26 @@ class UserList {
 	 *
 	 * @param int $user_id
 	 * @return string last activity date
+	*
+	* look at using bbp_get_user_last_posted to get the buddypress value 
 	 */
 	function get_user_last_activity($user_id) {
 		if (AA_is_bp()) {
-			return gmdate( 'Y-m-d H:i:s', (int)get_usermeta( $user_id, 'last_activity' ) );
-		}
-		else {
+			return gmdate( 'Y-m-d H:i:s', (int)get_user_meta( $user_id, 'last_activity' ) );
+		}else{
 			global $wpdb;
-			$query = 'SELECT `post_date` FROM `wp_posts` WHERE `post_status` = "publish" AND `post_author` = ' . $user_id . ' ORDER BY `post_date` DESC LIMIT 1';
-			return $wpdb->get_var($query);
+			$query = $wpdb->prepare(
+				"SELECT p.post_date
+				FROM $wpdb->posts p
+				WHERE
+					p.post_status = 'publish'
+					AND
+					p.post_author = %d
+				ORDER BY p.post_date
+				DESC LIMIT 1",
+				$user_id
+			);
+			return $wpdb->get_var( $query);
 		}
 	}
 	

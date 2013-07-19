@@ -43,8 +43,9 @@ class AuthorAvatarsEditorButton {
 				// set the POST parameter for the popup calls.
 				if (defined('DOING_AJAX') && DOING_AJAX == true) {
 					$p = 'author-avatars-editor-popup';
-					if ($_GET['action'] == $p && !isset($_POST['action'])) {
-						$_POST['action'] = $_GET['action'];
+					$action = isset($_GET['action']) ? $_GET['action'] : null;
+					if ($action == $p && !isset($_POST['action'])) {
+						$_POST['action'] = $action;
 					}
 				}
 			}
@@ -110,6 +111,7 @@ class AuthorAvatarsEditorButton {
 		// BASIC TAB
 		$basic_left  = $form->renderFieldShortcodeType();
 		$basic_left .= '<div class="fields_type_show_avatar">';
+		$basic_left .= $form->renderFieldUsers();
 		$basic_left .= $form->renderFieldEmail();
 		$basic_left .= $form->renderFieldAlignment();
 		$basic_left .= $form->renderFieldDisplayOptions();
@@ -146,7 +148,7 @@ class AuthorAvatarsEditorButton {
 
 		$tabs = $basic_tab . $advanced_tab;
 		$html = '<div class="aa-tabs">'. $form->renderTabList() . $tabs .'</div>';
-        $html .= "\n\t".'<div class="mceActionPanel" style="text-align:center;"> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=MZTZ5S8MGF75C&lc=CA&item_name=Author%20Avatars%20Plugin%20Support&item_number=authoravatars&currency_code=CAD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank" >Make a Donation (<i>opens in a new window</i>)</a>';
+        $html .= "\n\t".'<div class="mceActionPanel"> '.AA_donateButton();
 	    $html .= "\n\t".'<div style="float: left">';
 	    $html .= "\n\t".'<input type="button" id="cancel" name="cancel" value="'. __("Cancel") .'" onclick="tinyMCEPopup.close();" />';
 	    $html .= "\n\t".'</div>';

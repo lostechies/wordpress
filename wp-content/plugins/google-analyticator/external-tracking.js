@@ -15,20 +15,21 @@ jQuery(document).ready(function() {
 		var domain = hrefArray[2];
 		var downloadTracked = false;
 	
-	 	// If the link is a download
-		if (jQuery.inArray(extension,analyticsFileTypes) != -1) {
-			// Mark the link as already tracked
-			downloadTracked = true;
-			
-			// Add the tracking code
-			a.click(function() {
-				if ( analyticsEventTracking == 'enabled' ) {
-					_gaq.push(['_trackEvent', 'Downloads', extension.toUpperCase(), href]);
-				} else
-					_gaq.push(['_trackPageview', analyticsDownloadsPrefix + url]);
-			});
+		if (typeof analyticsFileTypes != "undefined") {
+			// If the link is a download
+			if (jQuery.inArray(extension,analyticsFileTypes) != -1) {
+				// Mark the link as already tracked
+				downloadTracked = true;
+				
+				// Add the tracking code
+				a.click(function() {
+					if ( analyticsEventTracking == 'enabled' ) {
+						_gaq.push(['_trackEvent', 'Downloads', extension.toUpperCase(), href]);
+					} else
+						_gaq.push(['_trackPageview', analyticsDownloadsPrefix + url]);
+				});
+			}
 		}
-		
 		// If the link is external
 	 	if ( ( href.match(/^http/) ) && ( !href.match(document.domain) ) && ( downloadTracked == false ) ) {
 	    	// Add the tracking code

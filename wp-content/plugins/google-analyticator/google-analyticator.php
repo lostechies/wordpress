@@ -1,15 +1,15 @@
 <?php
 /*
  * Plugin Name: Google Analyticator
- * Version: 6.4.3
- * Plugin URI: http://wordpress.org/extend/plugins/google-analyticator/
+ * Version: 6.4.4.3
+ * Plugin URI: http://www.videousermanuals.com/google-analyticator/?utm_campaign=analyticator&utm_medium=plugin&utm_source=readme-txt
  * Description: Adds the necessary JavaScript code to enable <a href="http://www.google.com/analytics/">Google's Analytics</a>. After enabling this plugin you need to authenticate with Google, then select your domain and you're set.
- * Author: Video User Manuals
- * Author URI: http://www.videousermanuals.com
+ * Author: Video User Manuals Pty Ltd
+ * Author URI: http://www.videousermanuals.com/?utm_campaign=analyticator&utm_medium=plugin&utm_source=readme-txt
  * Text Domain: google-analyticator
  */
 
-define('GOOGLE_ANALYTICATOR_VERSION', '6.4.3');
+define('GOOGLE_ANALYTICATOR_VERSION', '6.4.4.3');
 
 define('GOOGLE_ANALYTICATOR_CLIENTID', '1007949979410.apps.googleusercontent.com');
 define('GOOGLE_ANALYTICATOR_CLIENTSECRET', 'q06U41XDXtzaXD14E-KO1hti'); //don't worry - this don't need to be secret in our case
@@ -106,7 +106,7 @@ function ga_admin_init() {
 }
 
 # Add the core Google Analytics script, with a high priority to ensure last script for async tracking
-add_action('wp_head', 'add_google_analytics', 999999);
+add_action('wp_head', 'add_google_analytics',99);
 add_action('login_head', 'add_google_analytics', 999999);
 
 # Initialize outbound link tracking
@@ -776,19 +776,14 @@ function ga_options_page() {
 
                 </form>
 
-
+                 </form>
+ 
+ 
 <?php  if (!get_option('wpm_o_user_id')): ?>
-    <img src="<?php echo plugins_url('wlcms-plugin-advert.png', __FILE__ ); ?>" alt="Learn how to make WordPress better" />
-    <form method="post" onsubmit="return quickValidate()"  action="http://www.aweber.com/scripts/addlead.pl" target="_blank" >
+    <img src="<?php echo plugins_url('ga-plugin-advert.jpg', __FILE__ ); ?>" alt="Google Analytics Getting It Right" />
+    <form accept-charset="utf-8" action="https://app.getresponse.com/add_contact_webform.html" method="post" onsubmit="return quickValidate()" target="_blank">
     <div style="display: none;">
-    <input type="hidden" name="meta_web_form_id" value="672327302" />
-    <input type="hidden" name="meta_split_id" value="" />
-    <input type="hidden" name="listname" value="vumpublic2" />
-    <input type="hidden" name="redirect" value="http://www.aweber.com/thankyou-coi.htm?m=video" id="redirect_9567c93ed4b6fb0c7cd9247553c362eb" />
-    <input type="hidden" name="meta_adtracking" value="ga-plugin" />
-    <input type="hidden" name="meta_message" value="1" />
-    <input type="hidden" name="meta_required" value="name,email" />
-    <input type="hidden" name="meta_tooltip" value="" />
+        <input type="hidden" name="webform_id" value="416798" />
     </div>
     <table style="text-align:center;margin-left: 20px;">
     <tr>
@@ -798,34 +793,31 @@ function ga_options_page() {
     </tr>
     <tr>
     <td colspan="3" style="padding-top: 20px;">
-    <a title="Privacy Policy" href="http://www.aweber.com/permission.htm" target="_blank"><img src="<?php echo plugins_url('privacy.png', __FILE__); ?>"  alt="" title="" /></a>
+    <a title="Privacy Policy" href="http://www.getresponse.com/permission-seal?lang=en" target="_blank"><img src="<?php echo plugins_url('privacy.png', __FILE__); ?>"  alt="" title="" /></a>
     </td>
     </tr>
     </table>
     </form>
+
+    <script type="text/javascript">
+	function quickValidate()
+	{
+	        if (! jQuery('#sub_name').val() )
+	            {
+	                alert('Your Name is required');
+	                return false;
+	            }
+	        if(! jQuery('#sub_email').val() )
+	            {
+	                alert('Your Email is required');
+	                return false;
+	            }
+
+	            return true;
+	}
+	</script>
 <?php endif;?>
 
-<script type="text/javascript">
-function quickValidate()
-{
-        if (! jQuery('#sub_name').val() )
-            {
-                alert('Your Name is required');
-                return false;
-            }
-        if(! jQuery('#sub_email').val() )
-            {
-                alert('Your Email is required');
-                return false;
-            }
-
-            return true;
-
-}
-</script>
-
-		</div>
-		</form>
 
 <?php
 }
@@ -1014,7 +1006,7 @@ function ga_outgoing_links()
 				# Display page tracking if user is not an admin
 				if ( ( get_option(key_ga_admin) == ga_enabled || !ga_current_user_is(get_option(key_ga_admin_role)) ) && get_option(key_ga_admin_disable) == 'remove' || get_option(key_ga_admin_disable) != 'remove' )
 				{
-					add_action('wp_print_scripts', 'ga_external_tracking_js');
+					add_action('wp_print_scripts', 'ga_external_tracking_js',99999);
 				}
 			}
 		}
@@ -1026,7 +1018,8 @@ function ga_outgoing_links()
  **/
 function ga_external_tracking_js()
 {
-	wp_enqueue_script('ga-external-tracking', plugins_url('/google-analyticator/external-tracking.min.js'), array('jquery'), GOOGLE_ANALYTICATOR_VERSION);
+	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+	wp_enqueue_script('ga-external-tracking', plugins_url("/google-analyticator/external-tracking{$suffix}.js"), array('jquery'), GOOGLE_ANALYTICATOR_VERSION);
 }
 
 /**

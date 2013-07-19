@@ -34,6 +34,7 @@ class GoogleAnalyticsStats
             $this->client->setClientId(GOOGLE_ANALYTICATOR_CLIENTID);
             $this->client->setClientSecret(GOOGLE_ANALYTICATOR_CLIENTSECRET);
             $this->client->setRedirectUri(GOOGLE_ANALYTICATOR_REDIRECT);
+			
             $this->client->setScopes(array(GOOGLE_ANALYTICATOR_SCOPE));
 
             // Magic. Returns objects from the Analytics Service instead of associative arrays.

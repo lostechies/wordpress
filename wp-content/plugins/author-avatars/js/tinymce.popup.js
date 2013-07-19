@@ -9,6 +9,17 @@ function init() {
 	// hide or show fields & bind change event handler
 	jQuery('#shortcode_type label').click(AA_updateFieldVisibility);
 
+	jQuery('select#user_id').change(function(){
+		if(jQuery(this).val()>0){
+			jQuery('input#email').hide();
+			// just in case set
+			jQuery('.fields_type_show_avatar #email').parent().removeClass('aa-form-error');
+		}else{
+			jQuery('input#email').show();
+		}
+
+	});
+
 	// initialise the resizable avatar preview
 	AA_init_avatarpreview(jQuery("div.avatar_size_preview"), jQuery('input.avatar_size_input'));
 
@@ -18,6 +29,7 @@ function init() {
 	tinyMCEPopup.resizeToInnerSize();
 }
 tinyMCEPopup.executeOnLoad('init();')
+
 
 // Checks the value of the shortcode type field and hides/shows other form fields respectively.
 function AA_updateFieldVisibility(evt) {
@@ -94,36 +106,46 @@ function insertAuthorAvatarsCode() {
 			tagtext += " user_link=" + user_link;
 		}
 
-		// show_name
 
-		var show_name = jQuery('.fields_type_authoravatars #display input[value="show_name"]').attr("checked");
-		if (show_name == true || 'checked' == show_name) {
-			tagtext += " show_name=true";
-		}
+		jQuery('.fields_type_authoravatars #display :checked').each(function(i, el) { 
+			// show_name
+			if ('show_name' == jQuery(el).val()) {
+				tagtext += " show_name=true";
+			}
 
-		// show_postcount
-		var show_postcount = jQuery('.fields_type_authoravatars #display input[value="show_postcount"]').attr("checked");
-		if (show_postcount == true || 'checked' == show_postcount) {
-			tagtext += " show_postcount=true";
-		}
+			// show_email
+			if ('show_email' == jQuery(el).val()) {
+				tagtext += " show_email=true";
+			}
 
-		// show_biography
-		var show_biography = jQuery('.fields_type_authoravatars #display input[value="show_biography"]').attr("checked");
-		if (show_biography == true || 'checked' == show_biography) {
-			tagtext += " show_biography=true";
-		}
+			// show_postcount
+			if ('show_postcount' == jQuery(el).val()) {
+				tagtext += " show_postcount=true";
+			}
 
-		// limit
+			// show_biography
+			if ('show_biography' == jQuery(el).val()) {
+				tagtext += " show_biography=true";
+			}
+
+			// BBPRESS_post_count
+			if ('show_bbpress_post_count' == jQuery(el).val()) {
+				tagtext += " show_bbpress_post_count=true";
+			}
+
+		 });
+
+		 		// limit
 		var limit = jQuery("#limit").val() || "";
 		if (limit.length > 0) {
 			tagtext += " limit=" + limit;
 		}
 		// Page size
-	var page_size = jQuery("#page_size").val() || "";
-	if (page_size.length > 0) {
-		tagtext += " page_size=" + page_size;
-	}
-		// min post count
+		var page_size = jQuery("#page_size").val() || "";
+		if (page_size.length > 0) {
+			tagtext += " page_size=" + page_size;
+		}
+			// min post count
 		var min_post_count = jQuery("#min_post_count").val() || "";
 		if (min_post_count.length > 0) {
 			tagtext += " min_post_count=" + min_post_count;
@@ -149,12 +171,18 @@ function insertAuthorAvatarsCode() {
 
 		// email or id
 		var email = jQuery('.fields_type_show_avatar #email').val() || '';
-		if (email.length > 0) {
-			jQuery('.fields_type_show_avatar #email').parent().parent().removeClass('aa-form-error');
-			tagtext += " email=" + email;
+		var user = jQuery('.fields_type_show_avatar #user_id').val()
+		if (email.length > 0 || user > 0) {
+			jQuery('.fields_type_show_avatar #email').parent().removeClass('aa-form-error');
+			if(user > 0){
+				tagtext += " email=" + user;
+			}else{
+				tagtext += " email=" + email;
+			}
+			
 		}
 		else {
-			jQuery('#email').parent().parent().addClass('aa-form-error');
+			jQuery('#email').parent().addClass('aa-form-error');
 			error = true;
 		}
 
@@ -170,23 +198,34 @@ function insertAuthorAvatarsCode() {
 			tagtext += " user_link=" + user_link;
 		}
 
-		// show_name
+		jQuery('.fields_type_show_avatar #display :checked').each(function(i, el) { 
+			// show_name
+			if ('show_name' == jQuery(el).val()) {
+				tagtext += " show_name=true";
+			}
 
-		var show_name = jQuery('.fields_type_show_avatar #display input[value="show_name"]').attr("checked");
-		if (show_name == true || 'checked' == show_name) {
-			tagtext += " show_name=true";
-		}
-				// show_postcount
-		var show_postcount = jQuery('.fields_type_show_avatar #display input[value="show_postcount"]').attr("checked");
-		if (show_postcount == true || 'checked' == show_postcount) {
-			tagtext += " show_postcount=true";
-		}
+			// show_email
+			if ('show_email' == jQuery(el).val()) {
+				tagtext += " show_email=true";
+			}
 
-		// show_biography
-		var show_biography = jQuery('.fields_type_show_avatar #display input[value="show_biography"]').attr("checked");
-		if (show_biography == true || 'checked' == show_biography) {
-			tagtext += " show_biography=true";
-		}
+			// show_postcount
+			if ('show_postcount' == jQuery(el).val()) {
+				tagtext += " show_postcount=true";
+			}
+
+			// show_biography
+			if ('show_biography' == jQuery(el).val()) {
+				tagtext += " show_biography=true";
+			}
+
+			// BBPRESS_post_count
+			if ('show_bbpress_post_count' == jQuery(el).val()) {
+				tagtext += " show_bbpress_post_count=true";
+			}
+
+		 });
+
 
 	}
 
