@@ -34,6 +34,8 @@
 					<?php bloginfo('name'); ?> &copy; <?php echo date('Y'); ?><br />
 						<?php bloginfo('description'); ?><br />
 				<?php printf( __( 'Proudly powered by <span id="generator-link">%s</span>.', 'twentyten' ), '<a href="http://wordpress.org/" title="' . esc_attr__( 'Semantic Personal Publishing Platform', 'twentyten' ) . '" rel="generator">' . __( 'WordPress', 'twentyten' ) . '</a>' ); ?>
+				<br/><br/>
+				<a href="http://www.rackspace.com" target="_blank"><img src="http://e6b031908a72d151cb58-e811db8ece5abf3fe1b6c8e3c1955f7f.r83.cf1.rackcdn.com/powered-by-rs-40.jpg" /></a>
 					
 				</div><!-- #fourth .widget-area -->
 			</div><!-- #footer-widget-area -->		
