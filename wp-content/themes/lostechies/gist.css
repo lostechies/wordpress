@@ -35,7 +35,7 @@
 .gist .line-data .ne { color: #990000; font-weight: bold } /* Name.Exception */
 .gist .line-data .nf { color: #990000; font-weight: bold } /* Name.Function */
 .gist .line-data .nn { color: #555555 } /* Name.Namespace */
-.gist .line-data .nt { color: #000080 } /* Name.Tag */
+.gist .line-data .nt { color: #000080} /* Name.Tag */
 .gist .line-data .nv { color: #008080 } /* Name.Variable */
 .gist .line-data .ow { color: #cfbfad; font-weight: bold } /* Operator.Word */
 .gist .line-data .w { color: #bbbbbb } /* Text.Whitespace */
