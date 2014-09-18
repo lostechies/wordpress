@@ -1289,3 +1289,7 @@ code {
 #author_avatars-3 .avatar { display: none; }
 
 .with-name { text-align:left; }
+
+.highlight pre{
+  background-color: #000;
+}
