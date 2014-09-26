@@ -1,5 +1,5 @@
 <?php
-define( 'PYGMENT_THEME', 'railscasts' );
+define( 'PYGMENT_THEME', 'desert' );
 define( 'PYGMENT_CACHE_VAR', 'pygment_cache' );
 define( 'PYGMENT_CACHE_HASH_VAR', 'pygment_cache_hash' );
 define( 'PYGMENT_HASH', 'crc32b' );
