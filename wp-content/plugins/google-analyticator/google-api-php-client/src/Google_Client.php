@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-// Check for the required json and curl extensions, the Google APIs PHP Client
-// won't function without them.
-if (! function_exists('curl_init')) {
-  throw new Exception('Google PHP API Client requires the CURL PHP extension');
-}
-
+// Check for the json extension, the Google APIs PHP Client won't function
+// without it.
 if (! function_exists('json_decode')) {
   throw new Exception('Google PHP API Client requires the JSON PHP extension');
 }
@@ -32,9 +28,9 @@ if (! function_exists('http_build_query')) {
 if (! ini_get('date.timezone') && function_exists('date_default_timezone_set')) {
   date_default_timezone_set('UTC');
 }
-
+define("GA_API_Path", dirname(__FILE__) .'/');
 // hack around with the include paths a bit so the library 'just works'
-set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
+//set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
 
 require_once "config.php";
 // If a local configuration file is found, merge it's values with the default configuration
@@ -45,18 +41,18 @@ if (file_exists(dirname(__FILE__)  . '/local_config.php')) {
 }
 
 // Include the top level classes, they each include their own dependencies
-require_once 'service/Google_Model.php';
-require_once 'service/Google_Service.php';
-require_once 'service/Google_ServiceResource.php';
-require_once 'auth/Google_AssertionCredentials.php';
-require_once 'auth/Google_Signer.php';
-require_once 'auth/Google_P12Signer.php';
-require_once 'service/Google_BatchRequest.php';
-require_once 'external/URITemplateParser.php';
-require_once 'auth/Google_Auth.php';
-require_once 'cache/Google_Cache.php';
-require_once 'io/Google_IO.php';
-require_once('service/Google_MediaFileUpload.php');
+require_once GA_API_Path. 'service/Google_Model.php';
+require_once GA_API_Path. 'service/Google_Service.php';
+require_once GA_API_Path. 'service/Google_ServiceResource.php';
+require_once GA_API_Path. 'auth/Google_AssertionCredentials.php';
+require_once GA_API_Path. 'auth/Google_Signer.php';
+require_once GA_API_Path. 'auth/Google_P12Signer.php';
+require_once GA_API_Path. 'service/Google_BatchRequest.php';
+require_once GA_API_Path. 'external/URITemplateParser.php';
+require_once GA_API_Path. 'auth/Google_Auth.php';
+require_once GA_API_Path. 'cache/Google_Cache.php';
+require_once GA_API_Path. 'io/Google_IO.php';
+require_once(GA_API_Path. 'service/Google_MediaFileUpload.php');
 
 /**
  * The Google API Client
@@ -271,7 +267,7 @@ class Google_Client {
   public function getClientId() {
     return self::$auth->clientId;
   }
-  
+
   /**
    * Set the OAuth 2.0 Client Secret.
    * @param string $clientSecret
@@ -357,6 +353,28 @@ class Google_Client {
   }
 
   /**
+   * Returns the list of scopes set on the client
+   * @return array the list of scopes
+   *
+   */
+  public function getScopes() {
+     return $this->scopes;
+  }
+
+  /**
+   * If 'plus.login' is included in the list of requested scopes, you can use
+   * this method to define types of app activities that your app will write.
+   * You can find a list of available types here:
+   * @link https://developers.google.com/+/api/moment-types
+   *
+   * @param array $requestVisibleActions Array of app activity types
+   */
+  public function setRequestVisibleActions($requestVisibleActions) {
+    self::$auth->requestVisibleActions =
+            join(" ", $requestVisibleActions);
+  }
+
+  /**
    * Declare if objects should be returned by the api service classes.
    *
    * @param boolean $useObjects True if objects should be returned by the service classes.
@@ -430,7 +448,7 @@ class Google_ServiceException extends Google_Exception {
     } else {
       parent::__construct($message, $code);
     }
-    
+
     $this->errors = $errors;
   }
 

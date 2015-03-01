@@ -5,7 +5,7 @@ jQuery(document).ready(function() {
 		var href = a.attr('href');
 		
 		// Check if the a tag has a href, if not, stop for the current link
-		if ( href == undefined )
+		if ( href == undefined || href =="")
 			return;
 		
 		var url = href.replace('http://','').replace('https://','');
@@ -24,9 +24,18 @@ jQuery(document).ready(function() {
 				// Add the tracking code
 				a.click(function() {
 					if ( analyticsEventTracking == 'enabled' ) {
-						_gaq.push(['_trackEvent', 'Downloads', extension.toUpperCase(), href]);
-					} else
-						_gaq.push(['_trackPageview', analyticsDownloadsPrefix + url]);
+						if(analyticsSnippet == 'enabled'){
+							_gaq.push(['_trackEvent', 'Downloads', extension.toUpperCase(), href]);
+						}else{
+							ga('send', 'event', 'Downloads', extension.toUpperCase(), href);							
+						}
+					} else{
+						if(analyticsSnippet == 'enabled'){
+							_gaq.push(['_trackPageview', analyticsDownloadsPrefix + url]);
+						}else{
+							ga('send', 'pageview',  analyticsDownloadsPrefix + url);
+						}
+					}
 				});
 			}
 		}
@@ -35,9 +44,19 @@ jQuery(document).ready(function() {
 	    	// Add the tracking code
 			a.click(function() {
 				if ( analyticsEventTracking == 'enabled' ) {
-					_gaq.push(['_trackEvent', 'Outbound Traffic', href.match(/:\/\/(.[^/]+)/)[1], href]);
+					if(analyticsSnippet == 'enabled'){
+						_gaq.push(['_trackEvent', 'Outbound Traffic', href.match(/:\/\/(.[^/]+)/)[1], href]);
+					}else{
+							ga('send', 'event', 'Outbound Traffic', href.match(/:\/\/(.[^/]+)/)[1], href);
+
+						}
 				} else
-					_gaq.push(['_trackPageview', analyticsOutboundPrefix + url]);
+					if(analyticsSnippet == 'enabled'){
+						_gaq.push(['_trackPageview', analyticsOutboundPrefix + url]);
+					}else{
+						ga('send', 'pageview',  analyticsOutboundPrefix + url);
+							
+					}
 			});
 		}
 	});

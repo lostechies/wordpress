@@ -195,7 +195,7 @@ class GoogleAnalyticsSummary
 						
 								jQuery.plot(placeholder, [ 
 									{
-										label: "Visits", 
+										label: "<?php _e('Visits', 'google-analyticator')?>", 
 										data: d1,
 										lines: {fillColor: "#f2f7f9"},
 										points: {fillColor: "#88bbc8"}
@@ -221,9 +221,9 @@ class GoogleAnalyticsSummary
     {
             # Attempt to login and get the current account
 		echo '<p align="right"><span id="analyticsloading"></span> <select id="qa_selecteddate" name="qa_selecteddate">
-					<option selected="selected" value="30">Past 30 days</option>
-					<option value="60">Past 60 days</option>
-					<option value="1">Yesterday</option>
+					<option selected="selected" value="30">'. __("Past 30 days", 'google-analyticator'). '</option>
+					<option value="60">'. __("Past 60 days", 'google-analyticator'). '</option>
+					<option value="1">'. __("Yesterday", 'google-analyticator'). '</option>
 				</select></p>';
         echo '<div class="flotcontainer" style="height: 230px;width:100%;"> </div>';
         echo '<div class="target" style="display: none;"></div>';
@@ -298,6 +298,7 @@ class GoogleAnalyticsSummary
             # Close the table
             echo '</td></tr></table>';
 
+           
             # Grab the above outputs and cache it!
             $ga_output = ob_get_flush();
 
@@ -311,6 +312,13 @@ class GoogleAnalyticsSummary
          
         if( ! $doing_transient )
             echo $ga_output;
+      
+        if(  get_option( key_ga_show_ad ) ) {
+        echo '<p style="text-align:center">
+                <a href="http://www.videousermanuals.com/rd/ga-dashboard/" target="_BLANK">
+                    Learn how to use Google Analytics <br />
+                    To remove the guess work from your business </a></p>';
+        }
         
         die();
     }
