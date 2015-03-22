@@ -7,7 +7,7 @@
 					<ul>
 					<li><a href="<?php bloginfo('url'); ?>" title="home">Home</a></li>
 					<?php wp_list_pages('title_li='); ?>
-					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					<li><a href="https://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="https://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="https://feeds.feedburner.com/LosTechies"><img src="https://feeds.feedburner.com/~fc/LosTechies?bg=FFFFFF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
 					</ul>
 				</div><!-- #second .widget-area -->
 				<div class="grid_4">
@@ -35,7 +35,7 @@
 						<?php bloginfo('description'); ?><br />
 				<?php printf( __( 'Proudly powered by <span id="generator-link">%s</span>.', 'twentyten' ), '<a href="http://wordpress.org/" title="' . esc_attr__( 'Semantic Personal Publishing Platform', 'twentyten' ) . '" rel="generator">' . __( 'WordPress', 'twentyten' ) . '</a>' ); ?>
 				<br/><br/>
-				<a href="http://www.rackspace.com" target="_blank"><img src="http://e6b031908a72d151cb58-e811db8ece5abf3fe1b6c8e3c1955f7f.r83.cf1.rackcdn.com/powered-by-rs-40.jpg" /></a>
+				<a href="http://www.rackspace.com" target="_blank"><img src="https://e6b031908a72d151cb58-e811db8ece5abf3fe1b6c8e3c1955f7f.r83.cf1.rackcdn.com/powered-by-rs-40.jpg" /></a>
 					
 				</div><!-- #fourth .widget-area -->
 			</div><!-- #footer-widget-area -->		

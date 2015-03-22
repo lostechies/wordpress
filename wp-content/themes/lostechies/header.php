@@ -19,7 +19,7 @@
     ?></title>
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
 	
-	<link href="http://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
+	<link href="https://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
 	<?php
 		wp_enqueue_style( 'mainstyle', '/wp-content/themes/lostechies/style.css');
 			wp_enqueue_style( 'jquerystyle', '/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css');	
@@ -45,7 +45,7 @@
 				<ul>
 					<li><a href="<?php bloginfo('url'); ?>" title="home">Home</a></li>
 					<?php wp_list_pages('title_li=&exclude=41'); ?>
-					<li><a href="http://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="http://feeds.feedburner.com/LosTechies"><img src="http://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
+					<li><a href="https://feeds.feedburner.com/LosTechies" rel="alternate" type="application/rss+xml"><img src="https://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a><a href="https://feeds.feedburner.com/LosTechies"><img src="https://feeds.feedburner.com/~fc/LosTechies?bg=EFEFEF&amp;fg=2E9BD2&amp;anim=1" height="26" width="88" style="vertical-align:middle;border:0"/></a></li>
 				</ul>
 								
 			</div><!-- end div#globalNav.container_12 -->				
