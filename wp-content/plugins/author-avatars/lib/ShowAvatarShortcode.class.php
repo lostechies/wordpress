@@ -10,6 +10,8 @@ class ShowAvatarShortcode {
 	 */
 	function ShowAvatarShortcode() {
 		$this->register();
+		require_once( 'UserList.class.php' );
+		$this->userlist = new UserList();
 	}
 
 	/**
@@ -41,6 +43,13 @@ class ShowAvatarShortcode {
 		if ( empty( $id ) && ! empty( $atts['email'] ) ) {
 			$id = preg_replace( '[^\w\.\@\-]', '', $atts['email'] );
 		}
+
+		// get avatar size
+		$bio_length = -1;
+		if ( ! empty( $atts['max_bio_length'] ) ) {
+			$bio_length = intval( $atts['max_bio_length'] );
+		}
+
 
 		// get avatar size
 		$avatar_size = false;
@@ -105,7 +114,7 @@ class ShowAvatarShortcode {
 							break;
 						case 'website':
 							$link = get_the_author_meta( 'user_url', $id );
-							if ( empty( $link ) || $link == 'http://' ) {
+							if ( empty( $link ) || 'http://' === $link ) {
 								$link = false;
 							}
 							break;
@@ -124,18 +133,54 @@ class ShowAvatarShortcode {
 								$link = bp_core_get_userurl( $id );
 							}
 							break;
+						case 'um_profile':
+							if ( function_exists( 'um_user_profile_url' ) ) {
+								um_fetch_user( $id );
+								$link = um_user_profile_url();
+								um_reset_user();
+							}
+							if ( empty( $link ) || 'http://' === $link ) {
+								$link = false;
+							}
+							break;
 						case 'bbpress_memberpage':
 							if ( function_exists( 'bbp_get_user_profile_url' ) ) {
 								$link = bbp_get_user_profile_url( $id );
 							}
-							if ( empty( $link ) || $link == 'http://' ) {
+							if ( empty( $link ) || 'http://' === $link ) {
 								$link = false;
 							}
+							break;
+						case 'last_post':
+							$recent = get_posts(array(
+								'author' => $id,
+								'orderby' => 'date',
+								'order' => 'desc',
+								'numberposts' => 1,
+							));
+							$link = get_permalink( $recent[0]->ID );
+							break;
+
+						case 'last_post_filtered':
+							$recent = get_posts(array(
+								'author' => $id,
+								'orderby' => 'date',
+								'order' => 'desc',
+								'numberposts' => 1,
+							));
+							$link = get_permalink( $recent[0]->ID );
+							break;
+
+						case 'last_post_all':
+							$last_post = get_most_recent_post_of_user( $id );
+							$link = get_permalink( $last_post['post_id'] );
 							break;
 					}
 					if ( $link ) {
 						$hrefStart = '<a href="' . $link . '">';
 					}
+
+					$extraClass .= ' user-' . $id;
 				}
 
 				if ( ! empty( $atts['show_name'] ) ) {
@@ -154,8 +199,6 @@ class ShowAvatarShortcode {
 				}
 
 				if ( ! empty( $atts['show_postcount'] ) ) {
-					require_once( 'UserList.class.php' );
-					$this->userlist = new UserList();
 					$name .= ' (' . $postcount = $this->userlist->get_user_postcount( $id ) . ')';
 				}
 
@@ -167,23 +210,28 @@ class ShowAvatarShortcode {
 				}
 
 				if ( ! empty( $atts['show_biography'] ) ) {
-					$bio = get_the_author_meta( 'description', $id );
-					$bio = wp_trim_words( $bio, apply_filters( 'aa_user_bio_length', absint( $atts['max_bio_length'] ) ) );
+
+					$biography = get_the_author_meta( 'description', $id );
+
+					if( 0 < $bio_length ){
+						$biography = $this->userlist->truncate_html( wpautop( $biography, true ) , apply_filters( 'aa_user_bio_length', $bio_length ) );
+					}else{
+						$biography = wpautop( $biography, true ) ;
+					}
+
 					if ( ! empty( $atts['show_name'] ) ) {
-						$bio = '<div class="bio bio-length-'. $atts['max_bio_length'] .'">' . $bio . '</div>';
+						$max_bio_length = ( isset( $atts['max_bio_length'] ) ) ? $atts['max_bio_length'] : 0;
+							$bio = '<div class="bio bio-length-'. $max_bio_length .'">' . $biography . '</div>';
 					}
 					if ( empty( $bio ) ) {
 						$extraClass .= ' biography-missing';
 					} else {
-						$extraClass .= ' with-biography';
+						$extraClass .= ' with-biography bio-length-'.$bio_length;
 					}
 				}
+
 				// show last_post?
 				if ( isset( $atts['show_last_post'] ) && ( strlen( $atts['show_last_post'] ) > 0 ) ) {
-					require_once( 'UserList.class.php' );
-					if( null == $this->userlist ){
-						$this->userlist = new UserList();
-					}
 
 					$last_post = '<div class="last_post">' .$this->userlist->aa_get_last_post( $id ). '</div>';
 					if ( empty( $last_post ) ) {

@@ -77,10 +77,19 @@ class AuthorAvatarsShortcode {
 		$hiddenusers = array(); // default value: no restriction -> all users
 		if ( ! empty( $atts['hiddenusers'] ) ) {
 			if ( ! is_array( $atts['hiddenusers'] ) ) {
-				$hiddenusers = explode( ',', $atts['hiddenusers'] );
+				$hiddenusers = array_unique ( explode( ',', $atts['hiddenusers'] ) );
 			}
 		}
 		$this->userlist->hiddenusers = array_map( 'trim', $hiddenusers );
+
+		// whitelist users
+		$whitelistusers = array(); // default value: no restriction -> all users
+		if ( ! empty( $atts['whitelistusers'] ) ) {
+			if ( ! is_array( $atts['whitelistusers'] ) ) {
+				$whitelistusers = array_unique ( explode( ',', $atts['whitelistusers'] ) );
+			}
+		}
+		$this->userlist->whitelistusers = array_map( 'trim', $whitelistusers );
 
 		// just these users
 		$onlyusers = array(); // default value: no restriction -> all users
@@ -113,7 +122,7 @@ class AuthorAvatarsShortcode {
 			}
 		}
 
-		$display = apply_filters('AA_shortcode_display_list', $display );
+		$display = apply_filters('aa_shortcode_display_list', $display );
 
 		// support for all style shortcode
 		$default_display_options = array('show_name','show_postcount','show_email','show_biography','show_last_post','show_bbpress_post_count');
