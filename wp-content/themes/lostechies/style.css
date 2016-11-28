@@ -102,6 +102,7 @@ textarea,
 	font-family: Georgia, "Bitstream Charter", serif;
 }
 
+/*
 h3#comments-title,
 h3#reply-title,
 #access .menu,
@@ -129,6 +130,7 @@ h3#reply-title,
 {
 	font-family: "Helvetica Neue", Arial, Helvetica, "Nimbus Sans L", sans-serif;
 }
+*/
 
 pre {
 	font-family: "Courier 10 Pitch", Courier, monospace;
@@ -174,7 +176,45 @@ code {
 body {
 	background: #f1f1f1;
 	background: url(images/header_bg.png) repeat-x;
+
+	font-family: Georgia,"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
+	font-size: 18px;
+	color: #434343;
+	line-height: 24px;
 }
+
+/* HEADERS */
+	h1, h2, h3, h4, h5, h6 {
+		color: #000;
+		font-weight: normal;
+		margin:0;
+		padding: 0;
+		line-height: 1.4em;
+	}
+	
+	h1 a, h2 a, h3 a, h4 a, h5 a{color: #000;}
+
+	h1{font-size: 32px;}
+	h2{font-size: 28px;}
+	h3{font-size: 24px;}
+	h4{font-size: 20px;}
+	h5{font-size: 16px;}
+	h6{font-size: 12px;}
+
+
+/*PRIMARY HEADERS FONT */
+h1, h2, #feature .fheading {
+	 font-family: Georgia, Myriad Pro, "Lucida Grande","Lucida Sans Unicode",Trebuchet MS,Arial;
+	color: #434343;	
+}
+
+/*SECONDARY HEADERS FONT */
+h3, h4, h5 {
+	font-family: Georgia, "Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
+	color: #434343;
+}
+
+
 body, input, textarea {
 	color: #555;
 	font-size: 12px;
@@ -243,6 +283,10 @@ hr {
 /* Text elements */
 p {
 	margin-bottom: 18px;
+	color: #434343;
+	font-family: Georgia, Myriad Pro, "Lucida Grande","Lucida Sans Unicode",Trebuchet MS,Arial;
+	font-size: 18px;
+	line-height: 24px;
 }
 ul {
 	list-style: square;
@@ -486,6 +530,7 @@ a:hover {
 #content th {
 	color: #color:#555;
 }
+/*
 #content h1,
 #content h2,
 #content h3,
@@ -499,6 +544,7 @@ a:hover {
 	font-weight:bold;
 	padding-bottom:4px;
 }
+*/
 
 #sidebar h3 {
 border-bottom:1px solid #DEDEDE;
@@ -546,10 +592,8 @@ padding:6px;
 	margin: 0 0 36px 0;
 }
 .page-title {
-	color: #000;
-	font-size: 14px;
-	font-weight: bold;
-	margin: 0 0 36px 0;
+	color: #333333;
+	font-size: 18px;	
 }
 .page-title span {
 	color: #444;
@@ -571,11 +615,12 @@ padding:6px;
 	margin-right: 68px;
 }
 #content .entry-title {
-	color: #555;
-	border-bottom:none;
-	font-size: 18px;
-	font-weight: bold;
-	margin-bottom: 0;
+	font-family: "Helvetica Neue", Arial, Helvetica, "Nimbus Sans L", sans-serif;
+	font-size: 30px;
+	letter-spacing: -1px;
+	margin: 0 0 .45em;
+	color: #222222;
+	text-decoration: none;	
 }
 .entry-title a:link, .entry-title a:visited {	
 	text-decoration: none;
@@ -1105,7 +1150,7 @@ line-height:21px;
 	display: block;
 }
 .widget-container {
-	margin:18px 10px 0;
+	margin:0px 10px 0;
 	
 	-moz-border-radius:4px 4px 4px 4px;
 	border:1px solid #CECECE;
@@ -1322,4 +1367,112 @@ code {
   display: block;
   text-align: right;
   font-size: 12px;
+}
+
+@media only screen and (min-width: 1420px) {
+   /* wrapper */
+   div.container_12 {
+   	width:1420px;
+   	margin:0;
+   	margin-left:15px;
+   	padding:0;   	
+   }
+
+   #globalNav {
+   	width:1400px;
+   }   
+
+	#main {
+		margin:0px;
+		width: 1120px;		
+	}
+	
+	#sidebar {
+		margin:0;
+		width: 270px;		
+	}
+
+
+
+	#wrapper {
+		width: 1400px;
+	}
+
+	#maincontent {
+		width: 1120px;
+	}
+
+	#nav {
+		background-size: 1400px 38px;
+	}
+}
+
+@media only screen and (min-width: 1720px) {
+
+   /* wrapper */
+   div.container_12 {
+   	width:1720px;
+   	margin:0;
+   	margin-left:15px;
+   	padding:0;   	
+   }
+
+   #globalNav {
+   	width:1720px;
+   }   
+
+	#main {
+		margin:0px;
+		width: 1420px;
+	}
+	
+	#sidebar {
+		margin:0;
+		width: 270px;
+	}	
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+   /* wrapper */
+   div.container_12 {
+   	width:100%;
+   	margin:0;
+   	margin-left:15px;
+   	padding:0;   	
+   }
+
+   #globalNav {
+   	width:100%;
+   }   
+
+	#main {
+		margin:0px;
+		width: 100%;
+	}
+	
+	#sidebar {
+		display:none;
+	}
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 320px) and (orientation:portrait) {
+
+   /* wrapper */
+   div.container_12 {
+   	width:100%;   	 	
+   }
+
+   #globalNav {
+   	width:100%;
+   }   
+
+	#main {
+		margin:0px;
+		width: 100%;
+	}
+	
+	#sidebar {
+	display:none;
+	}
+
 }

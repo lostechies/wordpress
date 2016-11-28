@@ -1,4 +1,7 @@
 ## EXPIRES CACHING ##
+<IfModule mod_headers.c>
+   RequestHeader unset Proxy
+</IfModule>
 <IfModule mod_expires.c>
 ExpiresActive On
 ExpiresByType image/jpg "access 1 year"

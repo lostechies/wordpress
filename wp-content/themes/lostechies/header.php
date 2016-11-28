@@ -22,7 +22,7 @@
 	<link href="https://feeds.feedburner.com/LosTechies" title="LosTechies.Com &raquo; Feed" type="application/rss+xml" rel="alternate">
 	<?php
 		wp_enqueue_style( 'mainstyle', '/wp-content/themes/lostechies/style.css');
-			wp_enqueue_style( 'jquerystyle', '/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css');	
+		wp_enqueue_style( 'jquerystyle', '/wp-content/themes/lostechies/jquery-ui-1.8.1.custom.css');	
 	?>
 
 	<?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>

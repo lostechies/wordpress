@@ -1,0 +1,14 @@
+#content h1, h2, h3, h4 {
+	font-family: Georgia, Myriad Pro, "Lucida Grande","Lucida Sans Unicode",Trebuchet MS,Arial;
+	font-weight: normal;
+    margin: 0;
+    padding: 0;
+    line-height: 1.4em;
+}
+
+#content p {
+    color: #434343;
+    font-family: Georgia, Myriad Pro, "Lucida Grande","Lucida Sans Unicode",Trebuchet MS,Arial;
+    font-size: 18px;
+    line-height: 24px;
+}
