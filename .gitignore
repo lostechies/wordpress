@@ -3,3 +3,5 @@ permalinkmap.csv
 wp-settings.php
 wp-config.php
 wp-content/cache/
+wp-content/debug.log
+*.log
