@@ -1476,3 +1476,58 @@ code {
 	}
 
 }
+
+/* CARBON ADS BEGIN */
+
+#default_demo #_default_ {
+  position: relative;
+  margin-bottom: 24px;
+  border-radius: 3px;
+  background-color: hsl(0, 0%, 95%);
+  line-height: 1.5;
+}
+
+#default_demo .default-ad {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 1px 4px;
+  border: solid 1px hsla(0, 0%, 20%, .3);
+  border-radius: 3px;
+  color: hsla(0, 0%, 20%, .3);
+  text-transform: uppercase;
+  font-size: 8px;
+  font-family: Verdana, sans-serif;
+}
+
+#default_demo ._default_ {
+  display: block;
+  overflow: hidden;
+  padding: 1em;
+  line-height: 1.5;
+}
+
+#default_demo a {
+  text-decoration: none;
+}
+
+#default_demo .default-image img {
+  display: block;
+  float: left;
+  margin: 0;
+  margin-right: 10px;
+  width: 48px;
+  border-radius: 7.5%;
+}
+
+#default_demo .default-title,
+#default_demo .default-description {
+  display: block;
+  margin-left: 58px;
+  max-width: calc(100% - 48px);
+}
+
+#default_demo .default-title {
+  font-weight: 600;
+}
+/* CARBON ADS END */
