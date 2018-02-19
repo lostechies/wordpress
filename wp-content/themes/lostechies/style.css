@@ -1338,37 +1338,6 @@ code {
   background-color: #000;
 }
 
-#carbonads {
-  display: block;
-  overflow: hidden;
-  padding: 1em;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-#carbonads span {
-  display: block;
-  overflow: hidden;
-}
-
-.carbon-text {
-  display: block;
-  margin-bottom: 1em;
-  text-align: left;
-}
-
-.carbon-img {
-  display: block;
-  margin: 0 auto 1em;
-  text-align: center;
-}
-
-.carbon-poweredby {
-  display: block;
-  text-align: right;
-  font-size: 12px;
-}
-
 @media only screen and (min-width: 1420px) {
    /* wrapper */
    div.container_12 {
@@ -1477,57 +1446,114 @@ code {
 
 }
 
-/* CARBON ADS BEGIN */
+/* CARBON ADS HEADER BEGIN */
 
-#default_demo #_default_ {
+.bsa-cpc #_default_ {
   position: relative;
-  margin-bottom: 24px;
+  margin: 10px 10px;
+  border: solid 1px #cecece;
   border-radius: 3px;
-  background-color: hsl(0, 0%, 95%);
+  background-color: #f6f6f6;
+  text-align: center;
+  font-size: 12px;
+  font-family: Verdana, sans-serif;
   line-height: 1.5;
 }
 
-#default_demo .default-ad {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 1px 4px;
-  border: solid 1px hsla(0, 0%, 20%, .3);
-  border-radius: 3px;
-  color: hsla(0, 0%, 20%, .3);
-  text-transform: uppercase;
-  font-size: 8px;
-  font-family: Verdana, sans-serif;
+.bsa-cpc .default-ad {
+  display: none;
 }
 
-#default_demo ._default_ {
+.bsa-cpc ._default_ {
   display: block;
   overflow: hidden;
-  padding: 1em;
+  padding: .7em 1em;
   line-height: 1.5;
 }
 
-#default_demo a {
+.bsa-cpc ._default_ > * {
+  vertical-align: middle;
+}
+
+.bsa-cpc a {
   text-decoration: none;
 }
 
-#default_demo .default-image img {
-  display: block;
-  float: left;
-  margin: 0;
-  margin-right: 10px;
-  width: 48px;
-  border-radius: 7.5%;
+.bsa-cpc .default-image {
+  display: inline-block;
+  margin-right: 6px;
+  line-height: 0;
 }
 
-#default_demo .default-title,
-#default_demo .default-description {
-  display: block;
-  margin-left: 58px;
-  max-width: calc(100% - 48px);
+.bsa-cpc .default-image img {
+  height: 18px;
+  border-radius: 3px;
 }
 
-#default_demo .default-title {
+.bsa-cpc .default-title:after {
+  content: " — ";
+}
+
+.bsa-cpc .default-title,
+.bsa-cpc .default-description {
+  display: inline;
+}
+
+.bsa-cpc .default-title {
+  position: relative;
   font-weight: 600;
 }
-/* CARBON ADS END */
+
+.bsa-cpc .default-description:after {
+  position: relative;
+  top: -1px;
+  right: -8px;
+  padding: 2px 5px;
+  border: solid 1px #e17530;
+  border-radius: 3px;
+  color: #e17530;
+  content: "Ad";
+  text-transform: uppercase;
+  font-size: 9px;
+}
+
+/* CARBON ADS HEADER END */
+
+/* CARBON ADS SIDEBAR BEGIN */
+#carbonads {
+  display: block;
+  overflow: hidden;
+  padding: 1em 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+#carbonads a:hover {
+  text-decoration: none;
+}
+
+#carbonads span {
+  display: block;
+  overflow: hidden;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0 auto 1em;
+}
+
+.carbon-text {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.carbon-poweredby {
+  display: block;
+  color: inherit !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 9px;
+  line-height: 1;
+}
+
+/* CARBON ADS SIDEBAR END */

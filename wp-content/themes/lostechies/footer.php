@@ -55,6 +55,18 @@
   ga('send', 'pageview');
 
 </script>
+<script>
+  (function(){
+    if(typeof _bsa !== 'undefined' && _bsa) {
+    _bsa.init('default', 'CVAIVKJE', 'placement:lostechiescom', {
+      target: '.bsa-cpc',
+      align: 'horizontal',
+      disable_css: 'true'
+    });
+      }
+  })();
+</script>
+
 <?php
         /* Always have wp_footer() just before the closing </body>
          * tag of your theme, or you will break many plugins, which

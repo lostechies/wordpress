@@ -3,19 +3,7 @@
 				<li id="archives" class="widget-container">
 					<h3 class="widget-title">Ads</h3>
 					<ul>
-						<script src="https://m.servedby-buysellads.com/monetization.js" type="text/javascript"></script>
-						<div id="default_demo"></div>
-						<script>
-						(function(){
-						  // format, zoneKey, segment:value, options
-						  _bsa.init('default', 'CVAIVKJE', 'placement:demo', {
-						    target: '#default_demo',
-						    align: 'horizontal',
-						    disable_css: 'true'
-						  });
-						})();
-						</script>
-
+						<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=lostechiescom" id="_carbonads_js"></script>
 					</ul>
 				</li>
 						

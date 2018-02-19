@@ -1,0 +1,145 @@
+---
+id: 198
+title: 'Cool stuff in FubuCore No. 6: Command-line'
+date: 2011-06-06T18:16:00+00:00
+author: Chad Myers
+layout: post
+guid: http://lostechies.com/chadmyers/?p=198
+permalink: /2011/06/06/cool-stuff-in-fubucore-no-6-command-line/
+dsq_thread_id:
+  - "324090559"
+categories:
+  - .NET
+  - cool-stuff-in-fubu
+  - fubucore
+  - FubuMVC
+---
+This is the sixth post of the FubuCore series mentioned in the [Introduction post](http://lostechies.com/chadmyers/2011/05/30/cool-stuff-in-fubucore-and-fubumvc-series/).
+
+In the course of building the Fubu packaging infrastructure and later the deployment story, we had need for some command line apps to help automate some of the tedium of linking apps, poking some config files, etc.  Jeremy whipped up a nifty little [command-line helper framework](https://github.com/DarthFubuMVC/fubucore/tree/master/src/FubuCore/CommandLine) in FubuCore which impressed me as the beginning of a really sweet modular, convention-based, pluggable command-line facility.  If you’re building a big command-line app that lots of options, switches, flags, etc you might want to keep an eye on this. Or better yet, contribute! If you’re looking to be a Fubu contributor and are looking for a nice place to make a difference without biting off a big chunk of work, this might be a good place to start.
+
+To understand how to use the FubuCore CommandLine bits, it helps to understand some of its base concepts: Commands, Input Models, and Usages.
+
+## Commands
+
+The purpose of a command-line app is to issue commands. So it is fitting that the base unit of execution in FubuCore CommandLine is a “Command” object.  Currently, your command object must derive from [FubuCommand<T>](https://github.com/DarthFubuMVC/fubucore/blob/master/src/FubuCore/CommandLine/FubuCommand.cs) where the “T” is the type of your input model (more on this later). At this time, commands are not dependency-injected. Spinning up the container could possibly slow things down and command-line apps should be fast. This might be a good area for a would-be contributor to make some improvements if you were so inclined.
+
+FubuCommand<T> is an abstract method with one required abstract method: “bool Execute(T input)”.  Your Execute method will be called with your input model fully populated.  You must return true/false depending on whether you consider the command executed successfully or not.   This translates directly to the exit code of your command-line application (i.e. the %ERROR_LEVEL% after you run the command).
+
+FubuCore CommandLine can generate a help/usage output automatically from your commands, input models, usages, and flags. You have to decorate your commands and models with some attributes in order for FubuCore’s help output to be meaningful.
+
+### [CommandDescription(“description”, Name=”shortname”)]
+
+Decorate your command class with this in order to specify the text displayed when a user types “yourapp yourcommand help&#8221;.  This attribute also has property “Name” which you can set to control what the actual name of the command is from the command line. For example, if you wanted it to be “urcmd” instead of “yourcommand”, set the Name in the attribute. For example:
+
+<pre class="brush:csharp">[CommandDescription("Runs my command", Name="urcmd")]
+public class YourCommand : FubuCommand&lt;YourInput&gt;
+{
+    public override bool Execute(YourInput input)
+    {
+        return true;
+    }
+}</pre>
+
+### [Usage(“usage”, “description”)]
+
+The Usage attribute allows you assign multiple “usages” to a single command and give each a description so that the help/usage generator produces meaningful output to the user. More on “Usages” later.
+
+## Input Models
+
+Input Models are simple POCO objects that explain to FubuCore how to interpret the arguments that come after the command name that the user types on the command line.  Given the following command line:
+
+> yourapp yourcommand requiredarg1 –flag –optionalarg2 value
+
+FubuCore will try to bind “requiredarg1”, “-flag”, and “-optionalarg value” to your input model.
+
+Arguments get bound to input models using the following rules:
+
+  * Input Model classes must be POCO with a public, no-arg constructor.
+  * Settable properties are required by default (unless otherwise marked) and are processed in the order in which they appear in the class (top-down in the class translates to left-right on the command-line). Valid values will be converted from string to the property’s type. The following types are built-in supported: string,  (anything that has a TypeConverter registered with [System.ComponentModel.TypeDescriptor](http://msdn.microsoft.com/en-us/library/system.componentmodel.typedescriptor.aspx) such as int, long, bool, and a few others), DateTime, TimeSpan, TimeZoneInfo, enums, arrays, and nullable primitives (DateTime?, int?, long?, etc).
+  * Settlable properties whose name ends with “Flag” are not required. The command-line arg will be auto-generated by default unless the [FlagAlias] attribute is used. Thus the property “ConfigFileFlag” will translate into “-configFile” on the command-line by default.  The next argument will be the value passed to this argument.  The value of these arguments follow the same type rules mentioned above.
+  * Settable Boolean properties will be set to false by default, unless the “-propertyname” flag is set on the command-line. The exact name of the argument can be controlled used the [FlagAlias] attribute.
+  * Non-settable properties are ignored entirely
+  * Properties marked with the [IgnoreOnCommandLine] attribute are ignored entirely.
+  * Methods are ignored entirely
+
+You can use the [Description(“desc”)] attribute to describe this input model property and that description will show up in the help/usage output when the user types “help” in your app’s command-line interface.
+
+## Usages
+
+A given command may support several usages. For example:
+
+bottles alias list
+
+bottles alias create …
+
+bottles alias remove …
+
+There is one command (AliasCommand), yet three usages (list [default], add, and remove).
+
+To enable multiple usages for your command, use the [Usage(“name”, “description”)] attribute on your command class. You will then have to check in your Execute method which usage was invoked.  For an example, see the [Bottles AliasCommand](https://github.com/DarthFubuMVC/bottles/blob/master/src/Bottles/Commands/AliasCommand.cs).
+
+Let’s say that certain input model properties are required, optional, or not appropriate for certain usages.  You can use the [RequiredUsage("usage1”, “usage2”, …)] attribute to designate that a given input model property is only appropriate for a specific usage.
+
+Another situation is if you have an input model property that is appropriate for multiple usages, but maybe not required for all of them. Use the [ValidUsage(“usage1”, “usage2”, …)] attribute.  The RequiredUsage and ValidUsage attributes may be combined on a single property.
+
+## Wiring It All Up
+
+Once you have all your commands and input models wired up the way you want them, you’ll need to kick-off all the cool FubuCore command-line handling.
+
+For an example of wiring it up, [check out how the Bottles app works](https://github.com/DarthFubuMVC/bottles/blob/master/src/Bottles.Console/Program.cs).  I’ve copied the code (as it exists today) for your convenience:
+
+<pre class="brush:csharp">internal class Program
+{
+    private static bool success;
+
+    private static int Main(string[] args)
+    {
+        try
+        {
+            var factory = new CommandFactory();
+            factory.SetAppName("bottles");
+            factory.RegisterCommands(typeof(IFubuCommand).Assembly);
+            factory.RegisterCommands(typeof(Recipe).Assembly);
+            factory.RegisterCommands(typeof(PackageExploder).Assembly);
+
+            var executor = new CommandExecutor(factory);
+            success = executor.Execute(args);
+        }
+        catch (CommandFailureException e)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("ERROR: " + e.Message);
+            Console.ResetColor();
+            return 1;
+        }
+        catch (Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("ERROR: " + ex);
+            Console.ResetColor();
+            return 1;
+        }
+        return success ? 0 : 1;
+    }
+}</pre>
+
+This is pretty standard command-line handling stuff. But there are a few things I wanted to point out to your attention:
+
+### CommandFactory, CommandExecutor
+
+These are the configuration and execution core pieces of FubuCore respectively. If you want to tour the FubuCore CommandLine code, these would be good places to start. Other than that, you don’t need to worry about these. Just copy the code above to make it work in your app.
+
+### SetAppName
+
+This determines what the name of the app should be when FubuCore generates your help/usage documentation.  If you want the help suggestions to say “bottles yourcommand”, then SetAppName to “bottles”.
+
+### RegisterCommands
+
+Call this for each of the assemblies that contain your command classes. FubuCore will scan those assemblies for any class(es) that inherit from FubuCommand<T> and incorporate them into your command-line app automatically.
+
+## Summary
+
+There are lots of command-line libraries out there. Some of them are pretty good. Fubu already has lots of projects and dependencies and we were nervous about taking on more external dependencies than we already have. Also, the other libraries didn’t really fit the style of Fubu, so we decided to make one our own that would work in the same way Fubu does, for the most part.
+
+I hope you liked some or all of what you saw and that you will be able to put some of it into use in the future.  As always, feel free to drop some comments here or to the [FubuMVC mailing list](https://groups.google.com/group/fubumvc-devel).  If you’re interested in contributing to FubuCore CommandLine, you can always [fork FubuCore on Github](https://github.com/DarthFubuMVC/fubucore/).  Make sure to drop Dru Sellers (<dru@drusellers.com>) an email if you’re going to work on it to coordinate development. And yes, Dru approved me using his raw, unadulterated email address in a blog post :)
